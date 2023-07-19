@@ -226,6 +226,3 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
-
-application.properties
-application.yml
