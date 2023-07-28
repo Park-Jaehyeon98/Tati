@@ -9,17 +9,16 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "ATTENDANCE")
 public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer attendanceId;
 
-    @CreationTimestamp
+//    @CreationTimestamp
     @Column(name = "in_time", nullable = false)
     private String inTime;
 
-    @CreationTimestamp
+//    @CreationTimestamp
     @Column(name = "out_time")
     private String outTime;
 

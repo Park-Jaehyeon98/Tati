@@ -2,6 +2,8 @@ package com.ssafy.tati.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 
@@ -25,14 +27,17 @@ public class Study {
     @Column(name = "study_password", columnDefinition = "int")
     private Integer studyPassword;
 
-    @Column(name = "study_start_date", columnDefinition = "date", nullable = false)
+//    @CreatedDate
+//    @Column(name = "study_start_date", columnDefinition = "date", nullable = false)
+    @Column(name = "study_start_date", nullable = false)
     private String studyStartDate;
 
-    @Column(name = "study_end_date", columnDefinition = "date", nullable = false)
+//    @CreatedDate
+//    @Column(name = "study_start_date", columnDefinition = "date", nullable = false)
+    @Column(name = "study_end_date", nullable = false)
     private String studyEndDate;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-
 }

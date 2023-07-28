@@ -9,10 +9,12 @@ import lombok.Setter;
 @Schema(description = "스터디 생성 DTO")
 public class StudyReqDto {
     // Study Entity
+//    @Schema(hidden = true)
+//    private Integer studyId;
     @Schema(description = "스터디 명")
     private String studyName;
     @Schema(description = "스터디 설명")
-    private String study_description;
+    private String studyDescription;
     @Schema(description = "허용 인원")
     private Integer totalMember;
     @Schema(description = "비밀번호")
@@ -31,8 +33,8 @@ public class StudyReqDto {
     @Schema(description = "종료시간")
     private String studyEndTime;
     // Category Entity
-    @Schema(hidden = true)
-    private Integer categoryId;
+//    @Schema(hidden = true)
+//    private Integer categoryId;
     @Schema(description = "카테고리 이름")
     private String categoryName;
 
