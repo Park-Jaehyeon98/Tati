@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter @Setter
 @Schema(description = "닉네임 수정 DTO")
-public class NickNameReqDto {
+public class PutNickNameReqDto {
     @Schema(description = "회원식별번호")
     private Integer memberId;
 

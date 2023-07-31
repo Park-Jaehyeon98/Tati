@@ -3,7 +3,9 @@ package com.ssafy.tati.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
@@ -40,6 +42,15 @@ public class Member {
     //회원 총 공부 시간
     @Column(name = "total_study_time", columnDefinition = "int", nullable = false)
     private Integer totalStudyTime;
+
+    //회원 가입 날짜
+    @Column(updatable = false)
+    private String createdDate;
+
+    @PrePersist
+    public void prePersist(){
+        createdDate = LocalDateTime.now().toString();
+    }
 
 
 
