@@ -1,0 +1,66 @@
+.AuthModal {
+  /* 모달창 크기 */
+  width: 500px;
+  height: 300px;
+
+  z-index: 999;
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  /* 모달창 디자인 */
+  background-color: white;
+  border: 1px solid rgb(204, 201, 201);
+  border-radius: 20px;
+}
+
+.close {
+  position: absolute;
+  width: 130px;
+  height: 50px;
+  border-radius: 10px;
+  background-color: #D9D9D9;
+  border: 1px;
+  right: 78px;
+  bottom: 45px;
+  font-size: 20px;
+}
+
+.open {
+  position: absolute;
+  width: 130px;
+  height: 50px;
+  border-radius: 10px;
+  background-color: #A5DAF8;
+  border: 1px;
+  left: 80px;
+  bottom: 45px;
+  font-size: 20px;
+}
+
+.message_password{
+  padding-left: 20%;
+  margin-top: 10%;
+}
+
+.password_input{
+  width: 340px;
+  height: 38px;
+  font-size: 30px;
+
+  margin-left: 80px;
+  margin-top: 20px;
+
+  background-color: rgb(240, 239, 239);
+  border: 1px;
+  border-radius: 10px;
+}
+
+.open:hover {
+  transform: scale(1.1); 
+}
+.close:hover {
+  transform: scale(1.1); 
+}
