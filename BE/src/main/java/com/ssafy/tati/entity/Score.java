@@ -3,6 +3,7 @@ package com.ssafy.tati.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @ToString
@@ -18,7 +19,7 @@ public class Score {
 
     //날짜
     @Column(name = "score_date", nullable = false)
-    private String scoreDate;
+    private LocalDateTime scoreDate;
 
     //열정지수
     private int score;

@@ -33,12 +33,12 @@ public class MemberScheduleService {
     }
 
     //일정 조회(한 달 기준)
-    public List<MemberSchedule> findSchedules(String email, int month){
-        List<MemberSchedule> schedules = scheduleRepository.selectSchedule(email);
+    public List<MemberSchedule> findSchedules(Integer memberId, int month){
+        List<MemberSchedule> schedules = scheduleRepository.selectSchedule(memberId);
 
         List<MemberSchedule> scheduleList = new ArrayList<>();
         for(MemberSchedule schedule : schedules ){
-            int m = Integer.parseInt(schedule.getMemberScheduleDate().substring(2, 4));
+            int m = schedule.getMemberScheduleDate().getMonthValue();
             if(m == month) scheduleList.add(schedule);
         }
 

@@ -11,8 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Schema(description = "회원정보 수정 DTO")
 public class PutMemberReqDto {
-    @Schema(description = "이메일")
-    private String email;
+    @Schema(description = "회원 식별번호")
+    private Integer memberId;
 
     @Schema(description = "닉네임")
     private String nickName;

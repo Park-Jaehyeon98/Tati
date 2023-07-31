@@ -45,11 +45,11 @@ public class MemberScheduleController {
     public ResponseEntity<?> deleteSchedule(@PathVariable Integer scheduleId ){
         MemberSchedule schedule = memberScheduleService.findById(scheduleId);
 
-        String email = schedule.getMember().getEmail();
-        int month = Integer.parseInt(schedule.getMemberScheduleDate().substring(2, 4));
+        Integer memberId = schedule.getMember().getMemberId();
+        int month = schedule.getMemberScheduleDate().getMonthValue();
 
         memberScheduleService.delete(scheduleId);
-        List<MemberSchedule> schedules = memberScheduleService.findSchedules(email ,month);
+        List<MemberSchedule> schedules = memberScheduleService.findSchedules(memberId ,month);
 
         List<ScheduleResDto> scheduleList =
                 scheduleMapper.memberScheduleListToScheduleResDtoList(schedules);
@@ -60,9 +60,9 @@ public class MemberScheduleController {
 
 
     @Operation(summary = "일정 조회", description = "회원이 자신의 일정 조회")
-    @GetMapping("/mypage/schedule/{email}")
-    public ResponseEntity<?> selectSchedule(@PathVariable String email, int month){
-        List<MemberSchedule> schedules = memberScheduleService.findSchedules(email ,month);
+    @GetMapping("/mypage/schedule/{memberId}")
+    public ResponseEntity<?> selectSchedule(@PathVariable Integer memberId, int month){
+        List<MemberSchedule> schedules = memberScheduleService.findSchedules(memberId ,month);
 
         List<ScheduleResDto> scheduleList =
                 scheduleMapper.memberScheduleListToScheduleResDtoList(schedules);

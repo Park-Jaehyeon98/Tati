@@ -1,8 +1,10 @@
 package com.ssafy.tati.entity;
 
 import lombok.*;
+import net.bytebuddy.asm.Advice;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @ToString
@@ -16,9 +18,12 @@ public class Point {
     @Column(name="point_id", nullable = false)
     private int pointId;
 
+    //결제 고유번호
+    private String tid;
+
     //날짜
     @Column(name="point_data", nullable = false)
-    private String pointDate;
+    private LocalDateTime pointDate;
 
     //금액
     @Column(nullable = false)

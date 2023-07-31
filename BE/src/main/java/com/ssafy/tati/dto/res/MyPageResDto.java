@@ -8,8 +8,7 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class MyPageResDto {
@@ -19,8 +18,6 @@ public class MyPageResDto {
 
     //총 공부시간
     Integer totalStudyTime;
-
-    //스터디 리스트
 
     //할 일 리스트
     @Schema(description = "할 일 리스트")

@@ -4,6 +4,8 @@ import com.ssafy.tati.entity.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,7 +13,7 @@ import lombok.*;
 public class PointReqDto {
 
     @Schema(description = "날짜")
-    private String pointDate;
+    private LocalDateTime pointDate;
 
     @Schema(description = "총 금액")
     private int amount;

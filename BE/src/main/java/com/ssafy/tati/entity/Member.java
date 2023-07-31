@@ -3,9 +3,10 @@ package com.ssafy.tati.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -44,15 +45,23 @@ public class Member {
     private Integer totalStudyTime;
 
     //회원 가입 날짜
-    @Column(updatable = false)
-    private String createdDate;
+    @Column(name = "created_date", updatable = false)
+    private LocalDateTime createdDate;
+
+    //가입한 스터디 목록
+    @OneToMany(mappedBy = "member")
+    List<StudyMember> studyList = new ArrayList<>();
+
+    //신청한 스터디 목록
+
+
+    //내가 쓴 게시글 목록
+    @OneToMany(mappedBy = "member")
+    List<Board> myBoardList = new ArrayList<>();
 
     @PrePersist
     public void prePersist(){
-        createdDate = LocalDateTime.now().toString();
+        createdDate = LocalDateTime.now();
     }
-
-
-
 }
 

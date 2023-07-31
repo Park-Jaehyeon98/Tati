@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import static java.time.LocalDateTime.now;
 
 
 @Controller
@@ -33,10 +34,13 @@ public class KakaoPayController {
 
     @PostMapping("/success") //결제승인요청
     public ResponseEntity afterPayRequest(@RequestBody KaKaoApproveReqDto kaKaoApproveReqDto){
+        System.out.println("tid : " +kaKaoApproveReqDto.getTid());
         KakaoApproveResponse approveResponse = kakaoPayService.ApproveResponse(kaKaoApproveReqDto);
         Member member = memberService.findByEmail(kaKaoApproveReqDto.getEmail());
-        pointService.save(new Point(0, kaKaoApproveReqDto.getPointDate(),
-                approveResponse.getAmount().getTotal(), "포인트 적립", member));
+        Point point = new Point(0, approveResponse.getTid(), now(),
+                approveResponse.getAmount().getTotal(), "포인트 적립", member);
+        pointService.save(point);
+
         return new ResponseEntity(approveResponse, HttpStatus.OK);
     }
 
@@ -44,7 +48,7 @@ public class KakaoPayController {
     public ResponseEntity cancelPayRequest(@RequestBody KakaoCancleReqDto kakaoCancleReqDto){
         KakaoCancelResponse cancelResponse = kakaoPayService.kakaoPayCancel(kakaoCancleReqDto);
         Member member = memberService.findByEmail(kakaoCancleReqDto.getEmail());
-        pointService.delete(new Point(0, cancelResponse.getCanceled_at(),
+        pointService.delete(new Point(0, cancelResponse.getTid(), now(),
                 cancelResponse.getCanceled_amount().getTotal(), "결제취소", member));
         return new ResponseEntity(cancelResponse, HttpStatus.OK);
     }

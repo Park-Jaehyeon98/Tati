@@ -34,7 +34,7 @@ public class PointController {
         Point point = postPointMapper.pointReqDtoToPoint(member, pointReqDto);
         pointService.save(point);
 
-        List<Point> pointList = pointService.selectPoint(pointReqDto.getEmail());
+        List<Point> pointList = pointService.selectPoint(member.getMemberId());
         List<PointResDto> pointResDtoList = postPointMapper.pointListToPointResDtoList(pointList);
 
         return new ResponseEntity<>(pointResDtoList, HttpStatus.OK);
@@ -49,7 +49,7 @@ public class PointController {
         Point point = postPointMapper.pointReqDtoToPoint(member, pointReqDto);
         pointService.delete(point);
 
-        List<Point> pointList = pointService.selectPoint(pointReqDto.getEmail());
+        List<Point> pointList = pointService.selectPoint(member.getMemberId());
         List<PointResDto> pointResDtoList = postPointMapper.pointListToPointResDtoList(pointList);
 
         return new ResponseEntity<>(pointResDtoList, HttpStatus.OK);
@@ -57,9 +57,9 @@ public class PointController {
 
     //포인트 내역 조회
     @Operation(summary = "포인트 내역 조회", description = "마이페이지 접속하면 포인트 내역 반환")
-    @GetMapping("mypage/point/{email}")
-    public ResponseEntity<?> selectPoint(@PathVariable String email){
-        List<Point> pointList = pointService.selectPoint(email);
+    @GetMapping("mypage/point/{memberId}")
+    public ResponseEntity<?> selectPoint(@PathVariable Integer memberId){
+        List<Point> pointList = pointService.selectPoint(memberId);
 
         //포인트 매퍼에서 resDto로 변환해서 반환
         List<PointResDto> pointResList =  postPointMapper.pointListToPointResDtoList(pointList);

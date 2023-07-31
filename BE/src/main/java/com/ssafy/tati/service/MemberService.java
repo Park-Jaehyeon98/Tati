@@ -2,7 +2,11 @@ package com.ssafy.tati.service;
 
 import com.ssafy.tati.Exception.DataNotFoundException;
 import com.ssafy.tati.Exception.MismatchDataException;
+import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.entity.Member;
+import com.ssafy.tati.entity.Study;
+import com.ssafy.tati.entity.StudyMember;
+import com.ssafy.tati.repository.BoardRepository;
 import com.ssafy.tati.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -19,9 +23,10 @@ import java.util.Optional;
 @Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final BoardRepository boardRepository;
     private final PasswordEncoder passwordEncoder;
 
-//    회원가입
+    //회원가입
     public Member createMember(Member member){
         isExistedEmail(member.getEmail());
         isExistedNickName(member.getMemberNickName());
@@ -31,7 +36,7 @@ public class MemberService {
         return createdMember;
     }
 
-//    닉네임 중복확인
+    //닉네임 중복확인
     public void isExistedNickName(String nickName){
         Optional<Member> optionalMember = memberRepository.findByMemberNickName(nickName);
         if (optionalMember.isPresent()) {
@@ -39,7 +44,7 @@ public class MemberService {
         }
     }
 
-//    가입된 회원인지 확인
+    //가입된 회원인지 확인
     public Member findVerifiedMember(String email) {
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
         if (optionalMember.isPresent()) {
@@ -48,7 +53,7 @@ public class MemberService {
         throw new DataNotFoundException("회원이 존재하지 않습니다.");
     }
 
-//    이메일 중복확인
+    //이메일 중복확인
     public void isExistedEmail(String email){
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
         if (optionalMember.isPresent()) {
@@ -56,7 +61,7 @@ public class MemberService {
         }
     }
 
-//    비밀번호 확인
+    //비밀번호 확인
     public Member loginMember(Member member) {
         Member findMember = findVerifiedMember(member.getEmail());
         if (!passwordEncoder.matches(member.getPassword(), findMember.getPassword())) {
@@ -66,10 +71,17 @@ public class MemberService {
         return findMember;
     }
 
-//    임시 비밀번호 받기 > 비밀번호 수정
+    //임시 비밀번호 받기 > 비밀번호 수정
     public void passwordChange(Member member, String password) {
         member.setPassword(passwordEncoder.encode(password));
         memberRepository.save(member);
+    }
+
+    //식별번호로 회원 조회
+    public Member findById(Integer memberId){
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
+        else return optionalMember.get();
     }
 
     //이메일로 회원 조회
@@ -80,17 +92,17 @@ public class MemberService {
     }
 
     //닉네임 수정
-    public void modifyNickName(String email, String nickName){
-        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+    public void modifyNickName(Integer memberId, String nickName){
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
         if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
-        else memberRepository.updateNickname(nickName, email);
+        else memberRepository.updateNickname(nickName, memberId);
     }
 
     //비밀번호 수정
-    public void modifyPassword(String email, String password){
-        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+    public void modifyPassword(Integer memberId, String password){
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
         if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
-        else memberRepository.updatePassword(passwordEncoder.encode(password), email);
+        else memberRepository.updatePassword(passwordEncoder.encode(password), memberId);
     }
 
 
@@ -101,7 +113,25 @@ public class MemberService {
         else memberRepository.deleteById(memberId);
     }
 
-    //모든 회원 보기
+    //회원이 작성한 글 조회
+    public List<Board> selectBoard(Integer memberId){
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
+
+        return boardRepository.findByEmail(memberId);
+    }
+
+    //회원이 가입한 스터디 조회
+    public List<Study> selectStudyList(Integer memberId){
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
+
+        List<Study> studyList = memberRepository.selectStudyMemberList(memberId);
+
+        return studyList;
+    }
+
+    //모든 회원 조회
     public List<Member> selectAll(){
         return memberRepository.findAll();
     }

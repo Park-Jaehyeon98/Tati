@@ -13,8 +13,8 @@ public interface PutMemberMapper {
 
         Member member = new Member();
 
-        member.setMemberId(0);
-        member.setEmail(putMemberReqDto.getEmail());
+        member.setMemberId(putMemberReqDto.getMemberId());
+        member.setEmail("email");
         member.setMemberName("member");
         if(putMemberReqDto.getPassword() == null) member.setPassword( "password" );
         else member.setPassword(putMemberReqDto.getPassword());

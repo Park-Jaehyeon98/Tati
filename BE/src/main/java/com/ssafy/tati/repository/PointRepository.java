@@ -10,6 +10,6 @@ import java.util.List;
 public interface PointRepository extends JpaRepository<Point, Integer> {
 
     //포인트 내역 조회
-    @Query("select p from Point as p join fetch p.member as m where m.email = :email")
-    List<Point> selectPoint(@Param("email") String email);
+    @Query("select p from Point as p join fetch p.member as m where m.memberId = :memberId")
+    List<Point> selectPoint(@Param("memberId") Integer memberId);
 }

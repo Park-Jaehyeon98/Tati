@@ -41,7 +41,7 @@ public class PointService {
     }
 
     //포인트 내역
-    public List<Point> selectPoint(String email){
-        return pointRepository.selectPoint(email);
+    public List<Point> selectPoint(Integer memberId){
+        return pointRepository.selectPoint(memberId);
     }
 }
