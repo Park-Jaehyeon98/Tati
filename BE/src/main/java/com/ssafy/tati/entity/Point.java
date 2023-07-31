@@ -12,6 +12,7 @@ import javax.persistence.*;
 public class Point {
 
     @Id //포인트 식별번호
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="point_id", nullable = false)
     private int pointId;
 
@@ -21,11 +22,11 @@ public class Point {
 
     //금액
     @Column(nullable = false)
-    private int amount;
+    private Integer amount;
 
     //내용
-    @Column(name = "pContent", length = 100, nullable = false)
-    private String p_content;
+    @Column(name = "p_content", length = 100, nullable = false)
+    private String pContent;
 
     //회원식별번호
     @ManyToOne(fetch = FetchType.LAZY)

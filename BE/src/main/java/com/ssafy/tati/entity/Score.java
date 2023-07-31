@@ -12,6 +12,7 @@ import javax.persistence.*;
 public class Score {
 
     @Id //열정지수 식별번호
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="score_id", nullable = false)
     private int scoreId;
 

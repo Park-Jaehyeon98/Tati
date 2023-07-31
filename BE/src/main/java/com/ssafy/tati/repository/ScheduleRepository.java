@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ScheduleRepository extends JpaRepository<MemberSchedule, Integer> {
 
-    //일정 조회
-    @Query("select s from MemberSchedule as s where s.member.memberId = :memberId")
-    List<MemberSchedule> selectSchedule(@Param("memberId") int memberId);
+    //email로 일정 조회
+    @Query("select s from MemberSchedule as s join fetch s.member as m where m.email = :email")
+    List<MemberSchedule> selectSchedule(@Param("email") String email);
 }

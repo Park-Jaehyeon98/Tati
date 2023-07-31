@@ -6,21 +6,25 @@ import com.ssafy.tati.entity.Member;
 import com.ssafy.tati.entity.Point;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
-public interface PointMapper {
+import java.util.List;
 
-    default Point pointReqDtoPoint(PointReqDto pointReqDto){
+@Mapper(componentModel = "spring")
+public interface PostPointMapper {
+
+    default Point pointReqDtoToPoint(Member member, PointReqDto pointReqDto){
         if(pointReqDto == null) return null;
 
         Point point = new Point();
         point.setPointId(0);
         point.setPointDate(pointReqDto.getPointDate());
         point.setAmount(pointReqDto.getAmount());
-        point.setP_content("포인트 적립");
-        point.setMember(new Member());
+        point.setPContent(pointReqDto.getPContent());
+        point.setMember(member);
 
         return point;
     }
 
     PointResDto pointToPointResDto(Point point);
+
+    List<PointResDto> pointListToPointResDtoList(List<Point> pointList);
 }

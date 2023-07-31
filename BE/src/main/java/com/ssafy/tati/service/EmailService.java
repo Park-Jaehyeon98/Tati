@@ -1,5 +1,6 @@
 package com.ssafy.tati.service;
 
+import com.ssafy.tati.Exception.MismatchDataException;
 import com.ssafy.tati.dao.RedisDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -45,7 +46,7 @@ public class EmailService {
     public void verifyAuthCode(String email, String authCode) {
         String authCodeInRedis = redisDao.getValues(authCode);
         if (Objects.isNull(authCodeInRedis) || !authCodeInRedis.equals(email)) {
-            throw new RuntimeException("인증코드가 일치하지 않습니다.");
+            throw new MismatchDataException("인증코드가 일치하지 않습니다.");
         }
     }
 

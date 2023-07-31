@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "일정 응답 DTO")
-public class PostScheduleResDto {
+public class ScheduleResDto {
     @Schema(description = "날짜")
     private String memberScheduleDate;
 
