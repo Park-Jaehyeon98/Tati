@@ -10,9 +10,6 @@ import java.util.List;
 @Setter
 @Schema(description = "스터디 생성 DTO")
 public class StudyReqDto {
-    // Study Entity
-//    @Schema(hidden = true)
-//    private Integer studyId;
     @Schema(description = "스터디 명")
     private String studyName;
     @Schema(description = "스터디 설명")
@@ -21,23 +18,19 @@ public class StudyReqDto {
     private Integer totalMember;
     @Schema(description = "비밀번호")
     private Integer studyPassword;
+    @Schema(description = "공개 여부")
+    private Boolean isPublic;
+    @Schema(description = "스터디 방장")
+    private String studyHost;
+    @Schema(description = "신청 보증금")
+    private Integer studyDeposit;
     @Schema(description = "스터디 시작일")
     private String studyStartDate;
     @Schema(description = "스터디 종료일")
     private String studyEndDate;
-    // StudySchedule Entity
-//    @Schema(hidden = true)
-//    private Integer studyScheduleId;
-    @Schema(description = "요일 리스트")
-    private List<StudyDayItemDto> studyDay;
-    @Schema(description = "시작시간 리스트")
-    private List<StudyStartTimeItemDto> studyStartTime;
-    @Schema(description = "종료시간 리스트")
-    private List<StudyEndTimeItemDto> studyEndTime;
-    // Category Entity
-//    @Schema(hidden = true)
-//    private Integer categoryId;
-    @Schema(description = "카테고리 이름")
-    private String categoryName;
+    @Schema(description = "스터디 일정 리스트")
+    private List<StudyScheduleReqDto> studySchedule;
+    @Schema(description = "카테고리 식별번호")
+    private Integer categoryId;
 
 }

@@ -27,16 +27,21 @@ public class Study {
     @Column(name = "total_member", columnDefinition = "int", nullable = false)
     private Integer totalMember;
 
+    @Column(name = "is_public", columnDefinition = "boolean", nullable = false)
+    private Boolean isPublic;
+
+    @Column(name = "study_host", length = 20, nullable = false)
+    private String studyHost;
+
+    @Column(name = "study_deposit", columnDefinition = "int", nullable = false)
+    private Integer studyDeposit;
+
     @Column(name = "study_password", columnDefinition = "int")
     private Integer studyPassword;
 
-//    @CreatedDate
-//    @Column(name = "study_start_date", columnDefinition = "date", nullable = false)
     @Column(name = "study_start_date", nullable = false)
     private String studyStartDate;
 
-//    @CreatedDate
-//    @Column(name = "study_start_date", columnDefinition = "date", nullable = false)
     @Column(name = "study_end_date", nullable = false)
     private String studyEndDate;
 
@@ -44,9 +49,4 @@ public class Study {
     @JoinColumn(name = "category_id")
     private Category category;
 
-
-//    public void update(Study updateStudy) {
-//        this.setStudyName(updateStudy.studyName);
-//        this.setStudyPassword(updateStudy.studyPassword);
-//    }
 }

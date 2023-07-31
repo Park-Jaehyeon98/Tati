@@ -7,18 +7,6 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface StudyMapper {
-
-    default Category studyReqDtoToCategory(StudyReqDto studyReqDto){
-        if(studyReqDto == null){
-            return null;
-        }
-
-        Category category = new Category();
-        category.setCategoryName(studyReqDto.getCategoryName());
-
-        return category;
-    }
-
     default Study studyReqDtoToStudy(StudyReqDto studyReqDto){
         if(studyReqDto == null){
             return null;
@@ -26,7 +14,6 @@ public interface StudyMapper {
 
         Study study = new Study();
         Category category = new Category();
-//        category.setCategoryId(studyReqDto.getCategoryId());
 
         study.setStudyName(studyReqDto.getStudyName());
         study.setStudyDescription(studyReqDto.getStudyDescription());

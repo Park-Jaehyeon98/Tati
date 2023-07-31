@@ -15,11 +15,14 @@ public class StudyMember {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer studyMemberId;
 
-    @Column(name = "study_status", nullable = false)
-    private  String studyStatus;
+    @Column(name = "study_member_status", nullable = false)
+    private  String studyMemberStatus;
 
-    @Column(name = "study_deposit", columnDefinition = "int", nullable = false)
-    private Integer studyDeposit;
+    @Column(name = "study_member_deposit", columnDefinition = "int", nullable = false)
+    private Integer studyMemberDeposit;
+
+    @Column(name = "study_join_date", nullable = false)
+    private String studyJoinDate;
 
     @ManyToOne
     @JoinColumn(name = "study_id")
