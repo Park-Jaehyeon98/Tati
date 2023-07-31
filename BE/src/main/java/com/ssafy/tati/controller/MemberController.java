@@ -24,8 +24,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
-@Tag(name = "회원가입", description = "회원가입 API 문서")
+@Tag(name = "회원가입과 로그인", description = "회원가입과 로그인 API 문서")
 @RestController
 @RequestMapping("/member")
 @RequiredArgsConstructor
@@ -34,6 +35,7 @@ public class MemberController {
     private final MemberMapper memberMapper;
     private final EmailService emailService;
     private final JwtTokenizer jwtTokenizer;
+
 
     @Operation(summary = "회원가입 요청", description = "회원가입에 필요한 양식을 작성 후 회원가입 요청", responses = {
             @ApiResponse(responseCode = "200", description = "회원가입 성공", content = @Content(schema = @Schema(implementation = MemberResDto.class))),
@@ -124,4 +126,13 @@ public class MemberController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @Operation(summary = "회원 보기", description = "회원가입된 회원 보기")
+    @GetMapping("/find/member")
+    public ResponseEntity<?> selectAllMember()  {
+        List<Member> member = memberService.selectAll();
+        return new ResponseEntity<>(member, HttpStatus.OK);
+    }
+
+
 }

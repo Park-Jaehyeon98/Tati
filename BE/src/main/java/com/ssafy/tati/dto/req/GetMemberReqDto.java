@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
+@Schema(description = "회원 get 요청 DTO")
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "회원 요청 DTO")
-public class MemberReqDto {
+public class GetMemberReqDto {
     @Schema(hidden = true)
     private Integer memberId;
     @Schema(description = "이메일")
@@ -21,4 +21,10 @@ public class MemberReqDto {
     private String memberName;
     @Schema(description = "비밀번호")
     private String password;
+    @Schema(description = "열정지수")
+    private Integer totalScore;
+    @Schema(description = "적립금")
+    private Integer totalPoint;
+    @Schema(description = "총 공부시간")
+    private Integer totalStudyTime;
 }
