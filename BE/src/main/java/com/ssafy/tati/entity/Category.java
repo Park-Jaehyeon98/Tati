@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,4 +20,5 @@ public class Category {
 
     @Column(name = "category_name", length = 20, nullable = false)
     private String categoryName;
+
 }

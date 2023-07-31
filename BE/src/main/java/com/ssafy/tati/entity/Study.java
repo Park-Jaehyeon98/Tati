@@ -3,12 +3,8 @@ package com.ssafy.tati.entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
 
 @Entity
 @Getter
@@ -28,8 +24,8 @@ public class Study {
     @Column(name = "total_member", columnDefinition = "int", nullable = false)
     private Integer totalMember;
 
-    @Column(name = "is_public", columnDefinition = "boolean", nullable = false)
-    private Boolean isPublic;
+    @Column(name = "disclosure", columnDefinition = "boolean", nullable = false)
+    private Boolean disclosure;
 
     @Column(name = "study_host", length = 20, nullable = false)
     private String studyHost;
@@ -49,5 +45,19 @@ public class Study {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+
+    //category - int
+    //studyName - String
+    //studyDescription - String
+    //isPublic - boolean
+    //password - int
+    public void update(Category category, String studyName, String studyDescription, Boolean disclosure, Integer studyPassword){
+        this.category = category;
+        this.studyName = studyName;
+        this.studyDescription = studyDescription;
+        this.disclosure = disclosure;
+        this.studyPassword = studyPassword;
+    }
 
 }

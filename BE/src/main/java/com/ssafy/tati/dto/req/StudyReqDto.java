@@ -19,7 +19,7 @@ public class StudyReqDto {
     @Schema(description = "비밀번호")
     private Integer studyPassword;
     @Schema(description = "공개 여부")
-    private Boolean isPublic;
+    private Boolean disclosure;
     @Schema(description = "스터디 방장")
     private String studyHost;
     @Schema(description = "신청 보증금")
