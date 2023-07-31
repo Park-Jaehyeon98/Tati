@@ -1,17 +1,23 @@
 package com.ssafy.tati.service;
 
 import com.ssafy.tati.dto.req.StudyModifyReqDto;
+import com.ssafy.tati.dto.res.StudyListResDto;
 import com.ssafy.tati.dto.res.StudyModifyResDto;
 import com.ssafy.tati.entity.Category;
+import com.ssafy.tati.entity.Member;
 import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.entity.StudySchedule;
 import com.ssafy.tati.repository.CategoryRepository;
+import com.ssafy.tati.repository.MemberRepository;
 import com.ssafy.tati.repository.StudyRepository;
 import com.ssafy.tati.repository.StudyScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -21,7 +27,12 @@ public class StudyService {
     private final StudyRepository studyRepository;
     private final CategoryRepository categoryRepository;
     private final StudyScheduleRepository studyScheduleRepository;
+    private final MemberRepository memberRepository;
 
+
+//    public Page<Study> studyPageList(Pageable pageable){
+//        return studyRepository.findAll(pageable);
+//    }
 
     public void createStudy(Study study, Integer categoryId) {
         Optional<Category> category = categoryRepository.findByCategoryId(categoryId);
@@ -71,12 +82,25 @@ public class StudyService {
         return studyModifyResDto;
     }
 
+    @Transactional
+    public void removeStudy(Integer studyId, Integer memberId){
+        Optional<Study> optionalStudy = studyRepository.findById(studyId);
+        if(!optionalStudy.isPresent()){
+            throw new RuntimeException();
+        }
+        Study study = optionalStudy.get();
 
-//    @Transactional
-//    public void updateById(Integer id, Study updateStudy){
-//        Study study1 = studyRepository.findById(id).get();
-//        study1.update(updateStudy);
-//    }
+        Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
+        if(!optionalMember.isPresent()){
+            throw new RuntimeException();
+        }
+        Member member = optionalMember.get();
+        if(study.getStudyHost().equals(member.getMemberNickName())){
+            studyRepository.deleteById(studyId);
+        }else {
+            throw new RuntimeException();
+        }
+    }
 
 
 }

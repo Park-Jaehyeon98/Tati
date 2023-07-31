@@ -4,6 +4,7 @@ import com.ssafy.tati.dto.req.StudyModifyReqDto;
 import com.ssafy.tati.dto.req.StudyReqDto;
 import com.ssafy.tati.dto.req.StudyScheduleReqDto;
 import com.ssafy.tati.dto.res.StudyDetailResDto;
+import com.ssafy.tati.dto.res.StudyListResDto;
 import com.ssafy.tati.dto.res.StudyModifyResDto;
 import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.entity.StudySchedule;
@@ -11,8 +12,14 @@ import com.ssafy.tati.mapper.StudyMapper;
 import com.ssafy.tati.service.StudyService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.web.servlet.headers.HttpPublicKeyPinningDsl;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -23,6 +30,21 @@ import java.util.List;
 public class StudyController {
     private final StudyService studyService;
     private final StudyMapper studyMapper;
+
+//    @GetMapping("/")                 /* default size = 10 */
+//    public String boardList(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+//        Page<Study> studyList = studyService.studyPageList(pageable);
+//        int nowPage = studyList.getPageable().getPageNumber() + 1;
+//        int startPage = Math.max(nowPage - 4, 1);
+//        int endPage = Math.min(nowPage + 5, studyList.getTotalPages());
+//
+//        model.addAttribute("studyList", studyList);
+//        model.addAttribute("nowpage", nowPage);
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
+//
+//        return ;
+//    }
 
     @PostMapping("/create")
     public ResponseEntity<?> createStudy(@RequestBody StudyReqDto studyReqDto) {
@@ -48,6 +70,12 @@ public class StudyController {
     public ResponseEntity<?> modifyStudy(@PathVariable Integer studyId, @RequestBody StudyModifyReqDto studyModifyReqDto){
         StudyModifyResDto studyModifyResDto = studyService.modifyStudy(studyId, studyModifyReqDto);
         return new ResponseEntity<>(studyModifyResDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{studyId}/delete/{memberId}")
+    public ResponseEntity<?> deleteStudy(@PathVariable Integer studyId, @PathVariable Integer memberId){
+        studyService.removeStudy(studyId, memberId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
