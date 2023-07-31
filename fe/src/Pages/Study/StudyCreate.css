@@ -1,0 +1,23 @@
+.box {
+  border: 10px solid 3px;
+  width: 1000px;
+  height: 500px;
+  margin: auto;
+  background-color: #f1fafa;
+  border-radius: 10px;
+}
+body {
+  background-color: #a5daf8;
+}
+h6 {
+  color: red;
+  margin-left: 60px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.selected {
+  background-color: blue;
+}
+.noSelected {
+  background-color: white;
+}
