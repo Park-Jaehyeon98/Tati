@@ -1,6 +1,7 @@
 package com.ssafy.tati.auth;
 
 import io.jsonwebtoken.JwtException;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

@@ -10,8 +10,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
 @EntityListeners(AuditingEntityListener.class)
 public class Board {
     @Id
