@@ -11,6 +11,7 @@ import SignUp from "../Pages/Auth/SignUp";
 import Login from "../Pages/Auth/Login";
 import Main from "../Pages/Main/Main";
 import KakaoPay from "../Components/_MyPage/KakaoPay";
+import CreateNotice from "../Pages/Notice/CreateNotice";
 
 // import { aX } from "@fullcalendar/core/internal-common";
 import axios from "axios";
@@ -91,6 +92,7 @@ export default function Router() {
         <Route path="/Logout" element={<Login />} />
         <Route path="/" element={<Main />} />
         <Route path="/payment/success" element={<KakaoPay />} />
+        <Route path="/CreateNotice" element={<CreateNotice />} />
       </Routes>
     </BrowserRouter>
   );
