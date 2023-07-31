@@ -1,5 +1,6 @@
 package com.ssafy.tati.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode(of = "attendanceId")
 public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

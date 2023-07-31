@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface StudyMapper {
 
-    default Category studyReCategoryToCategory(StudyReqDto studyReqDto){
+    default Category studyReqDtoToCategory(StudyReqDto studyReqDto){
         if(studyReqDto == null){
             return null;
         }

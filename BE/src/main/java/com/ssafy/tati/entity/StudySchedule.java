@@ -1,20 +1,21 @@
 package com.ssafy.tati.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode(of = "studyScheduleId")
 public class StudySchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer studyScheduleId;
 
-    @Column(name = "study_day", length = 1, nullable = false)
+    @Column(name = "study_day", nullable = false)
     private String studyDay;
 
 //    @Column(name = "study_start_time", columnDefinition = "date", nullable = false)

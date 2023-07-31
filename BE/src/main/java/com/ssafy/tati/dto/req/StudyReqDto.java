@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Schema(description = "스터디 생성 DTO")
@@ -24,14 +26,14 @@ public class StudyReqDto {
     @Schema(description = "스터디 종료일")
     private String studyEndDate;
     // StudySchedule Entity
-    @Schema(hidden = true)
-    private Integer studyScheduleId;
-    @Schema(description = "요일")
-    private String studyDay;
-    @Schema(description = "시작시간")
-    private String studyStartTime;
-    @Schema(description = "종료시간")
-    private String studyEndTime;
+//    @Schema(hidden = true)
+//    private Integer studyScheduleId;
+    @Schema(description = "요일 리스트")
+    private List<StudyDayItemDto> studyDay;
+    @Schema(description = "시작시간 리스트")
+    private List<StudyStartTimeItemDto> studyStartTime;
+    @Schema(description = "종료시간 리스트")
+    private List<StudyEndTimeItemDto> studyEndTime;
     // Category Entity
 //    @Schema(hidden = true)
 //    private Integer categoryId;

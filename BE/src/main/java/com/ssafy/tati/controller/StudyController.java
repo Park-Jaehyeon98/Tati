@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @Tag(name = "스터디", description = "스터디 API 문서")
 @RestController
 @RequestMapping("/study")
@@ -22,7 +24,8 @@ public class StudyController {
 //    private final StudyMapper studyMapper;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createStudy(@RequestBody StudyReqDto studyReqDto) {
+    public ResponseEntity<?> createStudy(@RequestBody @Valid StudyReqDto studyReqDto) {
+//        System.out.println(studyReqDto.getStudyDay().stream().toArray());
         Study study = studyService.createStudy(studyReqDto);
         return new ResponseEntity<>(study, HttpStatus.CREATED);
     }

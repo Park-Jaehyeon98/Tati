@@ -1,6 +1,9 @@
 package com.ssafy.tati.service;
 
+import com.ssafy.tati.dto.req.StudyDayItemDto;
+import com.ssafy.tati.dto.req.StudyEndTimeItemDto;
 import com.ssafy.tati.dto.req.StudyReqDto;
+import com.ssafy.tati.dto.req.StudyStartTimeItemDto;
 import com.ssafy.tati.entity.Category;
 import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.entity.StudySchedule;
@@ -11,6 +14,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +25,7 @@ public class StudyService {
     private final CategoryRepository categoryRepository;
     private final StudyScheduleRepository studyScheduleRepository;
 
-    @Transactional
+
     public Study createStudy(StudyReqDto studyReqDto) {
         // Extract data from the DTO
         String studyName = studyReqDto.getStudyName();
@@ -28,9 +34,9 @@ public class StudyService {
         Integer studyPassword = studyReqDto.getStudyPassword();
         String studyStartDate = studyReqDto.getStudyStartDate();
         String studyEndDate = studyReqDto.getStudyEndDate();
-        String studyDay = studyReqDto.getStudyDay();
-        String studyStartTime = studyReqDto.getStudyStartTime();
-        String studyEndTime = studyReqDto.getStudyEndTime();
+        List<StudyDayItemDto> studyDay = studyReqDto.getStudyDay();
+        List<StudyStartTimeItemDto> studyStartTime = studyReqDto.getStudyStartTime();
+        List<StudyEndTimeItemDto> studyEndTime = studyReqDto.getStudyEndTime();
         String categoryName = studyReqDto.getCategoryName();
 
         // Create Category entity
@@ -50,18 +56,26 @@ public class StudyService {
         categoryRepository.save(category);
         Study study1 = studyRepository.save(study);
 
-        // Create StudySchedule entity
-        StudySchedule studySchedule = new StudySchedule();
-        studySchedule.setStudyDay(studyDay);
-        studySchedule.setStudyStartTime(studyStartTime);
-        studySchedule.setStudyEndTime(studyEndTime);
+        for(int i=0; i<studyDay.size(); i++) {
+            // Create StudySchedule entity
+            StudySchedule studySchedule = new StudySchedule();
+            studySchedule.setStudy(study1);
+            System.out.println(studySchedule.getStudyDay());
+            studySchedule.setStudyDay(new StudyDayItemDto(studyDay.get(i)).getStudyDay());
+            studySchedule.setStudyStartTime(new StudyStartTimeItemDto(studyStartTime.get(i)).getStudyStartTime());
+            studySchedule.setStudyEndTime(new StudyEndTimeItemDto(studyEndTime.get(i)).getStudyEndTime());
+            studyScheduleRepository.save(studySchedule);
+        }
 
         // Save the entities to the database
-
-//
-        studyScheduleRepository.save(studySchedule);
-
         return study1;
 
     }
+//    @Transactional
+//    public void updateById(Integer id, Study updateStudy){
+//        Study study1 = studyRepository.findById(id).get();
+//        study1.update(updateStudy);
+//    }
+
+
 }
