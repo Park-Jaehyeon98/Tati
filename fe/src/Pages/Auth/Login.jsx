@@ -19,6 +19,7 @@ export default function Login(){
 
 
   // 로그인
+  // 내일 로그인 성공 후 토큰과 유저 pk값을 로컬에 저장
   const handleLogin = () => {
     console.log(`이메일: ${formData.email} 비밀번호: ${formData.password}`)
   
@@ -29,6 +30,7 @@ export default function Login(){
       .then((res) => {
         console.log(res)
         console.log(res.headers.refreshtoken)
+        
         // navigate("/MyPage");
         // window.location.replace("/MyPage")
       })

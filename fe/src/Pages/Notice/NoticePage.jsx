@@ -6,11 +6,11 @@ import style from './NoticePage.module.css'
 export default function NoticePage(){
 
   // 공지사항들
-  const NoticeItem=(notice)=>{
+  const NoticeItem=({text,index,date})=>{
     return(
       <div>
         <div className={style.NoticeItem_text}>
-          <p>{notice.text} <h6 className={style.text}>{notice.date}</h6></p>
+          <p className={style.p_text}>{index+1}번 {text} <h6 className={style.text}>{date}</h6></p>
           <hr />
         </div>
       </div>
@@ -28,6 +28,9 @@ export default function NoticePage(){
     { text: '안녕하세요', date: '23.08.01' },
     { text: '안녕', date: '23.07.31' },
     { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
   ];
 
   return (
@@ -43,6 +46,7 @@ export default function NoticePage(){
             key={index} 
             text={notice.text} 
             date={notice.date} 
+            index={index}
             />
           ))}
         </div>

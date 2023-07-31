@@ -1,9 +1,36 @@
-import React from "react";
-
+import React,{useState} from "react";
+import { useNavigate } from "react-router-dom";
 import style from "./Aside.module.css"
+import AuthModal from "./AuthModal";
+
+export default function Aside() {
+
+  const navigate = useNavigate();
+
+  const [authModal, setAuthModal] = useState(false); 
 
 
-export default function Aside({ onButtonClick }) {
+  const onButtonClick = (page) => {
+    if (page === "schedule") {
+      navigate("/MyPage");
+    } else if (page === "StudyList") {
+      // StudyList 페이지로 이동하는 동작 구현
+      navigate("/MyPage/MyPageStudyList");
+    } else if (page === "Point") {
+      // Point 페이지로 이동하는 동작 구현
+      navigate("/MyPage/MyPagePoint");
+    } else if (page === "AuthModal") {
+      handleButtonClick(); // 회원정보수정 모달을 열기
+    }
+  };
+
+  const handleButtonClick = () => {
+      setAuthModal(true); 
+  };
+  
+  const closeModal  = () => {
+    setAuthModal(false); 
+  };
 
   return (
     <div className={style.box1}>
@@ -16,10 +43,26 @@ export default function Aside({ onButtonClick }) {
         <p>마일리지 30000pt</p>
       </div>
       <div>
-        <button className={style.bt} onClick={() => onButtonClick("schedule")} >일정</button>
-        <button className={style.bt} onClick={() => onButtonClick("StudyList")}>스터디목록</button>
-        <button className={style.bt} onClick={() => onButtonClick("Point")}>마일리지</button>
-        <button className={style.bt} onClick={() => onButtonClick("AuthModal")}>회원정보수정</button>
+        <button className={style.bt} onClick={() => onButtonClick("schedule")}>
+          일정
+        </button>
+        <button className={style.bt} onClick={() => onButtonClick("StudyList")}>
+          스터디목록
+        </button>
+        <button className={style.bt} onClick={() => onButtonClick("Point")}>
+          마일리지
+        </button>
+        <button className={style.bt} onClick={() => onButtonClick("AuthModal")}>
+          회원정보수정
+        </button>
+      </div>
+
+      <div>
+        {authModal && 
+        <div className={style.modal_backdrop}>
+          <AuthModal setAuthModal={setAuthModal} onButtonClick={handleButtonClick} closeModal={closeModal} />
+        </div>
+        }
       </div>
     </div>
   );

@@ -12,6 +12,9 @@ import Login from "../Pages/Auth/Login";
 import Main from "../Pages/Main/Main";
 import KakaoPay from "../Components/_MyPage/KakaoPay";
 import CreateNotice from "../Pages/Notice/CreateNotice";
+import MyPageInfoModify from "../Pages/MyPage/_MyPageInfoModify";
+import MyPageStudyList from "../Pages/MyPage/_MyPageStudyList";
+import MyPagePoint from "../Pages/MyPage/_MyPagePoint";
 
 // import { aX } from "@fullcalendar/core/internal-common";
 import axios from "axios";
@@ -85,14 +88,17 @@ export default function Router() {
       <Routes>
         <Route path="/NoticePage" element={<NoticePage />} />
         <Route path="/Study" element={<Study />} />
-        <Route path="/MyPage" element={<MyPage />} />
-        <Route path="/MyPage/InfoModify" element={<InfoModify />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Logout" element={<Login />} />
         <Route path="/" element={<Main />} />
         <Route path="/payment/success" element={<KakaoPay />} />
         <Route path="/CreateNotice" element={<CreateNotice />} />
+
+        <Route path="/MyPage" element={<MyPage />} />
+        <Route path="/MyPage/MyPageInfoModify" element={<MyPageInfoModify />} />
+        <Route path="/MyPage/MyPageStudyList" element={<MyPageStudyList />} />
+        <Route path="/MyPage/MyPagePoint" element={<MyPagePoint />} />
       </Routes>
     </BrowserRouter>
   );

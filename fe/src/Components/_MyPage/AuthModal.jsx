@@ -1,17 +1,17 @@
 import React,{useState} from "react";
 import style from "./AuthModal.module.css"
 import axios from "axios";
-import InfoModify from "./InfoModify";
-// import { useNavigate } from "react-router-dom";
 
 
-export default function AuthModal({ setAuthModal, onButtonClick }) {
+
+export default function AuthModal({ setAuthModal }) {
   
-  const [password, setPassword] = useState("")
-  // 회원정보
-  const [userInfo, setUserInfo] = useState(null);
-  // const navigate = useNavigate();
+  // 로컬의 유저pk값을 불러오기
+  const retrievedData = localStorage.getItem('useID');
 
+  const [password, setPassword] = useState("")
+
+  const [userInfo, setUserInfo] = useState(null);
   const handleChange = (p) => {
     const { value } = p.target;
     setPassword(value);
@@ -19,20 +19,22 @@ export default function AuthModal({ setAuthModal, onButtonClick }) {
 
   const closeModal = () => {
     setAuthModal(false);
-    onButtonClick("InfoModify");
+    // 임시===========================================
+    window.location.href = "/MyPage/MyPageInfoModify";
   };
 
+  // 유저의 pk와 password 보내기
+  // 요청 성공 후 유저의 값을 리덕스로 저장 
   const handlecheck = () => {
+    console.log(retrievedData)
     console.log(password)
-    const email = 't01045999371@gmail.com'
     axios.post(`http://${process.env.REACT_APP_URL}:8080/member/mypage/check`,{
-      email,
     password
     })
     .then((res) => {
       console.log(res)  
       setUserInfo(res.data);
-      onButtonClick("InfoModify");
+      window.location.href = "/MyPage/MyPageInfoModify";
     })
     .catch((err) => {
       console.log(err)
@@ -50,7 +52,6 @@ export default function AuthModal({ setAuthModal, onButtonClick }) {
         <button className={style.open} onClick={handlecheck}>
             확인
         </button>
-        {userInfo && <InfoModify userInfo={userInfo} />}
     </div>
   )
 }

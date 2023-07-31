@@ -20,6 +20,7 @@ export default function InfoModify(userInfo ){
     serNickName(value)
   };
 
+  // 닉네임 중복체크
   const handleSendNickName = () => {
     console.log(`닉네임 ${nickName}`)
     axios
@@ -44,7 +45,8 @@ export default function InfoModify(userInfo ){
   };
 
 
-  //
+  // 유저의 pk 와 닉네임을 보냄
+  // 요청 성공 후 다시 회원정보 수정 페이지로
   const handleNickNameupdata = () => {
     console.log(`닉네임 ${nickName} 프로필 ${profile}`)
     // window.history.back();
@@ -62,7 +64,7 @@ export default function InfoModify(userInfo ){
     });
   }
 
-  // 비밀번호
+  // 비밀번호 수정
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
 
@@ -76,13 +78,12 @@ export default function InfoModify(userInfo ){
     setPassword2(value);
   }
 
+  // 유저의 pk와 password를 보냄
   const handleSendPassword = () => {
     if (password !== password2){
       alert('비밀번호가 일치하자 않습니다.')
     }
-    const email = 'rlaalsrbs15@naver.com'
     axios.put(`http://${process.env.REACT_APP_URL}:8080/member/mypage/modifyPassword`,{
-      email,
       password
     })
     .then((res) => {
@@ -94,7 +95,9 @@ export default function InfoModify(userInfo ){
   }
   //
 
-  // 회원탈퇴
+
+  // 회원탈퇴 
+  // 유저 pk를 url에 삽입 후 보냄 (pk는 로컬에)
   const handleWithdrawal =()=>{
     const email = 'rlaalsrbs15@naver.com'
     axios.delete(`http://${process.env.REACT_APP_URL}:8080/member/mypage/remove/${email}`,{
