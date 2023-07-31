@@ -12,7 +12,7 @@ const StudyCreate = () => {
     const navigate = useNavigate();
 
     const [studyData, setStudyData] = useState({
-        categoryName: "자격증", //스터디 카테고리
+        category: 0, //스터디 카테고리
         studyName: "", //스터디 이름
         studyDescription: "", //스터디 설명
 
@@ -31,7 +31,7 @@ const StudyCreate = () => {
 
 
 
-    const { categoryName,
+    const { category,
         studyName,
         studyDescription,
         studyStartDate,
@@ -58,14 +58,20 @@ const StudyCreate = () => {
     const handleCategoryClick = (value) => {
         setStudyData({
             ...studyData,
-            categoryName: value
+            category: value
         })
     }
     const categoryArray = ["자격증", "취업", "학교", "공시", "기타"]
-
     // const categoryButtons = categoryArray.map((category) => {
     //     return <button className={categoryName === category ? "selected" : "noSelceted"} onClick={() => handleCategoryClick(category)}>{category}</button>
     // });
+    const handleIsPublicClick = (value) => {
+        setStudyData({
+            ...studyData,
+            isPublic: value
+        })
+    }
+
 
     const handleChecked = (e) => {
         e.target.checked ? setStudyData({
@@ -111,7 +117,7 @@ const StudyCreate = () => {
     //폼 제출
 
     const handleBackButtonClick = () => {
-        navigate('');
+        navigate('/StudyList');
     }
     //뒤로가기
 
@@ -119,36 +125,37 @@ const StudyCreate = () => {
         <div className="box">
             <h3>스터디 생성</h3>
             <>
-                <p>
+                <div>
                     <span>카테고리</span>
-                    {categoryArray.map((category, index) =>
-                        <button key={index} className={category === categoryName ? "selected" : "noSelected"} onClick={() => handleCategoryClick(category)}>{category}</button>
+                    {categoryArray.map((categoryItem, index) =>
+                        <button key={categoryItem} className={index === category ? "selected" : "noSelected"} onClick={() => handleCategoryClick(index)}>{categoryItem}</button>
                     )}
-                </p>
+                </div>
 
-                <p>
+                <div>
                     <span>공개 여부</span>
-                    <input type="checkbox" name="isPublic" value={isPublic} onClick={handleChecked} />
-                </p>
+                    <button name="isPublic" className={isPublic ? "selected" : "noSelected"} value={isPublic} onClick={() => handleIsPublicClick(true)}> 공개</button>
+                    <button name="isPublic" className={!isPublic ? "selected" : "noSelected"} value={isPublic} onClick={() => handleIsPublicClick(false)}> 비공개</button>
+                </div>
                 {!isPublic &&
-                    <p>
+                    <div>
                         <span>패스워드</span>
                         <input type="password" name="password" value={password} onChange={handleChange} />
-                    </p>}
-                <p>
+                    </div>}
+                <div>
                     <span>스터디 이름</span>
                     <input type="text" name="studyName" value={studyName} onChange={handleChange} />
-                </p>
-                <p>
+                </div>
+                <div>
                     <span>스터디 설명</span>
                     <input style={{ width: 500, height: 100 }} type="text" name="studyDescription" value={studyDescription} onChange={handleChange} />
-                </p>
+                </div>
 
 
-                <p>
+                <div>
                     <span>스터디 요일/시간</span>
                     <input type="text" name="studyDay" value={studyDay} onChange={handleChange} />
-                </p>
+                </div>
                 <div>
                     <span>스터디 기간</span>
                     <DatePicker
@@ -172,23 +179,23 @@ const StudyCreate = () => {
 
 
 
-                <p>
+                <div>
                     <span>스터디 멤버수</span>
                     <input type="number" name="totalMember" value={totalMember} max={8} onChange={handleChange} />
-                </p>
+                </div>
 
-                {/* <p>
+                {/* <div>
                     <span>스터디 대표이미지</span>
                     <input type="text" name="studyImg" value={studyImg} onChange={handleChange} />
-                </p> */}
-                {/* <p>
+                </div> */}
+                {/* <div>
                     <span>스터디 보증금</span>
                     <input type="number" name="studyDeposit" value={studyDeposit} onChange={handleChange} />
-                </p> */}
-                <p>
+                </div> */}
+                <div>
                     <button onClick={handleStudyCreateSubmit}>스터디 생성</button>
                     <button onClick={handleBackButtonClick}>취소하기</button>
-                </p>
+                </div>
                 <Link to='/StudyList'>
                     <button>이거누르세용</button>
                 </Link>

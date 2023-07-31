@@ -80,6 +80,14 @@ const StudyModify = () => {
     }
     const categoryArray = ["자격증", "취업", "학교", "공시", "기타"]
 
+    const handleIsPublicClick = (value) => {
+        setStudyData({
+            ...studyData,
+            isPublic: value
+        })
+    }
+
+
     const handleStudyModifySubmit = () => {
         // 
         axios({
@@ -103,45 +111,48 @@ const StudyModify = () => {
 
 
     return (
-        <div>
+        <div className='box'>
             <h3>스터디 수정하기</h3>
-            <>
-                <p>
+            <div>
+                <div>
                     <span>카테고리</span>
-                    {categoryArray.map((categoryindex, index) =>
-                        <button key={index} className={index === category ? "selected" : "noSelected"} onClick={() => handleCategoryClick(category)}>{categoryindex}</button>
+                    {categoryArray.map((categoryItem, index) =>
+                        <button key={categoryItem} className={index === category ? "selected" : "noSelected"} onClick={() => handleCategoryClick(index)}>{categoryItem}</button>
                     )}
-                </p>
+                </div>
 
-                <p>
+                <div>
                     <span>공개 여부</span>
-                    <input type="checkbox" name="isPublic" value={isPublic} onClick={handleChecked} />
-                </p>
+                    <button name="isPublic" className={isPublic ? "selected" : "noSelected"} value={isPublic} onClick={() => handleIsPublicClick(true)}> 공개</button>
+                    <button name="isPublic" className={!isPublic ? "selected" : "noSelected"} value={isPublic} onClick={() => handleIsPublicClick(false)}> 비공개</button>
+                </div>
                 {!isPublic &&
-                    <p>
+                    <div>
                         <span>패스워드</span>
                         <input type="password" name="password" value={password} onChange={handleChange} />
-                    </p>}
-                <p>
+                    </div>}
+
+                <div>
                     <span>스터디 이름</span>
                     <input type="text" name="studyName" value={studyName} onChange={handleChange} />
-                </p>
-                <p>
+                </div>
+
+                <div>
                     <span>스터디 설명</span>
                     <input style={{ width: 500, height: 100 }} type="text" name="studyDescription" value={studyDescription} onChange={handleChange} />
-                </p>
+                </div>
 
-                <p>
+                <div>
                     <span>스터디 멤버수</span>
                     <input type="number" name="totalMember" value={totalMember} max={8} onChange={handleChange} />
                     <span>2명 ~ 8명</span>
-                </p>
+                </div>
 
-                <p>
+                <div>
                     <button onClick={handleStudyModifySubmit}>스터디 수정</button>
                     <button onClick={handleBackButtonClick}>취소하기</button>
-                </p>
-            </>
+                </div>
+            </div>
         </div>
 
     )
