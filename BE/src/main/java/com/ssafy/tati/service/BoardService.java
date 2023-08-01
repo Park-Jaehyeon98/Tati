@@ -54,5 +54,21 @@ public class BoardService {
     public List<Board> selectAllByBoardType(char boardType){
         return boardRepository.findByBoardType(boardType);
     }
+
+    public void modify(Integer memberId, Board board) {
+        Optional<Board> optionalBoard = boardRepository.findById(board.getBoardId());
+
+        if (!optionalBoard.isPresent()){
+            throw new RuntimeException();
+        }
+        Board modifyBoard = optionalBoard.get();
+
+        if (modifyBoard.getMember().getMemberId().equals(memberId)) {
+            modifyBoard.setBoardTitle(board.getBoardTitle());
+            modifyBoard.setBoardContent(board.getBoardContent());
+        } else {
+            throw new RuntimeException();
+        }
+    }
 }
 

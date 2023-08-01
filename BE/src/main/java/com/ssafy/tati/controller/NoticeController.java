@@ -1,9 +1,11 @@
 package com.ssafy.tati.controller;
 
 import com.ssafy.tati.dto.req.BoardReqDto;
+import com.ssafy.tati.dto.req.PutBoardReqDto;
 import com.ssafy.tati.dto.res.NoticeResDto;
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.mapper.BoardMapper;
+import com.ssafy.tati.mapper.PutBoardMapper;
 import com.ssafy.tati.service.BoardService;
 import com.ssafy.tati.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,14 +26,13 @@ public class NoticeController {
     private final BoardService boardService;
     private final MemberService memberService;
     private final BoardMapper boardMapper;
+    private final PutBoardMapper putBoardMapper;
 
     @Operation(summary = "공지글 작성 요청", description = "사이트 공지글을 작성 후 글 작성 요청", responses = {
             @ApiResponse(responseCode = "200", description = "글 등록 성공"),
     })
     @PostMapping("/create")
     public ResponseEntity<?> createNotice(@RequestBody BoardReqDto boardReqDto) {
-
-//        Member member = memberService.findById(boardReqDto.getMemberId());
         Board board = boardMapper.boardReqDtoToBoard('0', boardReqDto);
         Integer memberId = boardReqDto.getMemberId();
         boardService.save(memberId, board);
@@ -67,6 +68,19 @@ public class NoticeController {
     @DeleteMapping("/{boardId}/delete/{memberId}")
     public ResponseEntity<?> removeNoticeById(@PathVariable Integer boardId, @PathVariable Integer memberId) {
         boardService.delete(boardId, memberId);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+    @Operation(summary = "공지글 수정 요청", description = "사이트 공지글 수정 요청", responses = {
+            @ApiResponse(responseCode = "200", description = "공지글 수정 성공"),
+    })
+    @PutMapping("/modify")
+    public ResponseEntity<?> modifyNotice(@RequestBody PutBoardReqDto putBoardReqDto) {
+        Board board = putBoardMapper.putBoardReqDtoToBoard(putBoardReqDto);
+        Integer memberId = putBoardReqDto.getMemberId();
+        boardService.modify(memberId, board);
 
         return new ResponseEntity(HttpStatus.OK);
     }
