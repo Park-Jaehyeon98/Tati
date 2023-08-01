@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+import React from "react";
+
+
+export default function InfoModify(){
+  return (
+    <div>    </div>
+=======
 import React,{useState} from "react";
 import style from "./InfoModify.module.css"
 import axios from "axios";
@@ -172,5 +180,6 @@ export default function InfoModify( ){
 
       <button onClick={handleWithdrawal}>회원탈퇴</button>
     </div>
+>>>>>>> 7e1ae3aabb788553f58bc79ec20b90bf4ad9985e
   )
 }

@@ -1,4 +1,6 @@
-import React, {useState, useEffect} from "react";
+
+import "../router/Router.css"
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 
 import style from "./Router.module.css"
@@ -9,6 +11,12 @@ import MyPage from "../Pages/MyPage/_MyPage";
 import InfoModify from "../Components/_MyPage/InfoModify";
 import SignUp from "../Pages/Auth/SignUp";
 import Login from "../Pages/Auth/Login";
+import LandingPage from './../Pages/LandingPage/LandingPage';
+import StudyCreate from "../Pages/Study/StudyCreate";
+import StudyList from "../Pages/Study/StudyList";
+import StudyDetail from "../Pages/Study/StudyDetail";
+import StudyModify from "../Pages/Study/StudyModify";
+import NoticeCreate from "../Pages/Notice/NoticeCreate";
 import Main from "../Pages/Main/Main";
 import KakaoPay from "../Components/_MyPage/KakaoPay";
 import CreateNotice from "../Pages/Notice/CreateNotice";
@@ -20,17 +28,14 @@ import MyPagePointWithdraw from "../Pages/MyPage/_MyPagePointWithdraw";
 // import { aX } from "@fullcalendar/core/internal-common";
 import axios from "axios";
 
-
 export default function Router() {
-
-  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 
   const handleschedule = () => {
-    const email='t01045999371@gmail.com'
+    const email = 't01045999371@gmail.com'
     console.log(email)
-    axios.get(`http://${process.env.REACT_APP_URL}:8080/member/mypage/schedule/${email}`, { 
+    axios.get(`http://${process.env.REACT_APP_URL}:8080/member/mypage/schedule/${email}`, {
       params: 7
     })
       .then((res) => {
@@ -55,17 +60,18 @@ export default function Router() {
   }, []);
 
 
+
   return (
     <BrowserRouter>
       <div className={style.navBox}>
         <nav>
-          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")}to="/NoticePage">
+          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/NoticePage">
             공지사항
           </NavLink>
-          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")}to="/Study">
+          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Study">
             스터디
           </NavLink>
-          <NavLink onClick={handleschedule} className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")}to="/MyPage">
+          <NavLink onClick={handleschedule} className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage">
             마이페이지
           </NavLink>
           {!isLoggedIn && (
@@ -83,12 +89,23 @@ export default function Router() {
             </NavLink>
           )}
         </nav>
-        <hr className={style.nav_hr}/>
+        <hr className={style.nav_hr} />
       </div>
 
       <Routes>
         <Route path="/NoticePage" element={<NoticePage />} />
         <Route path="/Study" element={<Study />} />
+        <Route path="/MyPage" element={<MyPage />} />
+        <Route path="/MyPage/InfoModify" element={<InfoModify />} />
+        <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/Study" element={<Study />} />
+        <Route path="/StudyCreate" element={<StudyCreate />} />
+        <Route path="/StudyList" element={<StudyList />} />
+        <Route path="/Study/:studyId" element={<StudyDetail />} />
+        <Route path="/StudyModify/:studyId" element={<StudyModify />} />
+        <Route path="/NoticeCreate" element={<NoticeCreate />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Logout" element={<Login />} />

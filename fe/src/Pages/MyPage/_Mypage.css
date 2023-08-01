@@ -1,0 +1,13 @@
+#box2 {
+  background-color: white;
+  width: 10000px;
+  height: 570px;
+  margin-left: 60px;
+  border-radius: 10px;
+  padding: 2%;
+  margin-right: 7%;
+}
+#box3{
+  margin-top: 70px;
+  display: flex;
+}

@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+import React from "react";
+
+export default function Point(){
+  return(
+    <div>마일리지</div>
+  )
+}
+=======
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Charge from "./Charge";
@@ -27,3 +36,4 @@ export default function Point() {
     </div>
   );
 }
+>>>>>>> 7e1ae3aabb788553f58bc79ec20b90bf4ad9985e
