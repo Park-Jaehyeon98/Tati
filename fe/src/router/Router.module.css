@@ -18,12 +18,18 @@
 
 .navBox{
   background-color: white;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: bold;
-  width: 1820px;
+  width: 1520px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
 }
 
 .nav_hr{
   width: 100%;
   margin-bottom: 0px;
 }
+

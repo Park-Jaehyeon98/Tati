@@ -20,23 +20,23 @@
 
 .bt {
   margin-top: 20px;
-  margin-left: 10px;
+  margin-left: 23px;
   display: flex;
   justify-content: center; 
   align-items: center; 
-  width: 180px;
-  height: 45px;
+  width: 150px;
+  height: 35px;
   border-radius: 20px;
   background-color: #c2e7fb;
   border: 1px; 
   font-weight: bold;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 .name_point{
-  font-size: 18px;
+  font-size: 15px;
   font-weight: bold;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   margin-left: 25px;
 }
 

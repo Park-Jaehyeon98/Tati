@@ -3,8 +3,8 @@ body{
 }
 
 .img01{
-    width: 1821px;
-    height: 915px;
+    width: 1520px;
+    height: 780px;
 }
 
 .Main_title{
@@ -16,45 +16,45 @@ body{
     color: white;
 }
 .Main_title01{
-    font-size: 23px;
+    font-size: 20px;
     margin-bottom: 20px;
 }
 
 .Main_title02{
     margin-top: 20px;
-    font-size: 80px;
+    font-size: 70px;
     font-weight: bold;
 }
 .Main_start_btn{
-    width: 200px;
-    height: 80px;
+    width: 180px;
+    height: 70px;
     border-radius: 20px;
     border: 1px;
     background-color: #67c3f8;
     margin-top: 40px;
-    margin-left: 1140px;
-    font-size: 20px;
+    margin-left: 1000px;
+    font-size: 15px;
     font-weight: bold;
     color: white;
 }
 .Main_title03{
-    padding-left: 680px;
+    padding-left: 500px;
     width: 1000px;
     margin-bottom: 0px;
     word-spacing: 10px;
     letter-spacing: 1.5px;
 }
 .img02{
-    width: 1820px;
-    height: 900px;
+    width: 1520px;
+    height: 680px;
     top:1000px
 }
 .img03{
-    width: 1820px;
+    width: 1520px;
     height: 700px;
 }
 .Main_start_btn:hover{
-    transform: scale(1.1);
+    transform: scale(1.03);
 }
 
 .scroll_to_top_btn {

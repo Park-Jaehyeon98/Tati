@@ -4,31 +4,31 @@
 }
 .signup{
   width: 800px;
-  height: 960px;
+  height: 740px;
   text-align: center;
   color: black;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
   margin-right: 100px; /* 오른쪽으로 100px 이동 */
   position: absolute;
-  top: 650px; /* Adjust the value to vertically center the signup element */
+  top: 500px; /* Adjust the value to vertically center the signup element */
   left: 50%; /* Adjust the value to horizontally center the signup element */
   transform: translate(-50%, -50%);
   border-radius: 70px;
 }
 .img01{
-  width: 1820px;
-  height: 1400px;
+  width: 1520px;
+  height: 1200px;
 }
 .signup_title{
   padding-top: 30px;
-  font-size: 50px;
-  padding-bottom: 50px;
+  font-size: 35px;
+  padding-bottom: 20px;
 }
 
 .signup_text{
-  margin-top: 30px;
-  font-size: 20px;
+  margin-top: 10px;
+  font-size: 18px;
   font-weight: bold;
   /* left: 10px; */
 }
@@ -50,7 +50,7 @@
 
 .input_email_check{
   margin-left: 60px;
-  margin-top: 25px;
+  margin-top: 20px;
   height: 30px;
   width: 250px;
   border: 1px solid black;
@@ -71,7 +71,7 @@
 .input_name{
   margin-left: 100px;
   margin-right: 120px;
-  margin-top: 25px;
+  margin-top: 20px;
   height: 30px;
   width: 250px;
   border: 1px solid black;
@@ -98,7 +98,7 @@
 
 .input_nickname{
   margin-left: 80px;
-  margin-top: 25px;
+  margin-top: 20px;
   height: 20px;
   height: 30px;
   width: 250px;
@@ -107,7 +107,7 @@
 }
 
 .signup_btn{
-  margin-top: 100px;
+  margin-top: 40px;
   height: 50px;
   width: 180px;
   border-radius: 10px;
