@@ -1,9 +1,10 @@
-import React from "react";
+import React from 'react'
 
-export default function NoticePage(){
+const NoticePage = () => {
+
   return (
-    <div>
-      공지사항
-    </div>
+    <div>NoticePage</div>
   )
 }
+
+export default NoticePage

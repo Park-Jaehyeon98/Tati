@@ -12,9 +12,9 @@ import Login from "../Pages/Auth/Login";
 import LandingPage from './../Pages/LandingPage/LandingPage';
 import StudyCreate from "../Pages/Study/StudyCreate";
 import StudyList from "../Pages/Study/StudyList";
-// import StudyDetail from "../Pages/Study/StudyDetail";
+import StudyDetail from "../Pages/Study/StudyDetail";
 import StudyModify from "../Pages/Study/StudyModify";
-
+import NoticeCreate from "../Pages/Notice/NoticeCreate";
 
 export default function Router() {
   return (
@@ -42,13 +42,18 @@ export default function Router() {
           스터디생성
         </NavLink>
 
-
+        <NavLink className={({ isActive }) => "nav-link" + (isActive ? " click" : "")} to="/StudyDetail">
+          스터디 디테일
+        </NavLink>
 
         <NavLink className={({ isActive }) => "nav-link" + (isActive ? " click" : "")} to="/StudyList">
           스터디목록
         </NavLink>
         <NavLink className={({ isActive }) => "nav-link" + (isActive ? " click" : "")} to="/StudyModify">
           스터디수정
+        </NavLink>
+        <NavLink className={({ isActive }) => "nav-link" + (isActive ? " click" : "")} to="/NoticeCreate">
+          공지사항 생성
         </NavLink>
       </nav>
 
@@ -63,8 +68,9 @@ export default function Router() {
         <Route path="/Study" element={<Study />} />
         <Route path="/StudyCreate" element={<StudyCreate />} />
         <Route path="/StudyList" element={<StudyList />} />
-        {/* <Route path="/Study/:studyId" element={<StudyDetail />} /> */}
-        <Route path="/StudyModify" element={<StudyModify />} />
+        <Route path="/Study/:studyId" element={<StudyDetail />} />
+        <Route path="/StudyModify/:studyId" element={<StudyModify />} />
+        <Route path="/NoticeCreate" element={<NoticeCreate />} />
       </Routes>
     </BrowserRouter>
   );

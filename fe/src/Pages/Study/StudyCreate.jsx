@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../Study/StudyCreate.css";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 import DatePicker from 'react-datepicker';
@@ -9,40 +9,46 @@ import 'react-datepicker/dist/react-datepicker.css';
 import axios from "axios";
 
 const StudyCreate = () => {
-    const navigate = useNavigate();
 
     const [studyData, setStudyData] = useState({
         category: 0, //스터디 카테고리
         studyName: "", //스터디 이름
         studyDescription: "", //스터디 설명
+        totalMember: 2, //스터디 멤버 수
+        disclosure: true, // 공개 여부
+        studyPassword: null, // 패스워드
+        studyDeposit: 1,  //보증금 최대 50000
+        studyHost: "나", // memberId 로 들어갈것.
 
         studyStartDate: "", //스터디 시작일
         studyEndDate: "", //스터디 종료일
 
-        studyDay: "", //스터디 요일, 시간
-        totalMember: 2, //스터디 멤버 수
-        studyStartTime: "1",
-        studyEndTime: "1",
+        studySchedule: [{ studyDay: '', studyStartTime: '', studyEndTime: '' },
+        { studyDay: '', studyStartTime: '', studyEndTime: '' },
+        { studyDay: '', studyStartTime: '', studyEndTime: '' }],
+        //스터디 일정 array 안에 object들어가있는형태
+        // studyDay : 월,화,수,목,금,토,일 
+        // studyTime : '00:00'
+
         // studyImg: "", //스터디 대표 이미지
-        // studyDeposit: 1,  //보증금 최대 50000
-        isPublic: true, // 공개 여부
-        password: null // 패스워드
+
+
     });
-
-
 
     const { category,
         studyName,
         studyDescription,
-        studyStartDate,
-        studyEndDate,
-        studyDay,
+        // studyStartDate,
+        // studyEndDate,
+
         // studyImg,
         totalMember,
-        studyStartTime,
-        studyEndTime,
-        isPublic,
-        password } = studyData
+        // studyDay,
+        // studyStartTime,
+        // studyEndTime,
+        studyDeposit,
+        disclosure,
+        studyPassword } = studyData
 
 
     const handleChange = (e) => {
@@ -65,23 +71,14 @@ const StudyCreate = () => {
     // const categoryButtons = categoryArray.map((category) => {
     //     return <button className={categoryName === category ? "selected" : "noSelceted"} onClick={() => handleCategoryClick(category)}>{category}</button>
     // });
-    const handleIsPublicClick = (value) => {
-        setStudyData({
+    const handleIsDisclosureClick = (value) => {
+        value ? setStudyData({
             ...studyData,
-            isPublic: value
-        })
-    }
-
-
-    const handleChecked = (e) => {
-        e.target.checked ? setStudyData({
-            ...studyData,
-            isPublic: true,
-            password: null
+            disclosure: value,
+            studyPassword: null
         }) : setStudyData({
             ...studyData,
-            isPublic: false,
-            password: ""
+            disclosure: value,
         })
     }
 
@@ -103,7 +100,7 @@ const StudyCreate = () => {
         })
         axios({
             method: 'post',
-            url: `http://59.27.11.90:8080/study/create`,
+            url: `http://172.30.1.79:8080/study/create`,
             header: {},
             data: studyData
         })
@@ -115,11 +112,6 @@ const StudyCreate = () => {
         console.log(studyData)
     }
     //폼 제출
-
-    const handleBackButtonClick = () => {
-        navigate('/StudyList');
-    }
-    //뒤로가기
 
     return (
         <div className="box">
@@ -134,13 +126,13 @@ const StudyCreate = () => {
 
                 <div>
                     <span>공개 여부</span>
-                    <button name="isPublic" className={isPublic ? "selected" : "noSelected"} value={isPublic} onClick={() => handleIsPublicClick(true)}> 공개</button>
-                    <button name="isPublic" className={!isPublic ? "selected" : "noSelected"} value={isPublic} onClick={() => handleIsPublicClick(false)}> 비공개</button>
+                    <button name="disclosure" className={disclosure ? "selected" : "noSelected"} value={disclosure} onClick={() => handleIsDisclosureClick(true)}> 공개</button>
+                    <button name="disclosure" className={!disclosure ? "selected" : "noSelected"} value={disclosure} onClick={() => handleIsDisclosureClick(false)}> 비공개</button>
                 </div>
-                {!isPublic &&
+                {!disclosure &&
                     <div>
                         <span>패스워드</span>
-                        <input type="password" name="password" value={password} onChange={handleChange} />
+                        <input type="studyPassword" name="studyPassword" value={studyPassword} onChange={handleChange} />
                     </div>}
                 <div>
                     <span>스터디 이름</span>
@@ -152,10 +144,10 @@ const StudyCreate = () => {
                 </div>
 
 
-                <div>
+                {/* <div>
                     <span>스터디 요일/시간</span>
                     <input type="text" name="studyDay" value={studyDay} onChange={handleChange} />
-                </div>
+                </div> */}
                 <div>
                     <span>스터디 기간</span>
                     <DatePicker
@@ -188,17 +180,16 @@ const StudyCreate = () => {
                     <span>스터디 대표이미지</span>
                     <input type="text" name="studyImg" value={studyImg} onChange={handleChange} />
                 </div> */}
-                {/* <div>
+                <div>
                     <span>스터디 보증금</span>
                     <input type="number" name="studyDeposit" value={studyDeposit} onChange={handleChange} />
-                </div> */}
+                </div>
                 <div>
                     <button onClick={handleStudyCreateSubmit}>스터디 생성</button>
-                    <button onClick={handleBackButtonClick}>취소하기</button>
+                    <Link to='/StudyList'>
+                        <button>취소하기</button>
+                    </Link>
                 </div>
-                <Link to='/StudyList'>
-                    <button>이거누르세용</button>
-                </Link>
             </>
         </div>
     );

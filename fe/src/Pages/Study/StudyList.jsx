@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import styles from './StudyList.module.css';
+import StudyCardList from "../../Components/Study/StudyCardList";
 
 const StudyList = () => {
     const navigate = useNavigate();
-    const [studyList, setStudyList] = useState();
+    const [studyList, setStudyList] = useState([]);
 
 
     // 페이지네이션
@@ -28,7 +29,7 @@ const StudyList = () => {
     const handleSearchBtnClick = () => {
         axios({
             method: 'get',
-            url: `http://59.27.11.90:8080/study`,
+            url: `http://59.27.11.90:8080/1`,
             header: {},
             params: {
                 page: pageNum,
@@ -60,7 +61,12 @@ const StudyList = () => {
     //             console.log(response.data);
     //             setStudyList(response.data);
     //         })
-    // }, []);
+    // }, [pageNum, listCategory, keyword]);
+
+    // 하드코딩용
+    // useEffect(() => {
+    //     setStudyList([{ studyId: 0, studyName: "하하", totalMember: 8, disclosure: true, currentMember: 5, imageUrl: "" }, { studyId: 1, studyName: "하하", totalMember: 8, disclosure: true, currentMember: 5, imageUrl: "" }])
+    // }, [])
 
     return (
         <div>
@@ -81,7 +87,22 @@ const StudyList = () => {
                     category: listCategory,
                     keyword: (keyword ? keyword : null)
                 })
+                // axios.get(`http://59.27.11.90:8080/study`, {
+                //     params: {
+                //         page: pageNum,
+                //         category: listCategory,
+                //         keyword: keyword
+                //     }
+                // })
+                //     .then(response => {
+                //         console.log(response.data);
+                //         setStudyList(response.data);
+                //     })
             }}>테스트용</button>
+            {/* 페이지 1개당 8개 스터디 렌더링할것 */}
+            <StudyCardList studyList={studyList} />
+            {/* 페이지네이션 부분 */}
+
         </div>
     )
 }
