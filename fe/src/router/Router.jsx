@@ -15,7 +15,8 @@ import CreateNotice from "../Pages/Notice/CreateNotice";
 import MyPageInfoModify from "../Pages/MyPage/_MyPageInfoModify";
 import MyPageStudyList from "../Pages/MyPage/_MyPageStudyList";
 import MyPagePoint from "../Pages/MyPage/_MyPagePoint";
-
+import MyPagePointHistory from "../Pages/MyPage/_MyPagePointHistory";
+import MyPagePointWithdraw from "../Pages/MyPage/_MyPagePointWithdraw";
 // import { aX } from "@fullcalendar/core/internal-common";
 import axios from "axios";
 
@@ -42,13 +43,13 @@ export default function Router() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("accessToken");
+    localStorage.removeItem("memberId");
     setIsLoggedIn(false);
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
+    const memberId = localStorage.getItem("memberId");
+    if (memberId) {
       setIsLoggedIn(true);
     }
   }, []);
@@ -99,6 +100,8 @@ export default function Router() {
         <Route path="/MyPage/MyPageInfoModify" element={<MyPageInfoModify />} />
         <Route path="/MyPage/MyPageStudyList" element={<MyPageStudyList />} />
         <Route path="/MyPage/MyPagePoint" element={<MyPagePoint />} />
+        <Route path="/MyPage/PointHistory" element={<MyPagePointHistory />} />
+        <Route path="/MyPage/PointWithdraw" element={<MyPagePointWithdraw />} />
       </Routes>
     </BrowserRouter>
   );

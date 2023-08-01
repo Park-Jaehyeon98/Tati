@@ -2,18 +2,18 @@ import React,{useState} from "react";
 import style from "./InfoModify.module.css"
 import axios from "axios";
 import { useNavigate  } from "react-router-dom";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-export default function InfoModify(userInfo ){
+export default function InfoModify( ){
   
   const navigate = useNavigate();
 
   // 회원정보 리덕스에서 가져오기
-  // const userData = useSelector((state) => state.userData);
+  const userInfo = useSelector((state) => state.userInfo);
   // 닉네임 중복 확인
   const [nickName, serNickName] = useState("")
   // 회원정보
-  // const [userData, setUserData] = useState(userInfo);
+  const [userData, setUserData] = useState(userInfo);
 
   const handleChange = (e) => {
     const {value} = e.target;
@@ -122,7 +122,7 @@ export default function InfoModify(userInfo ){
       <div className={style.contents}>
         <p className={style.InfoModify_text}>
           이메일
-          <p className={style.InfoModify_email}>김싸피@naver.com</p>
+          <p className={style.InfoModify_email}>{userData}</p>
         </p>  
         <p className={style.InfoModify_text}>
           이름

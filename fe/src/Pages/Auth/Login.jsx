@@ -1,9 +1,12 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import style from "./Login.module.css"
 
+
 export default function Login(){
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -19,7 +22,7 @@ export default function Login(){
 
 
   // 로그인
-  // 내일 로그인 성공 후 토큰과 유저 pk값을 로컬에 저장
+  // 로그인 성공 후 토큰과 유저 pk값을 로컬에 저장
   const handleLogin = () => {
     console.log(`이메일: ${formData.email} 비밀번호: ${formData.password}`)
   
@@ -30,9 +33,10 @@ export default function Login(){
       .then((res) => {
         console.log(res)
         console.log(res.headers.refreshtoken)
-        
-        // navigate("/MyPage");
-        // window.location.replace("/MyPage")
+        // 로컬 스토리지에 데이터 저장
+        localStorage.setItem('memberId', res.data.memberId);
+
+        navigate("/MyPage");
       })
       .catch((err) => {
         console.log(err)
@@ -74,6 +78,7 @@ export default function Login(){
         <div className={style.line1}></div>
         <p>간편로그인</p>
         <div className ={style.line2}></div>
+
         <img className={style.loginGoogleLogo} 
         src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="" />
         {/* kakao 로그인 */}
@@ -83,6 +88,7 @@ export default function Login(){
 
         <img className={style.loginNaverLogo} 
         src="/Assets/네이버.png" alt="" />
+
       </div>
     </div>
   )

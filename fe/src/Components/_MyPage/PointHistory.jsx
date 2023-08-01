@@ -1,18 +1,29 @@
-import React from "react";
-import style from './PointHistory.module.css'
-export default function PointHistory(){
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Charge from "./Charge";
+import Withdraw from "./Withdraw";
+import KakaoPay from "./KakaoPay";
+import style from "./Point.module.css"
 
-    
-    return(
-        <div>
-            <p className={style.PointHistory_title}>포인트 내역</p>
-            <hr />
-            <br />
-            <div className={style.point_list}>
-                <p className={style.point_name}>타이타이</p>
-                <p className={style.point_day}>23.07.31</p>
-            </div>
-            <hr />
-        </div>
-    )
+export default function PointHistory() {
+
+  const navigate = useNavigate();
+
+  const handleButtonClick = (tab) => {
+    navigate(tab);
+  };
+
+  return (
+    <div className={style.point}>
+      <nav className={style.point_nav_btn}>
+        <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/MyPagePoint")}>충전</button>
+        <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/PointWithdraw")}>인출</button>
+        <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/PointHistory")}>내역</button>
+      </nav>
+
+      <div className={style.content}>
+       <KakaoPay />
+      </div>
+    </div>
+  );
 }

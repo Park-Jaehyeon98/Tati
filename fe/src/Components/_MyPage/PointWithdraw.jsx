@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Charge from "./Charge";
 import Withdraw from "./Withdraw";
 
 import style from "./Point.module.css"
 
-export default function Point() {
+export default function PointWithdraw() {
 
   const navigate = useNavigate();
 
@@ -22,7 +21,7 @@ export default function Point() {
       </nav>
 
       <div className={style.content}>
-       <Charge />
+       <Withdraw />
       </div>
     </div>
   );
