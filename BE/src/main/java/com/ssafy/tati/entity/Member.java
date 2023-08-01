@@ -63,5 +63,19 @@ public class Member {
     public void prePersist(){
         createdDate = LocalDateTime.now();
     }
-}
 
+    //총합 포인트 수정하기
+    public void updateTotalPoint(Integer totalPoint){
+        this.totalPoint=totalPoint;
+    }
+
+    //회원 닉네임 수정
+    public void updateNickName(String nickName){
+        this.memberNickName = nickName;
+    }
+
+    //회원 비밀번호 수정
+    public void updatePassword(String password){
+        this.password = password;
+    }
+}
