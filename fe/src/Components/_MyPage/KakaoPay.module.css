@@ -1,52 +1,38 @@
-/* .KakaoPay_box{
-  background-color: yellow;
-} */
-.btn_box{
-  margin-top: 200px;
-  /* display: flex; */
-  margin-left: 600px;
-  margin-bottom: 400px;
-  width: 500px;
-  height: 300px;
-  background-color:  rgb(251, 251, 80);
-  border-radius: 30px;
+.point_History_box{
+    width: 550px;
+    height: 700px;
+    /* border: 1px solid black; */
 }
-.success_btn{
-  margin-top: 20px;
-  margin-right: 65px;
-  margin-left: 50px;
-  height: 60px;
-  width: 170px;
-  border-radius: 30px;
-  border: 1px;
-  background-color: white;
-  font-size: 25px;
-  font-weight: bold;
-  color: black;
+.box{
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+  flex-wrap: wrap; /* 컨테이너 크기를 넘어가면 자동으로 다음 줄로 넘어감 */
+  gap: 10px; /* 요소들 사이의 간격을 조정 */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* 버튼 사이에 간격을 주기 위해 gap 설정 */
+    position: absolute;
+    top: 980px;
+    left: 650px;
+    padding: 10px;
 }
 .cancel_btn{
-  height: 60px;
-  width: 170px;
-  border-radius: 30px;
-  border: 1px;
-  background-color: white;
-  font-size: 25px;
-  font-weight: bold;
-  color: black;
+    height: 17px;
+    font-size: 10px;
+    margin-left: 310px;
+}
+.NoticeItem_text{
+    white-space: nowrap;
+}
+.p_text{
+    margin: 0px;
 }
 
-.KakaoPay_title{
-  font-size: 37px;
-  font-weight: bold;
-  width: 300px;
-  height: 50px;
-  margin-left: 112px;
-  padding-top: 80px; 
-}
-
-.success_btn:hover{
-  transform: scale(1.05);
-}
-.cancel_btn:hover{
-  transform: scale(1.05);
+.text{
+    margin: 0px;
+    margin-left: 500px;
 }

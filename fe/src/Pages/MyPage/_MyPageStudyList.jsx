@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./_Mypage.module.css"
 
-import StudyList from "../../Components/_MyPage/StudyList";
+import StudyList from "../../Components/_MyPage/studyList/StudyList";
 import Aside from "../../Components/_MyPage/Aside";
 
 

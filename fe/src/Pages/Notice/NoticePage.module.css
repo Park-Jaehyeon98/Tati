@@ -21,7 +21,7 @@
 
 .NoticeItem_box {
   position: relative; /* 추가: NoticeItem_box의 position을 relative로 설정 */
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 540;
   margin-top: 180px;
   margin-left: 210px;
@@ -43,5 +43,14 @@
 
 .text{
   margin: 0px;
-  margin-left: 900px;
+  margin-left: 940px;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* 버튼 사이에 간격을 주기 위해 gap 설정 */
+  position: absolute;
+  top: 1100px;
+  left: 500px;
+  padding: 10px;
 }

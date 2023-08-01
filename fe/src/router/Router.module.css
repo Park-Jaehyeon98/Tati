@@ -8,11 +8,12 @@
   color: black;
   text-decoration: none;
   padding-left: 30px;
+  font-size: 12px;
 }
 
 .nav-link.click {
   font-weight: bold;
-  font-size: 20px;
+  font-size: 15px;
   color: blue;
 }
 
@@ -21,11 +22,11 @@
   font-size: 14px;
   font-weight: bold;
   width: 1520px;
+  z-index: 3;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 3;
 }
 
 .nav_hr{
