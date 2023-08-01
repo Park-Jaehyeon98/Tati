@@ -29,7 +29,7 @@ const StudyList = () => {
     const handleSearchBtnClick = () => {
         axios({
             method: 'get',
-            url: `http://59.27.11.90:8080/1`,
+            url: `http://59.27.11.90:8080/study`,
             header: {},
             params: {
                 page: pageNum,

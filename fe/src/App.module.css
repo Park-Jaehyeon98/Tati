@@ -1,0 +1,25 @@
+.Footer{
+    width: 1820px;
+    height: 250px;
+    background-color: rgb(238, 235, 235);
+}
+.App_hr{
+    margin: 0px;
+    width: 100%;
+}
+.App_Footer_name{
+    margin: 0px;
+    padding-top: 50px;
+    padding-left: 200px;
+    font-size: 25px;
+    font-weight: bold;
+}
+.App_Footer_text{
+    margin: 0px;
+    margin-top: 72px;
+    display: flex;
+    padding-left: 70%;
+}
+.App_Footer_name_text{
+    margin-right: 20px;
+}

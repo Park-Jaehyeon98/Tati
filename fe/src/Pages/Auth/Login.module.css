@@ -1,0 +1,108 @@
+.Login_box{
+  height: 900px;
+}
+.login {
+  position: absolute;
+  top: 517px;
+  left: 1520px;
+  width: 600px;
+  height: 900px;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: black;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
+}
+.Login_box_find{
+  display: flex;
+}
+.login_title{
+  padding-top: 150px;
+}
+
+.password_find{
+  font-size: 13px;
+  padding-left: 300px;
+  padding-right: 15px;
+  margin-top: 0px;
+}
+
+.signup{
+  font-size: 13px;
+  margin-top: 0px;
+}
+
+.login_img{
+  width: 1820px;
+  height: 900px;
+}
+
+.loginInput{
+  width: 300px;
+  height: 37px;
+  margin-top: 20px;
+  font-size: 15px;
+  border: 1px solid black;
+  /* margin-bottom: 20px; */
+}
+
+.loginBtn{
+  width: 305px;
+  height: 33px;
+  margin-bottom: 8px;
+  background-color: #a0d3f1;
+  border: 1px solid #a0d3f1;
+  border-radius: 10px;
+  font-weight: bolder;
+  font-size: large;
+}
+
+.line1 {
+  border: 1px solid black;
+  width: 100px;
+  position: absolute;
+  top: 482px; 
+  left: 24.5%;
+}
+
+.line2 {
+  border: 1px solid black;
+  width: 100px;
+  position: absolute;
+  top: 480px; 
+  right: 24.5%;
+}
+
+.loginGoogleLogo{
+  width: 35px;
+  position: absolute;
+  left: 33%;
+  top: 57%;
+}
+
+.loginKakaoLogo{
+  width: 35px;
+  position: absolute;
+  left: 47.3%;
+  top: 57%;
+}
+
+.loginNaverLogo{
+  width: 44px;
+  position: absolute;
+  left: 60%;
+  top: 56.5%;
+}
+
+.loginGoogleLogo:hover{
+  transform: scale(1.1);
+}
+
+.loginKakaoLogo:hover{
+  transform: scale(1.1);
+}
+
+.loginNaverLogo:hover{
+  transform: scale(1.1);
+}
+

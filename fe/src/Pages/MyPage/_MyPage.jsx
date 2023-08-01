@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import "../MyPage/_Mypage.css";
 
@@ -30,6 +31,25 @@ export default function MyPage() {
       <div id="box2">
         {show}
       </div>
+=======
+import React from "react";
+import style from "./_Mypage.module.css"
+
+import Aside from "../../Components/_MyPage/Aside";
+import Schedule from "../../Components/_MyPage/Schedule";
+
+
+
+export default function MyPage() {
+
+  return (
+    <div className={style.myPage}>
+      <Aside/>
+      <div className={style.box2}>
+        <Schedule />
+      </div>
+      
+>>>>>>> 7e1ae3aabb788553f58bc79ec20b90bf4ad9985e
     </div>
   );
 }

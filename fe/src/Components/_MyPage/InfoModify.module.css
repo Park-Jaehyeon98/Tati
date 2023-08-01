@@ -1,0 +1,74 @@
+.container{
+  margin-left: 170px;
+  margin-top: 40px;
+}
+
+.contents{
+  margin-top: 50px;
+}
+
+.InfoModify_text{
+display: flex;
+}
+
+.InfoModify_email{
+  margin: 0px;
+  margin-left: 90px;
+}
+
+.InfoModify_name{
+  margin: 0px;
+  margin-left: 105px;
+}
+
+.InfoModify_profile{
+  display: flex;
+}
+
+.InfoModify_nickname{
+  margin-left: 90px;
+  height: 20px;
+  width: 170px;
+  font-size: 18px;
+}
+
+.InfoModify_nickname_check_btn{
+  margin-left: 73px;
+  height: 30px;
+  border-radius: 10px;
+  background-color: #A5DAF8;
+  border: 1px;
+}
+
+.InfoModify_line{
+  border: 1px solid black;
+  width: 500px;
+  margin-bottom: 40px;
+}
+
+.InfoModify_change{
+  margin-left: 390px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  height: 30px;
+  border-radius: 10px;
+  background-color: #A5DAF8;
+  border: 1px;
+  width: 65px
+}
+
+.InfoModify_password{
+  margin: 0px;
+  height: 20px;
+  width: 170px;
+  margin-left: 73px;
+  font-size: 25px;
+}
+
+.InfoModify_password2{
+  margin: 0px;
+  height: 20px;
+  width: 170px;
+  font-size: 25px;
+  margin-left: 42px;
+}

@@ -1,0 +1,15 @@
+.PointHistory_title{
+  font-size: 30px;
+  font-weight: bold;
+}
+.point_list{
+  margin-left: 15px;
+  display: flex;
+}
+.point_name{
+  font-size: 20px;
+  font-weight: 530;
+}
+.point_day{
+  margin-left: 370px;
+}

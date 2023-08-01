@@ -1,7 +1,9 @@
-import React from "react";
-import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 
 import "../router/Router.css"
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+
+import style from "./Router.module.css"
 
 import NoticePage from "../Pages/Notice/NoticePage";
 import Study from "../Pages/Study/Study";
@@ -15,47 +17,80 @@ import StudyList from "../Pages/Study/StudyList";
 import StudyDetail from "../Pages/Study/StudyDetail";
 import StudyModify from "../Pages/Study/StudyModify";
 import NoticeCreate from "../Pages/Notice/NoticeCreate";
+import Main from "../Pages/Main/Main";
+import KakaoPay from "../Components/_MyPage/KakaoPay";
+import CreateNotice from "../Pages/Notice/CreateNotice";
+import MyPageInfoModify from "../Pages/MyPage/_MyPageInfoModify";
+import MyPageStudyList from "../Pages/MyPage/_MyPageStudyList";
+import MyPagePoint from "../Pages/MyPage/_MyPagePoint";
+import MyPagePointHistory from "../Pages/MyPage/_MyPagePointHistory";
+import MyPagePointWithdraw from "../Pages/MyPage/_MyPagePointWithdraw";
+// import { aX } from "@fullcalendar/core/internal-common";
+import axios from "axios";
 
 export default function Router() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+
+  const handleschedule = () => {
+    const email = 't01045999371@gmail.com'
+    console.log(email)
+    axios.get(`http://${process.env.REACT_APP_URL}:8080/member/mypage/schedule/${email}`, {
+      params: 7
+    })
+      .then((res) => {
+        console.log(res)
+        alert('요청 성공')
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("memberId");
+    setIsLoggedIn(false);
+  };
+
+  useEffect(() => {
+    const memberId = localStorage.getItem("memberId");
+    if (memberId) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+
+
   return (
     <BrowserRouter>
-      <nav>
-        <NavLink className={({ isActive }) => "nav-link" + (isActive ? " click" : "")} to="/">
-          홈
-        </NavLink>
-        <NavLink className={({ isActive }) => "nav-link" + (isActive ? " click" : "")} to="/NoticePage">
-          공지사항
-        </NavLink>
-        <NavLink className={({ isActive }) => "nav-link" + (isActive ? " click" : "")} to="/Study">
-          스터디
-        </NavLink>
-        <NavLink className={({ isActive }) => "nav-link" + (isActive ? " click" : "")} to="/MyPage">
-          마이페이지
-        </NavLink>
-        <NavLink className={({ isActive }) => "nav-link" + (isActive ? " click" : "")} to="/SignUp">
-          회원가입
-        </NavLink>
-        <NavLink className={({ isActive }) => "nav-link" + (isActive ? " click" : "")} to="/Login">
-          로그인
-        </NavLink>
-        <NavLink className={({ isActive }) => "nav-link" + (isActive ? " click" : "")} to="/StudyCreate">
-          스터디생성
-        </NavLink>
-
-        <NavLink className={({ isActive }) => "nav-link" + (isActive ? " click" : "")} to="/StudyDetail">
-          스터디 디테일
-        </NavLink>
-
-        <NavLink className={({ isActive }) => "nav-link" + (isActive ? " click" : "")} to="/StudyList">
-          스터디목록
-        </NavLink>
-        <NavLink className={({ isActive }) => "nav-link" + (isActive ? " click" : "")} to="/StudyModify">
-          스터디수정
-        </NavLink>
-        <NavLink className={({ isActive }) => "nav-link" + (isActive ? " click" : "")} to="/NoticeCreate">
-          공지사항 생성
-        </NavLink>
-      </nav>
+      <div className={style.navBox}>
+        <nav>
+          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/NoticePage">
+            공지사항
+          </NavLink>
+          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Study">
+            스터디
+          </NavLink>
+          <NavLink onClick={handleschedule} className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage">
+            마이페이지
+          </NavLink>
+          {!isLoggedIn && (
+            <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/SignUp">
+              회원가입
+            </NavLink>
+          )}
+          {isLoggedIn ? (
+            <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Logout" onClick={handleLogout}>
+              로그아웃
+            </NavLink>
+          ) : (
+            <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Login">
+              로그인
+            </NavLink>
+          )}
+        </nav>
+        <hr className={style.nav_hr} />
+      </div>
 
       <Routes>
         <Route path="/NoticePage" element={<NoticePage />} />
@@ -71,6 +106,19 @@ export default function Router() {
         <Route path="/Study/:studyId" element={<StudyDetail />} />
         <Route path="/StudyModify/:studyId" element={<StudyModify />} />
         <Route path="/NoticeCreate" element={<NoticeCreate />} />
+        <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Logout" element={<Login />} />
+        <Route path="/" element={<Main />} />
+        <Route path="/payment/success" element={<KakaoPay />} />
+        <Route path="/CreateNotice" element={<CreateNotice />} />
+
+        <Route path="/MyPage" element={<MyPage />} />
+        <Route path="/MyPage/MyPageInfoModify" element={<MyPageInfoModify />} />
+        <Route path="/MyPage/MyPageStudyList" element={<MyPageStudyList />} />
+        <Route path="/MyPage/MyPagePoint" element={<MyPagePoint />} />
+        <Route path="/MyPage/PointHistory" element={<MyPagePointHistory />} />
+        <Route path="/MyPage/PointWithdraw" element={<MyPagePointWithdraw />} />
       </Routes>
     </BrowserRouter>
   );
