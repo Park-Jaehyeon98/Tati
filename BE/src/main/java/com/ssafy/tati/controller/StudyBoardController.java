@@ -1,6 +1,7 @@
 package com.ssafy.tati.controller;
 
 import com.ssafy.tati.dto.req.BoardReqDto;
+import com.ssafy.tati.dto.req.PutBoardReqDto;
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.mapper.BoardMapper;
 import com.ssafy.tati.mapper.PutBoardMapper;
@@ -12,10 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "스터디 게시판", description = "스터디 게시판 API 문서")
 @RestController
@@ -52,5 +50,17 @@ public class StudyBoardController {
         boardService.saveStudyBoard(memberId, studyId, board);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "공지글 수정 요청", description = "스터디 공지글 수정 요청", responses = {
+            @ApiResponse(responseCode = "200", description = "공지글 수정 성공"),
+    })
+    @PutMapping(value = {"/notice/modify", "/board/modify"})
+    public ResponseEntity<?> modifyBoard(@RequestBody PutBoardReqDto putBoardReqDto) {
+        Board board = putBoardMapper.putBoardReqDtoToBoard(putBoardReqDto);
+        Integer memberId = putBoardReqDto.getMemberId();
+        boardService.updateBoard(memberId, board);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

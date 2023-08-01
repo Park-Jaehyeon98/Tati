@@ -65,7 +65,7 @@ public class BoardService {
         return boardRepository.findByBoardType(boardType);
     }
 
-    public void modify(Integer memberId, Board board) {
+    public void updateBoard(Integer memberId, Board board) {
         Optional<Board> optionalBoard = boardRepository.findById(board.getBoardId());
 
         if (!optionalBoard.isPresent()){

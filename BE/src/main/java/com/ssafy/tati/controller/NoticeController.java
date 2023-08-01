@@ -80,7 +80,7 @@ public class NoticeController {
     public ResponseEntity<?> modifyNotice(@RequestBody PutBoardReqDto putBoardReqDto) {
         Board board = putBoardMapper.putBoardReqDtoToBoard(putBoardReqDto);
         Integer memberId = putBoardReqDto.getMemberId();
-        boardService.modify(memberId, board);
+        boardService.updateBoard(memberId, board);
 
         return new ResponseEntity(HttpStatus.OK);
     }
