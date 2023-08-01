@@ -1,23 +1,4 @@
-<<<<<<< HEAD
-import React from "react";
-import "../_MyPage/Aside.css";
-
-export default function Aside({ onButtonClick }) {
-  return (
-    <div id="box1">
-      <div id="box4">
-        유저정보
-      </div>
-
-      <p>김싸피</p>
-      <p>마일리지 30000pt</p>
-      <div id="bt">
-        <button id="bt" onClick={() => onButtonClick("schedule")}>일정</button>
-        <button id="bt"onClick={() => onButtonClick("StudyList")}>스터디목록</button>
-        <button id="bt"onClick={() => onButtonClick("Point")}>마일리지</button>
-        <button id="bt"onClick={() => onButtonClick("info")}>회원가입수정</button>
-=======
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./Aside.module.css"
 import AuthModal from "./AuthModal";
@@ -26,7 +7,7 @@ export default function Aside() {
 
   const navigate = useNavigate();
 
-  const [authModal, setAuthModal] = useState(false); 
+  const [authModal, setAuthModal] = useState(false);
 
 
   const onButtonClick = (page) => {
@@ -44,11 +25,11 @@ export default function Aside() {
   };
 
   const handleButtonClick = () => {
-      setAuthModal(true); 
+    setAuthModal(true);
   };
-  
-  const closeModal  = () => {
-    setAuthModal(false); 
+
+  const closeModal = () => {
+    setAuthModal(false);
   };
 
   return (
@@ -77,12 +58,11 @@ export default function Aside() {
       </div>
 
       <div>
-        {authModal && 
-        <div className={style.modal_backdrop}>
-          <AuthModal setAuthModal={setAuthModal} onButtonClick={handleButtonClick} closeModal={closeModal} />
-        </div>
+        {authModal &&
+          <div className={style.modal_backdrop}>
+            <AuthModal setAuthModal={setAuthModal} onButtonClick={handleButtonClick} closeModal={closeModal} />
+          </div>
         }
->>>>>>> 7e1ae3aabb788553f58bc79ec20b90bf4ad9985e
       </div>
     </div>
   );

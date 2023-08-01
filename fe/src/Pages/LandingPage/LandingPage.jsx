@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './LandingPage.css';
 import MyStudyList from './MyStudyList';
 import TodaySchedule from './TodaySchedule';
 import LatestStudyList from './LatestStudyList';

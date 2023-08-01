@@ -1,11 +1,12 @@
 
-import "../router/Router.css"
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 
 import style from "./Router.module.css"
 
 import NoticePage from "../Pages/Notice/NoticePage";
+import NoticeCreate from "../Pages/Notice/NoticeCreate";
+
 import Study from "../Pages/Study/Study";
 import MyPage from "../Pages/MyPage/_MyPage";
 import InfoModify from "../Components/_MyPage/InfoModify";
@@ -16,10 +17,10 @@ import StudyCreate from "../Pages/Study/StudyCreate";
 import StudyList from "../Pages/Study/StudyList";
 import StudyDetail from "../Pages/Study/StudyDetail";
 import StudyModify from "../Pages/Study/StudyModify";
-import NoticeCreate from "../Pages/Notice/NoticeCreate";
+
 import Main from "../Pages/Main/Main";
 import KakaoPay from "../Components/_MyPage/KakaoPay";
-import CreateNotice from "../Pages/Notice/CreateNotice";
+
 import MyPageInfoModify from "../Pages/MyPage/_MyPageInfoModify";
 import MyPageStudyList from "../Pages/MyPage/_MyPageStudyList";
 import MyPagePoint from "../Pages/MyPage/_MyPagePoint";
@@ -94,24 +95,17 @@ export default function Router() {
 
       <Routes>
         <Route path="/NoticePage" element={<NoticePage />} />
-        <Route path="/Study" element={<Study />} />
-        <Route path="/MyPage" element={<MyPage />} />
-        <Route path="/MyPage/InfoModify" element={<InfoModify />} />
-        <Route path="/SignUp" element={<SignUp />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/Study" element={<Study />} />
-        <Route path="/StudyCreate" element={<StudyCreate />} />
-        <Route path="/StudyList" element={<StudyList />} />
-        <Route path="/Study/:studyId" element={<StudyDetail />} />
-        <Route path="/StudyModify/:studyId" element={<StudyModify />} />
         <Route path="/NoticeCreate" element={<NoticeCreate />} />
+
+
         <Route path="/SignUp" element={<SignUp />} />
+
         <Route path="/Login" element={<Login />} />
         <Route path="/Logout" element={<Login />} />
+
         <Route path="/" element={<Main />} />
         <Route path="/payment/success" element={<KakaoPay />} />
-        <Route path="/CreateNotice" element={<CreateNotice />} />
+
 
         <Route path="/MyPage" element={<MyPage />} />
         <Route path="/MyPage/MyPageInfoModify" element={<MyPageInfoModify />} />
@@ -119,6 +113,13 @@ export default function Router() {
         <Route path="/MyPage/MyPagePoint" element={<MyPagePoint />} />
         <Route path="/MyPage/PointHistory" element={<MyPagePointHistory />} />
         <Route path="/MyPage/PointWithdraw" element={<MyPagePointWithdraw />} />
+
+        <Route path="/Study" element={<Study />} />
+        <Route path="/StudyCreate" element={<StudyCreate />} />
+        <Route path="/StudyList" element={<StudyList />} />
+        <Route path="/Study/:studyId" element={<StudyDetail />} />
+        <Route path="/StudyModify/:studyId" element={<StudyModify />} />
+
       </Routes>
     </BrowserRouter>
   );

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import './LatestStudyList.css';
 
 function LatestStudyList(props) {
 
