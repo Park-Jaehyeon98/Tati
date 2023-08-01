@@ -16,11 +16,9 @@ public class Attendance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer attendanceId;
 
-//    @CreationTimestamp
     @Column(name = "in_time", nullable = false)
     private String inTime;
 
-//    @CreationTimestamp
     @Column(name = "out_time")
     private String outTime;
 

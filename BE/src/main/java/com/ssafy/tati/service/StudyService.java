@@ -29,11 +29,6 @@ public class StudyService {
     private final StudyScheduleRepository studyScheduleRepository;
     private final MemberRepository memberRepository;
 
-
-//    public Page<Study> studyPageList(Pageable pageable){
-//        return studyRepository.findAll(pageable);
-//    }
-
     public void createStudy(Study study, Integer categoryId) {
         Optional<Category> category = categoryRepository.findByCategoryId(categoryId);
         if(!category.isPresent()){

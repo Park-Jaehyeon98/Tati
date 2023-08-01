@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface StudyRepository extends JpaRepository<Study, Integer> {
     Optional<Study> findById(Integer id);
 
-    Optional<Study> findAllStudy();
+//    Optional<Study> findAllStudy();
 
 //    @Modifying(clearAutomatically = true)
 //    @Query("update Study set ")
