@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -41,6 +43,9 @@ public class Study {
 
     @Column(name = "study_end_date", nullable = false)
     private String studyEndDate;
+
+    @OneToMany(mappedBy = "study")
+    List<Board> boardList = new ArrayList<>();
 
 //    @ManyToOne
 //    @JoinColumn(name = "category_id")

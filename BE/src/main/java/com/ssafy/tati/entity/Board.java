@@ -27,11 +27,15 @@ public class Board {
     private String boardContent;
 
     @Column(name = "board_hit", nullable = false)
-    private String boardHit;
+    private Integer boardHit;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @ManyToOne
+    @JoinColumn(name = "study_id")
+    private Study study;
 
     @CreatedDate
     private LocalDateTime createdDate;
