@@ -14,8 +14,8 @@ import lombok.Setter;
 public class BoardReqDto {
     @Schema(hidden = true)
     private Integer boardId;
-    @Schema(hidden = true)
-    private char boardType;
+//    @Schema(hidden = true)
+//    private char boardType;
     @Schema(description = "게시글 제목")
     private String boardTitle;
     @Schema(description = "게시글 내용")

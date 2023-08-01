@@ -35,7 +35,7 @@ public class NoticeController {
     public ResponseEntity<?> createNotice(@RequestBody BoardReqDto boardReqDto) {
         Board board = boardMapper.boardReqDtoToBoard('0', boardReqDto);
         Integer memberId = boardReqDto.getMemberId();
-        boardService.save(memberId, board);
+        boardService.saveNotice(memberId, board);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
