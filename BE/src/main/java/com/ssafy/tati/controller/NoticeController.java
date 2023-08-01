@@ -60,4 +60,14 @@ public class NoticeController {
 
         return new ResponseEntity(noticeResDto, HttpStatus.OK);
     }
+
+    @Operation(summary = "공지글 삭제 요청", description = "사이트 공지글 삭제 요청", responses = {
+            @ApiResponse(responseCode = "200", description = "공지글 삭제 성공"),
+    })
+    @DeleteMapping("/{boardId}/{memberId}")
+    public ResponseEntity<?> removeNoticeById(@PathVariable Integer boardId, @PathVariable Integer memberId) {
+        boardService.delete(boardId, memberId);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

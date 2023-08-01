@@ -43,7 +43,7 @@ public class Study {
 
     @Column(name = "study_end_date", nullable = false)
     private String studyEndDate;
-    
+
     @OneToMany(mappedBy = "study")
     List<Board> boardList = new ArrayList<>();
 

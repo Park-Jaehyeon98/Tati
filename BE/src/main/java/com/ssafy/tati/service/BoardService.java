@@ -2,6 +2,7 @@ package com.ssafy.tati.service;
 
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.entity.Member;
+import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.repository.BoardRepository;
 import com.ssafy.tati.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,20 +26,24 @@ public class BoardService {
     // 게시글 조회
     public Board findById(Integer boardId){
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        System.out.println(optionalBoard.get().getMember().getMemberId());
-        System.out.println(optionalBoard.get().getMember().getMemberNickName());
-        System.out.println("#############################");
         optionalBoard.get().setBoardHit(optionalBoard.get().getBoardHit() + 1);
-//        if (!optionalBoard.isEmpty()) {
-//            Integer authorId = optionalBoard.get().getMember();
-//        }
-//        memberRepository.findById();
         return optionalBoard.get();
     }
     
     //게시글 삭제
-    public void delete(Integer boardId) {
-        boardRepository.deleteById(boardId);
+    public void delete(Integer boardId, Integer memberId) {
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+
+        if (!optionalBoard.isPresent()){
+            throw new RuntimeException();
+        }
+        Board board = optionalBoard.get();
+
+        if (board.getMember().getMemberId().equals(memberId)) {
+            boardRepository.deleteById(boardId);
+        } else {
+            throw new RuntimeException();
+        }
     }
 
     // boardType에 맞는 모든 게시글 조회
