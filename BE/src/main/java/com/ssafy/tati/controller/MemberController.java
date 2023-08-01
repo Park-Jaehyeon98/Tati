@@ -98,11 +98,13 @@ public class MemberController {
 
         Token token = jwtTokenizer.createTokensByLogin(loginMember);
 
+        MemberResDto resDto = memberMapper.memberToMemberResDto(loginMember);
+
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + token.getAccessToken());
         headers.add("RefreshToken", token.getRefreshToken());
 
-        return new ResponseEntity<>(headers, HttpStatus.OK);
+        return new ResponseEntity<>(resDto, headers, HttpStatus.OK);
     }
 
     @Operation(summary = "로그아웃", description = "로그아웃을 통해 Refresh Token을 제거")

@@ -24,11 +24,11 @@ public class StudyMember {
     @Column(name = "study_join_date", nullable = false)
     private String studyJoinDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "study_id")
     private Study study;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 

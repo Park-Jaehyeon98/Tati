@@ -26,7 +26,7 @@ public class PointService {
         Member member = point.getMember();
         int totalPoint = member.getTotalPoint() + point.getAmount();
 
-        memberRepository.updatePoint(totalPoint, member.getMemberId());
+        member.updateTotalPoint(totalPoint);
     }
 
     //포인트 인출
@@ -37,7 +37,7 @@ public class PointService {
         Member member = point.getMember();
         int totalPoint = member.getTotalPoint() - point.getAmount();
 
-        memberRepository.updatePoint(totalPoint, member.getMemberId());
+        member.updateTotalPoint(totalPoint);
     }
 
     //포인트 내역

@@ -19,11 +19,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
+@RequiredArgsConstructor
 public class MemberService {
-    private final MemberRepository memberRepository;
     private final BoardRepository boardRepository;
+    private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
     //회원가입
@@ -95,14 +95,15 @@ public class MemberService {
     public void modifyNickName(Integer memberId, String nickName){
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
-        else memberRepository.updateNickname(nickName, memberId);
+        else optionalMember.get().updateNickName(nickName);
+
     }
 
     //비밀번호 수정
     public void modifyPassword(Integer memberId, String password){
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
-        else memberRepository.updatePassword(passwordEncoder.encode(password), memberId);
+        else optionalMember.get().updatePassword(password);
     }
 
 
