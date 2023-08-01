@@ -70,43 +70,49 @@ const StudyList = () => {
 
     return (
         <div>
-            <h3>스터디 목록</h3>
-            <p><button onClick={() => { navigate('/StudyCreate') }}>스터디 만들기</button></p>
-            <p>
-                {categoryArray.map((category) =>
-                    <button key={category} className={category === listCategory ? styles.selected : styles.noSelected} onClick={() => handleCategoryClick(category)}>{category}</button>
-                )}
-            </p>
+            {/* 위에 바 */}
             <div>
-                <input type="text" name="keyword" value={keyword} onChange={handleKeywordChagne} placeholder="스터디이름으로 검색" />
-                <button onClick={handleSearchBtnClick}>검색</button>
+                <h3>스터디 목록</h3>
+                <hr />
+                <button onClick={() => { navigate('/StudyCreate') }}>스터디 만들기</button>
+                <div>
+                    {categoryArray.map((category) =>
+                        <button key={category} className={category === listCategory ? styles.selected : styles.noSelected} onClick={() => handleCategoryClick(category)}>{category}</button>
+                    )}
+                </div>
+                <div>
+                    <input type="text" name="keyword" value={keyword} onChange={handleKeywordChagne} placeholder="스터디이름으로 검색" />
+                    <button onClick={handleSearchBtnClick}>검색</button>
+                </div>
+                <button onClick={() => {
+                    console.log({
+                        page: pageNum,
+                        category: listCategory,
+                        keyword: (keyword ? keyword : null)
+                    })
+                    // axios.get(`http://59.27.11.90:8080/study`, {
+                    //     params: {
+                    //         page: pageNum,
+                    //         category: listCategory,
+                    //         keyword: keyword
+                    //     }
+                    // })
+                    //     .then(response => {
+                    //         console.log(response.data);
+                    //         setStudyList(response.data);
+                    //     })
+                }}>테스트용</button>
             </div>
-            <button onClick={() => {
-                console.log({
-                    page: pageNum,
-                    category: listCategory,
-                    keyword: (keyword ? keyword : null)
-                })
-                // axios.get(`http://59.27.11.90:8080/study`, {
-                //     params: {
-                //         page: pageNum,
-                //         category: listCategory,
-                //         keyword: keyword
-                //     }
-                // })
-                //     .then(response => {
-                //         console.log(response.data);
-                //         setStudyList(response.data);
-                //     })
-            }}>테스트용</button>
+
+            <hr />
+
             {/* 페이지 1개당 8개 스터디 렌더링할것 */}
-            <div style={{ height: 500, backgroundColor: "blue" }}>
+            <div style={{ height: 500, backgroundColor: "white" }}>
+                {/* 스터디 카드 리스트 */}
                 <StudyCardList studyList={studyList} />
+                {/* 페이지네이션 부분 */}
             </div>
-
-            {/* 페이지네이션 부분 */}
-
-        </div>
+        </div >
     )
 }
 
