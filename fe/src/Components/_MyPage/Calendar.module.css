@@ -1,0 +1,14 @@
+.calendar{
+  width: 600px;
+  height: 600px; 
+  margin-left: 100px;
+  margin-top: 30px;
+}
+.fc-day-sun a {
+  color: red;
+}
+
+/* 토요일 날짜: 파란색 */
+.fc-day-sat a {
+  color: blue;
+}

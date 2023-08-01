@@ -1,0 +1,44 @@
+.Change{
+  margin-left: 30px;
+  margin-top: 60px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.point{
+  margin-bottom: 50px;
+}
+
+.currentPoint{
+  margin-left: 100px;
+}
+
+.rechargeAmount{
+  margin-left: 100px;
+  height: 30px;
+  width: 150px;
+  font-size: 25px;
+}
+
+.btn{
+  width: 30px;
+  height: 30px;
+}
+
+.Change_btn{
+  width: 90px;
+  height: 45px;
+  border-radius: 10px;
+  border: 1px;
+  margin-left: 450px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.total_point{
+  margin-left: 125px;
+}
+
+.Change_btn:hover{
+  transform: scale(1.1); 
+}

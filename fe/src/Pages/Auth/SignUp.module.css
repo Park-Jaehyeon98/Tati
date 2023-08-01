@@ -1,0 +1,136 @@
+.SignUp_box{
+  display: flex;
+  justify-content: flex-end;
+}
+.signup{
+  width: 800px;
+  height: 960px;
+  text-align: center;
+  color: black;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
+  margin-right: 100px; /* 오른쪽으로 100px 이동 */
+  position: absolute;
+  top: 650px; /* Adjust the value to vertically center the signup element */
+  left: 50%; /* Adjust the value to horizontally center the signup element */
+  transform: translate(-50%, -50%);
+  border-radius: 70px;
+}
+.img01{
+  width: 1820px;
+  height: 1400px;
+}
+.signup_title{
+  padding-top: 30px;
+  font-size: 50px;
+  padding-bottom: 50px;
+}
+
+.signup_text{
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  /* left: 10px; */
+}
+
+.caution{
+  color: red;
+  margin-right: 90px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+
+.input_email{
+  margin-left: 80px;
+  height: 30px;
+  width: 250px;
+  border: 1px solid black;
+  font-size: 17px;
+}
+
+.input_email_check{
+  margin-left: 60px;
+  margin-top: 25px;
+  height: 30px;
+  width: 250px;
+  border: 1px solid black;
+  font-size: 17px;
+}
+
+.btn_check{
+  margin-left: 20px;
+  height: 35px;
+  width: 100px;
+  border-radius: 10px;
+  border: 1px;
+  background-color: #A5DAF8;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.input_name{
+  margin-left: 100px;
+  margin-right: 120px;
+  margin-top: 25px;
+  height: 30px;
+  width: 250px;
+  border: 1px solid black;
+  font-size: 17px;
+}
+
+.input_password{
+  margin-left: 60px;
+  margin-right: 120px;
+  height: 30px;
+  width: 250px;
+  border: 1px solid black;
+  font-size: 17px;
+}
+
+.input_password_check{
+  margin-left: 23px;
+  margin-right: 120px;
+  height: 30px;
+  width: 250px;
+  border: 1px solid black;
+  font-size: 17px;
+}
+
+.input_nickname{
+  margin-left: 80px;
+  margin-top: 25px;
+  height: 20px;
+  height: 30px;
+  width: 250px;
+  border: 1px solid black;
+  font-size: 17px;
+}
+
+.signup_btn{
+  margin-top: 100px;
+  height: 50px;
+  width: 180px;
+  border-radius: 10px;
+  border: 1px;
+  background-color: #A5DAF8;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.cancel_btn{
+  margin-left: 80px;
+  width: 180px;
+  height: 50px;
+  border-radius: 10px;
+  border: 1px;
+  background-color: rgb(249, 149, 149);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.signup_btn:hover{
+  transform: scale(1.05);
+}
+.cancel_btn:hover{
+  transform: scale(1.05);
+}

@@ -1,0 +1,30 @@
+.point{
+  margin-left: 100px;
+  margin-top: 10px;
+}
+
+.point_nav_btn{
+  display: flex;
+  margin-left: 50px;
+  margin-top: 60px;
+  margin-bottom: 30px;
+}
+
+.nav_btn{
+  margin-right: 50px;
+  margin-bottom: 30px;
+  width: 130px;
+  height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 10px;
+  border: 1px;
+}
+
+.nav_btn:hover{
+  transform: scale(1.1); 
+}
+
+.content{
+  margin-left: 30px;
+}
