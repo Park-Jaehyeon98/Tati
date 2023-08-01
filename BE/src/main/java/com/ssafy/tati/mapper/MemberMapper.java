@@ -29,3 +29,4 @@ public interface MemberMapper {
 
     MemberResDto memberToMemberResDto(Member member);
 }
+

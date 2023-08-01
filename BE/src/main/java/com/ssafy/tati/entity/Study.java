@@ -42,16 +42,10 @@ public class Study {
     @Column(name = "study_end_date", nullable = false)
     private String studyEndDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
-
-    //category - int
-    //studyName - String
-    //studyDescription - String
-    //isPublic - boolean
-    //password - int
     public void update(Category category, String studyName, String studyDescription, Boolean disclosure, Integer studyPassword){
         this.category = category;
         this.studyName = studyName;
