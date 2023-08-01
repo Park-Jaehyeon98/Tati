@@ -24,8 +24,8 @@ public class Study {
     @Column(name = "total_member", columnDefinition = "int", nullable = false)
     private Integer totalMember;
 
-    @Column(name = "is_public", columnDefinition = "boolean", nullable = false)
-    private Boolean isPublic;
+    @Column(name = "disclosure", columnDefinition = "boolean", nullable = false)
+    private Boolean disclosure;
 
     @Column(name = "study_host", length = 20, nullable = false)
     private String studyHost;
@@ -42,8 +42,16 @@ public class Study {
     @Column(name = "study_end_date", nullable = false)
     private String studyEndDate;
 
-//    @ManyToOne
-//    @JoinColumn(name = "category_id")
-//    private Category category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    public void update(Category category, String studyName, String studyDescription, Boolean disclosure, Integer studyPassword){
+        this.category = category;
+        this.studyName = studyName;
+        this.studyDescription = studyDescription;
+        this.disclosure = disclosure;
+        this.studyPassword = studyPassword;
+    }
 
 }
