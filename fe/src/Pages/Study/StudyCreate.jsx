@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../Study/StudyCreate.css";
 import { Link } from "react-router-dom";
 
 

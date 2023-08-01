@@ -1,5 +1,4 @@
 
-import "../router/Router.css"
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 
@@ -96,9 +95,9 @@ export default function Router() {
 
       <Routes>
         <Route path="/NoticePage" element={<NoticePage />} />
-        <Route path="/CreateNotice" element={<CreateNotice />} />
-
         <Route path="/NoticeCreate" element={<NoticeCreate />} />
+
+
         <Route path="/SignUp" element={<SignUp />} />
 
         <Route path="/Login" element={<Login />} />
