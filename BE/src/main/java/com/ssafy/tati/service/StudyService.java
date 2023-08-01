@@ -85,7 +85,7 @@ public class StudyService {
         }
         Study study = optionalStudy.get();
 
-        Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
         if(!optionalMember.isPresent()){
             throw new RuntimeException();
         }
