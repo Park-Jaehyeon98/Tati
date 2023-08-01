@@ -10,15 +10,13 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface BoardMapper {
-    default Board boardReqDtoToBoard(char boardType, Member member, BoardReqDto boardReqDto){
+    default Board boardReqDtoToBoard(char boardType, BoardReqDto boardReqDto){
         if(boardReqDto == null) return null;
 
         Board board = new Board();
         board.setBoardType(boardType);
         board.setBoardTitle(boardReqDto.getBoardTitle());
         board.setBoardContent(boardReqDto.getBoardContent());
-        board.setMember(member);
-//        board.setStudy(study);
         board.setBoardHit(0);
 
         return board;

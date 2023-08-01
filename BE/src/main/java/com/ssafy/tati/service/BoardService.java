@@ -2,7 +2,6 @@ package com.ssafy.tati.service;
 
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.entity.Member;
-import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.repository.BoardRepository;
 import com.ssafy.tati.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +16,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final MemberRepository memberRepository;
 
     // 게시글 등록
-    public void save(Board board){
-        boardRepository.save(board);
+    public void save(Integer memberId, Board board){
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        if (optionalMember.isPresent()) {
+            board.setMember(optionalMember.get());
+            boardRepository.save(board);
+        }
     }
 
     // 게시글 조회

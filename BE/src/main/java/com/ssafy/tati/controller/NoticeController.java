@@ -3,7 +3,6 @@ package com.ssafy.tati.controller;
 import com.ssafy.tati.dto.req.BoardReqDto;
 import com.ssafy.tati.dto.res.NoticeResDto;
 import com.ssafy.tati.entity.Board;
-import com.ssafy.tati.entity.Member;
 import com.ssafy.tati.mapper.BoardMapper;
 import com.ssafy.tati.service.BoardService;
 import com.ssafy.tati.service.MemberService;
@@ -32,9 +31,10 @@ public class NoticeController {
     @PostMapping("/create")
     public ResponseEntity<?> createNotice(@RequestBody BoardReqDto boardReqDto) {
 
-        Member member = memberService.findById(boardReqDto.getMemberId());
-        Board board = boardMapper.boardReqDtoToBoard('0', member, boardReqDto);
-        boardService.save(board);
+//        Member member = memberService.findById(boardReqDto.getMemberId());
+        Board board = boardMapper.boardReqDtoToBoard('0', boardReqDto);
+        Integer memberId = boardReqDto.getMemberId();
+        boardService.save(memberId, board);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -64,7 +64,7 @@ public class NoticeController {
     @Operation(summary = "공지글 삭제 요청", description = "사이트 공지글 삭제 요청", responses = {
             @ApiResponse(responseCode = "200", description = "공지글 삭제 성공"),
     })
-    @DeleteMapping("/{boardId}/{memberId}")
+    @DeleteMapping("/{boardId}/delete/{memberId}")
     public ResponseEntity<?> removeNoticeById(@PathVariable Integer boardId, @PathVariable Integer memberId) {
         boardService.delete(boardId, memberId);
 
