@@ -185,7 +185,7 @@ const StudyCreate = () => {
                 </div>
                 <div>
                     <button onClick={handleStudyCreateSubmit}>스터디 생성</button>
-                    <Link to='/StudyList'>
+                    <Link to='/Study'>
                         <button>취소하기</button>
                     </Link>
                 </div>

@@ -100,7 +100,10 @@ const StudyList = () => {
                 //     })
             }}>테스트용</button>
             {/* 페이지 1개당 8개 스터디 렌더링할것 */}
-            <StudyCardList studyList={studyList} />
+            <div style={{ height: 500, backgroundColor: "blue" }}>
+                <StudyCardList studyList={studyList} />
+            </div>
+
             {/* 페이지네이션 부분 */}
 
         </div>

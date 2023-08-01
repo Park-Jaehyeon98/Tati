@@ -7,7 +7,6 @@ import style from "./Router.module.css"
 import NoticePage from "../Pages/Notice/NoticePage";
 import NoticeCreate from "../Pages/Notice/NoticeCreate";
 
-import Study from "../Pages/Study/Study";
 import MyPage from "../Pages/MyPage/_MyPage";
 import InfoModify from "../Components/_MyPage/InfoModify";
 import SignUp from "../Pages/Auth/SignUp";
@@ -114,9 +113,8 @@ export default function Router() {
         <Route path="/MyPage/PointHistory" element={<MyPagePointHistory />} />
         <Route path="/MyPage/PointWithdraw" element={<MyPagePointWithdraw />} />
 
-        <Route path="/Study" element={<Study />} />
+        <Route exact path="/Study" element={<StudyList />} />
         <Route path="/StudyCreate" element={<StudyCreate />} />
-        <Route path="/StudyList" element={<StudyList />} />
         <Route path="/Study/:studyId" element={<StudyDetail />} />
         <Route path="/StudyModify/:studyId" element={<StudyModify />} />
 
