@@ -49,14 +49,14 @@ public class Member {
     private LocalDateTime createdDate;
 
     //가입한 스터디 목록
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     List<StudyMember> studyList = new ArrayList<>();
 
     //신청한 스터디 목록
 
 
     //내가 쓴 게시글 목록
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     List<Board> myBoardList = new ArrayList<>();
 
     @PrePersist

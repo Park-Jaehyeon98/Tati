@@ -3,6 +3,7 @@ package com.ssafy.tati.controller;
 import com.ssafy.tati.dto.req.StudyModifyReqDto;
 import com.ssafy.tati.dto.req.StudyReqDto;
 import com.ssafy.tati.dto.req.StudyScheduleReqDto;
+import com.ssafy.tati.dto.res.StudyAllListResDto;
 import com.ssafy.tati.dto.res.StudyDetailResDto;
 import com.ssafy.tati.dto.res.StudyModifyResDto;
 import com.ssafy.tati.entity.Study;
@@ -68,5 +69,13 @@ public class StudyController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+//    @Operation(summary = "스터디 전체 조회", )
+
+    @GetMapping
+    public ResponseEntity<?> selectAllStudy(){
+        List<Study> studylist = studyService.getStudyList();
+        List<StudyAllListResDto> studyAllListResDtoList = studyMapper.studyListToStudyAllListRedDtoList(studylist);
+        return new ResponseEntity<>(studyAllListResDtoList, HttpStatus.OK);
+    }
 
 }
