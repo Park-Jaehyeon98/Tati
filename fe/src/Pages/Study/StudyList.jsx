@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import styles from './StudyList.module.css';
 import StudyCardList from "../../Components/Study/StudyCardList";
+import { apiClient } from "../../api/apiClient";
 
 const StudyList = () => {
     const navigate = useNavigate();
@@ -27,10 +28,8 @@ const StudyList = () => {
     }
 
     const handleSearchBtnClick = () => {
-        axios({
-            method: 'get',
-            url: `http://59.27.11.90:8080/study`,
-            header: {},
+
+        apiClient.get('study', {
             params: {
                 page: pageNum,
                 category: listCategory,
@@ -46,17 +45,32 @@ const StudyList = () => {
                 console.log(err);
             })
     }
-
+    apiClient.get('study', {
+        params: {
+            page: pageNum,
+            category: listCategory,
+            keyword: keyword
+        }
+    })
 
     // 페이지 렌더링 될 때 처음 리스트를 받아오기 위해
     // useEffect(() => {
+
     //     axios.get(`http://59.27.11.90:8080/study`, {
     //         params: {
     //             page: pageNum,
     //             category: listCategory,
     //             keyword: keyword
     //         }
-    //     })
+    // })
+
+    // api 모듈화
+    // useEffect(() => {
+    // apiClient.get('study',{params: {
+    //     page: pageNum,
+    //     category: listCategory,
+    //     keyword: keyword
+    // }})
     //         .then(response => {
     //             console.log(response.data);
     //             setStudyList(response.data);
@@ -90,17 +104,6 @@ const StudyList = () => {
                         category: listCategory,
                         keyword: (keyword ? keyword : null)
                     })
-                    // axios.get(`http://59.27.11.90:8080/study`, {
-                    //     params: {
-                    //         page: pageNum,
-                    //         category: listCategory,
-                    //         keyword: keyword
-                    //     }
-                    // })
-                    //     .then(response => {
-                    //         console.log(response.data);
-                    //         setStudyList(response.data);
-                    //     })
                 }}>테스트용</button>
             </div>
 

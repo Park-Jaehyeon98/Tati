@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const apiClient = axios.create({
-  baseURL: process.env.REACT_APP_URL,
+  baseURL: "http://192.168.31.57/",
 });

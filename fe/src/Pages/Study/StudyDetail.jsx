@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { apiClient } from '../../api/apiClient';
 
 const StudyDetail = () => {
     const [studyData, setStudyData] = useState();
@@ -28,6 +29,18 @@ const StudyDetail = () => {
         studyPassword: "1234"
     });
 
+    // useEffect(() => {
+    //     apiClient.get(`study/${studyId}`)
+    //         .then(res => {
+    //             console.log(res.data);
+    //             // setStudyData(res.data);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err.data);
+    //         })
+    // }, []);
+
+    // 
     // useEffect(() => {
     //     axios({
     //         method: 'get',
