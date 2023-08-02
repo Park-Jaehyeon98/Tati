@@ -23,7 +23,11 @@ import StudyNotice from "../Pages/Study/StudyNotice/StudyNotice";
 import StudyNoticeList from "../Pages/Study/StudyNotice/StudyNoticeList";
 import StudyNoticeCreate from "../Pages/Study/StudyNotice/StudyNoticeCreate";
 import StudyNoticeDetail from './../Pages/Study/StudyNotice/StudyNoticeDetail';
+
+import StudyBoard from "../Pages/Study/StudyBoard/StudyBoard";
+import StudyBoardDetail from "../Pages/Study/StudyBoard/StudyBoardDetail";
 import StudyBoardCreate from "../Pages/Study/StudyBoard/StudyBoardCreate";
+import StudyBoardList from "../Pages/Study/StudyBoard/StudyBoardList";
 
 import Main from "../Pages/Main/Main";
 import KakaoPay from "../Components/_MyPage/KakaoPay";
@@ -141,10 +145,11 @@ export default function Router() {
           <Route path="Create" element={<StudyNoticeCreate />} />
         </Route>
         {/* 스터디 게시판 */}
-        {/* <Route path="/Study/:studyId/Board" element={}/>
-        <Route path="/Study/:studyId/Board/:boardId" element={}/> */}
-        <Route path="/Study/:studyId/Board/Create" element={<StudyBoardCreate />} />
-
+        <Route path="/Study/:studyId/Board" element={<StudyBoard />}>
+          <Route path="" element={<StudyBoardList />} />
+          <Route path=":boardId" element={<StudyBoardDetail />} />
+          <Route path="Create" element={<StudyBoardCreate />} />
+        </Route>
         {/* 스터디 웹rtc 입실 */}
         {/* <Route path="/Study/:studyId/Board/Create" element={}/> */}
 

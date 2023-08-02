@@ -1,20 +1,18 @@
 import React, { useState } from 'react'
-import { redirect, useParams } from 'react-router-dom';
+import { redirect, useOutletContext } from 'react-router-dom';
 import { apiClient } from '../../../api/apiClient';
 
 const StudyBoardCreate = () => {
-    const params = useParams();
-    const studyId = params.studyId;
-
+    const { studyId, boardType } = useOutletContext();
 
     const [boardBody, setBoardBody] = useState({
         boardTitle: '',
         boardContent: '',
 
-        boardType: 2,
+        boardType,
         // 0 : 공지 1: 스터디 공지 2: 스터디 게시판 9: FAQ
 
-        studyId: studyId,
+        studyId,
         memberId: 1
     })
 
@@ -49,7 +47,6 @@ const StudyBoardCreate = () => {
     return (
         <div>
             <div style={{ height: 100 }}></div>
-            <div>여기는 스터디 게시판 헤더</div>
             <h3>스터디 게시판 작성</h3>
             <div>
                 <div>제목

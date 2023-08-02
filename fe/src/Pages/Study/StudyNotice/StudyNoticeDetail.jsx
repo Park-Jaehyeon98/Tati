@@ -1,6 +1,6 @@
 import React from 'react'
 
-const StudyNoticeDetail = () => {
+const StudyNoticeDetail = (studyId, boardType) => {
     return (
         <div>StudyNoticeDetail</div>
     )
