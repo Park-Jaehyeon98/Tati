@@ -16,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Tag(name = "스터디 게시판", description = "스터디 게시판 API 문서")
 @RestController
 @RequestMapping("/study")
@@ -84,5 +86,28 @@ public class StudyBoardController {
         NoticeResDto noticeResDto = boardMapper.boardToNoticeResDto(board);
 
         return new ResponseEntity(noticeResDto, HttpStatus.OK);
+    }
+
+    @Operation(summary = "스터디 공지글 리스트 조회 요청", description = "스터디 공지글 리스트 요청", responses = {
+            @ApiResponse(responseCode = "200", description = "스터디 공지글 리스트"),
+    })
+    @GetMapping("/{studyId}/notice")
+    public ResponseEntity<?> listAllStudyNotice(@PathVariable Integer studyId) {
+        List<Board> boardList = boardService.selectAllByBoardTypeAndStudyId('1', studyId);
+        List<NoticeResDto> noticeResDtoList =  boardMapper.boardListToNoticeResDtoList(boardList);
+
+        return new ResponseEntity(noticeResDtoList, HttpStatus.OK);
+    }
+
+    @Operation(summary = "스터디 게시글 리스트 조회 요청", description = "스터디 게시글 리스트 요청", responses = {
+            @ApiResponse(responseCode = "200", description = "스터디 게시글 리스트"),
+    })
+    @GetMapping("/{studyId}/board")
+    public ResponseEntity<?> listAllStudyBoard(@PathVariable Integer studyId) {
+        List<Board> boardList = boardService.selectAllByBoardTypeAndStudyId('2', studyId);
+        List<NoticeResDto> noticeResDtoList =  boardMapper.boardListToNoticeResDtoList(boardList);
+
+        // 댓글 개수 보내줘야 함
+        return new ResponseEntity(noticeResDtoList, HttpStatus.OK);
     }
 }

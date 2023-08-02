@@ -1,6 +1,7 @@
 package com.ssafy.tati.repository;
 
 import com.ssafy.tati.entity.Board;
+import com.ssafy.tati.entity.Study;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,4 +14,6 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     List<Board> findByEmail(Integer memberId);
 
     List<Board> findByBoardType(char boardType);
+
+    List<Board> findByBoardTypeAndStudy(char boardType, Study study);
 }

@@ -69,6 +69,16 @@ public class BoardService {
         return boardRepository.findByBoardType(boardType);
     }
 
+    // boardType과 studyId에 맞는 모든 게시글 조회
+    public List<Board> selectAllByBoardTypeAndStudyId(char boardType, Integer studyId){
+        Optional<Study> optionalStudy = studyRepository.findById(studyId);
+        if (!optionalStudy.isPresent()){
+            throw new RuntimeException();
+        }
+        Study study = optionalStudy.get();
+        return boardRepository.findByBoardTypeAndStudy(boardType, study);
+    }
+
     public void updateBoard(Integer memberId, Board board) {
         Optional<Board> optionalBoard = boardRepository.findById(board.getBoardId());
 
