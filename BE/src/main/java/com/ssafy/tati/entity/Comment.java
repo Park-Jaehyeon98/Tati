@@ -10,32 +10,24 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @EntityListeners(AuditingEntityListener.class)
-public class Board {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer boardId;
+    private Integer commentId;
 
-    @Column(name = "board_type", length = 1, nullable = false)
-    private char boardType;
+    @Column(name = "comment_content", nullable = false)
+    private String commentContent;
 
-    @Column(name = "board_title", length = 50, nullable = false)
-    private String boardTitle;
-
-    @Column(name = "board_content", nullable = false)
-    private String boardContent;
-
-    @Column(name = "board_hit", nullable = false)
-    private Integer boardHit;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "study_id")
-    private Study study;
+    @JoinColumn(name = "board_id")
+    private Board board;
 
     @CreatedDate
     private LocalDateTime createdDate;
