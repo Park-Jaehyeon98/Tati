@@ -1,13 +1,17 @@
 package com.ssafy.tati.Exception;
 
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.repository.config.RepositoryNameSpaceHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import javax.mail.MessagingException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 
@@ -17,31 +21,62 @@ public class ExceptionHandlerController {
 
     //데이터가 존재하지 않을 때
     @ExceptionHandler(value = DataNotFoundException.class)
-    public ResponseEntity<?> DataNotFoundExceptionHandler(DataNotFoundException e){
+    public ResponseEntity<?> dataNotFoundExceptionHandler(DataNotFoundException e){
         return new ResponseEntity<>( e.getMessage(), HttpStatus.BAD_REQUEST );
     }
 
     //중복된 데이터일 때
     @ExceptionHandler(value = DuplicateKeyException.class)
-    public ResponseEntity<?> DuplicateKeyExceptionHandler(DuplicateKeyException e){
+    public ResponseEntity<?> duplicateKeyExceptionHandler(DuplicateKeyException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     //잘못된 데이터 값이 입력될 때
     @ExceptionHandler(value = MismatchDataException.class)
-    public ResponseEntity<?> MismatchDataExceptionHandler(MismatchDataException e){
+    public ResponseEntity<?> mismatchDataExceptionHandler(MismatchDataException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     //메일 관련 예외
     @ExceptionHandler(MessagingException.class)
-    public ResponseEntity<?> MessagingExceptionHandler(MessagingException e){
+    public ResponseEntity<?> messagingExceptionHandler(MessagingException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     //인코딩 관련 예외
-    public ResponseEntity<?> UnsupportedEncodingExceptionHandler(UnsupportedEncodingException e){
+    @ExceptionHandler(UnsupportedEncodingException.class)
+    public ResponseEntity<?> unsupportedEncodingExceptionHandler(UnsupportedEncodingException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(FileDownloadFailedException.class)
+    public ResponseEntity<?> fileDownloadFailedExceptionHandler(FileDownloadFailedException e){
+        return new ResponseEntity<>("파일 다운로드에 실패했습니다." +e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(FileNotFoundException.class)
+    public ResponseEntity<?> fileNotFoundExceptionHandler(FileNotFoundException e){
+        return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(StringIndexOutOfBoundsException.class)
+    public ResponseEntity<?> stringIndexOutOfBoundsExceptionHandler(StringIndexOutOfBoundsException e){
+        return new ResponseEntity<>("잘못된 형식의 파일입니다 : " + e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> illegalArgumentExceptionHandler(IllegalArgumentException e){
+        return new ResponseEntity<>("파일 변환 중 에러가 발생했습니다 : " +e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<?> maxUploadSizeExceededExceptionHandler(MaxUploadSizeExceededException e){
+        return new ResponseEntity<>("파일 용량이 초과되었습니다 : " +e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<?> ioexceptionHandler(IOException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 

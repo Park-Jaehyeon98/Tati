@@ -10,20 +10,25 @@ import com.ssafy.tati.entity.Member;
 import com.ssafy.tati.mapper.MemberMapper;
 import com.ssafy.tati.service.EmailService;
 import com.ssafy.tati.service.MemberService;
+import com.ssafy.tati.service.S3Service;
+import com.sun.mail.iap.ByteArray;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 @Tag(name = "회원가입과 로그인", description = "회원가입과 로그인 API 문서")
@@ -32,6 +37,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+    private final S3Service s3Service;
     private final MemberMapper memberMapper;
     private final EmailService emailService;
     private final JwtTokenizer jwtTokenizer;
@@ -40,9 +46,11 @@ public class MemberController {
     @Operation(summary = "회원가입 요청", description = "회원가입에 필요한 양식을 작성 후 회원가입 요청", responses = {
             @ApiResponse(responseCode = "200", description = "회원가입 성공", content = @Content(schema = @Schema(implementation = MemberResDto.class))),
     })
-    @PostMapping("/sign-up")
-    public ResponseEntity<?> signUp(@RequestBody MemberReqDto memberReqDto) {
+    @PostMapping( "/sign-up")
+    public ResponseEntity<?> signUp(@RequestBody MemberReqDto memberReqDto) throws IOException {
+
         Member member = memberMapper.memberReqDtoToMember(memberReqDto);
+
         Member createdMember = memberService.createMember(member);
         MemberResDto memberResDto = memberMapper.memberToMemberResDto(createdMember);
 
@@ -102,7 +110,7 @@ public class MemberController {
         headers.add("Authorization", "Bearer " + token.getAccessToken());
         headers.add("RefreshToken", token.getRefreshToken());
 
-        return new ResponseEntity<>(headers, HttpStatus.OK);
+        return new ResponseEntity<>(loginMember, headers, HttpStatus.OK);
     }
 
     @Operation(summary = "로그아웃", description = "로그아웃을 통해 Refresh Token을 제거")
@@ -133,6 +141,13 @@ public class MemberController {
         List<Member> member = memberService.selectAll();
         return new ResponseEntity<>(member, HttpStatus.OK);
     }
+
+    @PostMapping("/upload")
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+        return new ResponseEntity<>( s3Service.uploadFile(multipartFile), HttpStatus.OK );
+    }
+
+
 
 
 }

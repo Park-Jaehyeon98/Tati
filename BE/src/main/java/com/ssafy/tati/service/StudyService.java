@@ -20,8 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class StudyService {
     private final StudyRepository studyRepository;
