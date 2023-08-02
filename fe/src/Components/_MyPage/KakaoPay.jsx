@@ -63,7 +63,7 @@ const NoticeItem = ({ point, date, day }) => {
 };
 
 // 데이터
-const notices = [
+const dates = [
   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
@@ -112,11 +112,11 @@ const notices = [
 ];
 //====================================
 
-  const totalPages = Math.ceil(notices.length / itemsPerPage);
+  const totalPages = Math.ceil(dates.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNotices = notices.slice(startIndex, endIndex);
+  const currentNotices = dates.slice(startIndex, endIndex);
 
   // 결제 취소
   const handleCancel =()=>{

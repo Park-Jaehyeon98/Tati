@@ -8,6 +8,8 @@ export default function InfoModify() {
 
   const navigate = useNavigate();
 
+  // 로컬의 유저pk값을 불러오기
+  const memberId = localStorage.getItem('memberId');
   // 회원정보 리덕스에서 가져오기
   const userInfo = useSelector((state) => state.userInfo);
   // 닉네임 중복 확인
@@ -48,12 +50,11 @@ export default function InfoModify() {
   // 유저의 pk 와 닉네임을 보냄
   // 요청 성공 후 다시 회원정보 수정 페이지로
   const handleNickNameupdata = () => {
-    console.log(`닉네임 ${nickName} 프로필 ${profile}`)
+    console.log(`memberId - ${memberId} nickName - ${nickName}`)
     // window.history.back();
-    const email = 'rlaalsrbs15@naver.com'
     axios.put(`http://${process.env.REACT_APP_URL}:8080/member/mypage/modifyNickName`, {
-      email,
-      nickName: nickName,
+      memberId,
+      nickName
     })
       .then((res) => {
         alert("수정됨");
@@ -88,6 +89,7 @@ export default function InfoModify() {
     })
       .then((res) => {
         console.log(res)
+        // navigate("/MyPage/MyPageInfoModify");
       })
       .catch((err) => {
         console.log(err)

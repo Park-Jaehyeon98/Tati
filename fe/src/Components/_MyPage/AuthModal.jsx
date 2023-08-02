@@ -11,6 +11,7 @@ export default function AuthModal({ setAuthModal }) {
   const navigate = useNavigate();
   // 로컬의 유저pk값을 불러오기
   const memberId = localStorage.getItem('memberId');
+  const email = localStorage.getItem('email');
 
   const [password, setPassword] = useState("")
 
@@ -39,11 +40,12 @@ export default function AuthModal({ setAuthModal }) {
     console.log('회원가입수정 입장=========================================')
 
     axios.post(`http://${process.env.REACT_APP_URL}:8080/member/mypage/check`,{
-    email:'t01045999371@gmail.com',
+    email:'rlaalsrbs15@naver.com',
     password
     })
     .then((res) => {
-      console.log(res.config)
+      console.log(res)
+      setAuthModal(false);
       // dispatch(setUserInfo(res.data));  
       navigate("/MyPage/MyPageInfoModify");
     })
