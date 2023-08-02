@@ -12,10 +12,18 @@ import InfoModify from "../Components/_MyPage/InfoModify";
 import SignUp from "../Pages/Auth/SignUp";
 import Login from "../Pages/Auth/Login";
 import LandingPage from './../Pages/LandingPage/LandingPage';
+
+
 import StudyCreate from "../Pages/Study/StudyCreate";
 import StudyList from "../Pages/Study/StudyList";
 import StudyDetail from "../Pages/Study/StudyDetail";
 import StudyModify from "../Pages/Study/StudyModify";
+
+import StudyNotice from "../Pages/Study/StudyNotice/StudyNotice";
+import StudyNoticeList from "../Pages/Study/StudyNotice/StudyNoticeList";
+import StudyNoticeCreate from "../Pages/Study/StudyNotice/StudyNoticeCreate";
+import StudyNoticeDetail from './../Pages/Study/StudyNotice/StudyNoticeDetail';
+import StudyBoardCreate from "../Pages/Study/StudyBoard/StudyBoardCreate";
 
 import Main from "../Pages/Main/Main";
 import KakaoPay from "../Components/_MyPage/KakaoPay";
@@ -27,6 +35,7 @@ import MyPagePointHistory from "../Pages/MyPage/_MyPagePointHistory";
 import MyPagePointWithdraw from "../Pages/MyPage/_MyPagePointWithdraw";
 // import { aX } from "@fullcalendar/core/internal-common";
 import axios from "axios";
+
 
 export default function Router() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -126,14 +135,15 @@ export default function Router() {
         <Route path="/StudyModify/:studyId" element={<StudyModify />} />
 
         {/* 스터디 공지사항 */}
-        {/* <Route path="/Study/:studyId/Notice" element={}/>
-        <Route path="/Study/:studyId/Notice/:boardId" element={}/>
-        <Route path="/Study/:studyId/Notice/Create" element={}/> */}
-
+        <Route path="/Study/:studyId/Notice" element={<StudyNotice />}>
+          <Route path="" element={<StudyNoticeList />} />
+          <Route path=":boardId" element={<StudyNoticeDetail />} />
+          <Route path="Create" element={<StudyNoticeCreate />} />
+        </Route>
         {/* 스터디 게시판 */}
         {/* <Route path="/Study/:studyId/Board" element={}/>
-        <Route path="/Study/:studyId/Board/:boardId" element={}/>
-        <Route path="/Study/:studyId/Board/Create" element={}/> */}
+        <Route path="/Study/:studyId/Board/:boardId" element={}/> */}
+        <Route path="/Study/:studyId/Board/Create" element={<StudyBoardCreate />} />
 
         {/* 스터디 웹rtc 입실 */}
         {/* <Route path="/Study/:studyId/Board/Create" element={}/> */}
