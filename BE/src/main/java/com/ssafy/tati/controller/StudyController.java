@@ -3,9 +3,7 @@ package com.ssafy.tati.controller;
 import com.ssafy.tati.dto.req.StudyModifyReqDto;
 import com.ssafy.tati.dto.req.StudyReqDto;
 import com.ssafy.tati.dto.req.StudyScheduleReqDto;
-import com.ssafy.tati.dto.res.StudyAllListResDto;
-import com.ssafy.tati.dto.res.StudyDetailResDto;
-import com.ssafy.tati.dto.res.StudyModifyResDto;
+import com.ssafy.tati.dto.res.*;
 import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.entity.StudySchedule;
 import com.ssafy.tati.mapper.StudyMapper;
@@ -41,7 +39,9 @@ public class StudyController {
             studySchedule.setStudy(study);
             studyService.createStudySchedule(studySchedule);
         }
-        return new ResponseEntity<>(study, HttpStatus.OK);
+        StudyCreateResDto studyCreateResDto = new StudyCreateResDto();
+        studyCreateResDto.setStudyId(study.getStudyId());
+        return new ResponseEntity<>(studyCreateResDto, HttpStatus.OK);
     }
 
     @Operation(summary = "스터디 상세 조회", description = "스터디 식별 번호로 스터디 상세 조회", responses = {
@@ -65,8 +65,8 @@ public class StudyController {
             @ApiResponse(responseCode = "200", description = "스터디 삭제 성공")})
     @DeleteMapping("/{studyId}/delete/{memberId}")
     public ResponseEntity<?> deleteStudy(@PathVariable Integer studyId, @PathVariable Integer memberId){
-        studyService.removeStudy(studyId, memberId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        StudyDeleteResDto studyDeleteResDto = studyService.removeStudy(studyId, memberId);
+        return new ResponseEntity<>(studyDeleteResDto, HttpStatus.OK);
     }
 
     @Operation(summary = "스터디 전체 조회", description = "스터디 페이지 접속 시 모든 스터디 내림차순으로 조회", responses = {
@@ -82,9 +82,11 @@ public class StudyController {
     @Operation(summary = "카테고리, 키워드로 스터디 조회", description = "스터디 페이지에서 카테고리와 키워드로 스터디 리스트를 내림차순으로 조회", responses = {
             @ApiResponse(responseCode = "200", description = "스터디 카테고리, 키워드 조회 성공")})
     @GetMapping("/search")
-    public ResponseEntity<?> searchStudy(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                         @RequestParam(value = "categoryId", defaultValue = "1") Integer categoryId,
+    public ResponseEntity<?> searchStudy(@RequestParam(value = "page", defaultValue = "1") Integer pageNum,
+                                         @RequestParam(value = "category", defaultValue = "1") Integer categoryId,
                                          @RequestParam(value = "keyword", defaultValue = "") String keyword){
+
+        System.out.println("controller : " + categoryId + ", " + keyword);
         List<Study> studyList = studyService.getSearchStudy(pageNum, categoryId, keyword);
         List<StudyAllListResDto> studyAllListResDtoList = studyMapper.studyListToStudyAllListResDtoList(studyList);
         return new ResponseEntity<>(studyAllListResDtoList, HttpStatus.OK);

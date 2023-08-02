@@ -6,8 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Schema(description = "스터디 목록 조회")
-public class StudyListResDto {
+@Schema(description = "스터디 검색")
+public class StudySearchListResDto {
     @Schema(description = "스터디 식별번호")
     private Integer studyId;
 

@@ -48,7 +48,10 @@ public class Study {
     @OneToMany(mappedBy = "study")
     List<Board> boardList = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
+    List<StudySchedule> studyScheduleList = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "category_id")
     private Category category;

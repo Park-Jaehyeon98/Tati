@@ -24,7 +24,7 @@ public interface StudyRepository extends JpaRepository<Study, Integer> {
     @Query("SELECT s FROM Study s JOIN FETCH s.category c WHERE c.categoryId = :categoryId AND s.studyName LIKE %:keyword%")
     List<Study> findByCategoryAndStudyNameContaining(@Param("categoryId") Integer categoryId, @Param("keyword") String keyword);
 
-    //    Optional<Study> findAllStudy();
+//    List<Study> findAllByStudyIdOrderByStudyIdDesc(List<Study> studyList);
 //    @Modifying(clearAutomatically = true)
 //    @Query("update Study set ")
 
