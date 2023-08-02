@@ -16,7 +16,6 @@ import java.util.List;
 public class PointService {
 
     private final PointRepository pointRepository;
-    private final MemberRepository memberRepository;
 
     //포인트 적립
     public void save(Point point){

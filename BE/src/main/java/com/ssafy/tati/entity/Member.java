@@ -16,6 +16,10 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer memberId;
 
+    //회원 이미지
+    @Column(name = "member_img")
+    private String img;
+
     //회원 이메일
     @Column(name = "email", length = 50, nullable = false, unique = true)
     private String email;

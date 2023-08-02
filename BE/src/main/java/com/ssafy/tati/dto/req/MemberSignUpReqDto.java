@@ -5,12 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "회원 요청 DTO")
-public class MemberReqDto {
+public class MemberSignUpReqDto {
 
     @Schema(hidden = true)
     private Integer memberId;
@@ -26,4 +27,7 @@ public class MemberReqDto {
 
     @Schema(description = "비밀번호")
     private String password;
+
+    @Schema(description = "회원 이미지")
+    private MultipartFile multipartFile;
 }

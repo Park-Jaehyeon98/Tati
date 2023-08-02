@@ -16,10 +16,10 @@ public interface PutMemberMapper {
         member.setMemberId(putMemberReqDto.getMemberId());
         member.setEmail("email");
         member.setMemberName("member");
-        if(putMemberReqDto.getPassword() == null) member.setPassword( "password" );
+        if(putMemberReqDto.getPassword() == null) member.setPassword("none");
         else member.setPassword(putMemberReqDto.getPassword());
-        if(putMemberReqDto.getNickName() == null) member.setMemberNickName("nickname");
-        else member.setMemberNickName(putMemberReqDto.getNickName() );
+        if(putMemberReqDto.getMemberNickName() == null) member.setMemberNickName("none");
+        else member.setMemberNickName(putMemberReqDto.getMemberNickName());
         member.setTotalScore(10);
         member.setTotalPoint(0);
         member.setTotalStudyTime(0);
