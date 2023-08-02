@@ -3,8 +3,10 @@ package com.ssafy.tati.service;
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.entity.Member;
 import com.ssafy.tati.entity.Study;
+import com.ssafy.tati.entity.StudyMember;
 import com.ssafy.tati.repository.BoardRepository;
 import com.ssafy.tati.repository.MemberRepository;
+import com.ssafy.tati.repository.StudyMemberRepository;
 import com.ssafy.tati.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,11 +22,12 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
     private final StudyRepository studyRepository;
+    private final StudyMemberRepository studyMemberRepository;
 
     // 게시글 등록
-    public void saveNotice(Integer memberId, Board board){
+    public void createBoard(Integer memberId, Board board){
         Optional<Member> optionalMember = memberRepository.findById(memberId);
-        if (!optionalMember.isPresent()){
+        if (optionalMember.isEmpty()){
             throw new RuntimeException();
         }
         Member member = optionalMember.get();
@@ -96,10 +99,10 @@ public class BoardService {
     }
 
     // 스터디 공지글 생성
-    public void saveStudyNotice(Integer memberId, Integer studyId, Board board) {
+    public void createStudyNotice(Integer memberId, Integer studyId, Board board) {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         Optional<Study> optionalStudy = studyRepository.findById(studyId);
-        if (!optionalMember.isPresent() || !optionalStudy.isPresent()){
+        if (optionalMember.isEmpty() || optionalStudy.isEmpty()){
             throw new RuntimeException();
         }
         Member member = optionalMember.get();
@@ -115,16 +118,20 @@ public class BoardService {
     }
 
     // 스터디 게시글 생성
-    public void saveStudyBoard(Integer memberId, Integer studyId, Board board) {
+    public void createStudyBoard(Integer memberId, Integer studyId, Board board) {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         Optional<Study> optionalStudy = studyRepository.findById(studyId);
-        if (!optionalMember.isPresent() || !optionalStudy.isPresent()){
+        if (optionalMember.isEmpty() || optionalStudy.isEmpty()){
             throw new RuntimeException();
         }
         Member member = optionalMember.get();
         Study study = optionalStudy.get();
 
         // 스터디 멤버일때만 글 쓸수 있어야 함
+//        Optional<StudyMember> optionalStudyMember = studyMemberRepository.findByMemberIdAndStudyId(memberId, studyId);
+//        if (optionalStudyMember.isEmpty()) {
+//            throw new RuntimeException();
+//        }
 
         board.setMember(member);
         board.setStudy(study);

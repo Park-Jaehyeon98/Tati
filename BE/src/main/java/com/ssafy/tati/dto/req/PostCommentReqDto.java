@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "댓글 요청 DTO")
-public class CommentReqDto {
+public class PostCommentReqDto {
     @Schema(description = "댓글 내용")
     private String commentContent;
     @Schema(description = "작성자 식별번호")

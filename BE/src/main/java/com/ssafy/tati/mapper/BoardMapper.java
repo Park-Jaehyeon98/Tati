@@ -1,6 +1,7 @@
 package com.ssafy.tati.mapper;
 
-import com.ssafy.tati.dto.req.BoardReqDto;
+import com.ssafy.tati.dto.req.PostBoardReqDto;
+import com.ssafy.tati.dto.req.PostStudyBoardReqDto;
 import com.ssafy.tati.dto.res.NoticeResDto;
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.entity.Member;
@@ -10,17 +11,17 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface BoardMapper {
-    default Board boardReqDtoToBoard(char boardType, BoardReqDto boardReqDto){
-        if(boardReqDto == null) return null;
-
-        Board board = new Board();
-        board.setBoardType(boardType);
-        board.setBoardTitle(boardReqDto.getBoardTitle());
-        board.setBoardContent(boardReqDto.getBoardContent());
-        board.setBoardHit(0);
-
-        return board;
-    }
+//    default Board boardReqDtoToBoard(char boardType, BoardReqDto boardReqDto) {
+//        if (boardReqDto == null) return null;
+//
+//        Board board = new Board();
+//        board.setBoardType(boardType);
+//        board.setBoardTitle(boardReqDto.getBoardTitle());
+//        board.setBoardContent(boardReqDto.getBoardContent());
+//        board.setBoardHit(0);
+//
+//        return board;
+//    }
 
     default NoticeResDto boardToNoticeResDto(Board board) {
         if (board == null) return null;
@@ -39,5 +40,8 @@ public interface BoardMapper {
     }
 
     List<NoticeResDto> boardListToNoticeResDtoList(List<Board> boardList);
+
+
+
 
 }

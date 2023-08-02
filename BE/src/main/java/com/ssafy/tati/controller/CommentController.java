@@ -1,6 +1,6 @@
 package com.ssafy.tati.controller;
 
-import com.ssafy.tati.dto.req.CommentReqDto;
+import com.ssafy.tati.dto.req.PostCommentReqDto;
 import com.ssafy.tati.dto.req.PutCommentReqDto;
 import com.ssafy.tati.dto.res.CommentResDto;
 import com.ssafy.tati.entity.Comment;
@@ -32,11 +32,11 @@ public class CommentController {
     @Operation(summary = "스터디 게시판 댓글 작성 요청", description = "댓글을 작성 후 글 작성 요청", responses = {
             @ApiResponse(responseCode = "200", description = "댓글 등록 성공"),
     })
-    @PostMapping("/comment/create")
-    public ResponseEntity<?> createStudyNotice(@RequestBody CommentReqDto commentReqDto) {
-        Comment comment = commentMapper.commentReqDtoToComment(commentReqDto);
-        Integer memberId = commentReqDto.getMemberId();
-        Integer boardId = commentReqDto.getBoardId();
+    @PostMapping("/comment")
+    public ResponseEntity<?> createStudyNotice(@RequestBody PostCommentReqDto postCommentReqDto) {
+        Integer memberId = postCommentReqDto.getMemberId();
+        Integer boardId = postCommentReqDto.getBoardId();
+        Comment comment = commentMapper.commentReqDtoToComment(postCommentReqDto);
 
         commentService.saveComment(memberId, boardId, comment);
 
@@ -69,7 +69,7 @@ public class CommentController {
             @ApiResponse(responseCode = "200", description = "댓글 리스트"),
     })
     @GetMapping("/{boardId}/comment")
-    public ResponseEntity<?> listComment(@PathVariable Integer boardId, @RequestParam(required = false) @PageableDefault(page = 0, size = 10, sort = "created_date", direction = Sort.Direction.ASC)Pageable pageable) {
+    public ResponseEntity<?> listComment(@PathVariable Integer boardId, @RequestParam(required = false) @PageableDefault(page = 0, size = 10, sort = "created_date", direction = Sort.Direction.ASC) Pageable pageable) {
         Page<Comment> commentPage = commentService.selectAllCommentByBoardId(boardId, pageable);
 
         Page<CommentResDto> commentResDtoPage = commentPage.map(c -> new CommentResDto(c));
