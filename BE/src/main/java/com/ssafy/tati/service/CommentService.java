@@ -38,4 +38,19 @@ public class CommentService {
         comment.setBoard(board);
         commentRepository.save(comment);
     }
+
+    public void updateComment(Integer memberId, Comment comment) {
+        Optional<Comment> optionalComment = commentRepository.findById(comment.getCommentId());
+
+        if (optionalComment.isEmpty()){
+            throw new RuntimeException();
+        }
+        Comment modifyComment = optionalComment.get();
+
+        if (modifyComment.getMember().getMemberId().equals(memberId)) {
+            modifyComment.setCommentContent(comment.getCommentContent());
+        } else {
+            throw new RuntimeException();
+        }
+    }
 }
