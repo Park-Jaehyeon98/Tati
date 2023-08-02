@@ -105,4 +105,10 @@ public class StudyService {
         List<Study> studyList = studyRepository.findAll();
         return studyList;
     }
+
+    @Transactional(readOnly = true)
+    public List<Study> getSearchStudy(Integer pageNum, Integer categoryId, String keyword){
+        List<Study> searchStudyList = studyRepository.findByCategoryAndStudyNameContaining(categoryId, keyword);
+        return searchStudyList;
+    }
 }

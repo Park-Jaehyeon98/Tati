@@ -69,12 +69,24 @@ public class StudyController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @Operation(summary = "스터디 전체 조회", )
+    @Operation(summary = "스터디 전체 조회", description = "스터디 페이지 접속 시 모든 스터디 내림차순으로 조회", responses = {
+            @ApiResponse(responseCode = "200", description = "스터디 전체 조회 성공")})
 
     @GetMapping
     public ResponseEntity<?> selectAllStudy(){
         List<Study> studylist = studyService.getStudyList();
-        List<StudyAllListResDto> studyAllListResDtoList = studyMapper.studyListToStudyAllListRedDtoList(studylist);
+        List<StudyAllListResDto> studyAllListResDtoList = studyMapper.studyListToStudyAllListResDtoList(studylist);
+        return new ResponseEntity<>(studyAllListResDtoList, HttpStatus.OK);
+    }
+
+    @Operation(summary = "카테고리, 키워드로 스터디 조회", description = "스터디 페이지에서 카테고리와 키워드로 스터디 리스트를 내림차순으로 조회", responses = {
+            @ApiResponse(responseCode = "200", description = "스터디 카테고리, 키워드 조회 성공")})
+    @GetMapping("/search")
+    public ResponseEntity<?> searchStudy(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                         @RequestParam(value = "categoryId", defaultValue = "1") Integer categoryId,
+                                         @RequestParam(value = "keyword", defaultValue = "") String keyword){
+        List<Study> studyList = studyService.getSearchStudy(pageNum, categoryId, keyword);
+        List<StudyAllListResDto> studyAllListResDtoList = studyMapper.studyListToStudyAllListResDtoList(studyList);
         return new ResponseEntity<>(studyAllListResDtoList, HttpStatus.OK);
     }
 
