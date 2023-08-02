@@ -35,7 +35,7 @@ export default function AuthModal({ setAuthModal }) {
   const handlecheck = () => {
     // console.log(userInfo)
     console.log('회원가입수정 입장=========================================')
-    console.log(`memberId: ${memberId}`)
+    console.log(`email: ${email}`)
     console.log(`password: ${password}`)
     console.log('회원가입수정 입장=========================================')
 

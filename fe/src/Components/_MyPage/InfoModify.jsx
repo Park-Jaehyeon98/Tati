@@ -10,10 +10,11 @@ export default function InfoModify() {
 
   // 로컬의 유저pk값을 불러오기
   const memberId = localStorage.getItem('memberId');
+  const nick = localStorage.getItem('memberNickName');
   // 회원정보 리덕스에서 가져오기
   const userInfo = useSelector((state) => state.userInfo);
   // 닉네임 중복 확인
-  const [nickName, serNickName] = useState("")
+  const [nickName, serNickName] = useState(nick)
   // 회원정보
   const [userData, setUserData] = useState(userInfo);
 
@@ -27,7 +28,7 @@ export default function InfoModify() {
     console.log(`닉네임 ${nickName}`)
     axios
       .post(`http://${process.env.REACT_APP_URL}:8080/member/nickname-check`, {
-        nickName: nickName,
+        memberNickName: nickName,
       })
       .then((res) => {
         alert("중복체크성공");
@@ -39,24 +40,45 @@ export default function InfoModify() {
   // 
 
   // 프로필
-  const [profile, setProfile] = useState('')
+  const [file, setFile] = useState(null)
 
-  const handleProfileChange = (e) => {
+  const handleFileChange = (e) => {
     const { value } = e.target;
-    setProfile(value)
+    setFile(value)
+    // setFile(e.target.files[0])
   };
 
 
   // 유저의 pk 와 닉네임을 보냄
   // 요청 성공 후 다시 회원정보 수정 페이지로
   const handleNickNameupdata = () => {
-    console.log(`memberId - ${memberId} nickName - ${nickName}`)
+    console.log(`memberId - ${memberId} nickName - ${nickName} file - ${file}`)
+    
+    const putMemberReqDto = new FormData();
+    const files = new FormData();
+    files.append('file',file)
+
+    const data = {
+      "memberId": memberId,
+      "memberNickName": nickName,
+    };
+
+    putMemberReqDto.append('putMemberReqDto', JSON.stringify(data));
+    // files.append('putMemberReqDto', data);
+    
+    console.log('-------------------------------------------------')
     // window.history.back();
-    axios.put(`http://${process.env.REACT_APP_URL}:8080/member/mypage/modifyNickName`, {
-      memberId,
-      nickName
+    for (const [key, value] of putMemberReqDto.entries()) {
+      console.log(key, value);
+    }
+    axios.put(`http://${process.env.REACT_APP_URL}:8080/member/mypage/modifyNickName`, {data:{'file':files,'putMemberReqDto':putMemberReqDto}},{
+    // axios.put(`http://${process.env.REACT_APP_URL}:8080/member/mypage/modifyNickName`, files, {
+      headers: {
+        "Content-Type": "multipart/form-data", // 파일 업로드를 위해 Content-Type을 multipart/form-data로 설정
+      },
     })
       .then((res) => {
+        console.log(res);
         alert("수정됨");
       })
       .catch((err) => {
@@ -84,7 +106,9 @@ export default function InfoModify() {
     if (password !== password2) {
       alert('비밀번호가 일치하자 않습니다.')
     }
+    console.log(`비밀번호 변경: ${password} memberId: ${memberId}`)
     axios.put(`http://${process.env.REACT_APP_URL}:8080/member/mypage/modifyPassword`, {
+      memberId,
       password
     })
       .then((res) => {
@@ -132,7 +156,8 @@ export default function InfoModify() {
         </p>
         <p className={style.InfoModify_profile}>
           프로필
-          <input name="profile" value={profile} onChange={handleProfileChange} className={style.InfoModify_email} type="file" />
+          {/* <input name="profile" value={file} onChange={handleFileChange} className={style.InfoModify_email} type="file" /> */}
+          <input name="profile" onChange={handleFileChange} className={style.InfoModify_email} type="file" />
           <input type="button" value="업로드" />
         </p>
         <p>
