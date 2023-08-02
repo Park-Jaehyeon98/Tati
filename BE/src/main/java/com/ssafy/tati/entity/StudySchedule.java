@@ -1,8 +1,6 @@
 package com.ssafy.tati.entity;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,6 +8,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "studyScheduleId")
+@NoArgsConstructor
+@AllArgsConstructor
 public class StudySchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

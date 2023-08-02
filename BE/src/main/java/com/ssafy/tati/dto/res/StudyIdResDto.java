@@ -10,7 +10,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudyModifyResDto {
+@Schema(description = "스터디 식별번호 ResDto")
+public class StudyIdResDto {
     @Schema(description = "스터디 식별번호")
     private Integer studyId;
 }

@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Schema(description = "스터디 상세 페이지")
+@Schema(description = "스터디 상세 ResDto")
 public class StudyDetailResDto {
     @Schema(description = "스터디 식별번호")
     private Integer studyId;
