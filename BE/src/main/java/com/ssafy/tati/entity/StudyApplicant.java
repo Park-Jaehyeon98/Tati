@@ -19,11 +19,11 @@ public class StudyApplicant {
     @Column(name = "study_applicant_deposit", columnDefinition = "int", nullable = false)
     private Integer studyApplicantDeposit;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "study_id")
     private Study studyId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id")
     private Member memberId;
 }

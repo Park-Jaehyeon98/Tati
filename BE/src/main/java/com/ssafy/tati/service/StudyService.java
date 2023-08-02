@@ -42,6 +42,7 @@ public class StudyService {
         studyScheduleRepository.save(studySchedule);
     }
 
+    @Transactional(readOnly = true)
     public Study getStudyDetail(Integer studyId){
         Optional<Study> optionalStudy = studyRepository.findById(studyId);
         if(!optionalStudy.isPresent()){
@@ -90,6 +91,8 @@ public class StudyService {
             throw new RuntimeException();
         }
         Member member = optionalMember.get();
+
+
         if(study.getStudyHost().equals(member.getMemberNickName())){
             studyRepository.deleteById(studyId);
         }else {
@@ -97,5 +100,9 @@ public class StudyService {
         }
     }
 
-
+    @Transactional(readOnly = true)
+    public List<Study> getStudyList() {
+        List<Study> studyList = studyRepository.findAll();
+        return studyList;
+    }
 }

@@ -28,7 +28,7 @@ public class Attendance {
     @Column(name = "penalty_amt", columnDefinition = "smallint", nullable = false)
     private Short penaltyAmt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "study_member_id")
     private StudyMember studyMember;
 }
