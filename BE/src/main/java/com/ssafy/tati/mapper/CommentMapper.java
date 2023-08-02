@@ -1,7 +1,6 @@
 package com.ssafy.tati.mapper;
 
 import com.ssafy.tati.dto.req.CommentReqDto;
-import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.entity.Comment;
 import org.mapstruct.Mapper;
 

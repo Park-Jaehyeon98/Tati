@@ -7,8 +7,11 @@ import com.ssafy.tati.repository.BoardRepository;
 import com.ssafy.tati.repository.CommentRepository;
 import com.ssafy.tati.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.Optional;
 
@@ -67,5 +70,13 @@ public class CommentService {
         } else {
             throw new RuntimeException();
         }
+    }
+
+    public Page<Comment> selectAllCommentByBoardId(Integer boardId, Pageable pageable) {
+//        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+//        if (optionalBoard.isEmpty()){
+//            throw new RuntimeException();
+//        }
+        return commentRepository.findByBoardId(boardId, pageable);
     }
 }

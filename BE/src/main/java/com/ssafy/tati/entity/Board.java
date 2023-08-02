@@ -8,6 +8,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -36,6 +38,9 @@ public class Board {
     @ManyToOne
     @JoinColumn(name = "study_id")
     private Study study;
+
+    @OneToMany(mappedBy = "board")
+    List<Comment> commentList = new ArrayList<>();
 
     @CreatedDate
     private LocalDateTime createdDate;
