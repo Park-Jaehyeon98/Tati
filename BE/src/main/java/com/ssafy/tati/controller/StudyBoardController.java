@@ -52,14 +52,24 @@ public class StudyBoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @Operation(summary = "공지글 수정 요청", description = "스터디 공지글 수정 요청", responses = {
-            @ApiResponse(responseCode = "200", description = "공지글 수정 성공"),
+    @Operation(summary = "공지글 / 게시글 수정 요청", description = "스터디 공지글 / 게시글 수정 요청", responses = {
+            @ApiResponse(responseCode = "200", description = "글 수정 성공"),
     })
     @PutMapping(value = {"/notice/modify", "/board/modify"})
     public ResponseEntity<?> modifyBoard(@RequestBody PutBoardReqDto putBoardReqDto) {
         Board board = putBoardMapper.putBoardReqDtoToBoard(putBoardReqDto);
         Integer memberId = putBoardReqDto.getMemberId();
         boardService.updateBoard(memberId, board);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @Operation(summary = "공지글 / 게시글 삭제 요청", description = "스터디 공지글 / 게시글 삭제 요청", responses = {
+            @ApiResponse(responseCode = "200", description = "글 삭제 성공"),
+    })
+    @DeleteMapping(value = {"/notice/{boardId}/delete/{memberId}", "/board/{boardId}/delete/{memberId}"})
+    public ResponseEntity<?> removeBoardById(@PathVariable Integer boardId, @PathVariable Integer memberId) {
+        boardService.delete(boardId, memberId);
 
         return new ResponseEntity(HttpStatus.OK);
     }
