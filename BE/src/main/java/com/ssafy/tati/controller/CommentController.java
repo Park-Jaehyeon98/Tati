@@ -54,4 +54,14 @@ public class CommentController {
 
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @Operation(summary = "댓글 삭제 요청", description = "댓글 삭제 요청", responses = {
+            @ApiResponse(responseCode = "200", description = "댓글 삭제 성공"),
+    })
+    @DeleteMapping("/comment/{commentId}/delete/{memberId}")
+    public ResponseEntity<?> removeBoardById(@PathVariable Integer commentId, @PathVariable Integer memberId) {
+        commentService.deleteComment(commentId, memberId);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

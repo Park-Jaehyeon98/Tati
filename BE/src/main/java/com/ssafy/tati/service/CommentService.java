@@ -53,4 +53,19 @@ public class CommentService {
             throw new RuntimeException();
         }
     }
+
+    public void deleteComment(Integer commentId, Integer memberId) {
+        Optional<Comment> optionalComment = commentRepository.findById(commentId);
+
+        if (optionalComment.isEmpty()){
+            throw new RuntimeException();
+        }
+        Comment comment = optionalComment.get();
+
+        if (comment.getMember().getMemberId().equals(memberId)) {
+            commentRepository.deleteById(commentId);
+        } else {
+            throw new RuntimeException();
+        }
+    }
 }
