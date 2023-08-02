@@ -29,8 +29,8 @@
   font-size: 11px;
   font-weight: bold;
   display: flex;
-flex-wrap: wrap; /* 컨테이너 크기를 넘어가면 자동으로 다음 줄로 넘어감 */
-gap: 10px; /* 요소들 사이의 간격을 조정 */
+  flex-wrap: wrap; /* 컨테이너 크기를 넘어가면 자동으로 다음 줄로 넘어감 */
+  gap: 10px; /* 요소들 사이의 간격을 조정 */
 }
 
 .pagination {
@@ -38,7 +38,7 @@ gap: 10px; /* 요소들 사이의 간격을 조정 */
   justify-content: center;
   gap: 10px; /* 버튼 사이에 간격을 주기 위해 gap 설정 */
   position: absolute;
-  top: 980px;
+  top: 860px;
   left: 650px;
   padding: 10px;
 }

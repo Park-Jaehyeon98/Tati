@@ -12,7 +12,7 @@ export default function JoinStudy(){
     navigate(tab);
   };
 
-  const itemsPerPage = 12;
+  const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
   const NoticeItem = ({ point, date, day }) => {
