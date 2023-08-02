@@ -1,11 +1,10 @@
-import React from "react";
-import style from './NoticePage.module.css'
-
-
+import React, { useState } from "react";
+import style from './NoticePage.module.css';
 
 export default function NoticePage() {
+  const itemsPerPage = 17;
+  const [currentPage, setCurrentPage] = useState(1);
 
-  // 공지사항들
   const NoticeItem = ({ text, index, date }) => {
     return (
       <div>
@@ -25,6 +24,42 @@ export default function NoticePage() {
     { text: '안녕', date: '23.07.31' },
     { text: '안녕하세요', date: '23.08.01' },
     { text: '안녕', date: '23.07.31' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
+    { text: '안녕하세요', date: '23.08.01' },
+    { text: '안녕', date: '23.07.31' },
     { text: '안녕하세요', date: '23.08.01' },
     { text: '안녕', date: '23.07.31' },
     { text: '안녕하세요', date: '23.08.01' },
@@ -32,6 +67,12 @@ export default function NoticePage() {
     { text: '안녕하세요', date: '23.08.01' },
     { text: '안녕', date: '23.07.31' },
   ];
+
+  const totalPages = Math.ceil(notices.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentNotices = notices.slice(startIndex, endIndex);
 
   return (
     <div className={style.Notice}>
@@ -41,18 +82,28 @@ export default function NoticePage() {
 
       <div className={style.NoticeItem_box}>
         <div className={style.box}>
-          {notices.map((notice, index) => (
+          {currentNotices.map((notice, index) => (
             <NoticeItem
-              key={index}
+              key={startIndex + index}
               text={notice.text}
               date={notice.date}
-              index={index}
+              index={startIndex + index}
             />
           ))}
         </div>
+      <div className={style.pagination}>
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+          <button
+            key={pageNum}
+            onClick={() => setCurrentPage(pageNum)}
+            disabled={currentPage === pageNum}
+          >
+            {pageNum}
+          </button>
+        ))}
       </div>
+      </div>
+
     </div>
-  )
+  );
 }
-
-

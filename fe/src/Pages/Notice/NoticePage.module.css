@@ -3,9 +3,9 @@
   position: absolute;
   z-index: 2;
   left: 120px;
-  top: 150px;
-  width: 300px;
-  height: 250px;
+  top: 100px;
+  width: 250px;
+  height: 200px;
   background-color: bisque;
 }
 .p_text{
@@ -14,26 +14,26 @@
 .NoticePage_title {
   position: relative;
   z-index: 3;
-  padding-top: 50px;
-  padding-left: 50px;
+  padding-top: 30px;
+  padding-left: 30px;
   font-size: 50px;
 }
 
 .NoticeItem_box {
   position: relative; /* 추가: NoticeItem_box의 position을 relative로 설정 */
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 540;
   margin-top: 180px;
-  margin-left: 250px;
+  margin-left: 210px;
   margin-bottom: 180px;
-  width: 1200px;
+  width: 1130px;
   height: 1200px;
   background-color: aliceblue;
   z-index: 1; /* 추가: NoticeItem_box의 쌓이는 순서를 설정 */
 }
 
 .NoticeItem_text{
-  margin-left: 100px;
+  margin-left: 70px;
   width: 1000px;
 }
 
@@ -43,5 +43,14 @@
 
 .text{
   margin: 0px;
-  margin-left: 900px;
+  margin-left: 940px;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* 버튼 사이에 간격을 주기 위해 gap 설정 */
+  position: absolute;
+  top: 1100px;
+  left: 500px;
+  padding: 10px;
 }
