@@ -26,7 +26,7 @@ public class StudySchedule {
     @Column(name = "study_end_time", nullable = false)
     private String studyEndTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "study_id")
     private Study study;
 
