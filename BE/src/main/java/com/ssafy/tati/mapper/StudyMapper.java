@@ -4,7 +4,6 @@ import com.ssafy.tati.dto.req.StudyReqDto;
 import com.ssafy.tati.dto.req.StudyScheduleReqDto;
 import com.ssafy.tati.dto.res.StudyAllListResDto;
 import com.ssafy.tati.dto.res.StudyDetailResDto;
-import com.ssafy.tati.dto.res.StudyListResDto;
 import com.ssafy.tati.entity.Category;
 import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.entity.StudySchedule;

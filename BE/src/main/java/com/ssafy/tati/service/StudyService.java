@@ -1,7 +1,7 @@
 package com.ssafy.tati.service;
 
 import com.ssafy.tati.dto.req.StudyModifyReqDto;
-import com.ssafy.tati.dto.res.StudyListResDto;
+import com.ssafy.tati.dto.res.StudyDeleteResDto;
 import com.ssafy.tati.dto.res.StudyModifyResDto;
 import com.ssafy.tati.entity.Category;
 import com.ssafy.tati.entity.Member;
@@ -12,8 +12,6 @@ import com.ssafy.tati.repository.MemberRepository;
 import com.ssafy.tati.repository.StudyRepository;
 import com.ssafy.tati.repository.StudyScheduleRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,8 +32,10 @@ public class StudyService {
         if(!category.isPresent()){
             throw new RuntimeException();
         }
+//        study.setCategory(category.get());
         study.setCategory(category.get());
         studyRepository.save(study);
+
     }
 
     public void createStudySchedule(StudySchedule studySchedule){
@@ -79,22 +79,23 @@ public class StudyService {
     }
 
     @Transactional
-    public void removeStudy(Integer studyId, Integer memberId){
+    public StudyDeleteResDto removeStudy(Integer studyId, Integer memberId){
         Optional<Study> optionalStudy = studyRepository.findById(studyId);
         if(!optionalStudy.isPresent()){
             throw new RuntimeException();
         }
         Study study = optionalStudy.get();
-
+        StudyDeleteResDto studyDeleteResDto = new StudyDeleteResDto();
+        studyDeleteResDto.setStudyName(study.getStudyName());
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         if(!optionalMember.isPresent()){
             throw new RuntimeException();
         }
         Member member = optionalMember.get();
 
-
         if(study.getStudyHost().equals(member.getMemberNickName())){
             studyRepository.deleteById(studyId);
+            return studyDeleteResDto;
         }else {
             throw new RuntimeException();
         }
@@ -109,6 +110,7 @@ public class StudyService {
     @Transactional(readOnly = true)
     public List<Study> getSearchStudy(Integer pageNum, Integer categoryId, String keyword){
         List<Study> searchStudyList = studyRepository.findByCategoryAndStudyNameContaining(categoryId, keyword);
+        System.out.println("서비스 : " + searchStudyList);
         return searchStudyList;
     }
 }
