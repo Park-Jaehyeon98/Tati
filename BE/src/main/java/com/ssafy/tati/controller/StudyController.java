@@ -92,4 +92,5 @@ public class StudyController {
         return new ResponseEntity<>(studyAllListResDtoList, HttpStatus.OK);
     }
 
+
 }
