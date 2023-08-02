@@ -1,9 +1,11 @@
 .calendar{
-  width: 600px;
+  width: 700px;
   height: 600px; 
   margin-left: 100px;
   margin-top: 30px;
+  font-size: 13px;
 }
+
 .fc-day-sun a {
   color: red;
 }

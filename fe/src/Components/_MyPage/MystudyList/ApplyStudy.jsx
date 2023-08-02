@@ -86,9 +86,9 @@ export default function ApplyStudy(){
     <div className={style.point}>
       <h1>신청한스터디</h1>
       <nav className={style.point_nav_btn}>
-        <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/MyPagePoint")}>가입된스터디</button>
+        <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/JoinStudy")}>가입된스터디</button>
         <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/ApplyStudy")}>신청한스터디</button>
-        <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/PointHistory")}>내 작성글</button>
+        <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/MyPagePost")}>내 작성글</button>
       </nav>
 
       <div className={style.content}>

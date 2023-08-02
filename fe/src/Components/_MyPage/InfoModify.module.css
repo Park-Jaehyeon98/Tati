@@ -72,3 +72,8 @@ display: flex;
   font-size: 25px;
   margin-left: 42px;
 }
+
+.file_img{
+  width: 250px;
+  height: 150px;
+}

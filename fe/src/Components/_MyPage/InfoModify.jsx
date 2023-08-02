@@ -42,10 +42,16 @@ export default function InfoModify() {
   // 프로필
   const [file, setFile] = useState(null)
 
-  const handleFileChange = (e) => {
-    const { value } = e.target;
-    setFile(value)
-    // setFile(e.target.files[0])
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    console.log(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFile(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
 
@@ -54,25 +60,21 @@ export default function InfoModify() {
   const handleNickNameupdata = () => {
     console.log(`memberId - ${memberId} nickName - ${nickName} file - ${file}`)
     
-    const putMemberReqDto = new FormData();
-    const files = new FormData();
-    files.append('file',file)
+    const formData = new FormData();
+    formData.append('file',file)
 
-    const data = {
+    const putMemberReqDto = {
       "memberId": memberId,
       "memberNickName": nickName,
     };
-
-    putMemberReqDto.append('putMemberReqDto', JSON.stringify(data));
-    // files.append('putMemberReqDto', data);
     
+    formData.append('putMemberReqDto', JSON.stringify(putMemberReqDto));
     console.log('-------------------------------------------------')
     // window.history.back();
-    for (const [key, value] of putMemberReqDto.entries()) {
+    for (const [key, value] of formData.entries()) {
       console.log(key, value);
     }
-    axios.put(`http://${process.env.REACT_APP_URL}:8080/member/mypage/modifyNickName`, {data:{'file':files,'putMemberReqDto':putMemberReqDto}},{
-    // axios.put(`http://${process.env.REACT_APP_URL}:8080/member/mypage/modifyNickName`, files, {
+    axios.put(`http://${process.env.REACT_APP_URL}:8080/member/mypage/modifyNickName`, formData,{
       headers: {
         "Content-Type": "multipart/form-data", // 파일 업로드를 위해 Content-Type을 multipart/form-data로 설정
       },
@@ -127,7 +129,6 @@ export default function InfoModify() {
   const handleWithdrawal = () => {
     const email = 'rlaalsrbs15@naver.com'
     axios.delete(`http://${process.env.REACT_APP_URL}:8080/member/mypage/remove/${email}`, {
-
     })
       .then((res) => {
         console.log(res)
@@ -156,10 +157,10 @@ export default function InfoModify() {
         </p>
         <p className={style.InfoModify_profile}>
           프로필
-          {/* <input name="profile" value={file} onChange={handleFileChange} className={style.InfoModify_email} type="file" /> */}
-          <input name="profile" onChange={handleFileChange} className={style.InfoModify_email} type="file" />
+          <input name="profile" accept="image/*"  onChange={handleImageChange} className={style.InfoModify_email} type="file" />
           <input type="button" value="업로드" />
         </p>
+        {file && <img src={file} alt="Uploaded" className={style.file_img}/>}
         <p>
           닉네임
           <input name="NickName"

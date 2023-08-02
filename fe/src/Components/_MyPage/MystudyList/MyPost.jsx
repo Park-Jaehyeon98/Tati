@@ -4,7 +4,7 @@ import axios from "axios";
 import style from './ApplyStudy.module.css'
 import { useNavigate } from "react-router-dom";
 
-export default function JoinStudy(){
+export default function MyPost(){
 
   const navigate = useNavigate();
 
@@ -84,7 +84,7 @@ export default function JoinStudy(){
 
   return(
     <div className={style.point}>
-      <h1>가입스터디</h1>
+      <h1>내 작성글</h1>
       <nav className={style.point_nav_btn}>
         <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/JoinStudy")}>가입된스터디</button>
         <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/ApplyStudy")}>신청한스터디</button>
