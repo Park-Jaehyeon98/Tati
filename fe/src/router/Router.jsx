@@ -7,7 +7,6 @@ import style from "./Router.module.css"
 import NoticePage from "../Pages/Notice/NoticePage";
 import NoticeCreate from "../Pages/Notice/NoticeCreate";
 
-import Study from "../Pages/Study/Study";
 import MyPage from "../Pages/MyPage/_MyPage";
 import InfoModify from "../Components/_MyPage/InfoModify";
 import SignUp from "../Pages/Auth/SignUp";
@@ -94,19 +93,25 @@ export default function Router() {
       </div>
 
       <Routes>
+
+        <Route path="/" element={<Main />} />
+
+        {/* 공지사항 */}
         <Route path="/NoticePage" element={<NoticePage />} />
         <Route path="/NoticeCreate" element={<NoticeCreate />} />
 
+        {/* FAQ */}
 
+
+        {/* Auth (회원가입 로그인 로그아웃) */}
         <Route path="/SignUp" element={<SignUp />} />
-
         <Route path="/Login" element={<Login />} />
         <Route path="/Logout" element={<Login />} />
 
-        <Route path="/" element={<Main />} />
+
         <Route path="/payment/success" element={<KakaoPay />} />
 
-
+        {/* 마이페이지 */}
         <Route path="/MyPage" element={<MyPage />} />
         <Route path="/MyPage/MyPageInfoModify" element={<MyPageInfoModify />} />
         <Route path="/MyPage/MyPageStudyList" element={<MyPageStudyList />} />
@@ -114,11 +119,25 @@ export default function Router() {
         <Route path="/MyPage/PointHistory" element={<MyPagePointHistory />} />
         <Route path="/MyPage/PointWithdraw" element={<MyPagePointWithdraw />} />
 
-        <Route path="/Study" element={<Study />} />
+        {/* 스터디 CRUD */}
+        <Route exact path="/Study" element={<StudyList />} />
         <Route path="/StudyCreate" element={<StudyCreate />} />
-        <Route path="/StudyList" element={<StudyList />} />
         <Route path="/Study/:studyId" element={<StudyDetail />} />
         <Route path="/StudyModify/:studyId" element={<StudyModify />} />
+
+        {/* 스터디 공지사항 */}
+        {/* <Route path="/Study/:studyId/Notice" element={}/>
+        <Route path="/Study/:studyId/Notice/:boardId" element={}/>
+        <Route path="/Study/:studyId/Notice/Create" element={}/> */}
+
+        {/* 스터디 게시판 */}
+        {/* <Route path="/Study/:studyId/Board" element={}/>
+        <Route path="/Study/:studyId/Board/:boardId" element={}/>
+        <Route path="/Study/:studyId/Board/Create" element={}/> */}
+
+        {/* 스터디 웹rtc 입실 */}
+        {/* <Route path="/Study/:studyId/Board/Create" element={}/> */}
+
 
       </Routes>
     </BrowserRouter>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import StudyDeleteButton from '../../Components/Study/StudyDeleteButton';
+import { apiClient } from '../../api/apiClient';
 
 const StudyModify = () => {
     const navigate = useNavigate();
@@ -21,8 +22,9 @@ const StudyModify = () => {
     });
 
     useEffect(() => {
-        axios.get(`http://192.168.31.58:8080/study/${studyId}`
-        )
+        // axios.get(`http://192.168.31.58:8080/study/${studyId}`
+        // )
+        apiClient.get(`study/${studyId}`)
             .then((res) => {
                 console.log(res.data);
                 setStudyData(res.data);
@@ -68,12 +70,15 @@ const StudyModify = () => {
 
     const handleStudyModifySubmit = () => {
         // 
-        axios({
-            method: 'put',
-            url: `http://192.168.31.58:8080/study/${studyId}/modify`,
-            header: {},
-            data: studyData
-        })
+
+        // axios({
+        //     method: 'put',
+        //     url: `http://192.168.31.58:8080/study/${studyId}/modify`,
+        //     header: {},
+        //     data: studyData
+        // })
+        // 모듈화
+        apiClient.put(`study/${studyId}/modify`, studyData)
             .then((res) => {
                 console.log(res);
                 setStudyData(res.data);
