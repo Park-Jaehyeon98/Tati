@@ -2,6 +2,7 @@ package com.ssafy.tati.controller;
 
 import com.ssafy.tati.dto.req.BoardReqDto;
 import com.ssafy.tati.dto.req.PutBoardReqDto;
+import com.ssafy.tati.dto.res.NoticeResDto;
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.mapper.BoardMapper;
 import com.ssafy.tati.mapper.PutBoardMapper;
@@ -69,8 +70,19 @@ public class StudyBoardController {
     })
     @DeleteMapping(value = {"/notice/{boardId}/delete/{memberId}", "/board/{boardId}/delete/{memberId}"})
     public ResponseEntity<?> removeBoardById(@PathVariable Integer boardId, @PathVariable Integer memberId) {
-        boardService.delete(boardId, memberId);
+        boardService.deleteBoard(boardId, memberId);
 
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @Operation(summary = "스터디 공지글 상세 조회 요청", description = "스터디 공지글 상세 조회 요청", responses = {
+            @ApiResponse(responseCode = "200", description = "하나의 스터디 공지글 상세"),
+    })
+    @GetMapping(value = {"/notice/{boardId}","/board/{boardId}" })
+    public ResponseEntity<?> getBoardById(@PathVariable Integer boardId) {
+        Board board = boardService.selectBoardById(boardId);
+        NoticeResDto noticeResDto = boardMapper.boardToNoticeResDto(board);
+
+        return new ResponseEntity(noticeResDto, HttpStatus.OK);
     }
 }

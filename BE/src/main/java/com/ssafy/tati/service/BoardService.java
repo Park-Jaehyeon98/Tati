@@ -38,14 +38,18 @@ public class BoardService {
     }
 
     // 게시글 조회
-    public Board findById(Integer boardId){
+    public Board selectBoardById(Integer boardId){
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        optionalBoard.get().setBoardHit(optionalBoard.get().getBoardHit() + 1);
-        return optionalBoard.get();
+        if (!optionalBoard.isPresent()){
+            throw new RuntimeException();
+        }
+        Board board = optionalBoard.get();
+        board.setBoardHit(board.getBoardHit() + 1);
+        return board;
     }
     
     //게시글 삭제
-    public void delete(Integer boardId, Integer memberId) {
+    public void deleteBoard(Integer boardId, Integer memberId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
 
         if (!optionalBoard.isPresent()){

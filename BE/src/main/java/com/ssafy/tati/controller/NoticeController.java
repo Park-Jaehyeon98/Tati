@@ -56,7 +56,7 @@ public class NoticeController {
     })
     @GetMapping("/{boardId}")
     public ResponseEntity<?> getNoticeById(@PathVariable Integer boardId) {
-        Board board = boardService.findById(boardId);
+        Board board = boardService.selectBoardById(boardId);
         NoticeResDto noticeResDto = boardMapper.boardToNoticeResDto(board);
 
         return new ResponseEntity(noticeResDto, HttpStatus.OK);
@@ -67,7 +67,7 @@ public class NoticeController {
     })
     @DeleteMapping("/{boardId}/delete/{memberId}")
     public ResponseEntity<?> removeNoticeById(@PathVariable Integer boardId, @PathVariable Integer memberId) {
-        boardService.delete(boardId, memberId);
+        boardService.deleteBoard(boardId, memberId);
 
         return new ResponseEntity(HttpStatus.OK);
     }
