@@ -35,6 +35,25 @@ public class S3Service implements FileService {
         return amazonS3.getUrl(bucket, s3FileName).toString();
     }
 
+    @Override
+    public byte[] downloadFile(String fileName) throws IOException {
+        validateFileExists(fileName);
+
+        S3Object s3Object = amazonS3.getObject(bucket, fileName);
+        S3ObjectInputStream s3ObjectContent = s3Object.getObjectContent();
+
+        return IOUtils.toByteArray(s3ObjectContent);
+    }
+
+    private void validateFileExists(String fileName) throws FileNotFoundException {
+        System.out.println("fileName : " +fileName);
+        System.out.println("bucket : " +bucket);
+
+        if(!amazonS3.doesObjectExist(bucket, fileName)) {
+            System.out.println(amazonS3.doesObjectExist(bucket, fileName));
+            throw new FileNotFoundException("존재하지 않는 파일입니다.");
+        }
+    }
 
 
 

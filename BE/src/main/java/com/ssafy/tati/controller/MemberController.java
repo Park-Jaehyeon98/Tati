@@ -61,6 +61,7 @@ public class MemberController {
     @PostMapping("/nickname-check")
     public ResponseEntity<?> nickNameCheck(@RequestBody MemberReqDto memberReqDto) {
         String nickName = memberReqDto.getMemberNickName();
+        System.out.println("nickname : " +nickName);
         memberService.isExistedNickName(nickName);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -143,8 +144,21 @@ public class MemberController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+    public ResponseEntity<String> uploadFile(@RequestParam(value = "file") MultipartFile multipartFile) throws IOException {
         return new ResponseEntity<>( s3Service.uploadFile(multipartFile), HttpStatus.OK );
+    }
+
+    @GetMapping("/download")
+    public ResponseEntity<ByteArrayResource> downloadFile(String fileName) throws IOException {
+        byte[] data = s3Service.downloadFile(fileName);
+        ByteArrayResource resource = new ByteArrayResource(data);
+
+        String encodedFileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        httpHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename(encodedFileName).build());
+
+        return new ResponseEntity<>(resource, httpHeaders, HttpStatus.OK);
     }
 
 

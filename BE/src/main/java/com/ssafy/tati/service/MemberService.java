@@ -106,6 +106,13 @@ public class MemberService {
         else optionalMember.get().updatePassword(password);
     }
 
+    //이미지 수정
+    public void modifyImg(Integer memberId, String url){
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
+        else optionalMember.get().updateImg(url);
+    }
+
 
     //회원탈퇴
     public void deleteMember(int memberId){

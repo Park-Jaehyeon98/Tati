@@ -17,7 +17,7 @@ public class Member {
     private Integer memberId;
 
     //회원 이미지
-    @Column(name = "member_img")
+    @Column(name = "member_img", length = 300)
     private String img;
 
     //회원 이메일
@@ -82,4 +82,7 @@ public class Member {
     public void updatePassword(String password){
         this.password = password;
     }
+
+    //회원 이미지 수정
+    public void updateImg(String url) {this.img=url;}
 }
