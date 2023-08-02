@@ -9,7 +9,6 @@ import NoticeCreate from "../Pages/Notice/NoticeCreate";
 
 import Study from "../Pages/Study/Study";
 import MyPage from "../Pages/MyPage/_MyPage";
-import InfoModify from "../Components/_MyPage/InfoModify";
 import SignUp from "../Pages/Auth/SignUp";
 import Login from "../Pages/Auth/Login";
 import LandingPage from './../Pages/LandingPage/LandingPage';
@@ -26,6 +25,8 @@ import MyPageStudyList from "../Pages/MyPage/_MyPageStudyList";
 import MyPagePoint from "../Pages/MyPage/_MyPagePoint";
 import MyPagePointHistory from "../Pages/MyPage/_MyPagePointHistory";
 import MyPagePointWithdraw from "../Pages/MyPage/_MyPagePointWithdraw";
+
+
 // import { aX } from "@fullcalendar/core/internal-common";
 import axios from "axios";
 
@@ -113,6 +114,7 @@ export default function Router() {
         <Route path="/MyPage/MyPagePoint" element={<MyPagePoint />} />
         <Route path="/MyPage/PointHistory" element={<MyPagePointHistory />} />
         <Route path="/MyPage/PointWithdraw" element={<MyPagePointWithdraw />} />
+        <Route path="/MyPage/ApplyStudy" element={<MyPageStudyList />} />
 
         <Route path="/Study" element={<Study />} />
         <Route path="/StudyCreate" element={<StudyCreate />} />
