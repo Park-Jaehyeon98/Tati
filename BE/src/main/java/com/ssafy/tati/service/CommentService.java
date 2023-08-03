@@ -23,8 +23,8 @@ public class CommentService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
 
-    // 스터디 게시판 댓글 생성
-    public void saveComment(Integer memberId, Integer boardId, Comment comment) {
+    // 스터디 게시판 댓글 등록
+    public void addComment(Integer memberId, Integer boardId, Comment comment) {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
         if (optionalMember.isEmpty() || optionalBoard.isEmpty()){
@@ -42,7 +42,16 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
-    public void updateComment(Integer memberId, Comment comment) {
+    // 하나의 게시글에 대한 댓글 조회
+    public Page<Comment> findCommentByBoardId(Integer boardId, Pageable pageable) {
+//        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+//        if (optionalBoard.isEmpty()){
+//            throw new RuntimeException();
+//        }
+        return commentRepository.findByBoardId(boardId, pageable);
+    }
+
+    public void modifyComment(Integer memberId, Comment comment) {
         Optional<Comment> optionalComment = commentRepository.findById(comment.getCommentId());
 
         if (optionalComment.isEmpty()){
@@ -57,7 +66,7 @@ public class CommentService {
         }
     }
 
-    public void deleteComment(Integer commentId, Integer memberId) {
+    public void removeComment(Integer commentId, Integer memberId) {
         Optional<Comment> optionalComment = commentRepository.findById(commentId);
 
         if (optionalComment.isEmpty()){
@@ -72,11 +81,4 @@ public class CommentService {
         }
     }
 
-    public Page<Comment> selectAllCommentByBoardId(Integer boardId, Pageable pageable) {
-//        Optional<Board> optionalBoard = boardRepository.findById(boardId);
-//        if (optionalBoard.isEmpty()){
-//            throw new RuntimeException();
-//        }
-        return commentRepository.findByBoardId(boardId, pageable);
-    }
 }

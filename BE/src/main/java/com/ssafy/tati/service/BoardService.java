@@ -24,8 +24,8 @@ public class BoardService {
     private final StudyRepository studyRepository;
     private final StudyMemberRepository studyMemberRepository;
 
-    // 게시글 등록
-    public void createBoard(Integer memberId, Board board){
+    // 관리자 게시글 (공지사항, FAQ) 등록
+    public void addBoard(Integer memberId, Board board){
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         if (optionalMember.isEmpty()){
             throw new RuntimeException();
@@ -40,66 +40,8 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    // 게시글 조회
-    public Board selectBoardById(Integer boardId){
-        Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        if (!optionalBoard.isPresent()){
-            throw new RuntimeException();
-        }
-        Board board = optionalBoard.get();
-        board.setBoardHit(board.getBoardHit() + 1);
-        return board;
-    }
-    
-    //게시글 삭제
-    public void deleteBoard(Integer boardId, Integer memberId) {
-        Optional<Board> optionalBoard = boardRepository.findById(boardId);
-
-        if (!optionalBoard.isPresent()){
-            throw new RuntimeException();
-        }
-        Board board = optionalBoard.get();
-
-        if (board.getMember().getMemberId().equals(memberId)) {
-            boardRepository.deleteById(boardId);
-        } else {
-            throw new RuntimeException();
-        }
-    }
-
-    // boardType에 맞는 모든 게시글 조회
-    public List<Board> selectAllByBoardType(char boardType){
-        return boardRepository.findByBoardType(boardType);
-    }
-
-    // boardType과 studyId에 맞는 모든 게시글 조회
-    public List<Board> selectAllByBoardTypeAndStudyId(char boardType, Integer studyId){
-        Optional<Study> optionalStudy = studyRepository.findById(studyId);
-        if (!optionalStudy.isPresent()){
-            throw new RuntimeException();
-        }
-        Study study = optionalStudy.get();
-        return boardRepository.findByBoardTypeAndStudy(boardType, study);
-    }
-
-    public void updateBoard(Integer memberId, Board board) {
-        Optional<Board> optionalBoard = boardRepository.findById(board.getBoardId());
-
-        if (!optionalBoard.isPresent()){
-            throw new RuntimeException();
-        }
-        Board modifyBoard = optionalBoard.get();
-
-        if (modifyBoard.getMember().getMemberId().equals(memberId)) {
-            modifyBoard.setBoardTitle(board.getBoardTitle());
-            modifyBoard.setBoardContent(board.getBoardContent());
-        } else {
-            throw new RuntimeException();
-        }
-    }
-
-    // 스터디 공지글 생성
-    public void createStudyNotice(Integer memberId, Integer studyId, Board board) {
+    // 스터디 공지글 등록
+    public void addStudyNotice(Integer memberId, Integer studyId, Board board) {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         Optional<Study> optionalStudy = studyRepository.findById(studyId);
         if (optionalMember.isEmpty() || optionalStudy.isEmpty()){
@@ -117,8 +59,8 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    // 스터디 게시글 생성
-    public void createStudyBoard(Integer memberId, Integer studyId, Board board) {
+    // 스터디 게시글 등록
+    public void addStudyBoard(Integer memberId, Integer studyId, Board board) {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         Optional<Study> optionalStudy = studyRepository.findById(studyId);
         if (optionalMember.isEmpty() || optionalStudy.isEmpty()){
@@ -138,5 +80,63 @@ public class BoardService {
         boardRepository.save(board);
     }
 
+    // 게시글 단건 조회
+    public Board findBoardByBoardId(Integer boardId){
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+        if (optionalBoard.isEmpty()){
+            throw new RuntimeException();
+        }
+        Board board = optionalBoard.get();
+        board.setBoardHit(board.getBoardHit() + 1);
+        return board;
+    }
+
+    // boardType에 맞는 모든 게시글 조회
+    public List<Board> findBoardByBoardType(char boardType){
+        return boardRepository.findByBoardType(boardType);
+    }
+
+    // boardType과 studyId에 맞는 모든 게시글 조회
+    public List<Board> findBoardByBoardTypeAndStudyId(char boardType, Integer studyId){
+        Optional<Study> optionalStudy = studyRepository.findById(studyId);
+        if (optionalStudy.isEmpty()){
+            throw new RuntimeException();
+        }
+        Study study = optionalStudy.get();
+        return boardRepository.findByBoardTypeAndStudy(boardType, study);
+    }
+
+    // 게시글 변경
+    public void modifyBoard(Integer memberId, Board board) {
+        Optional<Board> optionalBoard = boardRepository.findById(board.getBoardId());
+
+        if (optionalBoard.isEmpty()){
+            throw new RuntimeException();
+        }
+        Board modifyBoard = optionalBoard.get();
+
+        if (modifyBoard.getMember().getMemberId().equals(memberId)) {
+            modifyBoard.setBoardTitle(board.getBoardTitle());
+            modifyBoard.setBoardContent(board.getBoardContent());
+        } else {
+            throw new RuntimeException();
+        }
+    }
+
+    // 게시글 삭제
+    public void removeBoard(Integer boardId, Integer memberId) {
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+
+        if (optionalBoard.isEmpty()){
+            throw new RuntimeException();
+        }
+        Board board = optionalBoard.get();
+
+        if (board.getMember().getMemberId().equals(memberId)) {
+            boardRepository.deleteById(boardId);
+        } else {
+            throw new RuntimeException();
+        }
+    }
 }
 

@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface BoardMapper {
+public interface GetBoardMapper {
 //    default Board boardReqDtoToBoard(char boardType, BoardReqDto boardReqDto) {
 //        if (boardReqDto == null) return null;
 //

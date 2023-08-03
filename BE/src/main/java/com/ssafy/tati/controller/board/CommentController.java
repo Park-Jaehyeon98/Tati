@@ -33,24 +33,35 @@ public class CommentController {
             @ApiResponse(responseCode = "200", description = "댓글 등록 성공"),
     })
     @PostMapping("/comment")
-    public ResponseEntity<?> createStudyNotice(@RequestBody PostCommentReqDto postCommentReqDto) {
+    public ResponseEntity<?> commentAdd(@RequestBody PostCommentReqDto postCommentReqDto) {
         Integer memberId = postCommentReqDto.getMemberId();
         Integer boardId = postCommentReqDto.getBoardId();
         Comment comment = commentMapper.commentReqDtoToComment(postCommentReqDto);
 
-        commentService.saveComment(memberId, boardId, comment);
+        commentService.addComment(memberId, boardId, comment);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "댓글 리스트 조회 요청", description = "댓글 리스트 요청", responses = {
+            @ApiResponse(responseCode = "200", description = "댓글 리스트"),
+    })
+    @GetMapping("/{boardId}/comment")
+    public ResponseEntity<?> commentList(@PathVariable Integer boardId, @RequestParam(required = false) @PageableDefault(page = 0, size = 10, sort = "created_date", direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<Comment> commentPage = commentService.findCommentByBoardId(boardId, pageable);
+
+        Page<CommentResDto> commentResDtoPage = commentPage.map(c -> new CommentResDto(c));
+        return new ResponseEntity(commentResDtoPage, HttpStatus.OK);
     }
 
     @Operation(summary = "댓글 수정 요청", description = "댓글 수정 요청", responses = {
             @ApiResponse(responseCode = "200", description = "댓글 수정 성공"),
     })
-    @PutMapping("/comment/modify")
-    public ResponseEntity<?> modifyBoard(@RequestBody PutCommentReqDto putCommentReqDto) {
+    @PutMapping("/comment")
+    public ResponseEntity<?> commentModify(@RequestBody PutCommentReqDto putCommentReqDto) {
         Comment comment = putCommentMapper.putCommentReqDtoToComment(putCommentReqDto);
         Integer memberId = putCommentReqDto.getMemberId();
-        commentService.updateComment(memberId, comment);
+        commentService.modifyComment(memberId, comment);
 
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -58,21 +69,11 @@ public class CommentController {
     @Operation(summary = "댓글 삭제 요청", description = "댓글 삭제 요청", responses = {
             @ApiResponse(responseCode = "200", description = "댓글 삭제 성공"),
     })
-    @DeleteMapping("/comment/{commentId}/delete/{memberId}")
-    public ResponseEntity<?> removeBoardById(@PathVariable Integer commentId, @PathVariable Integer memberId) {
-        commentService.deleteComment(commentId, memberId);
+    @DeleteMapping("/comment/{commentId}/{memberId}")
+    public ResponseEntity<?> commentRemove(@PathVariable Integer commentId, @PathVariable Integer memberId) {
+        commentService.removeComment(commentId, memberId);
 
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @Operation(summary = "댓글 리스트 조회 요청", description = "댓글 리스트 요청", responses = {
-            @ApiResponse(responseCode = "200", description = "댓글 리스트"),
-    })
-    @GetMapping("/{boardId}/comment")
-    public ResponseEntity<?> listComment(@PathVariable Integer boardId, @RequestParam(required = false) @PageableDefault(page = 0, size = 10, sort = "created_date", direction = Sort.Direction.ASC) Pageable pageable) {
-        Page<Comment> commentPage = commentService.selectAllCommentByBoardId(boardId, pageable);
-
-        Page<CommentResDto> commentResDtoPage = commentPage.map(c -> new CommentResDto(c));
-        return new ResponseEntity(commentResDtoPage, HttpStatus.OK);
-    }
 }
