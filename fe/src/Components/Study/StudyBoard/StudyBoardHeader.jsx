@@ -4,7 +4,7 @@ import { Link, redirect } from 'react-router-dom'
 
 // 스터디 공지사항 게시판 위에 있는 헤더
 
-const StudyBoardHeader = (boardType, studyId) => {
+const StudyBoardHeader = ({ boardType, studyId }) => {
     // boardType   0 : 공지 1: 스터디 공지 2: 스터디 게시판 9: FAQ
 
     return (
@@ -46,6 +46,18 @@ const StudyBoardHeader = (boardType, studyId) => {
 
                 {/* 스터디 메인으로 가는 버튼 */}
                 <div className={styles.content}>
+
+                    {boardType === 2 ?
+                        <Link to={`/Study/${studyId}/Notice`}>
+                            <div className={styles.btn}>
+                                <div>스터디 공지보러가기</div>
+                            </div>
+                        </Link> : <Link to={`/Study/${studyId}/Board`}>
+                            <div className={styles.btn}>
+                                <div>스터디 게시판 보러가기</div>
+                            </div>
+                        </Link>}
+
                     <Link to='/'>
                         <div className={styles.btn}>
                             <div>스터디 메인으로</div>

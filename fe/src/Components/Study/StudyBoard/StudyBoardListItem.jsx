@@ -2,12 +2,15 @@ import React from 'react'
 import styles from './StudyBoardListItem.module.css'
 import { useNavigate } from 'react-router-dom';
 
-const StudyBoardListItem = ({ boardData, studyId }) => {
+const StudyBoardListItem = ({ boardData, studyId, boardType }) => {
     const navigate = useNavigate();
     const { boardId, boardTitle, memberNickname, createdDate, boardHit } = boardData;
     const handleBoardItemClick = () => {
-        navigate(`/Study/${studyId}/Board/${boardId}`)
+        boardType === 1 ?
+            navigate(`/Study/${studyId}/Notice/${boardId}`) :
+            navigate(`/Study/${studyId}/Board/${boardId}`)
     }
+
 
     return (
         <div className={styles.boardItem} onClick={handleBoardItemClick}>

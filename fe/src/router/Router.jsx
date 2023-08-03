@@ -19,9 +19,9 @@ import StudyDetail from "../Pages/Study/StudyDetail";
 import StudyModify from "../Pages/Study/StudyModify";
 
 import StudyNotice from "../Pages/Study/StudyNotice/StudyNotice";
-import StudyNoticeList from "../Pages/Study/StudyNotice/StudyNoticeList";
-import StudyNoticeCreate from "../Pages/Study/StudyNotice/StudyNoticeCreate";
-import StudyNoticeDetail from './../Pages/Study/StudyNotice/StudyNoticeDetail';
+// import StudyNoticeList from "../Pages/Study/StudyNotice/StudyNoticeList";
+// import StudyNoticeCreate from "../Pages/Study/StudyNotice/StudyNoticeCreate";
+// import StudyNoticeDetail from './../Pages/Study/StudyNotice/StudyNoticeDetail';
 
 import StudyBoard from "../Pages/Study/StudyBoard/StudyBoard";
 import StudyBoardDetail from "../Pages/Study/StudyBoard/StudyBoardDetail";
@@ -146,9 +146,9 @@ export default function Router() {
 
         {/* 스터디 공지사항 */}
         <Route path="/Study/:studyId/Notice" element={<StudyNotice />}>
-          <Route path="" element={<StudyNoticeList />} />
-          <Route path=":boardId" element={<StudyNoticeDetail />} />
-          <Route path="Create" element={<StudyNoticeCreate />} />
+          <Route path="" element={<StudyBoardList />} />
+          <Route path=":boardId" element={<StudyBoardDetail />} />
+          <Route path="Create" element={<StudyBoardCreate />} />
         </Route>
 
 

@@ -40,7 +40,12 @@ const StudyBoardList = () => {
                         <h3>글이 없습니다..</h3 >
                         : boardList.map((boardData) => {
                             console.log(studyId)
-                            return <StudyBoardListItem key={boardData.boardId} boardData={boardData} studyId={studyId} />
+                            return (
+                                <div>
+                                    <StudyBoardListItem key={boardData.boardId} boardData={boardData} studyId={studyId} boardType={boardType} />
+                                    <hr />
+                                </div>)
+
                         })
                     }
                 </div>
