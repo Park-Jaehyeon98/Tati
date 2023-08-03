@@ -113,7 +113,7 @@ public class StudyService {
         Integer point = member.getTotalPoint() - study.getStudyDeposit();
         if(point < 0){
             studyRepository.deleteById(studyId);
-            new RuntimeException("스터디에 참가하는데 포인트가 부족합니다");
+            new RuntimeException("스터디를 생성하는데 포인트가 부족합니다");
         }
 
         member.updateTotalPoint(point);
