@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styles from './StudyBoardDetail.module.css'
+import style from './StudyBoardDetail.module.css'
 import StudyBoardCommentList from '../../../Components/Study/StudyBoard/StudyBoardCommentList';
 
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
@@ -67,13 +67,13 @@ const StudyBoardDetail = () => {
 
 
     return (
-        <div className={styles.container}>
+        <div className={style.container}>
             {/* 게시글 윗부분 6:2:2*/}
-            <div className={styles.titleBox}>
+            <div className={style.titleBox}>
                 <div>
                     {/* 제목 */}
                     <div>{boardData.boardTitle}</div>
-                    <div className={styles.subBox}>
+                    <div className={style.subBox}>
                         {/* 작성일 */}
                         <div>작성일 {boardData.createdData}</div>
                         {/* 조회수 */}
@@ -83,7 +83,7 @@ const StudyBoardDetail = () => {
                 {/* 대표글 설정 조건부 렌더링 */}
                 <div>
                     {boardType === 1 ?
-                        <div onClick={handleRepBtnClick} className={`${styles.btn} ${styles.gray}`}>
+                        <div onClick={handleRepBtnClick} className={`${style.btn} ${style.gray}`}>
                             대표글로 설정
                         </div> :
                         <></>
@@ -91,14 +91,14 @@ const StudyBoardDetail = () => {
                 </div>
                 {/* 게시글 목록으로 가기 버튼 렌더링 */}
                 <div>
-                    <div onClick={handleBackBtnClick} className={`${styles.btn} ${styles.blue}`}>
+                    <div onClick={handleBackBtnClick} className={`${style.btn} ${style.blue}`}>
                         목록으로 가기
                     </div>
                 </div>
             </div>
 
             {/* 게시글 내용 */}
-            <div className={styles.contentBox}>
+            <div className={style.contentBox}>
                 게시글 내용~
             </div>
             {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
-import styles from './StudyList.module.css';
+import style from './StudyList.module.css';
 import StudyCardList from "../../Components/Study/StudyCardList";
 import { apiClient } from "../../api/apiClient";
 
@@ -91,7 +91,7 @@ const StudyList = () => {
                 <button onClick={() => { navigate('/StudyCreate') }}>스터디 만들기</button>
                 <div>
                     {categoryArray.map((category) =>
-                        <button key={category} className={category === listCategory ? styles.selected : styles.noSelected} onClick={() => handleCategoryClick(category)}>{category}</button>
+                        <button key={category} className={category === listCategory ? style.selected : style.noSelected} onClick={() => handleCategoryClick(category)}>{category}</button>
                     )}
                 </div>
                 <div>

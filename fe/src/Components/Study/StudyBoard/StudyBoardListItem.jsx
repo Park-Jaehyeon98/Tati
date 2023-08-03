@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './StudyBoardListItem.module.css'
+import style from './StudyBoardListItem.module.css'
 import { useNavigate } from 'react-router-dom';
 
 const StudyBoardListItem = ({ boardData, studyId, boardType }) => {
@@ -13,12 +13,12 @@ const StudyBoardListItem = ({ boardData, studyId, boardType }) => {
 
 
     return (
-        <div className={styles.boardItem} onClick={handleBoardItemClick}>
-            <div className={styles.cell}>{boardId}</div>
-            <div className={styles.cell}>{boardTitle}</div>
-            <div className={styles.cell}>{memberNickname}</div>
-            <div className={styles.cell}>{createdDate}</div>
-            <div className={styles.cell}>{boardHit}</div>
+        <div className={style.boardItem} onClick={handleBoardItemClick}>
+            <div className={style.cell}>{boardId}</div>
+            <div className={style.cell}>{boardTitle}</div>
+            <div className={style.cell}>{memberNickname}</div>
+            <div className={style.cell}>{createdDate}</div>
+            <div className={style.cell}>{boardHit}</div>
         </div>
     )
 }

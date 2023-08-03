@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styles from './StudyBoardList.module.css'
+import style from './StudyBoardList.module.css'
 import StudyBoardListItem from '../../../Components/Study/StudyBoard/StudyBoardListItem'
 
 import { Link, useNavigate, useOutletContext } from 'react-router-dom'
@@ -27,15 +27,15 @@ const StudyBoardList = () => {
     return (
         <div>
             {/* 게시판 컨테이너 */}
-            <div className={styles.container}>
-                <div className={styles.boardFrame}>
-                    <div className={styles.cell}>번호</div>
-                    <div className={styles.cell}>제목</div>
-                    <div className={styles.cell}>작성자</div>
-                    <div className={styles.cell}>작성일</div>
-                    <div className={styles.cell}>조회수</div>
+            <div className={style.container}>
+                <div className={style.boardFrame}>
+                    <div className={style.cell}>번호</div>
+                    <div className={style.cell}>제목</div>
+                    <div className={style.cell}>작성자</div>
+                    <div className={style.cell}>작성일</div>
+                    <div className={style.cell}>조회수</div>
                 </div>
-                <div className={styles.boardContent}>
+                <div className={style.boardContent}>
                     {boardList.length === 0 ?
                         <h3>글이 없습니다..</h3 >
                         : boardList.map((boardData) => {

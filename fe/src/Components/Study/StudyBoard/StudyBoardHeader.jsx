@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './StudyBoardHeader.module.css'
+import style from './StudyBoardHeader.module.css'
 import { Link, redirect } from 'react-router-dom'
 
 // 스터디 공지사항 게시판 위에 있는 헤더
@@ -9,14 +9,14 @@ const StudyBoardHeader = ({ boardType, studyId }) => {
 
     return (
         <div>
-            <div className={styles.container}>
+            <div className={style.container}>
                 {/* 스터디 대표이미지 들어감 */}
-                <div className={styles.content}>
+                <div className={style.content}>
                     스터디 이미지 들어갈 자리
                 </div>
 
                 {/* 스터디 이름, 게시판 타입, 게시판 타입 설명 */}
-                <div className={styles.content}>
+                <div className={style.content}>
                     <div>
                         스터디 이름
                     </div>
@@ -45,21 +45,21 @@ const StudyBoardHeader = ({ boardType, studyId }) => {
                 </div>
 
                 {/* 스터디 메인으로 가는 버튼 */}
-                <div className={styles.content}>
+                <div className={style.content}>
 
                     {boardType === 2 ?
                         <Link to={`/Study/${studyId}/Notice`}>
-                            <div className={styles.btn}>
+                            <div className={style.btn}>
                                 <div>스터디 공지보러가기</div>
                             </div>
                         </Link> : <Link to={`/Study/${studyId}/Board`}>
-                            <div className={styles.btn}>
+                            <div className={style.btn}>
                                 <div>스터디 게시판 보러가기</div>
                             </div>
                         </Link>}
 
                     <Link to='/'>
-                        <div className={styles.btn}>
+                        <div className={style.btn}>
                             <div>스터디 메인으로</div>
                         </div>
                     </Link>
