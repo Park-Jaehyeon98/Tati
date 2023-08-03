@@ -18,7 +18,7 @@ import StudyList from "../Pages/Study/StudyList";
 import StudyDetail from "../Pages/Study/StudyDetail";
 import StudyModify from "../Pages/Study/StudyModify";
 
-import StudyNotice from "../Pages/Study/StudyNotice/StudyNotice";
+import StudyNotice from "../Pages/Study/StudyNotice";
 // import StudyNoticeList from "../Pages/Study/StudyNotice/StudyNoticeList";
 // import StudyNoticeCreate from "../Pages/Study/StudyNotice/StudyNoticeCreate";
 // import StudyNoticeDetail from './../Pages/Study/StudyNotice/StudyNoticeDetail';

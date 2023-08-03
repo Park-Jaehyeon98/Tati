@@ -1,5 +1,5 @@
 import React from 'react'
-import StudyBoardHeader from '../../../Components/Study/StudyBoard/StudyBoardHeader'
+import StudyBoardHeader from '../../Components/Study/StudyBoard/StudyBoardHeader'
 import { Outlet, useParams } from 'react-router-dom'
 
 const StudyNotice = () => {
