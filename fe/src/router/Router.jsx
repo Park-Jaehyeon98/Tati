@@ -4,8 +4,10 @@ import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 
 import style from "./Router.module.css"
 
+import Notice from "../Pages/Notice/Notice";
 import NoticePage from "../Pages/Notice/NoticePage";
 import NoticeCreate from "../Pages/Notice/NoticeCreate";
+import NoticeModify from "../Pages/Notice/NoticeModify";
 
 import MyPage from "../Pages/MyPage/_MyPage";
 import SignUp from "../Pages/Auth/SignUp";
@@ -43,6 +45,7 @@ import MyPagePointWithdraw from "../Pages/MyPage/_MyPagePointWithdraw";
 
 // import { aX } from "@fullcalendar/core/internal-common";
 import axios from "axios";
+import NoticeDetail from "../Pages/Notice/NoticeDetail";
 
 
 export default function Router() {
@@ -114,8 +117,13 @@ export default function Router() {
         <Route path="/" element={<Main />} />
 
         {/* 공지사항 */}
-        <Route path="/NoticePage" element={<NoticePage />} />
-        <Route path="/NoticeCreate" element={<NoticeCreate />} />
+        <Route path="/Notice" element={<Notice />}>
+          <Route path="" element={<NoticePage />} />
+          <Route path="Create" element={<NoticeCreate />} />
+          <Route path=":boardId" element={<NoticeDetail />} />
+          <Route path=":boardId/Modify" element={<NoticeModify />} />
+        </Route>
+
 
         {/* FAQ */}
 
