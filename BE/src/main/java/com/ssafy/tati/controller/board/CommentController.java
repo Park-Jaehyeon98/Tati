@@ -47,10 +47,11 @@ public class CommentController {
             @ApiResponse(responseCode = "200", description = "댓글 리스트"),
     })
     @GetMapping("/{boardId}/comment")
-    public ResponseEntity<?> commentList(@PathVariable Integer boardId, @RequestParam(required = false) @PageableDefault(page = 0, size = 10, sort = "created_date", direction = Sort.Direction.ASC) Pageable pageable) {
+    public ResponseEntity<?> commentList(@PageableDefault(size = 10, sort = "createdDate",
+            direction = Sort.Direction.DESC) Pageable pageable, @PathVariable Integer boardId) {
         Page<Comment> commentPage = commentService.findCommentByBoardId(boardId, pageable);
-
         Page<CommentResDto> commentResDtoPage = commentPage.map(c -> new CommentResDto(c));
+
         return new ResponseEntity(commentResDtoPage, HttpStatus.OK);
     }
 

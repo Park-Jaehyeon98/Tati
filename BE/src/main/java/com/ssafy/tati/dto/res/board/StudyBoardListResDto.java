@@ -1,5 +1,6 @@
 package com.ssafy.tati.dto.res.board;
 
+import com.ssafy.tati.entity.Board;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,4 +29,14 @@ public class StudyBoardListResDto {
     private LocalDateTime modifiedDate;
     @Schema(description = "댓글수")
     private Integer commentCount;
+
+    public StudyBoardListResDto(Board board) {
+        this.boardId = board.getBoardId();
+        this.boardTitle = board.getBoardTitle();
+        this.memberNickname = board.getMember().getMemberNickName();
+        this.boardHit = board.getBoardHit();
+        this.createdDate = board.getCreatedDate();
+        this.modifiedDate = board.getModifiedDate();
+        this.commentCount = board.getCommentList().size();
+    }
 }

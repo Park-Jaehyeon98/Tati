@@ -2,6 +2,8 @@ package com.ssafy.tati.repository;
 
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.entity.Study;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,5 +17,9 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
 
     List<Board> findByBoardType(char boardType);
 
+    Page<Board> findByBoardType(char boardType, Pageable pageable);
+
     List<Board> findByBoardTypeAndStudy(char boardType, Study study);
+
+    Page<Board> findByBoardTypeAndStudy(char boardType, Study study, Pageable pageable);
 }

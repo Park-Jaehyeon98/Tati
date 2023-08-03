@@ -1,5 +1,6 @@
 package com.ssafy.tati.dto.res.board;
 
+import com.ssafy.tati.entity.Board;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,4 +27,13 @@ public class BoardListResDto {
     private LocalDateTime createdDate;
     @Schema(description = "수정일")
     private LocalDateTime modifiedDate;
+
+    public BoardListResDto(Board board) {
+        this.boardId = board.getBoardId();
+        this.boardTitle = board.getBoardTitle();
+        this.memberNickname = board.getMember().getMemberNickName();
+        this.boardHit = board.getBoardHit();
+        this.createdDate = board.getCreatedDate();
+        this.modifiedDate = board.getModifiedDate();
+    }
 }

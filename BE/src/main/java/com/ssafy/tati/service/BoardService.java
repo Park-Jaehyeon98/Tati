@@ -3,12 +3,13 @@ package com.ssafy.tati.service;
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.entity.Member;
 import com.ssafy.tati.entity.Study;
-import com.ssafy.tati.entity.StudyMember;
 import com.ssafy.tati.repository.BoardRepository;
 import com.ssafy.tati.repository.MemberRepository;
 import com.ssafy.tati.repository.StudyMemberRepository;
 import com.ssafy.tati.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,6 +97,10 @@ public class BoardService {
         return boardRepository.findByBoardType(boardType);
     }
 
+    public Page<Board> findBoardPageByBoardType(char boardType, Pageable pageable) {
+        return boardRepository.findByBoardType(boardType, pageable);
+    }
+
     // boardType과 studyId에 맞는 모든 게시글 조회
     public List<Board> findBoardByBoardTypeAndStudyId(char boardType, Integer studyId){
         Optional<Study> optionalStudy = studyRepository.findById(studyId);
@@ -104,6 +109,16 @@ public class BoardService {
         }
         Study study = optionalStudy.get();
         return boardRepository.findByBoardTypeAndStudy(boardType, study);
+    }
+
+    // boardType과 studyId에 맞는 모든 게시글 조회
+    public Page<Board> findBoardPageByBoardTypeAndStudyId(char boardType, Integer studyId, Pageable pageable){
+        Optional<Study> optionalStudy = studyRepository.findById(studyId);
+        if (optionalStudy.isEmpty()){
+            throw new RuntimeException();
+        }
+        Study study = optionalStudy.get();
+        return boardRepository.findByBoardTypeAndStudy(boardType, study, pageable);
     }
 
     // 게시글 변경

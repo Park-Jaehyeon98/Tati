@@ -1,34 +1,12 @@
 package com.ssafy.tati.mapper.board;
 
 import com.ssafy.tati.dto.res.board.BoardDetailResDto;
-import com.ssafy.tati.dto.res.board.NoticeResDto;
 import com.ssafy.tati.dto.res.board.StudyBoardDetailResDto;
 import com.ssafy.tati.entity.Board;
 import org.mapstruct.Mapper;
 
-import java.util.List;
-
 @Mapper(componentModel = "spring")
 public interface GetBoardMapper {
-
-    default NoticeResDto boardToNoticeResDto(Board board) {
-        if (board == null) return null;
-
-        NoticeResDto noticeResDto = new NoticeResDto();
-        noticeResDto.setBoardId(board.getBoardId());
-        noticeResDto.setBoardTitle(board.getBoardTitle());
-        noticeResDto.setBoardContent(board.getBoardContent());
-        noticeResDto.setMemberId(board.getMember().getMemberId());
-        noticeResDto.setMemberNickname(board.getMember().getMemberNickName());
-        noticeResDto.setBoardHit(board.getBoardHit());
-        noticeResDto.setCreatedDate(board.getCreatedDate());
-        noticeResDto.setModifiedDate(board.getModifiedDate());
-
-        return noticeResDto;
-    }
-
-    List<NoticeResDto> boardListToNoticeResDtoList(List<Board> boardList);
-
 
     default BoardDetailResDto boardToBoardDetailResDto(Board board) {
         if (board == null) return null;

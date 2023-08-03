@@ -3,7 +3,7 @@ package com.ssafy.tati.controller.board;
 import com.ssafy.tati.dto.req.board.PostBoardReqDto;
 import com.ssafy.tati.dto.req.board.PutBoardReqDto;
 import com.ssafy.tati.dto.res.board.BoardDetailResDto;
-import com.ssafy.tati.dto.res.board.NoticeResDto;
+import com.ssafy.tati.dto.res.board.BoardListResDto;
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.mapper.board.GetBoardMapper;
 import com.ssafy.tati.mapper.board.PostBoardMapper;
@@ -13,11 +13,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Tag(name = "FAQ", description = "사이트 FAQ API 문서")
 @RestController
@@ -41,15 +44,16 @@ public class FAQController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @Operation(summary = "FAQ 리스트 조회 요청", description = "사이트 FAQ 리스트 요청", responses = {
+    @Operation(summary = "FAQ 리스트 조회 요청 (페이징)", description = "사이트 FAQ 리스트 요청", responses = {
             @ApiResponse(responseCode = "200", description = "FAQ 리스트"),
     })
     @GetMapping
-    public ResponseEntity<?> faqList() {
-        List<Board> boardList = boardService.findBoardByBoardType('9');
-        List<NoticeResDto> noticeResDtoList = getBoardMapper.boardListToNoticeResDtoList(boardList);
+    public ResponseEntity<?> faqListPage(@PageableDefault(size = 10, sort = "createdDate",
+            direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<Board> boardPage = boardService.findBoardPageByBoardType('9', pageable);
+        Page<BoardListResDto> boardListResDtoPage = boardPage.map(BoardListResDto::new);
 
-        return new ResponseEntity(noticeResDtoList, HttpStatus.OK);
+        return new ResponseEntity(boardListResDtoPage, HttpStatus.OK);
     }
 
     @Operation(summary = "FAQ 상세 조회 요청", description = "사이트 FAQ 상세 조회 요청", responses = {

@@ -2,8 +2,8 @@ package com.ssafy.tati.controller.board;
 
 import com.ssafy.tati.dto.req.board.PostStudyBoardReqDto;
 import com.ssafy.tati.dto.req.board.PutBoardReqDto;
-import com.ssafy.tati.dto.res.board.NoticeResDto;
 import com.ssafy.tati.dto.res.board.StudyBoardDetailResDto;
+import com.ssafy.tati.dto.res.board.StudyBoardListResDto;
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.mapper.board.GetBoardMapper;
 import com.ssafy.tati.mapper.board.PostBoardMapper;
@@ -13,11 +13,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Tag(name = "스터디 게시판", description = "스터디 게시판 API 문서")
 @RestController
@@ -43,16 +46,16 @@ public class StudyBoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @Operation(summary = "스터디 게시글 리스트 조회 요청", description = "스터디 게시글 리스트 요청", responses = {
+    @Operation(summary = "스터디 게시글 리스트 조회 요청 (페이징)", description = "스터디 게시글 리스트 요청", responses = {
             @ApiResponse(responseCode = "200", description = "스터디 게시글 리스트"),
     })
     @GetMapping("/{studyId}/board")
-    public ResponseEntity<?> studyBoardList(@PathVariable Integer studyId) {
-        List<Board> boardList = boardService.findBoardByBoardTypeAndStudyId('2', studyId);
-        List<NoticeResDto> noticeResDtoList = getBoardMapper.boardListToNoticeResDtoList(boardList);
+    public ResponseEntity<?> studyBoardListPage(@PageableDefault(size = 10, sort = "createdDate",
+            direction = Sort.Direction.DESC) Pageable pageable, @PathVariable Integer studyId) {
+        Page<Board> boardPage = boardService.findBoardPageByBoardTypeAndStudyId('2', studyId, pageable);
+        Page<StudyBoardListResDto> studyBoardListResDtoPage = boardPage.map(StudyBoardListResDto::new);
 
-        // 댓글 개수 보내줘야 함
-        return new ResponseEntity(noticeResDtoList, HttpStatus.OK);
+        return new ResponseEntity(studyBoardListResDtoPage, HttpStatus.OK);
     }
 
     @Operation(summary = "스터디 게시글 상세 조회 요청", description = "스터디 게시글 상세 조회 요청", responses = {
@@ -65,7 +68,6 @@ public class StudyBoardController {
 
         return new ResponseEntity(studyBoardDetailResDto, HttpStatus.OK);
     }
-
 
 
     @Operation(summary = "스터디 게시글 수정 요청", description = "스터디  게시글 수정 요청", responses = {
