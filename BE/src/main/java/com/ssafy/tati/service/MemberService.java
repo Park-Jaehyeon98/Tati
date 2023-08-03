@@ -1,14 +1,11 @@
 package com.ssafy.tati.service;
 
-import com.ssafy.tati.Exception.DataNotFoundException;
-import com.ssafy.tati.Exception.MismatchDataException;
-import com.ssafy.tati.dto.res.ApplicantStudyResDto;
-import com.ssafy.tati.dto.res.JoinStudyResDto;
+import com.ssafy.tati.exception.DataNotFoundException;
+import com.ssafy.tati.exception.MismatchDataException;
 import com.ssafy.tati.dto.res.MemberBoardListResDto;
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.entity.Member;
 import com.ssafy.tati.entity.Study;
-import com.ssafy.tati.entity.StudyMember;
 import com.ssafy.tati.repository.BoardRepository;
 import com.ssafy.tati.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -141,37 +138,23 @@ public class MemberService {
     }
 
     //회원이 가입한 스터디 조회
-    public List<JoinStudyResDto> selectStudyList(Integer memberId){
+    public List<Study> selectStudyList(Integer memberId){
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
 
-        List<JoinStudyResDto> joinStudyList = new ArrayList<>();
-
         List<Study> studyList = memberRepository.selectStudyList(memberId);
-        for(Study study : studyList){
-            joinStudyList.add(new JoinStudyResDto(study, study.getStudyMemberList().size()));
-        }
-
-        return joinStudyList;
+        return studyList;
     }
 
     //회원이 신청한 스터디 조회
-    public List<ApplicantStudyResDto> selectApplicantStudyList(Integer memberId){
+    public List<Study> selectApplicantStudyList(Integer memberId){
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
 
-        List<ApplicantStudyResDto> applicantStudyResDtoList = new ArrayList<>();
-
         List<Study> studyList = memberRepository.selectApplicantStudyList(memberId);
-        for(Study study : studyList){
-            int applicantCount = study.getStudyApplicantList().size();
-            applicantStudyResDtoList.add( new ApplicantStudyResDto(
-                    study.getStudyId(), study.getStudyName(), study.getTotalMember(), applicantCount
-            ));
-        }
-
-        return applicantStudyResDtoList;
+        return studyList;
     }
+
 
     //모든 회원 조회
     public List<Member> selectAll(){

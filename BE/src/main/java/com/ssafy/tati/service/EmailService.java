@@ -1,6 +1,6 @@
 package com.ssafy.tati.service;
 
-import com.ssafy.tati.Exception.MismatchDataException;
+import com.ssafy.tati.exception.MismatchDataException;
 import com.ssafy.tati.dao.RedisDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;

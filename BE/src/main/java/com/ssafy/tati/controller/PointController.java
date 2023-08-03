@@ -1,5 +1,6 @@
 package com.ssafy.tati.controller;
 
+import com.ssafy.tati.exception.PointException;
 import com.ssafy.tati.dto.req.PointReqDto;
 import com.ssafy.tati.dto.res.PointResDto;
 import com.ssafy.tati.entity.Member;
@@ -43,8 +44,11 @@ public class PointController {
 
     @Operation(summary = "포인트 인출", description = "포인트 인출")
     @PostMapping("/point/withdrawal")
-    public ResponseEntity<?> withdrawalPoint(@RequestBody PointReqDto pointReqDto){
+    public ResponseEntity<?> withdrawalPoint(@RequestBody PointReqDto pointReqDto) throws PointException {
         Member member = memberService.findByEmail(pointReqDto.getEmail());
+
+        if(member.getTotalPoint()<pointReqDto.getAmount())
+            throw new PointException("현재 가진 금액보다 더 큰 금액을 인출할 수 없습니다.");
 
         Point point = postPointMapper.pointReqDtoToPoint(member, pointReqDto);
         pointService.delete(point);

@@ -29,7 +29,7 @@ public class Point {
     private Integer amount;
 
     //내용
-    @Column(name = "p_content", length = 100, nullable = false)
+    @Column(name = "p_content", nullable = true, length = 100)
     private String pContent;
 
     //회원식별번호

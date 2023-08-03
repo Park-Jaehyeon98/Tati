@@ -1,6 +1,6 @@
 package com.ssafy.tati.service;
 
-import com.ssafy.tati.Exception.DataNotFoundException;
+import com.ssafy.tati.exception.DataNotFoundException;
 import com.ssafy.tati.entity.MemberSchedule;
 import com.ssafy.tati.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,13 +32,15 @@ public class MemberScheduleService {
     }
 
     //일정 조회(한 달 기준)
-    public List<MemberSchedule> findSchedules(Integer memberId, int month){
+    public List<MemberSchedule> findSchedules(Integer memberId, Integer year, Integer month){
         List<MemberSchedule> schedules = scheduleRepository.selectSchedule(memberId);
 
         List<MemberSchedule> scheduleList = new ArrayList<>();
         for(MemberSchedule schedule : schedules ){
             int m = schedule.getMemberScheduleDate().getMonthValue();
-            if(m == month) scheduleList.add(schedule);
+            int y = schedule.getMemberScheduleDate().getYear();
+
+            if(m == month && y==year) scheduleList.add(schedule);
         }
 
         return scheduleList;
