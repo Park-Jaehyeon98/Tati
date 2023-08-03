@@ -47,19 +47,24 @@ public class MyPageController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //닉네임 수정
+    //닉네임 수정 consumes = {"multipart/form-data", "multipart/mixed", "application/json"}
     @Operation(summary = "닉네임 수정", description = "닉네임을 입력하면, db에서 회원을 찾고 닉네임을 수정")
-    @PutMapping(value="/mypage/modifyNickName", consumes = "multipart/form-data")
-    public ResponseEntity<?> modifyNickname(PutMemberReqDto putMemberReqDto) throws IOException {
+    @PutMapping(value="/mypage/modifyNickName")
+    public ResponseEntity<?> modifyNickname(@RequestPart(value = "putMemberReqDto") PutMemberReqDto putMemberReqDto,
+                                @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws IOException {
 
-        String url = "";
-        if(putMemberReqDto.getImg() != null) url = s3Service.uploadFile(putMemberReqDto.getImg());
 
         Member member = putMemberMapper.PutMemberReqDtoToMember(putMemberReqDto);
         memberService.modifyNickName(member.getMemberId(), member.getMemberNickName());
-        if(putMemberReqDto.getImg() != null) member.setImg(url);
 
-        //이미지가 이미 있을 때 추가 필요
+        System.out.println(member.getMemberNickName());
+        System.out.println(member.getPassword());
+
+        String url = "";
+        if(multipartFile != null) {
+            url = s3Service.uploadFile(multipartFile);
+            memberService.modifyImg(member.getMemberId(), url);
+        }
 
         Member findMember = memberService.findById(putMemberReqDto.getMemberId());
         MemberResDto memberResDto = memberMapper.memberToMemberResDto(findMember);
@@ -69,8 +74,8 @@ public class MyPageController {
 
     //비밀번호 수정
     @Operation(summary = "비밀번호 수정", description = "비밀번호를 입력하면, db에서 회원을 찾고 비밀번호를 수정")
-    @PutMapping(value="/mypage/modifyPassword", consumes = "multipart/form-data")
-    public ResponseEntity<?> modifyPassword(PutMemberReqDto putMemberReqDto, @RequestParam(name="file") MultipartFile multipartFile){
+    @PutMapping(value="/mypage/modifyPassword")
+    public ResponseEntity<?> modifyPassword(@RequestBody PutMemberReqDto putMemberReqDto){
         Member member = putMemberMapper.PutMemberReqDtoToMember(putMemberReqDto);
         memberService.modifyPassword(member.getMemberId(), member.getPassword());
 
@@ -90,7 +95,7 @@ public class MyPageController {
     }
 
 
-    //회원정보 수정 페이지 접속
+    //회원정보 마이페이지 접속
     @Operation(summary = "회원정보 반환", description = "회원정보 페이지 클릭하면, db에서 회원을 찾고 회원 반환")
     @GetMapping("mypage/modify/{memberId}")
     public ResponseEntity<?> selectMember(@PathVariable Integer memberId){

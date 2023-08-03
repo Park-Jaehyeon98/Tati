@@ -45,10 +45,16 @@ public class Study {
     @Column(name = "study_end_date", nullable = false)
     private String studyEndDate;
 
-    @OneToMany(mappedBy = "study")
+    @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
     List<Board> boardList = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
+    List<StudySchedule> studyScheduleList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
+    List<StudyMember> studyMemberList = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "category_id")
     private Category category;

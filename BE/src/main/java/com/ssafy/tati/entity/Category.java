@@ -21,4 +21,7 @@ public class Category {
     @Column(name = "category_name", length = 20, nullable = false)
     private String categoryName;
 
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    List<Study> studyList = new ArrayList<>();
+
 }

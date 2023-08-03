@@ -9,8 +9,8 @@ public interface FileService {
 
     String uploadFile(MultipartFile multipartFile) throws IOException;
 
-//    void deleteFile(String fileName);
-//
-//    byte[] downloadFile(String fileName) throws IOException;
+    //void deleteFile(String fileName);
+
+    byte[] downloadFile(String fileName) throws IOException;
 
 }

@@ -1,22 +1,15 @@
 package com.ssafy.tati.service;
 
 import com.ssafy.tati.dto.req.StudyModifyReqDto;
-import com.ssafy.tati.dto.res.StudyListResDto;
-import com.ssafy.tati.dto.res.StudyModifyResDto;
-import com.ssafy.tati.entity.Category;
-import com.ssafy.tati.entity.Member;
-import com.ssafy.tati.entity.Study;
-import com.ssafy.tati.entity.StudySchedule;
-import com.ssafy.tati.repository.CategoryRepository;
-import com.ssafy.tati.repository.MemberRepository;
-import com.ssafy.tati.repository.StudyRepository;
-import com.ssafy.tati.repository.StudyScheduleRepository;
+import com.ssafy.tati.dto.res.StudyDeleteResDto;
+import com.ssafy.tati.dto.res.StudyIdResDto;
+import com.ssafy.tati.entity.*;
+import com.ssafy.tati.repository.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +21,7 @@ public class StudyService {
     private final CategoryRepository categoryRepository;
     private final StudyScheduleRepository studyScheduleRepository;
     private final MemberRepository memberRepository;
+    private final StudyMemberRepository studyMemberRepository;
 
     public void createStudy(Study study, Integer categoryId) {
         Optional<Category> category = categoryRepository.findByCategoryId(categoryId);
@@ -36,6 +30,7 @@ public class StudyService {
         }
         study.setCategory(category.get());
         studyRepository.save(study);
+        setStudyMemberHost(study.getStudyId(), study.getStudyHost());
     }
 
     public void createStudySchedule(StudySchedule studySchedule){
@@ -59,8 +54,8 @@ public class StudyService {
         return study;
 
     }
-    @Transactional
-    public StudyModifyResDto modifyStudy(Integer studyId, StudyModifyReqDto studyModifyReqDto){
+
+    public StudyIdResDto modifyStudy(Integer studyId, StudyModifyReqDto studyModifyReqDto){
         Optional<Study> optionalStudy = studyRepository.findById(studyId);
         if(!optionalStudy.isPresent()){
             throw new RuntimeException();
@@ -73,28 +68,28 @@ public class StudyService {
 
         study.update(optionalCategory.get(), studyModifyReqDto.getStudyName(), studyModifyReqDto.getStudyDescription(), studyModifyReqDto.isDisclosure(), studyModifyReqDto.getStudyPassword());
 
-        StudyModifyResDto studyModifyResDto = new StudyModifyResDto();
-        studyModifyResDto.setStudyId(studyId);
-        return studyModifyResDto;
+        StudyIdResDto studyIdResDto = new StudyIdResDto();
+        studyIdResDto.setStudyId(studyId);
+        return studyIdResDto;
     }
 
-    @Transactional
-    public void removeStudy(Integer studyId, Integer memberId){
+    public StudyDeleteResDto removeStudy(Integer studyId, Integer memberId){
         Optional<Study> optionalStudy = studyRepository.findById(studyId);
         if(!optionalStudy.isPresent()){
             throw new RuntimeException();
         }
         Study study = optionalStudy.get();
-
+        StudyDeleteResDto studyDeleteResDto = new StudyDeleteResDto();
+        studyDeleteResDto.setStudyName(study.getStudyName());
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         if(!optionalMember.isPresent()){
             throw new RuntimeException();
         }
         Member member = optionalMember.get();
 
-
         if(study.getStudyHost().equals(member.getMemberNickName())){
             studyRepository.deleteById(studyId);
+            return studyDeleteResDto;
         }else {
             throw new RuntimeException();
         }
@@ -111,4 +106,20 @@ public class StudyService {
         List<Study> searchStudyList = studyRepository.findByCategoryAndStudyNameContaining(categoryId, keyword);
         return searchStudyList;
     }
+
+    public void setStudyMemberHost(Integer studyId, String studyHost) {
+        Member member = memberRepository.findByMemberNickName(studyHost).orElseThrow(() -> new RuntimeException("study Host가 일치하지 않습니다"));
+        Study study = studyRepository.findById(studyId).orElseThrow(() -> new RuntimeException("study가 존재하지 않습니다."));
+        Integer point = member.getTotalPoint() - study.getStudyDeposit();
+        if(point < 0){
+            studyRepository.deleteById(studyId);
+            new RuntimeException("스터디에 참가하는데 포인트가 부족합니다");
+        }
+
+        member.updateTotalPoint(point);
+        LocalDate currentDate = LocalDate.now();
+        StudyMember studyMember = new StudyMember(study.getStudyDeposit(), currentDate, study, member);
+        studyMemberRepository.save(studyMember);
+    }
+
 }
