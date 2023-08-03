@@ -3,6 +3,7 @@ package com.ssafy.tati.controller.board;
 import com.ssafy.tati.dto.req.board.PostStudyBoardReqDto;
 import com.ssafy.tati.dto.req.board.PutBoardReqDto;
 import com.ssafy.tati.dto.res.board.NoticeResDto;
+import com.ssafy.tati.dto.res.board.StudyBoardDetailResDto;
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.mapper.board.GetBoardMapper;
 import com.ssafy.tati.mapper.board.PostBoardMapper;
@@ -60,9 +61,9 @@ public class StudyBoardController {
     @GetMapping("/board/{boardId}")
     public ResponseEntity<?> studyBoardDetails(@PathVariable Integer boardId) {
         Board board = boardService.findBoardByBoardId(boardId);
-        NoticeResDto noticeResDto = getBoardMapper.boardToNoticeResDto(board);
+        StudyBoardDetailResDto studyBoardDetailResDto = getBoardMapper.boardToStudyBoardDetailResDto(board);
 
-        return new ResponseEntity(noticeResDto, HttpStatus.OK);
+        return new ResponseEntity(studyBoardDetailResDto, HttpStatus.OK);
     }
 
 

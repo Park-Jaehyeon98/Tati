@@ -2,6 +2,7 @@ package com.ssafy.tati.controller.board;
 
 import com.ssafy.tati.dto.req.board.PostBoardReqDto;
 import com.ssafy.tati.dto.req.board.PutBoardReqDto;
+import com.ssafy.tati.dto.res.board.BoardDetailResDto;
 import com.ssafy.tati.dto.res.board.NoticeResDto;
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.mapper.board.GetBoardMapper;
@@ -57,9 +58,9 @@ public class NoticeController {
     @GetMapping("/{boardId}")
     public ResponseEntity<?> noticeDetails(@PathVariable Integer boardId) {
         Board board = boardService.findBoardByBoardId(boardId);
-        NoticeResDto noticeResDto = getBoardMapper.boardToNoticeResDto(board);
+        BoardDetailResDto boardDetailResDto = getBoardMapper.boardToBoardDetailResDto(board);
 
-        return new ResponseEntity(noticeResDto, HttpStatus.OK);
+        return new ResponseEntity(boardDetailResDto, HttpStatus.OK);
     }
 
     @Operation(summary = "공지글 수정 요청", description = "사이트 공지글 수정 요청", responses = {
