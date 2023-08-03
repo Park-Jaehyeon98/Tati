@@ -21,6 +21,4 @@ public class PutMemberReqDto {
     @Schema(description = "비밀번호")
     private String password;
 
-    @Schema(description = "회원 이미지")
-    private MultipartFile img;
 }

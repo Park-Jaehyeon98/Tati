@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import javax.mail.MessagingException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.io.UnsupportedEncodingException;
 
 
@@ -74,10 +75,15 @@ public class ExceptionHandlerController {
         return new ResponseEntity<>("파일 용량이 초과되었습니다 : " +e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(UncheckedIOException.class)
+    public void uncheckedIOException(UncheckedIOException e){
+    }
+
     @ExceptionHandler(IOException.class)
     public ResponseEntity<?> ioexceptionHandler(IOException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
 
 
 }
