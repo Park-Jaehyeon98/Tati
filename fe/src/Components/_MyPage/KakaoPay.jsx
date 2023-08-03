@@ -16,6 +16,8 @@ export default function KakaoPay() {
   const [pg_token, setPg_token] = useState(null)
   const [memberId, setMemberId] = useState('')
 
+  const email = localStorage.getItem('email');
+
   useEffect(() => {
 
     // 카카오페이 결제 kakaokakaokakaokakaokakaokakaokakao
@@ -34,8 +36,10 @@ export default function KakaoPay() {
       setTid(storedTid);
     }
 
-    const email = 'rlaalsrbs15@naver.com'
+
     console.log(`tid${storedTid}--------------`)
+    console.log(`pgToken: ${pgToken}--------------`)
+    console.log(`email: ${email}--------------`)
     // 결제 완료시 토큰 값이 있을 때 최종 결제 
     if(pgToken){
       axios.post(`http://${process.env.REACT_APP_URL}:8080/payment/success`,{
@@ -45,7 +49,9 @@ export default function KakaoPay() {
       })
         .then((res)=>{
           console.log(res)
-          window.location.href = '/mypage';
+          // 요청이 성공하면 tid와 pgToken을 로컬 스토리지에서 삭제
+          localStorage.removeItem('tid');
+          localStorage.removeItem('pgToken');
         })
         .catch((err)=>{
           console.log(err)
@@ -54,6 +60,7 @@ export default function KakaoPay() {
     // kakaokakaokakaokakaokakaokakaokakaokakao
 
 
+    const memberId = localStorage.getItem('memberId');
     // 회원포인트 내역 pointpointpointpointpointpointpointpointvpoint
     if (memberId) {
       console.log("memberId:", memberId);
@@ -62,7 +69,10 @@ export default function KakaoPay() {
     axios.get(`http://${process.env.REACT_APP_URL}:8080/member/mypage/point/${memberId}`,{
       })
         .then((res)=>{
+          console.log('---------------------------------------------')
           console.log(res.data)
+          console.log('회원포인트내역')
+          console.log('---------------------------------------------')
           dispatch(setMemberPoint(res.data));
         })
         .catch((err)=>{
@@ -71,12 +81,14 @@ export default function KakaoPay() {
 
     //pointpointpointpointpointpointpointpointpointpointpointpointpoint
 
-  }, [location, memberId]);
+  }, [ memberId]);
 //===============================================================================================
+
 
 
 const itemsPerPage = 13;
 const [currentPage, setCurrentPage] = useState(1);
+
 
 const PointItem = ({ point, date, day }) => {
   return (
@@ -92,8 +104,9 @@ const PointItem = ({ point, date, day }) => {
   );
 };
 
+
 // 포인트 내역 데이터를 리덕스 스토어에서 가져옴
-const pointData = useSelector((state) => state.memberPoint);
+const pointData = useSelector((state) => state.memberPoint) || [];
 
 // 데이터
 const dates = [
@@ -145,12 +158,14 @@ const dates = [
 ];
 //====================================
 
-  const totalPages = Math.ceil(dates.length / itemsPerPage);
+  const totalPages = Math.ceil(pointData.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNotices = dates.slice(startIndex, endIndex);
+  const currentNotices = pointData.slice(startIndex, endIndex);
 
+
+  
   // 결제 취소
   const handleCancel =()=>{
     axios.post(`http://${process.env.REACT_APP_URL}:8080/payment/cancel`,{
@@ -165,22 +180,12 @@ const dates = [
       })
   }
 
-  // const handleCancel =()=>{
-  //   const email = 'rlaalsrbs15@naver.com'
-  //   axios.get(`http://${process.env.REACT_APP_URL}:8080/member/mypage/point/${email}`,{
-  //   })
-  //     .then((res)=>{
-  //       console.log(res)
-  //     })
-  //     .catch((err)=>{
-  //       console.log(err)
-  //     })
-  // }
+
 
   return (
     <div className={style.point_History_box}>
-     {/* <h2>포인트 내역</h2>
-     <br /> */}
+     <h2>포인트 내역</h2>
+     <br />
       
       <div>
         <div className={style.box}>

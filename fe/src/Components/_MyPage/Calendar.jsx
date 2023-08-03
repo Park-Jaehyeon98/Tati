@@ -8,15 +8,45 @@ import style from "./Calendar.module.css"
 
 import { useSelector, useDispatch } from "react-redux";
 import {addEvent} from "../../redux/actions/actions"
+import axios from "axios";
+
 
 export default function Calendar(){
+
+  // 현재 년, 월
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth() + 1;
 
   const events = useSelector((state) => state.events);
   const dispatch = useDispatch();
 
+  const memberId = localStorage.getItem('memberId');
+
+  const [img,setImg] = useState(null)
+
   useEffect(() => {
-    console.log('캘린더')
-  })
+
+    console.log('캘린더',memberId)
+    console.log(`year---${year}///month---${month}`)
+
+    axios.get(`http://${process.env.REACT_APP_URL}:8080/member/mypage/${memberId }`, {
+      params: {
+        year,
+        month
+      }
+    })
+      .then((res) => {
+        console.log('=================================')
+        console.log(res.data);
+        setImg(res.data.img)
+        console.log('==============================')
+      })
+      .catch((err) => {
+        console.log(err,'------------------');
+      });
+
+  }, [memberId, year, month])
 
   const [selectedDate, setSelectedDate] = useState(null);
   const [eventTitle, setEventTitle] = useState('');
@@ -24,7 +54,6 @@ export default function Calendar(){
 
   const handleDateClick = (info) => {
     setSelectedDate(info.dateStr);
-    // 모달 열기 로직 등을 추가하시면 됩니다.
   };
 
   const handleModalSubmit = () => {
@@ -34,6 +63,7 @@ export default function Calendar(){
       start: new Date(selectedDate + "T" + eventTime).toISOString(),
       end: new Date(selectedDate + "T" + eventTime).toISOString(),
     };
+    console.log(newEvent)
     // 캘린더 이벤트 배열에 새 이벤트를 추가하고 모달을 닫습니다.
     dispatch(addEvent(newEvent));
     setSelectedDate(null);
@@ -47,12 +77,13 @@ export default function Calendar(){
     }
   };
 
+  //  월:1, 화:2, 수:3, 목:4, 금:5, 토:6, 일:0
   return (
     <div>
       {/* 캘린더 */}
       <div className={style.calendar}>
         <FullCalendar
-          defaultView="dayGridMonth" // 오타 수정
+          defaultView="dayGridMonth" 
           initialView={'dayGridMonth'}
           locale={"ko"}
           headerToolbar={
@@ -63,24 +94,25 @@ export default function Calendar(){
               }
           }
           plugins={[dayGridPlugin,timeGridPlugin,interactionPlugin]}
-          // events={[
-          //   { title: '일정 기능 완성', date: '2023-08-03' },
-          //   { title: 'webRTC 구현', start: '2023-08-04', end : "2023-08-06",color : "#FF0000" },
-          //   { title: 'webRTC 적용', start: '2023-08-06', end : "2023-08-09", backgroundColor : "#008000" },
-          //   { title: '기능 체크', start: '2023-08-07', end : "2023-08-10" },
-          //   { title: '추가 기능 구현 및 디버깅', start: '2023-08-09', end : "2023-08-12" },
-          //   { title: '추가 기능 구현', start: '2023-08-11', end : "2023-08-14", color : "#0000FF" },
-          //   { title: 'UCC 및 발표 준비', color : "#FFCCE5"  , start: '2023-08-14', end : "2023-08-18", rendering : "background"  },
-          //   { title: '발표', date: '2023-08-18'},
-          // ]}
-          events={events} 
+          events={[
+            { title: '일정 기능 완성', date: '2023-08-03' },
+            { title: 'webRTC 구현', start: '2023-08-04', end : "2023-08-06",color : "#FF0000" ,},
+            { title: 'webRTC 적용', start: '2023-08-06', end : "2023-08-09", backgroundColor : "#008000" },
+            { title: '기능 체크', start: '2023-08-07', end : "2023-08-10" },
+            { title: '추가 기능 구현 및 디버깅', start: '2023-08-09', end : "2023-08-12" },
+            { title: '추가 기능 구현', start: '2023-08-11', end : "2023-08-14", color : "#0000FF" },
+            { title: 'UCC 및 발표 준비', color : "#FFCCE5"  , start: '2023-08-14', end : "2023-08-18", rendering : "background" },
+            { title: '발표', date: '2023-08-18'},
+            ...events
+          ]}
           dateClick={handleDateClick}
           eventClick={handleEventClick}
+          // firstDay={3}
         />
       </div>
 
       {selectedDate && (
-        <div className="modal">
+        <div className={style.modal}>
           <div className="modal-content">
             <h2>선택한 날짜: {selectedDate}</h2>
             <input type="text" value={eventTitle} onChange={(e) => setEventTitle(e.target.value)} placeholder="이벤트 제목" />
@@ -90,6 +122,7 @@ export default function Calendar(){
           </div>
         </div>
       )}
+      <img src={img} alt="Uploaded" className={style.file_img}/>
     </div>
   )
 }

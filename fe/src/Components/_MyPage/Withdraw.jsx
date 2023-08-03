@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import style from "./Charge.module.css"
+import axios from "axios";
 
 export default function Withdraw() {
   const [currentPoint, setCurrentPoint] = useState(3000);
@@ -25,9 +26,32 @@ export default function Withdraw() {
     setRechargeAmount(value);
   };
 
+  const currentDate = new Date();
+  const email = localStorage.getItem('email');
+
   const handleTotal = (e) => {
     setCurrentPoint((prevPoint) => prevPoint - rechargeAmount);
     setRechargeAmount(0);
+
+    console.log(email)
+    const pContent = '제발 되라'
+    axios.post(`http://${process.env.REACT_APP_URL}:8080/member/point/withdrawal`, {
+      email,
+      amount:3,
+      pointDate:currentDate,
+      pContent
+    })
+      .then((res) => {
+        console.log('=================================')
+        console.log(res.data);
+        console.log('==============================')
+      })
+      .catch((err) => {
+        console.log(err,'------------------');
+      });
+
+      // email - String, amount - Integer, pointDate - String, pContent - String (포인트 결제 취소, 보증금 내기)
+
   }
   return (
     <div className={style.Change}>

@@ -58,23 +58,29 @@ export default function InfoModify() {
   // 유저의 pk 와 닉네임을 보냄
   // 요청 성공 후 다시 회원정보 수정 페이지로
   const handleNickNameupdata = () => {
-    console.log(`memberId - ${memberId} nickName - ${nickName} file - ${file}`)
+    const memberIdAsNumber = Number(memberId);
+
+    console.log(`memberId - ${typeof memberIdAsNumber} nickName - ${nickName} file - ${file}`)
     
     const formData = new FormData();
     formData.append('file',file)
 
     const putMemberReqDto = {
-      "memberId": memberId,
+      "memberId": memberIdAsNumber,
       "memberNickName": nickName,
     };
     
     formData.append('putMemberReqDto', JSON.stringify(putMemberReqDto));
     console.log('-------------------------------------------------')
-    // window.history.back();
+    
     for (const [key, value] of formData.entries()) {
-      console.log(key, value);
+      console.log(key, typeof value);
+      console.log('============');
     }
-    axios.put(`http://${process.env.REACT_APP_URL}:8080/member/mypage/modifyNickName`, formData,{
+
+
+    // axios.put(`http://${process.env.REACT_APP_URL}:8080/member/mypage/modifyNickName`, {data:{file}},{
+    axios.post(`http://${process.env.REACT_APP_URL}:8080/member/upload`, file,{
       headers: {
         "Content-Type": "multipart/form-data", // 파일 업로드를 위해 Content-Type을 multipart/form-data로 설정
       },
@@ -89,7 +95,8 @@ export default function InfoModify() {
       });
   }
 
-  // 비밀번호 수정
+
+  // 비밀번호 변경
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
 
@@ -102,6 +109,7 @@ export default function InfoModify() {
     const { value } = p.target;
     setPassword2(value);
   }
+
 
   // 유저의 pk와 password를 보냄
   const handleSendPassword = () => {
@@ -139,6 +147,7 @@ export default function InfoModify() {
         console.log(err)
       });
   }
+
 
   return (
     <div className={style.container}>

@@ -106,6 +106,7 @@ export default function MyPost(){
                 />
               ))}
             </div>
+            
             <div className={style.pagination}>
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
                 <button

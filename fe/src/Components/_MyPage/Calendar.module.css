@@ -15,6 +15,11 @@
   color: blue;
 }
 
+.modal{
+  position: fixed;
+  top: 130px;
+  margin-left: 850px;
+}
 
 /* FullCalendar 이벤트 속성
  ① title : 해당 이벤트의 제목을 나타낸다.
