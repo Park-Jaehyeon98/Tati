@@ -17,11 +17,16 @@ const StudyBoardList = () => {
     const memberId = 1;
 
     useEffect(() => {
+        const subURL = boardType === 1 ? `/study/${studyId}/notice/` : `/study/${studyId}/board/`
         // apiClient.get(`/study/${studyId}/board/`, { params: { pageNum: pageNum, memberId: memberId } })
-        //     .then((res) => { console.log(res) })
-        //     .cathc((err) => { console.log(err) })
-        setBoardList([{ boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 },])
-    }, pageNum);
+        apiClient.get(subURL)
+            .then((res) => {
+                console.log(res)
+                setBoardList(res.data)
+            })
+            .catch((err) => { console.log(err) })
+        // setBoardList([{ boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 },])
+    }, []);
 
 
     return (
@@ -53,7 +58,7 @@ const StudyBoardList = () => {
             {/* 스터디 생성 버튼 */}
             <div>
                 <Link to='./Create'>
-                    <button>새 스터디 만들기</button>
+                    <button>새 게시물 만들기</button>
                 </Link>
             </div>
             {/* 페이지네이션 */}

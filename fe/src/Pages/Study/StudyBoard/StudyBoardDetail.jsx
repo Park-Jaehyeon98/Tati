@@ -20,7 +20,7 @@ const StudyBoardDetail = () => {
         boardType,
         studyId,
         // 0 : 공지 1: 스터디 공지 2: 스터디 게시판 9: FAQ
-        createdData: '',
+        createdDate: '',
         boardHit: 0,
 
         memberNickname: '',
@@ -29,15 +29,15 @@ const StudyBoardDetail = () => {
 
 
     const config = {}
-    // useEffect(() => {
-    //     apiClient.get(`/study/board/${boardId}`, config)
-    //         .then((res) => {
-    //             setBoardData(res.data)
-    //         })
-    //         .catch((err) => {
-    //             console.log(err)
-    //         })
-    // }, [])
+    useEffect(() => {
+        apiClient.get(`/study/board/${boardId}`)
+            .then((res) => {
+                setBoardData(res.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [])
 
     // 테스트용
     useEffect(() => {
@@ -47,7 +47,7 @@ const StudyBoardDetail = () => {
 
             boardType,
             studyId,
-            createdData: '23/07/24',
+            createdDate: '23/07/24',
             boardHit: 1,
             memberNickname: '철수',
             memberId: 1
@@ -75,7 +75,7 @@ const StudyBoardDetail = () => {
                     <div>{boardData.boardTitle}</div>
                     <div className={style.subBox}>
                         {/* 작성일 */}
-                        <div>작성일 {boardData.createdData}</div>
+                        <div>작성일 {boardData.createdDate}</div>
                         {/* 조회수 */}
                         <div>조회수 {boardData.boardHit} 회</div>
                     </div>
