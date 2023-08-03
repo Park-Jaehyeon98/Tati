@@ -1,12 +1,16 @@
-import axios from 'axios';
 import React, { useState } from 'react'
+import { apiClient } from '../../api/apiClient';
 
 const NoticeCreate = () => {
     const [boardData, setBoardData] = useState({
         boardTitle: '',
         boardContent: '',
         memberId: 1,
+        // 0 : 공지 1: 스터디 공지 2: 스터디 게시판 9: FAQ
     });
+
+    const boardType = 0;
+    const config = 0;
 
     const {
         boardTitle,
@@ -23,16 +27,14 @@ const NoticeCreate = () => {
     };
 
     const handleSubmitBtnClick = () => {
-        axios({
-            method: 'post',  // get, put, post 등의 method 정의
-            url: 'http://192.168.31.56:8080/notice/create',     // 요청을 보낼 주소
-            headers: {}, // 헤더
-            data: boardData
-        })
+        const subURL = boardType === 0 ? 'notice' : 'faq'
+        console.log(subURL)
+        apiClient.post(subURL, boardData)
             .then((res) => {
                 console.log(res)
             })
             .catch((err) => {
+                console.log(err)
             });
     }
 
