@@ -5,12 +5,12 @@ import MyPost from "../../Components/_MyPage/MystudyList/MyPost";
 import Aside from "../../Components/_MyPage/Aside";
 
 
-export default function MyPagePost(){
-    return(
+export default function MyPagePost() {
+    return (
         <div className={style.myPage}>
-            <Aside/>
+            <Aside />
             <div className={style.box2}>
-                <MyPost/>
+                <MyPost />
             </div>
         </div>
     )

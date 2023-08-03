@@ -1,0 +1,16 @@
+.boardFrame {
+  display: grid;
+  grid-template-columns: 2fr 7fr 3fr 3fr 3fr;
+}
+.cell {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.container {
+  margin: auto;
+}
+
+.boardContent {
+  height: 400px;
+}

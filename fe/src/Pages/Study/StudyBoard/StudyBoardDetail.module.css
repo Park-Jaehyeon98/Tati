@@ -1,0 +1,32 @@
+.container {
+  margin: 50px;
+}
+
+.titleBox {
+  display: grid;
+  grid-template-columns: 6fr 2fr 2fr;
+
+  height: 50px;
+}
+
+.subBox {
+  display: grid;
+  grid-template-columns: 2fr 2fr 4fr;
+}
+
+.contentBox {
+  height: 600px;
+  background-color: white;
+}
+
+.btn {
+  width: 120px;
+  height: 50px;
+}
+
+.gray {
+  background-color: gray;
+}
+.blue {
+  background-color: rgb(128, 130, 255);
+}
