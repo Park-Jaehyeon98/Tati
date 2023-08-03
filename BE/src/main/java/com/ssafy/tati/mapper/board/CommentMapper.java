@@ -1,6 +1,6 @@
-package com.ssafy.tati.mapper;
+package com.ssafy.tati.mapper.board;
 
-import com.ssafy.tati.dto.req.PostCommentReqDto;
+import com.ssafy.tati.dto.req.board.PostCommentReqDto;
 import com.ssafy.tati.entity.Comment;
 import org.mapstruct.Mapper;
 

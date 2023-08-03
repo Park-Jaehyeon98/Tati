@@ -1,11 +1,11 @@
-package com.ssafy.tati.controller;
+package com.ssafy.tati.controller.board;
 
-import com.ssafy.tati.dto.req.PostCommentReqDto;
-import com.ssafy.tati.dto.req.PutCommentReqDto;
-import com.ssafy.tati.dto.res.CommentResDto;
+import com.ssafy.tati.dto.req.board.PostCommentReqDto;
+import com.ssafy.tati.dto.req.board.PutCommentReqDto;
+import com.ssafy.tati.dto.res.board.CommentResDto;
 import com.ssafy.tati.entity.Comment;
-import com.ssafy.tati.mapper.CommentMapper;
-import com.ssafy.tati.mapper.PutCommentMapper;
+import com.ssafy.tati.mapper.board.CommentMapper;
+import com.ssafy.tati.mapper.board.PutCommentMapper;
 import com.ssafy.tati.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

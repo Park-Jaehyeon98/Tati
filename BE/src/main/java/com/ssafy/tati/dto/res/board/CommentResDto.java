@@ -1,4 +1,4 @@
-package com.ssafy.tati.dto.res;
+package com.ssafy.tati.dto.res.board;
 
 import com.ssafy.tati.entity.Comment;
 import io.swagger.v3.oas.annotations.media.Schema;

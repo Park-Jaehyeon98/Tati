@@ -1,9 +1,8 @@
-package com.ssafy.tati.controller;
+package com.ssafy.tati.controller.board;
 
-import com.ssafy.tati.dto.req.PostStudyBoardReqDto;
+import com.ssafy.tati.dto.req.board.PostStudyBoardReqDto;
 import com.ssafy.tati.entity.Board;
-import com.ssafy.tati.mapper.BoardMapper;
-import com.ssafy.tati.mapper.PostBoardMapper;
+import com.ssafy.tati.mapper.board.PostBoardMapper;
 import com.ssafy.tati.service.BoardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

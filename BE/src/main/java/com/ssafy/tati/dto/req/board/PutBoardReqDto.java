@@ -1,4 +1,4 @@
-package com.ssafy.tati.dto.req;
+package com.ssafy.tati.dto.req.board;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

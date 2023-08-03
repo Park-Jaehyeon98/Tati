@@ -1,10 +1,7 @@
-package com.ssafy.tati.mapper;
+package com.ssafy.tati.mapper.board;
 
-import com.ssafy.tati.dto.req.PostBoardReqDto;
-import com.ssafy.tati.dto.req.PostStudyBoardReqDto;
-import com.ssafy.tati.dto.res.NoticeResDto;
+import com.ssafy.tati.dto.res.board.NoticeResDto;
 import com.ssafy.tati.entity.Board;
-import com.ssafy.tati.entity.Member;
 import org.mapstruct.Mapper;
 
 import java.util.List;

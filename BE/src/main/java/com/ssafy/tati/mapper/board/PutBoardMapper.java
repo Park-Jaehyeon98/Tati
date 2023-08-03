@@ -1,6 +1,6 @@
-package com.ssafy.tati.mapper;
+package com.ssafy.tati.mapper.board;
 
-import com.ssafy.tati.dto.req.PutBoardReqDto;
+import com.ssafy.tati.dto.req.board.PutBoardReqDto;
 import com.ssafy.tati.entity.Board;
 import org.mapstruct.Mapper;
 
