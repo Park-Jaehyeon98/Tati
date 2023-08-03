@@ -3,7 +3,9 @@ package com.ssafy.tati.mapper;
 import com.ssafy.tati.dto.req.PostBoardReqDto;
 import com.ssafy.tati.dto.req.PostStudyBoardReqDto;
 import com.ssafy.tati.entity.Board;
+import org.mapstruct.Mapper;
 
+@Mapper(componentModel = "spring")
 public interface PostBoardMapper {
     default Board postBoardReqDtoToBoard(char boardType, PostBoardReqDto postBoardReqDto) {
         if (postBoardReqDto == null) return null;
