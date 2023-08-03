@@ -144,6 +144,8 @@ export default function Router() {
           <Route path=":boardId" element={<StudyNoticeDetail />} />
           <Route path="Create" element={<StudyNoticeCreate />} />
         </Route>
+
+
         {/* 스터디 게시판 */}
         <Route path="/Study/:studyId/Board" element={<StudyBoard />}>
           <Route path="" element={<StudyBoardList />} />
