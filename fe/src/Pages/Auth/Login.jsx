@@ -37,6 +37,7 @@ export default function Login() {
         // 로컬 스토리지에 데이터 저장
         localStorage.setItem('memberId', res.data.memberId);
         localStorage.setItem('email', res.data.email);
+        localStorage.setItem('memberNickName', res.data.memberNickName);
 
         navigate("/MyPage");
       })

@@ -27,9 +27,9 @@ display: flex;
 
 .InfoModify_nickname{
   margin-left: 90px;
-  height: 20px;
+  height: 25px;
   width: 170px;
-  font-size: 18px;
+  font-size: 13px;
 }
 
 .InfoModify_nickname_check_btn{
@@ -71,4 +71,9 @@ display: flex;
   width: 170px;
   font-size: 25px;
   margin-left: 42px;
+}
+
+.file_img{
+  width: 250px;
+  height: 150px;
 }
