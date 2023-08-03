@@ -17,8 +17,6 @@ public interface StudyMapper {
     Study studyReqDtoToStudy(StudyReqDto studyReqDto);
     StudyDetailResDto studyToStudyDetailResDto(Study study, Category category);
     List<StudySchedule> studyReqScheduleListToStudySchedule(List<StudyScheduleReqDto> studyScheduleReqDtoList);
-
-
     List<StudyAllListResDto> studyListToStudyAllListResDtoList(List<Study> studyList);
 
 }

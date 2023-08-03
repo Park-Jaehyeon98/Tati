@@ -1,35 +1,59 @@
 package com.ssafy.tati.entity;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
 @EqualsAndHashCode(of = "studyMemberId")
+@NoArgsConstructor
+@AllArgsConstructor
 public class StudyMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer studyMemberId;
 
-    @Column(name = "study_member_status", nullable = false)
-    private  String studyMemberStatus;
-
     @Column(name = "study_member_deposit", columnDefinition = "int", nullable = false)
     private Integer studyMemberDeposit;
 
     @Column(name = "study_join_date", nullable = false)
-    private String studyJoinDate;
+    private LocalDate studyJoinDate;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "study_id")
     private Study study;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
+    public StudyMember(Integer point, LocalDate currentDate, Study study, Member member) {
+        this.studyMemberDeposit = point;
+        this.studyJoinDate = currentDate;
+        setMember(member);
+        setStudy(study);
+    }
+
+//    public void insert(Integer studyMemberDeposit, String studyJoinDate, Study study, Member member){
+//        this.studyMemberDeposit = studyMemberDeposit;
+//        this.studyJoinDate = studyJoinDate;
+//        this.study = study;
+//        this.member = member;
+//    }
+    private void setMember(Member member){
+        this.member=member;
+        if(member!=null){
+            member.getStudyList().add(this);
+        }
+    }
+
+    private void setStudy(Study study){
+        this.study=study;
+        if(study!=null){
+            study.getStudyMemberList().add(this);
+        }
+    }
 }

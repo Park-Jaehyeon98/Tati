@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Schema(description = "스터디 생성 Res Dto")
+@Schema(description = "스터디 생성 ResDto")
 public class StudyCreateResDto {
     @Schema(description = "스터디 식별번호")
     private Integer StudyId;

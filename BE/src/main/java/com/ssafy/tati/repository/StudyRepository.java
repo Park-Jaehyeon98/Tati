@@ -1,12 +1,7 @@
 package com.ssafy.tati.repository;
 
-import com.ssafy.tati.dto.res.StudyAllListResDto;
-import com.ssafy.tati.dto.res.StudyModifyResDto;
-import com.ssafy.tati.entity.MemberSchedule;
 import com.ssafy.tati.entity.Study;
-import org.hibernate.annotations.SQLDeleteAll;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
