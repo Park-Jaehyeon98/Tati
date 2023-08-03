@@ -6,8 +6,13 @@ import style from "./Router.module.css"
 
 import Notice from "../Pages/Notice/Notice";
 import NoticePage from "../Pages/Notice/NoticePage";
+import NoticeList from "../Pages/Notice/NoticeList";
 import NoticeCreate from "../Pages/Notice/NoticeCreate";
 import NoticeModify from "../Pages/Notice/NoticeModify";
+
+import Faq from "../Pages/Faq/Faq";
+import FaqCreate from "../Pages/Faq/FaqCreate";
+import FaqList from "../Pages/Faq/FaqList";
 
 import MyPage from "../Pages/MyPage/_MyPage";
 import SignUp from "../Pages/Auth/SignUp";
@@ -88,6 +93,9 @@ export default function Router() {
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/NoticePage">
             공지사항
           </NavLink>
+          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Faq">
+            FAQ
+          </NavLink>
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Study">
             스터디
           </NavLink>
@@ -119,14 +127,17 @@ export default function Router() {
         {/* 공지사항 */}
         <Route path="/Notice" element={<Notice />}>
           <Route path="" element={<NoticePage />} />
+          {/* <Route path="" element={<NoticeList />} /> */}
           <Route path="Create" element={<NoticeCreate />} />
           <Route path=":boardId" element={<NoticeDetail />} />
           <Route path=":boardId/Modify" element={<NoticeModify />} />
         </Route>
 
-
         {/* FAQ */}
-
+        <Route path="/Faq" element={<Faq />}>
+          <Route path="" element={<FaqList />} />
+          <Route path="Create" element={<FaqCreate />} />
+        </Route>
 
         {/* Auth (회원가입 로그인 로그아웃) */}
         <Route path="/SignUp" element={<SignUp />} />
@@ -148,9 +159,10 @@ export default function Router() {
 
         {/* 스터디 CRUD */}
         <Route exact path="/Study" element={<StudyList />} />
-        <Route path="/StudyCreate" element={<StudyCreate />} />
+        <Route path="/Study/Create" element={<StudyCreate />} />
         <Route path="/Study/:studyId" element={<StudyDetail />} />
-        <Route path="/StudyModify/:studyId" element={<StudyModify />} />
+        {/* 스터디 공지사항, 스터디 게시판, 스터디 수정하기 -> 스터디 디테일 하위 라우터 설정하기 */}
+        <Route path="/Study/:studyId/Modify/" element={<StudyModify />} />
 
         {/* 스터디 공지사항 */}
         <Route path="/Study/:studyId/Notice" element={<StudyNotice />}>
