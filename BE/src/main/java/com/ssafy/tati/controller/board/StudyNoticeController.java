@@ -62,7 +62,7 @@ public class StudyNoticeController {
     })
     @GetMapping("/notice/{boardId}")
     public ResponseEntity<?> studyNoticeDetails(@PathVariable Integer boardId) {
-        Board board = boardService.findBoardByBoardId(boardId);
+        Board board = boardService.findBoardByBoardIdAndBoardType(boardId, '1');
         BoardDetailResDto boardDetailResDto = getBoardMapper.boardToBoardDetailResDto(board);
 
         return new ResponseEntity(boardDetailResDto, HttpStatus.OK);

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<Board, Integer> {
 
@@ -22,4 +23,6 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     List<Board> findByBoardTypeAndStudy(char boardType, Study study);
 
     Page<Board> findByBoardTypeAndStudy(char boardType, Study study, Pageable pageable);
+
+    Optional<Board> findByBoardIdAndBoardType(Integer boardId, char boardType);
 }

@@ -61,7 +61,7 @@ public class NoticeController {
     })
     @GetMapping("/{boardId}")
     public ResponseEntity<?> noticeDetails(@PathVariable Integer boardId) {
-        Board board = boardService.findBoardByBoardId(boardId);
+        Board board = boardService.findBoardByBoardIdAndBoardType(boardId, '0');
         BoardDetailResDto boardDetailResDto = getBoardMapper.boardToBoardDetailResDto(board);
 
         return new ResponseEntity(boardDetailResDto, HttpStatus.OK);

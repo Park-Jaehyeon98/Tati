@@ -92,6 +92,17 @@ public class BoardService {
         return board;
     }
 
+    // 게시글 단건 조회
+    public Board findBoardByBoardIdAndBoardType(Integer boardId, char boardType){
+        Optional<Board> optionalBoard = boardRepository.findByBoardIdAndBoardType(boardId, boardType);
+        if (optionalBoard.isEmpty()){
+            throw new RuntimeException();
+        }
+        Board board = optionalBoard.get();
+        board.setBoardHit(board.getBoardHit() + 1);
+        return board;
+    }
+
     // boardType에 맞는 모든 게시글 조회
     public List<Board> findBoardByBoardType(char boardType){
         return boardRepository.findByBoardType(boardType);
