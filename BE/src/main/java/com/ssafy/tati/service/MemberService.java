@@ -2,6 +2,9 @@ package com.ssafy.tati.service;
 
 import com.ssafy.tati.Exception.DataNotFoundException;
 import com.ssafy.tati.Exception.MismatchDataException;
+import com.ssafy.tati.dto.res.ApplicantStudyResDto;
+import com.ssafy.tati.dto.res.JoinStudyResDto;
+import com.ssafy.tati.dto.res.MemberBoardListResDto;
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.entity.Member;
 import com.ssafy.tati.entity.Study;
@@ -15,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -122,21 +126,51 @@ public class MemberService {
     }
 
     //회원이 작성한 글 조회
-    public List<Board> selectBoard(Integer memberId){
+    public List<MemberBoardListResDto> selectBoardList(Integer memberId){
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
 
-        return boardRepository.findByEmail(memberId);
+        List<MemberBoardListResDto> boardListResDtoList = new ArrayList<>();
+
+        List<Board> boardList = boardRepository.findByEmail(memberId);
+        for(Board board : boardList){
+            boardListResDtoList.add(new MemberBoardListResDto(board, board.getCommentList().size()));
+        }
+
+        return boardListResDtoList;
     }
 
     //회원이 가입한 스터디 조회
-    public List<Study> selectStudyList(Integer memberId){
+    public List<JoinStudyResDto> selectStudyList(Integer memberId){
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
 
-        List<Study> studyList = memberRepository.selectStudyMemberList(memberId);
+        List<JoinStudyResDto> joinStudyList = new ArrayList<>();
 
-        return studyList;
+        List<Study> studyList = memberRepository.selectStudyList(memberId);
+        for(Study study : studyList){
+            joinStudyList.add(new JoinStudyResDto(study, study.getStudyMemberList().size()));
+        }
+
+        return joinStudyList;
+    }
+
+    //회원이 신청한 스터디 조회
+    public List<ApplicantStudyResDto> selectApplicantStudyList(Integer memberId){
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
+
+        List<ApplicantStudyResDto> applicantStudyResDtoList = new ArrayList<>();
+
+        List<Study> studyList = memberRepository.selectApplicantStudyList(memberId);
+        for(Study study : studyList){
+            int applicantCount = study.getStudyApplicantList().size();
+            applicantStudyResDtoList.add( new ApplicantStudyResDto(
+                    study.getStudyId(), study.getStudyName(), study.getTotalMember(), applicantCount
+            ));
+        }
+
+        return applicantStudyResDtoList;
     }
 
     //모든 회원 조회

@@ -45,6 +45,11 @@ public class S3Service implements FileService {
         return IOUtils.toByteArray(s3ObjectContent);
     }
 
+    @Override
+    public void deleteFile(String fileName) {
+        amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
+    }
+
     private void validateFileExists(String fileName) throws FileNotFoundException {
         System.out.println("fileName : " +fileName);
         System.out.println("bucket : " +bucket);

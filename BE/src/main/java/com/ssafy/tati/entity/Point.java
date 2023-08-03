@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@ToString
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor

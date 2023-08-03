@@ -2,12 +2,9 @@ package com.ssafy.tati.controller;
 
 import com.ssafy.tati.dto.req.MemberReqDto;
 import com.ssafy.tati.dto.req.PutMemberReqDto;
-import com.ssafy.tati.dto.res.GetMemberResDto;
-import com.ssafy.tati.dto.res.MemberResDto;
-import com.ssafy.tati.dto.res.MemberStudyResDto;
+import com.ssafy.tati.dto.res.*;
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.entity.Member;
-import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.mapper.GetMemberMapper;
 import com.ssafy.tati.mapper.MemberMapper;
 import com.ssafy.tati.mapper.PutMemberMapper;
@@ -52,7 +49,6 @@ public class MyPageController {
     @PutMapping(value="/mypage/modifyNickName")
     public ResponseEntity<?> modifyNickname(@RequestPart(value = "putMemberReqDto") PutMemberReqDto putMemberReqDto,
                                 @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws IOException {
-
 
         Member member = putMemberMapper.PutMemberReqDtoToMember(putMemberReqDto);
         memberService.modifyNickName(member.getMemberId(), member.getMemberNickName());
@@ -104,15 +100,24 @@ public class MyPageController {
         return new ResponseEntity<>(memberResDto, HttpStatus.OK);
     }
 
-    //회원의 가입, 신청 스터디와 작성 글 관련 페이지 접속
-    @GetMapping("member/mypage/study-list/{memberId}")
-    public ResponseEntity<?> selectMemberStudyList(@PathVariable Integer memberId){
-
-        List<Study> studyList = memberService.selectStudyList(memberId);
-        List<Board> boardList = memberService.selectBoard(memberId);
-
-        MemberStudyResDto memberStudyResDto = new MemberStudyResDto(studyList, boardList);
-
-        return new ResponseEntity<>(memberStudyResDto, HttpStatus.OK);
+    //회원 가입스터디 반환
+    @GetMapping("mypage/study-list/{memberId}")
+    public ResponseEntity<?> selectStudyList(@PathVariable Integer memberId){
+        List<JoinStudyResDto> joinStudyList = memberService.selectStudyList(memberId);
+        return new ResponseEntity<>(joinStudyList, HttpStatus.OK);
     }
-}
+
+    //회원 신청스터디 반환
+    @GetMapping("mypage/application-list/{memberId}")
+    public ResponseEntity<?> selectApplicationStudyList(@PathVariable Integer memberId){
+        List<ApplicantStudyResDto> applicantStudyList = memberService.selectApplicantStudyList(memberId);
+        return new ResponseEntity<>(applicantStudyList, HttpStatus.OK);
+    }
+
+    //회원 작성 게시글 반환
+    @GetMapping("mypage/board-list/{memberId}")
+    public ResponseEntity<?> selectBoardList(@PathVariable Integer memberId){
+        List<MemberBoardListResDto> boardList = memberService.selectBoardList(memberId);
+        return new ResponseEntity<>(boardList, HttpStatus.OK);
+    }
+ }
