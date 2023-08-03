@@ -15,7 +15,7 @@ export default function Aside() {
       navigate("/MyPage");
     } else if (page === "StudyList") {
       // StudyList 페이지로 이동하는 동작 구현
-      navigate("/MyPage/MyPageStudyList");
+      navigate("/MyPage/JoinStudy");
     } else if (page === "Point") {
       // Point 페이지로 이동하는 동작 구현
       navigate("/MyPage/MyPagePoint");

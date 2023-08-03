@@ -1,16 +1,16 @@
 import React from "react";
 import style from "./_Mypage.module.css"
 
-import StudyList from "../../Components/_MyPage/MystudyList/StudyList";
+import JoinStudy from "../../Components/_MyPage/MystudyList/JoinStudy";
 import Aside from "../../Components/_MyPage/Aside";
 
 
-export default function MyPageStudyList() {
-    return (
+export default function MyPageJoinStudy(){
+    return(
         <div className={style.myPage}>
-            <Aside />
+            <Aside/>
             <div className={style.box2}>
-                <StudyList />
+                <JoinStudy/>
             </div>
         </div>
     )

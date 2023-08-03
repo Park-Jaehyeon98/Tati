@@ -1,9 +1,11 @@
 .calendar{
-  width: 600px;
+  width: 700px;
   height: 600px; 
   margin-left: 100px;
   margin-top: 30px;
+  font-size: 13px;
 }
+
 .fc-day-sun a {
   color: red;
 }
@@ -12,3 +14,12 @@
 .fc-day-sat a {
   color: blue;
 }
+
+
+/* FullCalendar 이벤트 속성
+ ① title : 해당 이벤트의 제목을 나타낸다.
+ ② color : 이벤트의 색상을 변경한다.
+ ③ textColor : 이벤트 내용의 텍스트의 색상을 변경한다.
+ ④ backgroundColor : 이벤트 배경색의 색상만을 변경한다.
+ ⑤ borderColor : 이벤트 테두리의 색상만을 변경한다.
+ ⑥ rendering : "bakground"라고 입력하면 color, backgroundColor의 색상으로 해당일 전체의 내용이 채워진다. */

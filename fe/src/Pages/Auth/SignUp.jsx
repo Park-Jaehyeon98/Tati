@@ -73,9 +73,11 @@ export default function SignUp() {
 
   // 닉네임 중복 확인
   const handleSendNickName = () => {
+    console.log(formData.memberNickName)
+    console.log(process.env.REACT_APP_URL)
     axios
       .post(`http://${process.env.REACT_APP_URL}:8080/member/nickname-check`, {
-        nickName: formData.nickName,
+        memberNickName: formData.memberNickName,
       })
       .then((res) => {
         console.log(res)
