@@ -41,7 +41,7 @@ export default function SignUp() {
     console.log(formData.email)
     console.log(process.env.REACT_APP_URL)
     axios
-      .post(`http://${process.env.REACT_APP_URL}:8080/member/email-check`, {
+      .post(`${process.env.REACT_APP_URL}/member/email-check`, {
         email: formData.email, // formData의 email 값을 사용
       })
       .then((res) => {
@@ -58,7 +58,7 @@ export default function SignUp() {
     console.log(formData.email);
     console.log(formData.code);
     axios
-      .post(`http://${process.env.REACT_APP_URL}:8080/member/email-code-check`, {
+      .post(`${process.env.REACT_APP_URL}/member/email-code-check`, {
         email: formData.email,
         code: formData.code
       })
@@ -76,7 +76,7 @@ export default function SignUp() {
     console.log(formData.memberNickName)
     console.log(process.env.REACT_APP_URL)
     axios
-      .post(`http://${process.env.REACT_APP_URL}:8080/member/nickname-check`, {
+      .post(`${process.env.REACT_APP_URL}/member/nickname-check`, {
         memberNickName: formData.memberNickName,
       })
       .then((res) => {
@@ -114,7 +114,7 @@ export default function SignUp() {
     }
 
     axios
-      .post(`http://${process.env.REACT_APP_URL}:8080/member/sign-up`, {
+      .post(`${process.env.REACT_APP_URL}/member/sign-up`, {
         email,
         memberName,
         memberNickName,

@@ -26,8 +26,9 @@ export default function InfoModify() {
   // 닉네임 중복체크
   const handleSendNickName = () => {
     console.log(`닉네임 ${nickName}`)
+    console.log(process.env.REACT_APP_URL)
     axios
-      .post(`http://${process.env.REACT_APP_URL}:8080/member/nickname-check`, {
+      .post(`${process.env.REACT_APP_URL}/member/nickname-check`, {
         memberNickName: nickName,
       })
       .then((res) => {
@@ -79,8 +80,8 @@ export default function InfoModify() {
     }
 
 
-    // axios.put(`http://${process.env.REACT_APP_URL}:8080/member/mypage/modifyNickName`, {data:{file}},{
-    axios.post(`http://${process.env.REACT_APP_URL}:8080/member/upload`, file,{
+    console.log(process.env.REACT_APP_URL)
+    axios.post(`${process.env.REACT_APP_URL}/member/upload`, file,{
       headers: {
         "Content-Type": "multipart/form-data", // 파일 업로드를 위해 Content-Type을 multipart/form-data로 설정
       },
@@ -117,7 +118,8 @@ export default function InfoModify() {
       alert('비밀번호가 일치하자 않습니다.')
     }
     console.log(`비밀번호 변경: ${password} memberId: ${memberId}`)
-    axios.put(`http://${process.env.REACT_APP_URL}:8080/member/mypage/modifyPassword`, {
+    console.log(process.env.REACT_APP_URL)
+    axios.put(`${process.env.REACT_APP_URL}/member/mypage/modifyPassword`, {
       memberId,
       password
     })
@@ -136,7 +138,8 @@ export default function InfoModify() {
   // 유저 pk를 url에 삽입 후 보냄 (pk는 로컬에)
   const handleWithdrawal = () => {
     const email = 'rlaalsrbs15@naver.com'
-    axios.delete(`http://${process.env.REACT_APP_URL}:8080/member/mypage/remove/${email}`, {
+    console.log(process.env.REACT_APP_URL)
+    axios.delete(`${process.env.REACT_APP_URL}/member/mypage/remove/${email}`, {
     })
       .then((res) => {
         console.log(res)

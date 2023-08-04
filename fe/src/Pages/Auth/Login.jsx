@@ -27,7 +27,8 @@ export default function Login() {
   const handleLogin = () => {
     console.log(`이메일: ${formData.email} 비밀번호: ${formData.password}`)
 
-    axios.post(`http://${process.env.REACT_APP_URL}:8080/member/login`, {
+    console.log(process.env.REACT_APP_URL)
+    axios.post(`${process.env.REACT_APP_URL}/member/login`, {
       email: formData.email,
       password: formData.password
     })
@@ -53,7 +54,6 @@ export default function Login() {
       <img className={style.login_img} src="./Assets/Login_img01.jpg" alt="" />
 
       <div className={style.login}>
-        <form action="/MyPage" method="post">
             <h1 className={style.login_title}>로그인</h1>
             <p>
               <input className={style.loginInput}
@@ -79,7 +79,6 @@ export default function Login() {
             <button className={style.loginBtn}
               onClick={handleLogin}>
               로그인</button>
-        </form>
 
         <div className={style.line1}></div>
         <p>간편로그인</p>

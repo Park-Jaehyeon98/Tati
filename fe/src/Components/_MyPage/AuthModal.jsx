@@ -39,7 +39,8 @@ export default function AuthModal({ setAuthModal }) {
     console.log(`password: ${password}`)
     console.log('회원가입수정 입장=========================================')
 
-    axios.post(`http://${process.env.REACT_APP_URL}:8080/member/mypage/check`,{
+    console.log(process.env.REACT_APP_URL)
+    axios.post(`${process.env.REACT_APP_URL}/member/mypage/check`,{
     email:'rlaalsrbs15@naver.com',
     password
     })

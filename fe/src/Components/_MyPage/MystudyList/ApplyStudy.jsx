@@ -39,12 +39,12 @@ export default function ApplyStudy(){
   const itemsPerPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const NoticeItem = ({ point, date, day }) => {
+  const NoticeItem = ({ studyName, totalMember, currentMemberCount }) => {
     return (
       <div>
         <div className={style.NoticeItem_text}>
-          <p className={style.p_text}>{date} {point} 충전 
-            <h6 className={style.text}>{day}</h6></p>
+          <p className={style.p_text}>{studyName} 
+            <h6 className={style.text}>{currentMemberCount}/{totalMember}</h6></p>
           <hr />
         </div>
       </div>
@@ -116,9 +116,10 @@ export default function ApplyStudy(){
               {currentNotices.map((notice, index) => (
                 <NoticeItem
                   key={index}
-                  point={notice.amount}
-                  date={notice.pcontent}
-                  day={notice.pointDate}
+                  studyApplicantId={notice.studyApplicantId}
+                  studyName={notice.studyName}
+                  totalMember={notice.totalMember}
+                  currentMemberCount={notice.currentMemberCount}
                 />
               ))}
             </div>

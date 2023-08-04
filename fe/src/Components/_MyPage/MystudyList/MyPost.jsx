@@ -19,7 +19,8 @@ export default function MyPost(){
   console.log(`memberId - ${memberId}`)
   useEffect(() => {
 
-    axios.get(`http://${process.env.REACT_APP_URL}:8080/member/mypage/board-list/${memberId}`)
+    console.log(process.env.REACT_APP_URL)
+    axios.get(`${process.env.REACT_APP_URL}/member/mypage/board-list/${memberId}`)
       .then((res) => {
         console.log('=================================')
         console.log(res.data);

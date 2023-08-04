@@ -42,7 +42,8 @@ export default function KakaoPay() {
     console.log(`email: ${email}--------------`)
     // 결제 완료시 토큰 값이 있을 때 최종 결제 
     if(pgToken){
-      axios.post(`http://${process.env.REACT_APP_URL}:8080/payment/success`,{
+      console.log(process.env.REACT_APP_URL)
+      axios.post(`${process.env.REACT_APP_URL}/payment/success`,{
         email,
         pg_token:pgToken,
         tid:storedTid
@@ -66,7 +67,8 @@ export default function KakaoPay() {
       console.log("memberId:", memberId);
       setMemberId(memberId)
     }
-    axios.get(`http://${process.env.REACT_APP_URL}:8080/member/mypage/point/${memberId}`,{
+    console.log(process.env.REACT_APP_URL)
+    axios.get(`${process.env.REACT_APP_URL}/member/mypage/point/${memberId}`,{
       })
         .then((res)=>{
           console.log('---------------------------------------------')

@@ -7,6 +7,7 @@ export default function Withdraw() {
   const [currentPoint, setCurrentPoint] = useState(3000);
   const [rechargeAmount, setRechargeAmount] = useState(0);
 
+  
   const handleRecharge = () => {
     console.log(currentPoint - rechargeAmount)
     if(currentPoint - rechargeAmount>0){
@@ -26,16 +27,19 @@ export default function Withdraw() {
     setRechargeAmount(value);
   };
 
+  // 현재 시간
   const currentDate = new Date();
   const email = localStorage.getItem('email');
 
+  // 인출 =================================================================
   const handleTotal = (e) => {
     setCurrentPoint((prevPoint) => prevPoint - rechargeAmount);
     setRechargeAmount(0);
 
     console.log(email)
     const pContent = '제발 되라'
-    axios.post(`http://${process.env.REACT_APP_URL}:8080/member/point/withdrawal`, {
+    console.log(process.env.REACT_APP_URL)
+    axios.post(`${process.env.REACT_APP_URL}/member/point/withdrawal`, {
       email,
       amount:3,
       pointDate:currentDate,
@@ -51,8 +55,9 @@ export default function Withdraw() {
       });
 
       // email - String, amount - Integer, pointDate - String, pContent - String (포인트 결제 취소, 보증금 내기)
-
   }
+  // =========================================================================================
+
   return (
     <div className={style.Change}>
       <p className={style.point}>현재 포인트 <span className={style.currentPoint}>{currentPoint}</span></p>
