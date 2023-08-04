@@ -20,6 +20,7 @@ import Login from "../Pages/Auth/Login";
 import LandingPage from './../Pages/LandingPage/LandingPage';
 
 
+import Study from "../Pages/Study/Study";
 import StudyCreate from "../Pages/Study/StudyCreate";
 import StudyList from "../Pages/Study/StudyList";
 import StudyDetail from "../Pages/Study/StudyDetail";
@@ -158,11 +159,14 @@ export default function Router() {
         <Route path="/MyPage/MyPagePost" element={<MyPagePost />} />
 
         {/* 스터디 CRUD */}
-        <Route exact path="/Study" element={<StudyList />} />
-        <Route path="/Study/Create" element={<StudyCreate />} />
-        <Route path="/Study/:studyId" element={<StudyDetail />} />
-        {/* 스터디 공지사항, 스터디 게시판, 스터디 수정하기 -> 스터디 디테일 하위 라우터 설정하기 */}
-        <Route path="/Study/:studyId/Modify/" element={<StudyModify />} />
+
+        <Route path="/Study" element={<Study />}>
+          <Route path="" element={<StudyList />} />
+          <Route path="Create" element={<StudyCreate />} />
+          <Route path=":studyId" element={<StudyDetail />} />
+          {/* 스터디 공지사항, 스터디 게시판, 스터디 수정하기 -> 스터디 디테일 하위 라우터 설정하기 */}
+          <Route path=":studyId/Modify/" element={<StudyModify />} />
+        </Route>
 
         {/* 스터디 공지사항 */}
         <Route path="/Study/:studyId/Notice" element={<StudyNotice />}>

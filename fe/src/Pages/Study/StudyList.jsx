@@ -45,37 +45,34 @@ const StudyList = () => {
                 console.log(err);
             })
     }
-    apiClient.get('study', {
-        params: {
-            page: pageNum,
-            category: listCategory,
-            keyword: keyword
-        }
-    })
 
-    // 페이지 렌더링 될 때 처음 리스트를 받아오기 위해
-    // useEffect(() => {
+    // 전체조회
+    useEffect(() => {
+        apiClient.get('study')
+            .then((res) => {
+                console.log(res)
+                setStudyList(res.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    }, [])
 
-    //     axios.get(`http://59.27.11.90:8080/study`, {
-    //         params: {
-    //             page: pageNum,
-    //             category: listCategory,
-    //             keyword: keyword
-    //         }
-    // })
-
-    // api 모듈화
-    // useEffect(() => {
-    // apiClient.get('study',{params: {
-    //     page: pageNum,
-    //     category: listCategory,
-    //     keyword: keyword
-    // }})
-    //         .then(response => {
-    //             console.log(response.data);
-    //             setStudyList(response.data);
+    // 키워드, 카테고리, 페이지
+    // if ()
+    //     useEffect(() => {
+    //         apiClient.get('study/search', {
+    //             params: {
+    //                 page: pageNum,
+    //                 category: listCategory,
+    //                 keyword: keyword
+    //             }
     //         })
-    // }, [pageNum, listCategory, keyword]);
+    //             .then(response => {
+    //                 console.log(response.data);
+    //                 setStudyList(response.data);
+    //             })
+    //     }, [pageNum, listCategory, keyword]);
 
     // 하드코딩용
     // useEffect(() => {
@@ -88,7 +85,7 @@ const StudyList = () => {
             <div>
                 <h3>스터디 목록</h3>
                 <hr />
-                <button onClick={() => { navigate('/StudyCreate') }}>스터디 만들기</button>
+                <button onClick={() => { navigate('Create') }}>스터디 만들기</button>
                 <div>
                     {categoryArray.map((category) =>
                         <button key={category} className={category === listCategory ? style.selected : style.noSelected} onClick={() => handleCategoryClick(category)}>{category}</button>
