@@ -48,7 +48,7 @@ public class CommentController {
     })
     @GetMapping("/{boardId}/comment")
     public ResponseEntity<?> commentList(@PageableDefault(size = 10, sort = "createdDate",
-            direction = Sort.Direction.DESC) Pageable pageable, @PathVariable Integer boardId) {
+            direction = Sort.Direction.ASC) Pageable pageable, @PathVariable Integer boardId) {
         Page<Comment> commentPage = commentService.findCommentByBoardId(boardId, pageable);
         Page<CommentResDto> commentResDtoPage = commentPage.map(c -> new CommentResDto(c));
 
