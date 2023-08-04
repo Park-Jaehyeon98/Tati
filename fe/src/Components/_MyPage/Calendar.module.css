@@ -15,7 +15,57 @@
   color: blue;
 }
 
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
 
+.modal_content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal_content h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.modal_content input,
+.modal_content textarea {
+  width: 200px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+.modal_content textarea {
+  width: 385px;
+  resize: vertical; /* 세로 크기 조절 허용 */
+}
+.modal_content button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 8px;
+}
+.modal_content button:last-child {
+  background-color: #dc3545; /* 닫기 버튼은 빨간색 배경으로 */
+}
 /* FullCalendar 이벤트 속성
  ① title : 해당 이벤트의 제목을 나타낸다.
  ② color : 이벤트의 색상을 변경한다.

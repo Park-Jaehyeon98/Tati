@@ -29,7 +29,8 @@ export default function Change() {
     const amount = currentPoint + rechargeAmount
     setCurrentPoint((prevPoint) => prevPoint + rechargeAmount);
     setRechargeAmount(0);
-    axios.post(`http://${process.env.REACT_APP_URL}:8080/payment/ready`, {
+    console.log(process.env.REACT_APP_URL)
+    axios.post(`${process.env.REACT_APP_URL}/payment/ready`, {
       email: 'rlaalsrbs15@naver.com',
       amount
     })

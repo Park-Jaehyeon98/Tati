@@ -52,7 +52,7 @@ export default function Router() {
   const handleschedule = () => {
     const email = 't01045999371@gmail.com'
     console.log(email)
-    axios.get(`http://${process.env.REACT_APP_URL}:8080/member/mypage/schedule/${email}`, {
+    axios.get(`${process.env.REACT_APP_URL}/member/mypage/schedule/${email}`, {
       params: 7
     })
       .then((res) => {
