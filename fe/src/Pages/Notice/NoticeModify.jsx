@@ -25,7 +25,7 @@ const NoticeModify = () => {
 
     const { boardTitle, boardContent } = boardData;
 
-    const subURL = '/notice';
+    const subURL = 'notice';
     const config = {}
 
 

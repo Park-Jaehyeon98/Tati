@@ -90,7 +90,7 @@ export default function Router() {
     <BrowserRouter>
       <div className={style.navBox}>
         <nav>
-          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/NoticePage">
+          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Notice">
             공지사항
           </NavLink>
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Faq">
@@ -126,8 +126,8 @@ export default function Router() {
 
         {/* 공지사항 */}
         <Route path="/Notice" element={<Notice />}>
-          <Route path="" element={<NoticePage />} />
-          {/* <Route path="" element={<NoticeList />} /> */}
+          {/* <Route path="" element={<NoticePage />} /> */}
+          <Route path="" element={<NoticeList />} />
           <Route path="Create" element={<NoticeCreate />} />
           <Route path=":boardId" element={<NoticeDetail />} />
           <Route path=":boardId/Modify" element={<NoticeModify />} />

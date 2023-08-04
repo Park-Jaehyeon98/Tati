@@ -30,7 +30,7 @@ const StudyBoardDetail = () => {
 
     const config = {}
     useEffect(() => {
-        apiClient.get(`/study/board/${boardId}`)
+        apiClient.get(`study/board/${boardId}`)
             .then((res) => {
                 setBoardData(res.data)
             })

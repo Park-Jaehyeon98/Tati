@@ -16,14 +16,14 @@ const NoticeDetail = () => {
         createdDate: '23/07/03',
     });
 
-    const subURL = `/notice`;
+    const subURL = `/notice/${boardId}`;
     const config = {};
 
     useEffect(() => {
         apiClient.get(subURL, config)
             .then((res) => {
                 setBoardData(res.data)
-                console.log(res.data)
+                console.log(res)
             })
             .catch((err) => { console.log(err.data) })
     }, [])
@@ -58,7 +58,7 @@ const NoticeDetail = () => {
             </div>
             <div className={style.revDir}>
                 <div className={style.btn} onClick={handleListBtnClick}>목록 보기</div>
-                {memberNickname === '관리자' ? <div className={style.btn} onClick={handleModifyBtnClick}>공지사항 수정</div> : <></>}
+                {memberNickname === 'admin' ? <div className={style.btn} onClick={handleModifyBtnClick}>공지사항 수정</div> : <></>}
             </div>
 
         </div>

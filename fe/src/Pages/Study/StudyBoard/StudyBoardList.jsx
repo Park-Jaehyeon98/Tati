@@ -17,7 +17,7 @@ const StudyBoardList = () => {
     const memberId = 1;
 
     useEffect(() => {
-        const subURL = boardType === 1 ? `/study/${studyId}/notice/` : `/study/${studyId}/board/`
+        const subURL = boardType === 1 ? `study/${studyId}/notice/` : `study/${studyId}/board/`
         // apiClient.get(`/study/${studyId}/board/`, { params: { pageNum: pageNum, memberId: memberId } })
         apiClient.get(subURL)
             .then((res) => {

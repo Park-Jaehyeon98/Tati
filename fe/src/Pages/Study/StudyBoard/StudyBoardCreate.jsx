@@ -36,7 +36,7 @@ const StudyBoardCreate = () => {
     const handleCompleteBtnClick = () => {
         console.log(boardBody);
 
-        const subUrl = boardType === 1 ? '/study/notice' : '/study/board';
+        const subUrl = boardType === 1 ? 'study/notice' : 'study/board';
 
         apiClient.post(subUrl, boardBody, config)
             .then((res) => {

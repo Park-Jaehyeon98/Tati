@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { apiClient } from '../../api/apiClient';
 
-const FaqListItem = () => {
+const FaqListItem = ({ boardItemInfo }) => {
+    const { boardTitle, boardContent } = boardItemInfo
+
+
     return (
         <div>
             <div>
-                Q : { }
+                Q : {boardTitle}
             </div>
             <div>
-                A : { }
+                A : {boardContent}
             </div>
-
         </div>
     )
 }
