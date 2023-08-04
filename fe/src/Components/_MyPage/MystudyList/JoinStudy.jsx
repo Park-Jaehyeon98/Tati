@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import { useLocation } from 'react-router-dom';
 import axios from "axios";
 import style from './ApplyStudy.module.css'
@@ -12,9 +12,31 @@ export default function JoinStudy(){
     navigate(tab);
   };
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
 
+  const memberId = localStorage.getItem('memberId');
+  // 가입한 스터디 ======================================================================================
+  
+  console.log(`memberId - ${memberId}`)
+  useEffect(() => {
+
+    axios.get(`http://${process.env.REACT_APP_URL}:8080/member/mypage/study-list/${memberId }`)
+      .then((res) => {
+        console.log('=================================')
+        console.log(res.data);
+        console.log('==============================')
+      })
+      .catch((err) => {
+        console.log(err,'가입스터디 ------------------');
+      });
+  },[])
+
+
+  //studyId - int, studyName - String, studyStartDate - String, studyEndDate - String, totalMember - int, studyMembercount - int
+  // 가입한 스터디 ======================================================================================
+  
+  
   const NoticeItem = ({ point, date, day }) => {
     return (
       <div>
@@ -37,43 +59,6 @@ export default function JoinStudy(){
     { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
     { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
     { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-    { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-    { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-  
   ];
 
   const totalPages = Math.ceil(dates.length / itemsPerPage);

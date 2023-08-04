@@ -53,31 +53,34 @@ export default function Login() {
       <img className={style.login_img} src="./Assets/Login_img01.jpg" alt="" />
 
       <div className={style.login}>
-        <h1 className={style.login_title}>로그인</h1>
-        <p>
-          <input className={style.loginInput}
-            type="text"
-            placeholder="이메일"
-            name="email"
-            value={formData.email}
-            onChange={handleChange} />
-          <br />
-          <input className={style.loginInput}
-            type="password"
-            placeholder="비밀번호"
-            name="password"
-            value={formData.passWord}
-            onChange={handleChange} />
-        </p>
-        <div className={style.Login_box_find}>
-          <h5 className={style.password_find}>
-            비밀번호 찾기</h5>
-          <h5 className={style.signup}>
-            회원가입</h5>
-        </div>
-        <button className={style.loginBtn}
-          onClick={handleLogin}>
-          로그인</button>
+        <form action="/MyPage" method="post">
+            <h1 className={style.login_title}>로그인</h1>
+            <p>
+              <input className={style.loginInput}
+                type="text"
+                placeholder="이메일"
+                name="email"
+                value={formData.email}
+                onChange={handleChange} />
+              <br />
+              <input className={style.loginInput}
+                type="password"
+                placeholder="비밀번호"
+                name="password"
+                value={formData.passWord}
+                onChange={handleChange} />
+            </p>
+            <div className={style.Login_box_find}>
+              <h5 className={style.password_find}>
+                비밀번호 찾기</h5>
+              <h5 className={style.signup}>
+                회원가입</h5>
+            </div>
+            <button className={style.loginBtn}
+              onClick={handleLogin}>
+              로그인</button>
+        </form>
+
         <div className={style.line1}></div>
         <p>간편로그인</p>
         <div className={style.line2}></div>
