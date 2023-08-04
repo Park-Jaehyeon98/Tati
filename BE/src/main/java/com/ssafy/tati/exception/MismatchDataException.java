@@ -1,4 +1,4 @@
-package com.ssafy.tati.Exception;
+package com.ssafy.tati.exception;
 
 public class MismatchDataException extends RuntimeException {
     public MismatchDataException(String message){

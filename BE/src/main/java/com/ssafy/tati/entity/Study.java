@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
 @EqualsAndHashCode(of = "studyId")
 public class Study {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer studyId;
@@ -53,6 +53,9 @@ public class Study {
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
     List<StudyMember> studyMemberList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
+    List<StudyApplicant> studyApplicantList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

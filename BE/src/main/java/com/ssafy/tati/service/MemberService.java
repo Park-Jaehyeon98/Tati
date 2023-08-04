@@ -1,11 +1,11 @@
 package com.ssafy.tati.service;
 
-import com.ssafy.tati.Exception.DataNotFoundException;
-import com.ssafy.tati.Exception.MismatchDataException;
+import com.ssafy.tati.exception.DataNotFoundException;
+import com.ssafy.tati.exception.MismatchDataException;
+import com.ssafy.tati.dto.res.MemberBoardListResDto;
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.entity.Member;
 import com.ssafy.tati.entity.Study;
-import com.ssafy.tati.entity.StudyMember;
 import com.ssafy.tati.repository.BoardRepository;
 import com.ssafy.tati.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -122,11 +123,18 @@ public class MemberService {
     }
 
     //회원이 작성한 글 조회
-    public List<Board> selectBoard(Integer memberId){
+    public List<MemberBoardListResDto> selectBoardList(Integer memberId){
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
 
-        return boardRepository.findByEmail(memberId);
+        List<MemberBoardListResDto> boardListResDtoList = new ArrayList<>();
+
+        List<Board> boardList = boardRepository.findByEmail(memberId);
+        for(Board board : boardList){
+            boardListResDtoList.add(new MemberBoardListResDto(board, board.getCommentList().size()));
+        }
+
+        return boardListResDtoList;
     }
 
     //회원이 가입한 스터디 조회
@@ -134,10 +142,19 @@ public class MemberService {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
 
-        List<Study> studyList = memberRepository.selectStudyMemberList(memberId);
-
+        List<Study> studyList = memberRepository.selectStudyList(memberId);
         return studyList;
     }
+
+    //회원이 신청한 스터디 조회
+    public List<Study> selectApplicantStudyList(Integer memberId){
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
+
+        List<Study> studyList = memberRepository.selectApplicantStudyList(memberId);
+        return studyList;
+    }
+
 
     //모든 회원 조회
     public List<Member> selectAll(){

@@ -1,4 +1,4 @@
-package com.ssafy.tati.Exception;
+package com.ssafy.tati.exception;
 
 import java.io.IOException;
 

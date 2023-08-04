@@ -161,7 +161,11 @@ public class MemberController {
         return new ResponseEntity<>(resource, httpHeaders, HttpStatus.OK);
     }
 
-
+    @DeleteMapping("/remove")
+    public ResponseEntity<?> removeFile(String fileName){
+        s3Service.deleteFile(fileName);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
 }

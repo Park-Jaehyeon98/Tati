@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @Tag(name = "회원 일정", description = "회원일정 API 문서")
 @RestController
 @RequestMapping("/member")
@@ -46,14 +47,14 @@ public class MemberScheduleController {
         MemberSchedule schedule = memberScheduleService.findById(scheduleId);
 
         Integer memberId = schedule.getMember().getMemberId();
+        int year =  schedule.getMemberScheduleDate().getYear();
         int month = schedule.getMemberScheduleDate().getMonthValue();
 
         memberScheduleService.delete(scheduleId);
-        List<MemberSchedule> schedules = memberScheduleService.findSchedules(memberId ,month);
 
+        List<MemberSchedule> schedules = memberScheduleService.findSchedules(memberId ,year, month);
         List<ScheduleResDto> scheduleList =
                 scheduleMapper.memberScheduleListToScheduleResDtoList(schedules);
-
 
         return new ResponseEntity<>(scheduleList, HttpStatus.OK);
     }
@@ -61,8 +62,8 @@ public class MemberScheduleController {
 
     @Operation(summary = "일정 조회", description = "회원이 자신의 일정 조회")
     @GetMapping("/mypage/schedule/{memberId}")
-    public ResponseEntity<?> selectSchedule(@PathVariable Integer memberId, int month){
-        List<MemberSchedule> schedules = memberScheduleService.findSchedules(memberId ,month);
+    public ResponseEntity<?> selectSchedule(@PathVariable Integer memberId, Integer year, Integer month){
+        List<MemberSchedule> schedules = memberScheduleService.findSchedules(memberId , year, month);
 
         List<ScheduleResDto> scheduleList =
                 scheduleMapper.memberScheduleListToScheduleResDtoList(schedules);
