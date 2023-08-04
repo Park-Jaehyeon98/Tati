@@ -5,11 +5,11 @@ const FaqCreate = () => {
     const [boardData, setBoardData] = useState({
         boardTitle: '',
         boardContent: '',
-        memberId: 9,
-        // 0 : 공지 1: 스터디 공지 2: 스터디 게시판 9: FAQ
+        memberId: 1,
     });
 
-    const boardType = 0;
+    const boardType = 9;
+    // 0 : 공지 1: 스터디 공지 2: 스터디 게시판 9: FAQ
     const config = 0;
 
     const {
