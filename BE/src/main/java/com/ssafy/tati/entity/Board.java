@@ -47,4 +47,7 @@ public class Board {
 
     @LastModifiedDate
     private LocalDateTime modifiedDate;
+
+    @Column(name = "main_notice_yn")
+    private boolean mainNoticeYn;
 }

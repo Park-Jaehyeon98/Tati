@@ -164,5 +164,39 @@ public class BoardService {
             throw new RuntimeException();
         }
     }
+
+    public void saveStudyMainNotice(Integer memberId, Board board) {
+        Optional<Board> optionalBoard = boardRepository.findById(board.getBoardId());
+
+        if (optionalBoard.isEmpty()){
+            throw new RuntimeException();
+        }
+        Board saveNoticeMainBoard = optionalBoard.get();
+        if (!saveNoticeMainBoard.getMember().getMemberId().equals(memberId)) {
+            throw new RuntimeException();
+        }
+
+        Optional<Board> existingNoticeMain = boardRepository.findByBoardTypeAndStudyAndMainNoticeYnTrue('1', saveNoticeMainBoard.getStudy());
+
+        if (existingNoticeMain.isPresent()) { // 기존 대표 공지글이 있는 경우
+            existingNoticeMain.get().setMainNoticeYn(false); // 기존 대표 공지글 false로 변경
+        }
+
+        saveNoticeMainBoard.setMainNoticeYn(true);
+    }
+
+    public void removeStudyMainNotice(Integer memberId, Board board) {
+        Optional<Board> optionalBoard = boardRepository.findById(board.getBoardId());
+
+        if (optionalBoard.isEmpty()){
+            throw new RuntimeException();
+        }
+        Board removeNoticeMainBoard = optionalBoard.get();
+        if (!removeNoticeMainBoard.getMember().getMemberId().equals(memberId)) {
+            throw new RuntimeException();
+        }
+
+        removeNoticeMainBoard.setMainNoticeYn(false);
+    }
 }
 
