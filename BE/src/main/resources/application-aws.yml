@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://i9b305.p.ssafy.io:3306/tati?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=utf8
     username: tati
-    password: ssafyb305
+    password: tatib305@
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
