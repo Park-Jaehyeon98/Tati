@@ -26,7 +26,7 @@ public class StudyService {
     public void createStudy(Study study, Integer categoryId) {
         Optional<Category> category = categoryRepository.findByCategoryId(categoryId);
         if(!category.isPresent()){
-            throw new RuntimeException();
+            throw new RuntimeException("해당 카테고리가 존재하지 않습니다.");
         }
         study.setCategory(category.get());
         studyRepository.save(study);
@@ -41,12 +41,12 @@ public class StudyService {
     public Study getStudyDetail(Integer studyId){
         Optional<Study> optionalStudy = studyRepository.findById(studyId);
         if(!optionalStudy.isPresent()){
-            throw new RuntimeException();
+            throw new RuntimeException("해당 스터디가 존재하지 않습니다.");
         }
         Study study = optionalStudy.get();
         Optional<Category> optionalCategory = categoryRepository.findByCategoryId(study.getCategory().getCategoryId());
         if(!optionalCategory.isPresent()){
-            throw new RuntimeException();
+            throw new RuntimeException("해당 카테고리가 존재하지 않습니다.");
         }
         Category category = optionalCategory.get();
         study.setCategory(category);
@@ -58,12 +58,12 @@ public class StudyService {
     public StudyIdResDto modifyStudy(Integer studyId, StudyModifyReqDto studyModifyReqDto){
         Optional<Study> optionalStudy = studyRepository.findById(studyId);
         if(!optionalStudy.isPresent()){
-            throw new RuntimeException();
+            throw new RuntimeException("해당 스터디가 존재하지 않습니다.");
         }
         Study study = optionalStudy.get();
         Optional<Category> optionalCategory = categoryRepository.findByCategoryId(studyModifyReqDto.getCategoryId());
         if(!optionalCategory.isPresent()){
-            throw new RuntimeException();
+            throw new RuntimeException("해당 카테고리가 존재하지 않습니다.");
         }
 
         study.update(optionalCategory.get(), studyModifyReqDto.getStudyName(), studyModifyReqDto.getStudyDescription(), studyModifyReqDto.isDisclosure(), studyModifyReqDto.getStudyPassword());
@@ -76,14 +76,14 @@ public class StudyService {
     public StudyDeleteResDto removeStudy(Integer studyId, Integer memberId){
         Optional<Study> optionalStudy = studyRepository.findById(studyId);
         if(!optionalStudy.isPresent()){
-            throw new RuntimeException();
+            throw new RuntimeException("해당 스터디가 존재하지 않습니다.");
         }
         Study study = optionalStudy.get();
         StudyDeleteResDto studyDeleteResDto = new StudyDeleteResDto();
         studyDeleteResDto.setStudyName(study.getStudyName());
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         if(!optionalMember.isPresent()){
-            throw new RuntimeException();
+            throw new RuntimeException("회원 정보가 존재하지 않습니다.");
         }
         Member member = optionalMember.get();
 
@@ -91,7 +91,7 @@ public class StudyService {
             studyRepository.deleteById(studyId);
             return studyDeleteResDto;
         }else {
-            throw new RuntimeException();
+            throw new RuntimeException("스터디 방장이 아닙니다.");
         }
     }
 

@@ -32,4 +32,9 @@ public class StudyApplicant {
         setMember(member);
         this.studyApplicantDeposit = studyDeposit;
     }
+
+    public Integer getMemberId() {
+        Integer memberId = member.getMemberId();
+        return memberId;
+    }
 }

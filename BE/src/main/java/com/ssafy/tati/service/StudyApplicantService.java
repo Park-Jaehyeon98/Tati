@@ -1,6 +1,5 @@
 package com.ssafy.tati.service;
 
-import com.ssafy.tati.dto.res.StudyApplicantMemberResDto;
 import com.ssafy.tati.dto.res.StudyIdResDto;
 import com.ssafy.tati.entity.Member;
 import com.ssafy.tati.entity.Study;
@@ -12,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,7 +23,7 @@ public class StudyApplicantService {
 
     public StudyIdResDto studyApplicantMember(Integer studyId, Integer memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("회원 정보가 존재하지 않습니다"));
-        Study study = studyRepository.findById(studyId).orElseThrow(() -> new RuntimeException("study가 존재하지 않습니다."));
+        Study study = studyRepository.findById(studyId).orElseThrow(() -> new RuntimeException("스터디가 존재하지 않습니다."));
         Integer point = member.getTotalPoint() - study.getStudyDeposit();
         if (point < 0) { new RuntimeException("스터디에 참가하는데 포인트가 부족합니다");  }
 
@@ -40,15 +40,20 @@ public class StudyApplicantService {
         return studyIdResDto;
     }
 
-    public List<StudyApplicantMemberResDto> getStudyApplicantMember(Integer studyId) {
-        Study study = studyRepository.findById(studyId).orElseThrow(() -> new RuntimeException("study가 존재하지 않습니다."));
-        List<StudyApplicant> studyApplicantList = studyApplicantRepository.findAllByStudyStudyId(studyId);
-        List<StudyApplicantMemberResDto> studyApplicantMemberResDtoList = null;
-        for (StudyApplicant studyApplicant: studyApplicantList) {
-            Member member = studyApplicant.getMember();
-            StudyApplicantMemberResDto studyApplicantMemberResDto = new StudyApplicantMemberResDto(member.getMemberId(), member.getMemberNickName(), member.getTotalScore(), member.getTotalStudyTime());
-            studyApplicantMemberResDtoList.add(studyApplicantMemberResDto);
-        }
-        return studyApplicantMemberResDtoList;
+    public List<Member> getStudyApplicantMember(Integer studyId) {
+//        Study study = studyRepository.findById(studyId).orElseThrow(() -> new RuntimeException("study가 존재하지 않습니다."));
+//        List<StudyApplicant> studyApplicantList = studyApplicantRepository.findAllByStudyStudyId(studyId);
+//        System.out.println("서비스 : " + studyApplicantList);
+//        Optional<StudyApplicant> optionalStudyApplicant = studyApplicantRepository.findByStudyStudyId(studyId);
+//        System.out.println("서비스 : " + optionalStudyApplicant.get());
+//        List<StudyApplicantMemberResDto> studyApplicantMemberResDtoList = null;
+//        for (StudyApplicant studyApplicant: studyApplicantList) {
+//            Member member = studyApplicant.getMember();
+//            StudyApplicantMemberResDto studyApplicantMemberResDto = new StudyApplicantMemberResDto(member.getMemberId(), member.getMemberNickName(), member.getTotalScore(), member.getTotalStudyTime());
+//            studyApplicantMemberResDtoList.add(studyApplicantMemberResDto);
+//        }
+        List<StudyApplicant> studyApplicants = studyApplicantRepository.findAllByStudyStudyId(studyId);
+        List<Integer> memberIds = studyApplicants.stream().map(StudyApplicant::getMemberId).collect(Collectors.toList());
+        return memberRepository.findByMemberIdIn(memberIds);
     }
 }
