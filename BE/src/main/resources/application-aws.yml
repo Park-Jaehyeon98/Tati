@@ -21,7 +21,7 @@ spring:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
   redis:
-    host: localhost
+    host: i9b305.p.ssafy.io
     port: 6379
   servlet:
     multipart:
