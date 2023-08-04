@@ -4,8 +4,15 @@ import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 
 import style from "./Router.module.css"
 
+import Notice from "../Pages/Notice/Notice";
 import NoticePage from "../Pages/Notice/NoticePage";
+import NoticeList from "../Pages/Notice/NoticeList";
 import NoticeCreate from "../Pages/Notice/NoticeCreate";
+import NoticeModify from "../Pages/Notice/NoticeModify";
+
+import Faq from "../Pages/Faq/Faq";
+import FaqCreate from "../Pages/Faq/FaqCreate";
+import FaqList from "../Pages/Faq/FaqList";
 
 import MyPage from "../Pages/MyPage/_MyPage";
 import SignUp from "../Pages/Auth/SignUp";
@@ -13,15 +20,16 @@ import Login from "../Pages/Auth/Login";
 import LandingPage from './../Pages/LandingPage/LandingPage';
 
 
+import Study from "../Pages/Study/Study";
 import StudyCreate from "../Pages/Study/StudyCreate";
 import StudyList from "../Pages/Study/StudyList";
 import StudyDetail from "../Pages/Study/StudyDetail";
 import StudyModify from "../Pages/Study/StudyModify";
 
-import StudyNotice from "../Pages/Study/StudyNotice/StudyNotice";
-import StudyNoticeList from "../Pages/Study/StudyNotice/StudyNoticeList";
-import StudyNoticeCreate from "../Pages/Study/StudyNotice/StudyNoticeCreate";
-import StudyNoticeDetail from './../Pages/Study/StudyNotice/StudyNoticeDetail';
+import StudyNotice from "../Pages/Study/StudyNotice";
+// import StudyNoticeList from "../Pages/Study/StudyNotice/StudyNoticeList";
+// import StudyNoticeCreate from "../Pages/Study/StudyNotice/StudyNoticeCreate";
+// import StudyNoticeDetail from './../Pages/Study/StudyNotice/StudyNoticeDetail';
 
 import StudyBoard from "../Pages/Study/StudyBoard/StudyBoard";
 import StudyBoardDetail from "../Pages/Study/StudyBoard/StudyBoardDetail";
@@ -43,6 +51,7 @@ import MyPagePointWithdraw from "../Pages/MyPage/_MyPagePointWithdraw";
 
 // import { aX } from "@fullcalendar/core/internal-common";
 import axios from "axios";
+import NoticeDetail from "../Pages/Notice/NoticeDetail";
 
 
 export default function Router() {
@@ -82,8 +91,11 @@ export default function Router() {
     <BrowserRouter>
       <div className={style.navBox}>
         <nav>
-          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/NoticePage">
+          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Notice">
             공지사항
+          </NavLink>
+          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Faq">
+            FAQ
           </NavLink>
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Study">
             스터디
@@ -114,11 +126,19 @@ export default function Router() {
         <Route path="/" element={<Main />} />
 
         {/* 공지사항 */}
-        <Route path="/NoticePage" element={<NoticePage />} />
-        <Route path="/NoticeCreate" element={<NoticeCreate />} />
+        <Route path="/Notice" element={<Notice />}>
+          {/* <Route path="" element={<NoticePage />} /> */}
+          <Route path="" element={<NoticeList />} />
+          <Route path="Create" element={<NoticeCreate />} />
+          <Route path=":boardId" element={<NoticeDetail />} />
+          <Route path=":boardId/Modify" element={<NoticeModify />} />
+        </Route>
 
         {/* FAQ */}
-
+        <Route path="/Faq" element={<Faq />}>
+          <Route path="" element={<FaqList />} />
+          <Route path="Create" element={<FaqCreate />} />
+        </Route>
 
         {/* Auth (회원가입 로그인 로그아웃) */}
         <Route path="/SignUp" element={<SignUp />} />
@@ -139,16 +159,20 @@ export default function Router() {
         <Route path="/MyPage/MyPagePost" element={<MyPagePost />} />
 
         {/* 스터디 CRUD */}
-        <Route exact path="/Study" element={<StudyList />} />
-        <Route path="/StudyCreate" element={<StudyCreate />} />
-        <Route path="/Study/:studyId" element={<StudyDetail />} />
-        <Route path="/StudyModify/:studyId" element={<StudyModify />} />
+
+        <Route path="/Study" element={<Study />}>
+          <Route path="" element={<StudyList />} />
+          <Route path="Create" element={<StudyCreate />} />
+          <Route path=":studyId" element={<StudyDetail />} />
+          {/* 스터디 공지사항, 스터디 게시판, 스터디 수정하기 -> 스터디 디테일 하위 라우터 설정하기 */}
+          <Route path=":studyId/Modify/" element={<StudyModify />} />
+        </Route>
 
         {/* 스터디 공지사항 */}
         <Route path="/Study/:studyId/Notice" element={<StudyNotice />}>
-          <Route path="" element={<StudyNoticeList />} />
-          <Route path=":boardId" element={<StudyNoticeDetail />} />
-          <Route path="Create" element={<StudyNoticeCreate />} />
+          <Route path="" element={<StudyBoardList />} />
+          <Route path=":boardId" element={<StudyBoardDetail />} />
+          <Route path="Create" element={<StudyBoardCreate />} />
         </Route>
 
 

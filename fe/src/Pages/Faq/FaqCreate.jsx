@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
 import { apiClient } from '../../api/apiClient';
+import { useNavigate } from 'react-router-dom';
 
-const NoticeCreate = () => {
+const FaqCreate = () => {
+    const naviate = useNavigate();
     const [boardData, setBoardData] = useState({
         boardTitle: '',
         boardContent: '',
+        // 멤버아이디 리덕스로 받아와야함.
         memberId: 1,
-        // 0 : 공지 1: 스터디 공지 2: 스터디 게시판 9: FAQ
     });
 
-    const boardType = 0;
+    const boardType = 9;
+    // 0 : 공지 1: 스터디 공지 2: 스터디 게시판 9: FAQ
     const config = 0;
 
     const {
@@ -28,10 +31,10 @@ const NoticeCreate = () => {
 
     const handleSubmitBtnClick = () => {
         const subURL = boardType === 0 ? 'notice' : 'faq'
-        console.log(subURL)
         apiClient.post(subURL, boardData)
             .then((res) => {
                 console.log(res)
+                if (res.request.status === 200) naviate('../')
             })
             .catch((err) => {
                 console.log(err)
@@ -40,7 +43,7 @@ const NoticeCreate = () => {
 
     return (
         <div>
-            <h3>공지사항 생성</h3>
+            <h3>FAQ 생성</h3>
             <div>
                 <span>제목</span>
                 <input type="text" name="boardTitle" value={boardTitle} onChange={handleChange} />
@@ -54,4 +57,4 @@ const NoticeCreate = () => {
     )
 }
 
-export default NoticeCreate
+export default FaqCreate

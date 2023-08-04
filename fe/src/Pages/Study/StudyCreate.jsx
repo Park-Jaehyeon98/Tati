@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import styles from './StudyCreate.module.css';
+import style from './StudyCreate.module.css';
 
 import axios from "axios";
 import { apiClient } from "../../api/apiClient";
@@ -23,14 +23,14 @@ const StudyCreate = () => {
 
 
     const [studyData, setStudyData] = useState({
-        category: 0, //스터디 카테고리
+        categoryId: 1, //스터디 카테고리
         studyName: "", //스터디 이름
         studyDescription: "", //스터디 설명
         totalMember: 2, //스터디 멤버 수
         disclosure: true, // 공개 여부
         studyPassword: null, // 패스워드
         studyDeposit: 1,  //보증금 최대 50000
-        studyHost: "나", // memberId 로 들어갈것.
+        studyHost: "admin", // memberId 로 들어갈것.
 
         studyStartDate: todayString, //스터디 시작일
         studyEndDate: todayString, //스터디 종료일
@@ -47,7 +47,7 @@ const StudyCreate = () => {
 
     });
 
-    const { category,
+    const { categoryId,
         studyName,
         studyDescription,
         // studyStartDate,
@@ -73,15 +73,15 @@ const StudyCreate = () => {
     //폼 데이터 수정시 변경
 
 
-    const handleCategoryClick = (value) => {
+    const handleCategoryIdClick = (value) => {
         setStudyData({
             ...studyData,
-            category: value
+            categoryId: value + 1
         })
     }
-    const categoryArray = ["자격증", "취업", "학교", "공시", "기타"]
-    // const categoryButtons = categoryArray.map((category) => {
-    //     return <button className={categoryName === category ? styles.selected : styles.noSelceted} onClick={() => handleCategoryClick(category)}>{category}</button>
+    const categoryIdArray = ["자격증", "취업", "학교", "공시", "기타"]
+    // const categoryIdButtons = categoryIdArray.map((categoryId) => {
+    //     return <button className={categoryIdName === categoryId ? style.selected : style.noSelceted} onClick={() => handleCategoryIdClick(categoryId)}>{categoryId}</button>
     // });
     const handleIsDisclosureClick = (value) => {
         value ? setStudyData({
@@ -144,15 +144,15 @@ const StudyCreate = () => {
                 <div></div>
                 <div>
                     <div>카테고리</div>
-                    {categoryArray.map((categoryItem, index) =>
-                        <button key={categoryItem} className={index === category ? styles.selected : styles.noSelected} onClick={() => handleCategoryClick(index)}>{categoryItem}</button>
+                    {categoryIdArray.map((categoryIdItem, index) =>
+                        <button key={categoryIdItem} className={index === categoryId - 1 ? style.selected : style.noSelected} onClick={() => handleCategoryIdClick(index)}>{categoryIdItem}</button>
                     )}
                 </div>
 
                 <div>
                     <div>공개 여부</div>
-                    <button name="disclosure" className={disclosure ? styles.selected : styles.noSelected} value={disclosure} onClick={() => handleIsDisclosureClick(true)}> 공개</button>
-                    <button name="disclosure" className={!disclosure ? styles.selected : styles.noSelected} value={disclosure} onClick={() => handleIsDisclosureClick(false)}> 비공개</button>
+                    <button name="disclosure" className={disclosure ? style.selected : style.noSelected} value={disclosure} onClick={() => handleIsDisclosureClick(true)}> 공개</button>
+                    <button name="disclosure" className={!disclosure ? style.selected : style.noSelected} value={disclosure} onClick={() => handleIsDisclosureClick(false)}> 비공개</button>
                 </div>
                 {!disclosure &&
                     <div>

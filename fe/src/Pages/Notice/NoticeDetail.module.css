@@ -1,0 +1,27 @@
+.container {
+  height: 400px;
+  /* display: grid;
+  grid-template-rows: 2fr 6fr; */
+}
+
+.titleBox {
+  margin-top: 300;
+  display: grid;
+  grid-template-columns: 10fr 1fr;
+}
+
+.revDir {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.contentBox {
+  height: 75%;
+}
+
+.btn {
+  width: 80px;
+  height: 40px;
+  background-color: gray;
+  margin: 10px;
+}
