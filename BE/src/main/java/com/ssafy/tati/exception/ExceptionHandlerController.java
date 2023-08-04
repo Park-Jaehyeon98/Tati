@@ -28,7 +28,7 @@ public class ExceptionHandlerController {
     //중복된 데이터일 때
     @ExceptionHandler(value = DuplicateKeyException.class)
     public ResponseEntity<?> duplicateKeyExceptionHandler(DuplicateKeyException e){
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);  
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     //잘못된 데이터 값이 입력될 때
