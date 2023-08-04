@@ -26,8 +26,9 @@ export default function InfoModify() {
   // 닉네임 중복체크
   const handleSendNickName = () => {
     console.log(`닉네임 ${nickName}`)
+    console.log(process.env.REACT_APP_URL)
     axios
-      .post(`http://${process.env.REACT_APP_URL}:8080/member/nickname-check`, {
+      .post(`${process.env.REACT_APP_URL}/member/nickname-check`, {
         memberNickName: nickName,
       })
       .then((res) => {
@@ -58,23 +59,29 @@ export default function InfoModify() {
   // 유저의 pk 와 닉네임을 보냄
   // 요청 성공 후 다시 회원정보 수정 페이지로
   const handleNickNameupdata = () => {
-    console.log(`memberId - ${memberId} nickName - ${nickName} file - ${file}`)
+    const memberIdAsNumber = Number(memberId);
+
+    console.log(`memberId - ${typeof memberIdAsNumber} nickName - ${nickName} file - ${file}`)
     
     const formData = new FormData();
     formData.append('file',file)
 
     const putMemberReqDto = {
-      "memberId": memberId,
+      "memberId": memberIdAsNumber,
       "memberNickName": nickName,
     };
     
     formData.append('putMemberReqDto', JSON.stringify(putMemberReqDto));
     console.log('-------------------------------------------------')
-    // window.history.back();
+    
     for (const [key, value] of formData.entries()) {
-      console.log(key, value);
+      console.log(key, typeof value);
+      console.log('============');
     }
-    axios.put(`http://${process.env.REACT_APP_URL}:8080/member/mypage/modifyNickName`, formData,{
+
+
+    console.log(process.env.REACT_APP_URL)
+    axios.post(`${process.env.REACT_APP_URL}/member/upload`, file,{
       headers: {
         "Content-Type": "multipart/form-data", // 파일 업로드를 위해 Content-Type을 multipart/form-data로 설정
       },
@@ -89,7 +96,8 @@ export default function InfoModify() {
       });
   }
 
-  // 비밀번호 수정
+
+  // 비밀번호 변경
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
 
@@ -103,13 +111,15 @@ export default function InfoModify() {
     setPassword2(value);
   }
 
+
   // 유저의 pk와 password를 보냄
   const handleSendPassword = () => {
     if (password !== password2) {
       alert('비밀번호가 일치하자 않습니다.')
     }
     console.log(`비밀번호 변경: ${password} memberId: ${memberId}`)
-    axios.put(`http://${process.env.REACT_APP_URL}:8080/member/mypage/modifyPassword`, {
+    console.log(process.env.REACT_APP_URL)
+    axios.put(`${process.env.REACT_APP_URL}/member/mypage/modifyPassword`, {
       memberId,
       password
     })
@@ -128,7 +138,8 @@ export default function InfoModify() {
   // 유저 pk를 url에 삽입 후 보냄 (pk는 로컬에)
   const handleWithdrawal = () => {
     const email = 'rlaalsrbs15@naver.com'
-    axios.delete(`http://${process.env.REACT_APP_URL}:8080/member/mypage/remove/${email}`, {
+    console.log(process.env.REACT_APP_URL)
+    axios.delete(`${process.env.REACT_APP_URL}/member/mypage/remove/${email}`, {
     })
       .then((res) => {
         console.log(res)
@@ -139,6 +150,7 @@ export default function InfoModify() {
         console.log(err)
       });
   }
+
 
   return (
     <div className={style.container}>

@@ -27,7 +27,8 @@ export default function Login() {
   const handleLogin = () => {
     console.log(`이메일: ${formData.email} 비밀번호: ${formData.password}`)
 
-    axios.post(`http://${process.env.REACT_APP_URL}:8080/member/login`, {
+    console.log(process.env.REACT_APP_URL)
+    axios.post(`${process.env.REACT_APP_URL}/member/login`, {
       email: formData.email,
       password: formData.password
     })
@@ -53,31 +54,32 @@ export default function Login() {
       <img className={style.login_img} src="./Assets/Login_img01.jpg" alt="" />
 
       <div className={style.login}>
-        <h1 className={style.login_title}>로그인</h1>
-        <p>
-          <input className={style.loginInput}
-            type="text"
-            placeholder="이메일"
-            name="email"
-            value={formData.email}
-            onChange={handleChange} />
-          <br />
-          <input className={style.loginInput}
-            type="password"
-            placeholder="비밀번호"
-            name="password"
-            value={formData.passWord}
-            onChange={handleChange} />
-        </p>
-        <div className={style.Login_box_find}>
-          <h5 className={style.password_find}>
-            비밀번호 찾기</h5>
-          <h5 className={style.signup}>
-            회원가입</h5>
-        </div>
-        <button className={style.loginBtn}
-          onClick={handleLogin}>
-          로그인</button>
+            <h1 className={style.login_title}>로그인</h1>
+            <p>
+              <input className={style.loginInput}
+                type="text"
+                placeholder="이메일"
+                name="email"
+                value={formData.email}
+                onChange={handleChange} />
+              <br />
+              <input className={style.loginInput}
+                type="password"
+                placeholder="비밀번호"
+                name="password"
+                value={formData.passWord}
+                onChange={handleChange} />
+            </p>
+            <div className={style.Login_box_find}>
+              <h5 className={style.password_find}>
+                비밀번호 찾기</h5>
+              <h5 className={style.signup}>
+                회원가입</h5>
+            </div>
+            <button className={style.loginBtn}
+              onClick={handleLogin}>
+              로그인</button>
+
         <div className={style.line1}></div>
         <p>간편로그인</p>
         <div className={style.line2}></div>
