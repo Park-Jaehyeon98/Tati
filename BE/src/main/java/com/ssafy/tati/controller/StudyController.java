@@ -28,8 +28,8 @@ public class StudyController {
     private final StudyService studyService;
     private final StudyMapper studyMapper;
 
-//    @Operation(summary = "스터디 생성", description = "스터디 생성하면 방장의 포인트 비교 후 스터디 생성",                                                                                                                                                                                                                                          ription = "스터디(이름, 설명, 허용인원, 비밀번호, 스터디 시작 기간, 스터디 종료 기간, 카테고리 식별번호, 공개여부, 스터디 방장, 신청 보증금), 스터디 할 요일과 시작 시간, 종료 시간을 객체 형태로 받아서 저장", responses = {
-//            @ApiResponse(responseCode = "200", description = "스터디 생성 성공", content = @Content(schema = @Schema(implementation = Study.class)))})
+    @Operation(summary = "스터디 생성", description = "스터디(이름, 설명, 허용인원, 비밀번호, 스터디 시작 기간, 스터디 종료 기간, 카테고리 식별번호, 공개여부, 스터디 방장, 신청 보증금), 스터디 할 요일과 시작 시간, 종료 시간을 객체 형태로 받아서 저장", responses = {
+            @ApiResponse(responseCode = "200", description = "스터디 생성 성공", content = @Content(schema = @Schema(implementation = Study.class)))})
     @PostMapping("/create")
     public ResponseEntity<?> createStudy(@RequestBody StudyReqDto studyReqDto) {
         Study study = studyMapper.studyReqDtoToStudy(studyReqDto);
@@ -88,7 +88,6 @@ public class StudyController {
                                          @RequestParam(value = "category", defaultValue = "1") Integer categoryId,
                                          @RequestParam(value = "keyword", defaultValue = "") String keyword) {
 
-        System.out.println("controller : " + categoryId + ", " + keyword);
         List<Study> studyList = studyService.getSearchStudy(pageNum, categoryId, keyword);
         List<StudyAllListResDto> studyAllListResDtoList = studyMapper.studyListToStudyAllListResDtoList(studyList);
         return new ResponseEntity<>(studyAllListResDtoList, HttpStatus.OK);

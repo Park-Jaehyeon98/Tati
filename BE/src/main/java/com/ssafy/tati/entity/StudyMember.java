@@ -1,6 +1,7 @@
 package com.ssafy.tati.entity;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;

@@ -8,11 +8,6 @@ import lombok.Setter;
 @Setter
 @Schema(description = "스터디 정보 수정")
 public class StudyModifyReqDto {
-//    category - int
-//    studyName - String
-//    studyDescription - String
-//    isPublic - boolean
-//    password - int
     @Schema(description = "카테고리 식별번호")
     private Integer categoryId;
 
