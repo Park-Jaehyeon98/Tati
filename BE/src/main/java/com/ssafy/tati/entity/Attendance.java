@@ -19,17 +19,13 @@ public class Attendance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer attendanceId;
 
-    //날짜
-    @Column(name="attendance_date")
-    private LocalDate attendanceDate;
-
     //입실 시간
     @Column(name = "in_time", nullable = false)
-    private Time inTime;
+    private LocalDateTime inTime;
 
     //퇴실 시간
     @Column(name = "out_time")
-    private Time outTime;
+    private LocalDateTime outTime;
 
     //출석 여부 : 0 결석, 1 지각, 2 출석
     @Column(name = "is_attended")

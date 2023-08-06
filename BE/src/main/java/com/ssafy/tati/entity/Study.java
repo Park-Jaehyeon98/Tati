@@ -45,6 +45,12 @@ public class Study {
     @Column(name = "study_end_date", nullable = false)
     private String studyEndDate;
 
+    @Column(name="total_deposit")
+    private Integer totalDeposit;
+
+    @Column(name="total_penalty")
+    private Integer totalPenalty;
+
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
     List<Board> boardList = new ArrayList<>();
 
