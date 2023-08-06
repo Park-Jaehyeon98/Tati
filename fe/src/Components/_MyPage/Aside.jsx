@@ -9,6 +9,8 @@ export default function Aside() {
 
   const [authModal, setAuthModal] = useState(false);
 
+  const totalPoint = localStorage.getItem('totalPoint');
+  const memberNickName = localStorage.getItem('memberNickName');
 
   const onButtonClick = (page) => {
     if (page === "schedule") {
@@ -39,8 +41,8 @@ export default function Aside() {
       </div>
 
       <div className={style.name_point}>
-        <p>김싸피</p>
-        <p>마일리지 30000pt</p>
+        <p>{memberNickName}</p>
+        <p>마일리지 {totalPoint}pt</p>
       </div>
       <div>
         <button className={style.bt} onClick={() => onButtonClick("schedule")}>

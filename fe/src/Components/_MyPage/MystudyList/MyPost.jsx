@@ -49,9 +49,9 @@ export default function MyPost(){
     return (
       <div>
         <div className={style.NoticeItem_text}>
-          <p className={style.p_text}>{boardId} {boardTitle} - 조회수 {boardHit} 댓글수 {boardCommentCount}
-            <h6 className={style.text}>{boardDate.slice(0, 10)}</h6></p>
-          <hr />
+          <p className={style.MyPost_text}>{boardId} {boardTitle} - 조회수 {boardHit} 댓글수 {boardCommentCount}
+            <h6 className={style.MyPost_text_time}>{boardDate.slice(0, 10)}</h6></p>
+          <hr className={style.Study_hr}/>
         </div>
       </div>
     );

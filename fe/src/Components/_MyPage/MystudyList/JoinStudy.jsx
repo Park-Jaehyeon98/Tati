@@ -42,9 +42,9 @@ export default function JoinStudy(){
     return (
       <div>
         <div className={style.NoticeItem_text}>
-          <p className={style.p_text}>{studyName} - {studyMembercount}/{totalMember} 인원
-            <h6 className={style.text}>{studyStartDate} ~ {studyEndDate} 기간</h6></p>
-          <hr />
+          <p className={style.JoinStudy_text}>{studyName} - {studyMembercount}/{totalMember} 인원
+            <h6 className={style.JoinStudy_text_day}>{studyStartDate} ~ {studyEndDate} 기간</h6></p>
+          <hr className={style.Study_hr}/>
         </div>
       </div>
     );

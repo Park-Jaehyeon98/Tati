@@ -49,23 +49,38 @@ export default function Router() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 
-  const handleschedule = () => {
-    const email = 't01045999371@gmail.com'
-    console.log(email)
-    axios.get(`${process.env.REACT_APP_URL}/member/mypage/schedule/${email}`, {
-      params: 7
-    })
-      .then((res) => {
-        console.log(res)
-        alert('요청 성공')
-      })
-      .catch((err) => {
-        console.log(err)
-      });
-  };
+  // const handleschedule = () => {
+  //   const email = 't01045999371@gmail.com'
+  //   console.log(email)
+  //   axios.get(`${process.env.REACT_APP_URL}/member/mypage/schedule/${email}`, {
+  //     params: 7
+  //   })
+  //     .then((res) => {
+  //       console.log(res)
+  //       alert('요청 성공')
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     });
+  // };
 
   const handleLogout = () => {
-    localStorage.removeItem("memberId");
+
+    const token = localStorage.getItem("accessToken");
+
+    axios.get(`${process.env.REACT_APP_URL}/member/logout`,{
+      headers:{
+        token:token
+      }
+    })
+    .then((res)=>
+    console.log(res)
+    )
+    .catch((err)=>
+      console.log(err)
+    )
+
+    localStorage.clear();
     setIsLoggedIn(false);
   };
 
@@ -88,7 +103,7 @@ export default function Router() {
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Study">
             스터디
           </NavLink>
-          <NavLink onClick={handleschedule} className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage">
+          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage">
             마이페이지
           </NavLink>
           {!isLoggedIn && (

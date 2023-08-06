@@ -34,11 +34,20 @@ export default function Login() {
     })
       .then((res) => {
         console.log(res)
-        console.log(res.headers.refreshtoken)
+        console.log(res.headers)
         // 로컬 스토리지에 데이터 저장
         localStorage.setItem('memberId', res.data.memberId);
         localStorage.setItem('email', res.data.email);
         localStorage.setItem('memberNickName', res.data.memberNickName);
+
+        localStorage.setItem('totalPoint', res.data.totalPoint);
+        localStorage.setItem('totalScore', res.data.totalScore);
+        localStorage.setItem('totalStudyTime', res.data.totalStudyTime);
+
+        const authorizationHeader = res.headers.authorization;
+        const accessToken = authorizationHeader.substring(7);
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshtoken',res.headers.refreshtoken);
 
         navigate("/MyPage");
       })

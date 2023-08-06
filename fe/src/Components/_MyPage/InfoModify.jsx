@@ -9,7 +9,8 @@ export default function InfoModify() {
   const navigate = useNavigate();
 
   // 로컬의 유저pk값을 불러오기
-  const memberId = localStorage.getItem('memberId');
+  const memberId = Number(localStorage.getItem('memberId'));
+  const email = localStorage.getItem('email');
   const nick = localStorage.getItem('memberNickName');
   // 회원정보 리덕스에서 가져오기
   const userInfo = useSelector((state) => state.userInfo);
@@ -46,13 +47,14 @@ export default function InfoModify() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     console.log(file);
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFile(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+    setFile(file);
+    // if (file) {
+    //   const reader = new FileReader();
+    //   reader.onloadend = () => {
+    //     setFile(reader.result);
+    //   };
+    //   reader.readAsDataURL(file);
+    // }
   };
 
 
@@ -72,6 +74,8 @@ export default function InfoModify() {
     };
     
     formData.append('putMemberReqDto', JSON.stringify(putMemberReqDto));
+  
+    
     console.log('-------------------------------------------------')
     
     for (const [key, value] of formData.entries()) {
@@ -137,9 +141,9 @@ export default function InfoModify() {
   // 회원탈퇴 
   // 유저 pk를 url에 삽입 후 보냄 (pk는 로컬에)
   const handleWithdrawal = () => {
-    const email = 'rlaalsrbs15@naver.com'
     console.log(process.env.REACT_APP_URL)
-    axios.delete(`${process.env.REACT_APP_URL}/member/mypage/remove/${email}`, {
+    console.log(memberId)
+    axios.delete(`${process.env.REACT_APP_URL}/member/mypage/remove/${memberId}`, {
     })
       .then((res) => {
         console.log(res)
@@ -161,7 +165,7 @@ export default function InfoModify() {
       <div className={style.contents}>
         <p className={style.InfoModify_text}>
           이메일
-          <p className={style.InfoModify_email}>{userData}</p>
+          <p className={style.InfoModify_email}>{email}</p>
         </p>
         <p className={style.InfoModify_text}>
           이름

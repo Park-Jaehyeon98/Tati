@@ -18,7 +18,7 @@ export default function Calendar(){
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth() + 1;
 
-  // const events = useSelector((state) => state.events);
+  const events = useSelector((state) => state.events);
 
   const dispatch = useDispatch();
 
@@ -27,7 +27,7 @@ export default function Calendar(){
 
   const [img,setImg] = useState(null)
 
-  const [events,setEvents] = useState([])
+  // const [events,setEvents] = useState([])
 
   useEffect(() => {
 
@@ -58,7 +58,7 @@ export default function Calendar(){
         }));
 
         // const events = eventsToAdd
-        setEvents(eventsToAdd);
+        // setEvents(eventsToAdd);
 
         console.log(eventsToAdd[0])
         // eventsToAdd 배열을 리덕스 스토어에 추가
@@ -134,7 +134,7 @@ export default function Calendar(){
 
     console.log(newEvent)
     // 캘린더 이벤트 배열에 새 이벤트를 추가하고 모달을 닫습니다.
-    // dispatch(addEvent(newEvent));
+    dispatch(addEvent(newEvent));
     setSelectedDate(null);
     setEventTitle('');
     setEventTime('');
@@ -223,7 +223,6 @@ export default function Calendar(){
           </div>
         </div>
       )}
-      <img src={img} alt="Uploaded" className={style.file_img}/>
     </div>
   )
 }

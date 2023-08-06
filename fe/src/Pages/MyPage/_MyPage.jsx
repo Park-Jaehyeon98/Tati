@@ -14,7 +14,6 @@ export default function MyPage() {
       <div className={style.box2}>
         <Schedule />
       </div>
-
     </div>
   );
 }
