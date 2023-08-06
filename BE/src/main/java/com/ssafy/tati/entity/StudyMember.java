@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudyMember {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer studyMemberId;

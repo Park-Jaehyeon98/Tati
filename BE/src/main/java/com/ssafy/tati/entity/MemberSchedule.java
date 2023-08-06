@@ -16,7 +16,7 @@ public class MemberSchedule {
     @Id //회원일정 식별번호
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="member_schedule_id", nullable = false)
-    private int memberScheduleId;
+    private Integer memberScheduleId;
 
     //날짜
     @Column(name = "member_schedule_date")

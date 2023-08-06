@@ -4,9 +4,11 @@ import com.ssafy.tati.auth.JwtTokenizer;
 import com.ssafy.tati.auth.MemberDetails;
 import com.ssafy.tati.dto.req.EmailReqDto;
 import com.ssafy.tati.dto.req.MemberReqDto;
+import com.ssafy.tati.dto.res.GetMemberResDto;
 import com.ssafy.tati.dto.res.MemberResDto;
 import com.ssafy.tati.auth.Token;
 import com.ssafy.tati.entity.Member;
+import com.ssafy.tati.mapper.GetMemberMapper;
 import com.ssafy.tati.mapper.MemberMapper;
 import com.ssafy.tati.service.EmailService;
 import com.ssafy.tati.service.MemberService;
@@ -36,10 +38,12 @@ import java.util.List;
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
+
     private final MemberService memberService;
     private final S3Service s3Service;
-    private final MemberMapper memberMapper;
     private final EmailService emailService;
+    private final MemberMapper memberMapper;
+    private final GetMemberMapper getMemberMapper;
     private final JwtTokenizer jwtTokenizer;
 
 
@@ -111,7 +115,9 @@ public class MemberController {
         headers.add("Authorization", "Bearer " + token.getAccessToken());
         headers.add("RefreshToken", token.getRefreshToken());
 
-        return new ResponseEntity<>(loginMember, headers, HttpStatus.OK);
+        GetMemberResDto getMemberResDto = getMemberMapper.memberToGetMemberResDto(loginMember);
+
+        return new ResponseEntity<>(getMemberResDto, headers, HttpStatus.OK);
     }
 
     @Operation(summary = "로그아웃", description = "로그아웃을 통해 Refresh Token을 제거")
