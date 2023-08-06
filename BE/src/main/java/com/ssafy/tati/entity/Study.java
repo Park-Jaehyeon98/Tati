@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,16 +41,19 @@ public class Study {
     private Integer studyPassword;
 
     @Column(name = "study_start_date", nullable = false)
-    private String studyStartDate;
+    private LocalDate studyStartDate;
 
     @Column(name = "study_end_date", nullable = false)
-    private String studyEndDate;
+    private LocalDate studyEndDate;
 
     @Column(name="total_deposit")
     private Integer totalDeposit;
 
     @Column(name="total_penalty")
     private Integer totalPenalty;
+
+    @Column(name = "deposit_end_yn")
+    private boolean depositEndYn;
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
     List<Board> boardList = new ArrayList<>();
