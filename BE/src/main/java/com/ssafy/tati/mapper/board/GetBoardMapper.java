@@ -2,6 +2,7 @@ package com.ssafy.tati.mapper.board;
 
 import com.ssafy.tati.dto.res.board.BoardDetailResDto;
 import com.ssafy.tati.dto.res.board.StudyBoardDetailResDto;
+import com.ssafy.tati.dto.res.board.StudyNoticeDetailResDto;
 import com.ssafy.tati.entity.Board;
 import org.mapstruct.Mapper;
 
@@ -39,4 +40,6 @@ public interface GetBoardMapper {
 
         return studyBoardDetailResDto;
     }
+
+    StudyNoticeDetailResDto boardToStudyNoticeDetailResDto(Board board);
 }

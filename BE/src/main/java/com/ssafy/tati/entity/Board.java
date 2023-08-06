@@ -31,7 +31,7 @@ public class Board {
     @Column(name = "board_hit", nullable = false)
     private Integer boardHit;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -39,7 +39,7 @@ public class Board {
     @JoinColumn(name = "study_id")
     private Study study;
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Comment> commentList = new ArrayList<>();
 
     @CreatedDate
@@ -47,4 +47,7 @@ public class Board {
 
     @LastModifiedDate
     private LocalDateTime modifiedDate;
+
+    @Column(name = "main_notice_yn")
+    private boolean mainNoticeYn;
 }

@@ -3,7 +3,7 @@ package com.ssafy.tati.controller.board;
 import com.ssafy.tati.dto.req.board.PostBoardReqDto;
 import com.ssafy.tati.dto.req.board.PutBoardReqDto;
 import com.ssafy.tati.dto.res.board.BoardDetailResDto;
-import com.ssafy.tati.dto.res.board.BoardListResDto;
+import com.ssafy.tati.dto.res.board.FAQListResDto;
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.mapper.board.GetBoardMapper;
 import com.ssafy.tati.mapper.board.PostBoardMapper;
@@ -51,9 +51,9 @@ public class FAQController {
     public ResponseEntity<?> faqListPage(@PageableDefault(size = 10, sort = "createdDate",
             direction = Sort.Direction.DESC) Pageable pageable) {
         Page<Board> boardPage = boardService.findBoardPageByBoardType('9', pageable);
-        Page<BoardListResDto> boardListResDtoPage = boardPage.map(BoardListResDto::new);
+        Page<FAQListResDto> faqListResDtoPage = boardPage.map(FAQListResDto::new);
 
-        return new ResponseEntity(boardListResDtoPage, HttpStatus.OK);
+        return new ResponseEntity(faqListResDtoPage, HttpStatus.OK);
     }
 
     @Operation(summary = "FAQ 상세 조회 요청", description = "사이트 FAQ 상세 조회 요청", responses = {

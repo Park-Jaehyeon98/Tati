@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "게시글 상세 조회 응답 DTO (사이트 공지사항, 스터디 공지사항, FAQ 단건 상세 조회 시 사용)")
+@Schema(description = "게시글 상세 조회 응답 DTO (사이트 공지사항, FAQ 단건 상세 조회 시 사용)")
 public class BoardDetailResDto {
     @Schema(description = "공지글 식별번호")
     private Integer boardId;
