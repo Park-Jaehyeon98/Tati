@@ -18,11 +18,15 @@ public class StudyMember {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer studyMemberId;
 
-    @Column(name = "study_member_deposit", columnDefinition = "int", nullable = false)
-    private Integer studyMemberDeposit;
-
     @Column(name = "study_join_date", nullable = false)
     private LocalDate studyJoinDate;
+
+    @Column(name="total_penalty")
+    private Integer totalPenalty;
+
+    @Column(name="absence_count", columnDefinition = "tinyint")
+    private Integer absenceCount;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "study_id")
@@ -32,8 +36,8 @@ public class StudyMember {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public StudyMember(Integer point, LocalDate currentDate, Study study, Member member) {
-        this.studyMemberDeposit = point;
+    public StudyMember(LocalDate currentDate, Study study, Member member) {
+        this.totalPenalty = 0;
         this.studyJoinDate = currentDate;
         setMember(member);
         setStudy(study);
