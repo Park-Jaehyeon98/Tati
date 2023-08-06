@@ -41,9 +41,9 @@ public class Attendance {
     //내용
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "study_member_id")
-    private StudyMember studyMember;
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "study_member_id")
+//    private StudyMember studyMember;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id")

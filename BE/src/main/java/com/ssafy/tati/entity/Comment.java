@@ -25,9 +25,9 @@ public class Comment {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne
-    @JoinColumn(name = "board_id")
-    private Board board;
+//    @ManyToOne
+//    @JoinColumn(name = "board_id")
+//    private Board board;
 
     @CreatedDate
     private LocalDateTime createdDate;

@@ -3,11 +3,11 @@ package com.ssafy.tati.service;
 import com.ssafy.tati.entity.Attendance;
 import com.ssafy.tati.exception.DataNotFoundException;
 import com.ssafy.tati.exception.MismatchDataException;
-import com.ssafy.tati.dto.res.MemberBoardListResDto;
-import com.ssafy.tati.entity.Board;
+//import com.ssafy.tati.dto.res.MemberBoardListResDto;
+//import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.entity.Member;
-import com.ssafy.tati.entity.Study;
-import com.ssafy.tati.repository.BoardRepository;
+//import com.ssafy.tati.entity.Study;
+//import com.ssafy.tati.repository.BoardRepository;
 import com.ssafy.tati.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +24,7 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class MemberService {
-    private final BoardRepository boardRepository;
+    //private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -125,31 +125,31 @@ public class MemberService {
 
 
     //회원이 가입한 스터디 조회
-    public List<Study> selectStudyList(Integer memberId){
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
-        if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
-
-        List<Study> studyList = memberRepository.selectStudyList(memberId);
-        return studyList;
-    }
-
-    //회원이 신청한 스터디 조회
-    public List<Study> selectApplicantStudyList(Integer memberId){
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
-        if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
-
-        List<Study> studyList = memberRepository.selectApplicantStudyList(memberId);
-        return studyList;
-    }
-
-    //회원이 작성한 글 조회
-    public List<Board> selectBoardList(Integer memberId){
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
-        if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
-
-        List<Board> boardList = boardRepository.findByEmail(memberId);
-        return boardList;
-    }
+//    public List<Study> selectStudyList(Integer memberId){
+//        Optional<Member> optionalMember = memberRepository.findById(memberId);
+//        if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
+//
+//        List<Study> studyList = memberRepository.selectStudyList(memberId);
+//        return studyList;
+//    }
+//
+//    //회원이 신청한 스터디 조회
+//    public List<Study> selectApplicantStudyList(Integer memberId){
+//        Optional<Member> optionalMember = memberRepository.findById(memberId);
+//        if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
+//
+//        List<Study> studyList = memberRepository.selectApplicantStudyList(memberId);
+//        return studyList;
+//    }
+//
+//    //회원이 작성한 글 조회
+//    public List<Board> selectBoardList(Integer memberId){
+//        Optional<Member> optionalMember = memberRepository.findById(memberId);
+//        if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
+//
+//        List<Board> boardList = boardRepository.findByEmail(memberId);
+//        return boardList;
+//    }
 
     //회원 입퇴실 조회
     public List<Attendance> attendanceList(Integer memberId){

@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,10 +23,10 @@ public class JoinStudyResDto {
     private String studyName;
 
     @Schema(description = "스터디 시작 날짜")
-    private String studyStartDate;
+    private LocalDate studyStartDate;
 
     @Schema(description = "스터디 완료 날짜")
-    private String studyEndDate;
+    private LocalDate studyEndDate;
 
     @Schema(description = "스터디 모집 인원")
     private Integer totalMember;

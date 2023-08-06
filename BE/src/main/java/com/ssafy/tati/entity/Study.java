@@ -19,6 +19,8 @@ public class Study {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer studyId;
 
+    private String  img;
+
     @Column(name = "study_name", length = 50, nullable = false)
     private String studyName;
 
