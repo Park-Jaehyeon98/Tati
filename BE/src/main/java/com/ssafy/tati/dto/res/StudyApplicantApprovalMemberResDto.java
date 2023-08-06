@@ -10,14 +10,14 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "스터디 전체 리스트 RessDto")
-public class StudyAllListResDto {
+@Schema(description = "스터디 전체 리스트 ResDto")
+public class StudyApplicantApprovalMemberResDto {
     @Schema(description = "스터디 식별번호")
+    private Integer memberId;
+
+    @Schema(description = "회원 식별번호")
     private Integer studyId;
-    @Schema(description = "스터디 명")
-    private String studyName;
-    @Schema(description = "총 인원")
-    private Integer totalMember;
-    @Schema(description = "공개 여부")
-    private Boolean disclosure;
+
+    @Schema(description = "회원 닉네임")
+    private String memberNickName;
 }

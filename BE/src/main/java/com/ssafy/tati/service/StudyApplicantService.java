@@ -1,14 +1,17 @@
 package com.ssafy.tati.service;
 
+import com.ssafy.tati.dto.res.StudyApplicantApprovalMemberResDto;
 import com.ssafy.tati.dto.res.StudyIdResDto;
 import com.ssafy.tati.entity.Member;
 import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.entity.StudyApplicant;
+import com.ssafy.tati.entity.StudyMember;
 import com.ssafy.tati.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,6 +23,7 @@ public class StudyApplicantService {
     private final StudyRepository studyRepository;
     private final MemberRepository memberRepository;
     private final StudyApplicantRepository studyApplicantRepository;
+    private final StudyMemberRepository studyMemberRepository;
 
     public StudyIdResDto studyApplicantMember(Integer studyId, Integer memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("회원 정보가 존재하지 않습니다"));
@@ -40,6 +44,7 @@ public class StudyApplicantService {
         return studyIdResDto;
     }
 
+    @Transactional(readOnly = true)
     public List<Member> getStudyApplicantMember(Integer studyId) {
 //        Study study = studyRepository.findById(studyId).orElseThrow(() -> new RuntimeException("study가 존재하지 않습니다."));
 //        List<StudyApplicant> studyApplicantList = studyApplicantRepository.findAllByStudyStudyId(studyId);
@@ -55,5 +60,23 @@ public class StudyApplicantService {
         List<StudyApplicant> studyApplicants = studyApplicantRepository.findAllByStudyStudyId(studyId);
         List<Integer> memberIds = studyApplicants.stream().map(StudyApplicant::getMemberId).collect(Collectors.toList());
         return memberRepository.findByMemberIdIn(memberIds);
+    }
+
+    public StudyApplicantApprovalMemberResDto getStudyApplicantApprovalMember(Integer studyId, Integer memberId){
+        StudyApplicant studyApplicant = studyApplicantRepository.findByMemberMemberIdAndStudyStudyId(memberId, studyId).orElseThrow(() -> new RuntimeException("해당 스터디 신청 회원이 아닙니다."));
+
+        LocalDate localDate = LocalDate.now();
+        studyMemberRepository.save(new StudyMember(studyApplicant.getStudyApplicantDeposit(), localDate, studyApplicant.getStudy(), studyApplicant.getMember()));
+        StudyApplicantApprovalMemberResDto studyApplicantApprovalMemberResDto = new StudyApplicantApprovalMemberResDto(memberId, studyId, studyApplicant.getMember().getMemberNickName());
+        studyApplicantRepository.deleteById(studyApplicant.getStudyApplicantId());
+        return studyApplicantApprovalMemberResDto;
+    }
+
+    public StudyApplicantApprovalMemberResDto getStudyApplicantRefuseMember(Integer studyId, Integer memberId) {
+        StudyApplicant studyApplicant = studyApplicantRepository.findByMemberMemberIdAndStudyStudyId(memberId, studyId).orElseThrow(() -> new RuntimeException("해당 스터디 신청 회원이 아닙니다."));
+        Member member = studyApplicant.getMember();
+        member.setTotalPoint(member.getTotalPoint() + studyApplicant.getStudyApplicantDeposit());
+        StudyApplicantApprovalMemberResDto studyApplicantApprovalMemberResDto = new StudyApplicantApprovalMemberResDto(memberId, studyId, studyApplicant.getMember().getMemberNickName());
+        return studyApplicantApprovalMemberResDto;
     }
 }
