@@ -61,7 +61,16 @@ public class Member {
 
     //내가 쓴 게시글 목록
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    List<Board> myBoardList = new ArrayList<>();
+    List<Board> boardList = new ArrayList<>();
+
+    //열정지수 내역
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    List<Score> scoreList = new ArrayList<>();
+
+    //입퇴실 내역
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    List<Attendance> attendanceList = new ArrayList<>();
+
 
     @PrePersist
     public void prePersist(){

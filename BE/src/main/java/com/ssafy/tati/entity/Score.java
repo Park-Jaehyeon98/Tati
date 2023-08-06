@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@ToString
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,7 +20,7 @@ public class Score {
     @Column(name = "score_date", nullable = false)
     private LocalDateTime scoreDate;
 
-    //열정지수
+    //열정지수 변경 값
     private int score;
 
     //내용
@@ -29,9 +28,15 @@ public class Score {
     private String sContent;
 
     //회원 식별 번호
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
+
+    //입퇴실
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "attendance_id")
+    private Attendance attendance;
+
 
 
 }

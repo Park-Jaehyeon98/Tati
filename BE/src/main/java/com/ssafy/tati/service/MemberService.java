@@ -1,5 +1,6 @@
 package com.ssafy.tati.service;
 
+import com.ssafy.tati.entity.Attendance;
 import com.ssafy.tati.exception.DataNotFoundException;
 import com.ssafy.tati.exception.MismatchDataException;
 import com.ssafy.tati.dto.res.MemberBoardListResDto;
@@ -122,20 +123,6 @@ public class MemberService {
         else memberRepository.deleteById(memberId);
     }
 
-    //회원이 작성한 글 조회
-    public List<MemberBoardListResDto> selectBoardList(Integer memberId){
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
-        if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
-
-        List<MemberBoardListResDto> boardListResDtoList = new ArrayList<>();
-
-        List<Board> boardList = boardRepository.findByEmail(memberId);
-        for(Board board : boardList){
-            boardListResDtoList.add(new MemberBoardListResDto(board, board.getCommentList().size()));
-        }
-
-        return boardListResDtoList;
-    }
 
     //회원이 가입한 스터디 조회
     public List<Study> selectStudyList(Integer memberId){
@@ -155,6 +142,23 @@ public class MemberService {
         return studyList;
     }
 
+    //회원이 작성한 글 조회
+    public List<Board> selectBoardList(Integer memberId){
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
+
+        List<Board> boardList = boardRepository.findByEmail(memberId);
+        return boardList;
+    }
+
+    //회원 입퇴실 조회
+    public List<Attendance> attendanceList(Integer memberId){
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
+
+        List<Attendance> attendanceList = optionalMember.get().getAttendanceList();
+        return attendanceList;
+    }
 
     //모든 회원 조회
     public List<Member> selectAll(){

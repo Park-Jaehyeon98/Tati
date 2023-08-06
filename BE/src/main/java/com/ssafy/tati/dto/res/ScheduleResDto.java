@@ -13,6 +13,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Schema(description = "일정 응답 DTO")
 public class ScheduleResDto {
+
+    @Schema(description = "일정 식별번호")
+    private Integer memberScheduleId;
+
     @Schema(description = "날짜")
     private LocalDateTime memberScheduleDate;
 

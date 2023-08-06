@@ -4,6 +4,7 @@ import com.ssafy.tati.dto.req.MemberReqDto;
 import com.ssafy.tati.dto.req.PutMemberReqDto;
 import com.ssafy.tati.dto.res.*;
 import com.ssafy.tati.entity.*;
+import com.ssafy.tati.mapper.AttendanceMapper;
 import com.ssafy.tati.mapper.GetMemberMapper;
 import com.ssafy.tati.mapper.MemberMapper;
 import com.ssafy.tati.mapper.PutMemberMapper;
@@ -35,6 +36,7 @@ public class MyPageController {
     private final MemberMapper memberMapper;
     private final GetMemberMapper getMemberMapper;
     private final PutMemberMapper putMemberMapper;
+    private final AttendanceMapper attendanceMapper;
 
     @Operation(summary = "마이페이지 접속", description = "마이페이지 접속 시 일정, 할 일, 공부 시간, 열정 지수 확인")
     @GetMapping("mypage/{memberId}")
@@ -76,7 +78,7 @@ public class MyPageController {
         List<MemberSchedule> schedules = memberScheduleService.findSchedules(memberId , year, month);
         List<ScheduleResDto> scheduleResDtoList = new ArrayList<>();
         for(MemberSchedule schedule : schedules){
-            scheduleResDtoList.add( new ScheduleResDto( schedule.getMemberScheduleDate(),
+            scheduleResDtoList.add( new ScheduleResDto( schedule.getMemberScheduleId(), schedule.getMemberScheduleDate(),
                             schedule.getMemberScheduleTitle(), schedule.getMemberScheduleTitle()));
         }
 
@@ -184,7 +186,21 @@ public class MyPageController {
     //회원 작성 게시글 반환
     @GetMapping("mypage/board-list/{memberId}")
     public ResponseEntity<?> selectBoardList(@PathVariable Integer memberId){
-        List<MemberBoardListResDto> boardList = memberService.selectBoardList(memberId);
+        List<Board> boardList = memberService.selectBoardList(memberId);
+
+        List<MemberBoardListResDto> boardListResDtoList = new ArrayList<>();
+        for(Board board : boardList){
+            boardListResDtoList.add(new MemberBoardListResDto(board, board.getCommentList().size()));
+        }
         return new ResponseEntity<>(boardList, HttpStatus.OK);
+    }
+
+    //입퇴실 내역 반환
+    @GetMapping("mypage/sttendance-list/{memberId}")
+    public ResponseEntity<?> selectAttendanceList(@PathVariable Integer memberId){
+        List<Attendance> attendances = memberService.attendanceList(memberId);
+
+        List<AttendanceResDto> attendanceList = attendanceMapper.attendanceListToAttendanceResDtoList(attendances);
+        return new ResponseEntity<>(attendanceList, HttpStatus.OK);
     }
  }

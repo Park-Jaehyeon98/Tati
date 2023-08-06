@@ -37,8 +37,8 @@ public class MemberScheduleController {
 
         memberScheduleService.save(schedule);
 
-        ScheduleResDto scheduleReqDto = scheduleMapper.memberScheduleToScheduleResDto(schedule);
-        return new ResponseEntity<>(scheduleReqDto, HttpStatus.OK);
+        ScheduleResDto scheduleResDto = scheduleMapper.memberScheduleToScheduleResDto(schedule);
+        return new ResponseEntity<>(scheduleResDto, HttpStatus.OK);
     }
 
     @Operation(summary = "일정 삭제", description = "회원이 일정 삭제")
