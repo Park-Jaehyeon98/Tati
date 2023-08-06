@@ -1,6 +1,7 @@
 package com.ssafy.tati.entity;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -38,12 +39,6 @@ public class StudyMember {
         setStudy(study);
     }
 
-//    public void insert(Integer studyMemberDeposit, String studyJoinDate, Study study, Member member){
-//        this.studyMemberDeposit = studyMemberDeposit;
-//        this.studyJoinDate = studyJoinDate;
-//        this.study = study;
-//        this.member = member;
-//    }
     private void setMember(Member member){
         this.member=member;
         if(member!=null){

@@ -2,10 +2,8 @@ package com.ssafy.tati.repository;
 
 import com.ssafy.tati.entity.Member;
 import com.ssafy.tati.entity.Study;
-import com.ssafy.tati.entity.StudyMember;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -13,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Integer> {
-
     //닉네임으로 회원 조회
     Optional<Member> findByMemberNickName(String nickName);
 
@@ -31,6 +28,6 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     @Query("select a.study from StudyApplicant as a join a.member as m where m.memberId = :memberId")
     List<Study> selectApplicantStudyList(@Param("memberId") Integer memberId);
 
-
+    List<Member> findByMemberIdIn(List<Integer> memberIds);
 
 }

@@ -22,10 +22,4 @@ public class StudyScheduleReqDto {
     @Schema(description = "종료 시간")
     private String studyEndTime;
 
-//    private StudyDayItemDto() {}
-//    public StudyScheduleReqDto(StudyScheduleReqDto studyScheduleReqDto) {
-//        this.studyDay = studyScheduleReqDto.getStudyDay();
-//        this.studyStartTime = studyScheduleReqDto.getStudyStartTime();
-//        this.studyEndTime = studyScheduleReqDto.getStudyEndTime();
-//    }
 }
