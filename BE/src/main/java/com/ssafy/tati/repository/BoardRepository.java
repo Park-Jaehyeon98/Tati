@@ -26,4 +26,6 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     Page<Board> findByBoardTypeAndStudy(char boardType, Study study, Pageable pageable);
 
     Optional<Board> findByBoardIdAndBoardType(Integer boardId, char boardType);
+
+    Optional<Board> findByBoardTypeAndStudyAndMainNoticeYnTrue(char boardType, Study study);
 }

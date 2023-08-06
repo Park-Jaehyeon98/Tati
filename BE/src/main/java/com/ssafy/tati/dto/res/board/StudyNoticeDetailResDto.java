@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "게시글 리스트 응답 DTO (사이트 공지사항, FAQ 리스트 조회 시 사용)")
-public class BoardListResDto {
+@Schema(description = "스터디 공지사항 상세 조회 응답 DTO (스터디 공지사항 단건 상세 조회 시 사용)")
+public class StudyNoticeDetailResDto {
     @Schema(description = "게시글 식별번호")
     private Integer boardId;
     @Schema(description = "게시글 제목")
@@ -27,13 +27,6 @@ public class BoardListResDto {
     private LocalDateTime createdDate;
     @Schema(description = "수정일")
     private LocalDateTime modifiedDate;
-
-    public BoardListResDto(Board board) {
-        this.boardId = board.getBoardId();
-        this.boardTitle = board.getBoardTitle();
-        this.memberNickname = board.getMember().getMemberNickName();
-        this.boardHit = board.getBoardHit();
-        this.createdDate = board.getCreatedDate();
-        this.modifiedDate = board.getModifiedDate();
-    }
+    @Schema(description = "대표글 여부")
+    private boolean mainNoticeYn;
 }
