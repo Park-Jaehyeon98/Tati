@@ -27,11 +27,6 @@ public class SchedulerService {
     @Scheduled(cron = "0 59 11 * * *")
     public void run(){
 
-        //현재 시점 기점으로 완료된 스터디를 찾고, 보증금 정산이 안되어 있다면 벌금을 정산
-        //스터디 종료시, 각자 자신이 돌려받을 보증금 ( 스터디의 신청보증금 - 진행스터디원의 벌금) 만큼 회원의 Point 적립
-        //스터디 종료시, 스터디테이블의 총벌금을 출석률가 제일 좋은사람한테 point 적립
-        //출석률 계산 > 진행스터디 회원의 결석횟수가 제일 적은 회원으로 지정 : 여러명이면 총 벌금 / 회원 명수
-
         LocalDate today = LocalDate.now();
 
         List<Study> endedStudyList = studyManageRepository.findEndedStudyList(today);

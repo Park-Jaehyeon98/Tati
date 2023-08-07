@@ -15,7 +15,6 @@ public class StudyDetailResDto {
     @Schema(description = "이미지 url")
     private String img;
 
-
     @Schema(description = "스터디 명")
     private String studyName;
 
