@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface StudyScheduleRepository extends JpaRepository<StudySchedule, Integer> {
     Optional<StudySchedule> deleteStudySchedulesByStudyStudyId(Integer studyId);
 
+    Optional<StudySchedule> findByStudyIdAndStudyDay(Integer studyId, String studyDay);
 }

@@ -29,12 +29,12 @@ public class Attendance {
 
     //출석 여부 : 0 결석, 1 지각, 2 출석
     @Column(name = "is_attended")
-    private Integer isAttended;
+    private char isAttended;
 
     //상벌점
     private Integer score;
 
-    //회원이 제출한 누적 벌금 > 회원이 스터디 끝난 후 가져갈 보증금
+    //입퇴실 1건에 대한 벌금
     @Column(name = "penalty_amt", columnDefinition = "smallint", nullable = false)
     private Short penaltyAmt;
 
@@ -48,7 +48,5 @@ public class Attendance {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id")
     private Member member;
-
-
 
 }

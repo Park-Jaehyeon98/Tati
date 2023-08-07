@@ -63,9 +63,6 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     List<Board> boardList = new ArrayList<>();
 
-    //열정지수 내역
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    List<Score> scoreList = new ArrayList<>();
 
     //입퇴실 내역
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
