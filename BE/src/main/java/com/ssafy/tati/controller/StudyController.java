@@ -35,8 +35,8 @@ public class StudyController {
 
     @Operation(summary = "스터디 생성", description = "스터디(이름, 설명, 허용인원, 비밀번호, 스터디 시작 기간, 스터디 종료 기간, 카테고리 식별번호, 공개여부, 스터디 방장, 신청 보증금), 스터디 할 요일과 시작 시간, 종료 시간을 객체 형태로 받아서 저장", responses = {
             @ApiResponse(responseCode = "200", description = "스터디 생성 성공", content = @Content(schema = @Schema(implementation = Study.class)))})
-    @PostMapping("/create")
-    public ResponseEntity<?> createStudy(@RequestBody StudyReqDto studyReqDto, @RequestPart(value = "file") MultipartFile multipartFile) throws IOException {
+    @PostMapping(value = "/create", consumes = {"multipart/form-data"})
+    public ResponseEntity<?> createStudy(@RequestPart StudyReqDto studyReqDto, @RequestPart(value = "file") MultipartFile multipartFile) throws IOException {
 
         String img = null;
         if(multipartFile != null) {
@@ -64,7 +64,7 @@ public class StudyController {
 
     @Operation(summary = "스터디 상세 조회", description = "스터디 식별 번호로 스터디 상세 조회", responses = {
             @ApiResponse(responseCode = "200", description = "스터디 상세 조회 성공", content = @Content(schema = @Schema(implementation = StudyDetailResDto.class)))})
-    @GetMapping("/{studyId}")
+    @GetMapping(value = "/{studyId}",  consumes = {"multipart/form-data"})
     public ResponseEntity<?> detailStudy(@PathVariable Integer studyId) {
         Study study = studyService.getStudyDetail(studyId);
         StudyDetailResDto studyDetailResDto = studyMapper.studyToStudyDetailResDto(study, study.getCategory());
@@ -73,7 +73,7 @@ public class StudyController {
 
     @Operation(summary = "스터디 수정", description = "스터디 식별번호와 StudyModifyReqDto의 내용을 받아서 스터디 수정", responses = {
             @ApiResponse(responseCode = "200", description = "스터디 수정 성공", content = @Content(schema = @Schema(implementation = StudyIdResDto.class)))})
-    @PutMapping("/{studyId}/modify")
+    @PutMapping(value = "/{studyId}/modify",  consumes = {"multipart/form-data"})
     public ResponseEntity<?> modifyStudy(@PathVariable Integer studyId,
                                          @RequestBody StudyModifyReqDto studyModifyReqDto, @RequestPart(value = "file") MultipartFile multipartFile) throws IOException {
 

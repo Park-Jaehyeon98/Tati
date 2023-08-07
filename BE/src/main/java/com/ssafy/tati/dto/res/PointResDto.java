@@ -19,6 +19,9 @@ public class PointResDto {
     @Schema(description = "총 금액")
     private int amount;
 
+    @Schema(description = "남은 금액")
+    private int currAmount;
+
     @Schema(description = "내용")
     private String pContent;
 

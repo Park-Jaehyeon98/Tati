@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Tag(name = "포인트", description = "회원 포인트 API 문서")
@@ -64,9 +65,16 @@ public class PointController {
     @GetMapping("mypage/point/{memberId}")
     public ResponseEntity<?> selectPoint(@PathVariable Integer memberId){
         List<Point> pointList = pointService.selectPoint(memberId);
+        Member member = memberService.findById(memberId);
 
         //포인트 매퍼에서 resDto로 변환해서 반환
-        List<PointResDto> pointResList =  postPointMapper.pointListToPointResDtoList(pointList);
+        List<PointResDto> pointResList = new ArrayList<>();
+        for(Point point : pointList){
+            pointResList.add(new PointResDto(
+                point.getPointDate(), point.getTid(), point.getAmount(),
+                    member.getTotalPoint(), point.getPContent()
+            ));
+        }
 
         return new ResponseEntity(pointResList, HttpStatus.OK);
     }
