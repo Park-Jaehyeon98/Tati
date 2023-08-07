@@ -18,8 +18,9 @@ export default function RewardPoint(){
         console.log(err)
       })
 
-  },[])
+  },[]);
 
+  
   return(
     <div className={style.RewardPoint}>
       <h1>상벌점내역</h1>

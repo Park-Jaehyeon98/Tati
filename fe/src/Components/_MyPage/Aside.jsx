@@ -23,6 +23,8 @@ export default function Aside() {
       navigate("/MyPage/MyPagePoint");
     } else if (page === "AuthModal") {
       handleButtonClick(); // 회원정보수정 모달을 열기
+    } else if (page === "RewardPoint") {
+      navigate("/MyPage/MyPageRewardPoint"); // 상벌점내역 페이지로 이동
     }
   };
 
@@ -56,6 +58,9 @@ export default function Aside() {
         </button>
         <button className={style.bt} onClick={() => onButtonClick("AuthModal")}>
           회원정보수정
+        </button>
+        <button className={style.bt} onClick={() => onButtonClick("RewardPoint")}>
+          상벌점내역
         </button>
       </div>
 

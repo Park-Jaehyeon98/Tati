@@ -48,12 +48,11 @@ export default function Login() {
        
         const authorizationHeader = res.headers.authorization;
         const decodedToken = jwt_decode(authorizationHeader);
-        console.log(decodedToken)
-        // const accessToken = authorizationHeader.substring(7);
+
+        const accessToken = authorizationHeader.substring(7);
         localStorage.setItem('decodedToken', JSON.stringify(decodedToken));
-        console.log("이거는 그냥 꺼낸거")
-        console.log(localStorage.getItem('decodedToken'));
-        console.log("이거는 parse사용")
+
+        const token = localStorage.getItem('accessToken');
         const tokenInfo = localStorage.getItem('decodedToken');
         console.log(JSON.parse(tokenInfo));
         const parseJwt = JSON.parse(tokenInfo);

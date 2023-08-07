@@ -26,14 +26,17 @@ export default function Calendar(){
   const email = localStorage.getItem('email');
 
   const [img,setImg] = useState(null)
+  const [totalScore,setTotalScore] = useState('')
+  const [totalStudyTime,setTotalStudyTime] = useState('')
+  const [todayStudyTime,setTodayStudyTime] = useState('')
 
   // const [events,setEvents] = useState([])
 
   useEffect(() => {
 
-    console.log('events ===========================')
-    console.log(events)
-    console.log('===========================')
+    // console.log('events ===========================')
+    // console.log(events)
+    // console.log('===========================')
 
     console.log('캘린더 memberId',memberId)
     console.log(`year---${year}///month---${month}`)
@@ -48,7 +51,8 @@ export default function Calendar(){
     })
       .then((res) => {
         console.log(' 일정 요청 성공=================================')
-        console.log(res.data.scheduleList);
+        console.log(res);
+        // console.log(res.data.scheduleList);
 
         const eventsToAdd = res.data.scheduleList.map((scheduleItem) => ({
           title: scheduleItem.memberScheduleTitle,
@@ -56,18 +60,11 @@ export default function Calendar(){
           date: scheduleItem.memberScheduleDate.slice(0, 10),
           scheduleId: scheduleItem.memberScheduleId,
         }));
-
-        // const events = eventsToAdd
-        // setEvents(eventsToAdd);
-
         console.log(eventsToAdd[0])
-        // eventsToAdd 배열을 리덕스 스토어에 추가
-        // for (const event of eventsToAdd) {
-        //   console.log(event)
-        //   dispatch(addEvent(event));
-        // }
-
         setImg(res.data.img)
+        setTotalScore(res.data.totalScore)
+        setTotalStudyTime(res.data.todayStudyTime)
+        setTodayStudyTime(res.data.totalStudyTime)
         console.log('==============================')
       })
       .catch((err) => {

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import jwt from 'jsonwebtoken';
+
 
 export default function RefreshToken(){
 
@@ -17,4 +17,4 @@ export default function RefreshToken(){
       .catch((err) => {
         console.log(err)
       });
-}
+};

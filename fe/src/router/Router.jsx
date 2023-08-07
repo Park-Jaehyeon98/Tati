@@ -32,13 +32,13 @@ import Main from "../Pages/Main/Main";
 import KakaoPay from "../Components/_MyPage//Point/KakaoPay";
 
 import MyPageInfoModify from "../Pages/MyPage/_MyPageInfoModify";
-import MyPageApplyStudy from "../Pages/MyPage/_MyPageApplyStudy";
-import MyPageJoinStudy from "../Pages/MyPage/_MyPageJoinStudy";
-import MyPagePost from "../Pages/MyPage/_MyPagePost";
-import MyPagePoint from "../Pages/MyPage/_MyPagePoint";
-import MyPagePointHistory from "../Pages/MyPage/_MyPagePointHistory";
-import MyPagePointWithdraw from "../Pages/MyPage/_MyPagePointWithdraw";
-import MyPageRewardPoint from "../Pages/MyPage/_MyPageRewardPoint";
+import MyPageApplyStudy from "../Pages/MyPage/Study/_MyPageApplyStudy";
+import MyPageJoinStudy from "../Pages/MyPage/Study/_MyPageJoinStudy";
+import MyPagePost from "../Pages/MyPage/Study/_MyPagePost";
+import MyPagePoint from "../Pages/MyPage/Point/_MyPagePoint";
+import MyPagePointHistory from "../Pages/MyPage/Point/_MyPagePointHistory";
+import MyPagePointWithdraw from "../Pages/MyPage/Point/_MyPagePointWithdraw";
+import MyPageRewardPoint from "../Pages/MyPage/_MyPageRewardPoint"
 
 
 // import { aX } from "@fullcalendar/core/internal-common";
