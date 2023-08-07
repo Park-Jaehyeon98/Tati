@@ -3,6 +3,8 @@ package com.ssafy.tati.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Time;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -19,10 +21,10 @@ public class StudySchedule {
     private String studyDay;
 
     @Column(name = "study_start_time", nullable = false)
-    private String studyStartTime;
+    private Time studyStartTime;
 
     @Column(name = "study_end_time", nullable = false)
-    private String studyEndTime;
+    private Time studyEndTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "study_id")

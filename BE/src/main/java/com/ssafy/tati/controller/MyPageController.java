@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,9 +51,30 @@ public class MyPageController {
         String img = member.getImg();
 
         //오늘 공부시간
+        int todayStudyTime = 0;
+        List<Attendance> attendances = memberService.attendanceList(memberId);
+
+        LocalDateTime now = LocalDateTime.now();
+        for(Attendance attendance : attendances){
+            if(attendance.getIsAttended()==0) continue;
+
+            LocalDate studyDay = attendance.getInTime().toLocalDate();
+
+            Period piff = Period.between(now.toLocalDate(), studyDay);
+
+            if(piff.isZero()) {
+                Duration diff = Duration.between( attendance.getOutTime(),attendance.getInTime());
+                todayStudyTime+=diff.toMillis();
+            }
+        }
+
+        String studyTime = (todayStudyTime / (1000 * 60 * 60)) + "시간 " +  (todayStudyTime / (1000 * 60)) + "분 "
+                + (todayStudyTime / 1000) + "초";
 
         //총 공부 시간
-        int totalStudyTime = member.getTotalStudyTime();
+        Integer totalTime = member.getTotalStudyTime();
+        String totalStudyTime = (totalTime/ (1000 * 60 * 60)) + "시간 " +  (totalTime / (1000 * 60)) + "분 "
+                + (totalTime / 1000) + "초";
 
         //열정 지수
         int totalScore = member.getTotalScore();
@@ -82,9 +104,14 @@ public class MyPageController {
                             schedule.getMemberScheduleTitle(), schedule.getMemberScheduleTitle()));
         }
 
-        //오늘 공부시간 추가 필요
-        MyPageResDto myPageResDto =  new MyPageResDto(img, 0, totalStudyTime, totalScore, mypageStudyResDto, scheduleResDtoList);
-        return new ResponseEntity<MyPageResDto>(myPageResDto, HttpStatus.OK);
+        // 입퇴실 내역
+        List<Attendance> attendance = memberService.attendanceList(memberId);
+        List<AttendanceResDto> attendanceList = attendanceMapper.attendanceListToAttendanceResDtoList(attendance);
+
+        MyPageResDto myPageResDto =  new MyPageResDto(img, studyTime, totalStudyTime, totalScore,
+                mypageStudyResDto, scheduleResDtoList, attendanceList);
+
+        return new ResponseEntity<>(myPageResDto, HttpStatus.OK);
     }
 
 
@@ -155,44 +182,44 @@ public class MyPageController {
     }
 
     //회원 가입스터디 반환
-//    @GetMapping("mypage/study-list/{memberId}")
-//    public ResponseEntity<?> selectStudyList(@PathVariable Integer memberId){
-//        List<Study> studyList = memberService.selectStudyList(memberId);
-//
-//        List<JoinStudyResDto> joinStudyList = new ArrayList<>();
-//        for(Study study : studyList){
-//            joinStudyList.add(new JoinStudyResDto(study, study.getStudyMemberList().size()));
-//        }
-//        return new ResponseEntity<>(joinStudyList, HttpStatus.OK);
-//    }
-//
-//    //회원 신청스터디 반환
-//    @GetMapping("mypage/application-list/{memberId}")
-//    public ResponseEntity<?> selectApplicationStudyList(@PathVariable Integer memberId){
-//        List<Study> applicantStudyList = memberService.selectApplicantStudyList(memberId);
-//
-//        List<ApplicantStudyResDto> applicantStudyResDtoList = new ArrayList<>();
-//        for(Study study : applicantStudyList){
-//            int applicantCount = study.getStudyApplicantList().size();
-//            applicantStudyResDtoList.add( new ApplicantStudyResDto(
-//                    study.getStudyId(), study.getStudyName(), study.getTotalMember(), applicantCount
-//            ));
-//        }
-//
-//        return new ResponseEntity<>(applicantStudyList, HttpStatus.OK);
-//    }
-//
-//    //회원 작성 게시글 반환
-//    @GetMapping("mypage/board-list/{memberId}")
-//    public ResponseEntity<?> selectBoardList(@PathVariable Integer memberId){
-//        List<Board> boardList = memberService.selectBoardList(memberId);
-//
-//        List<MemberBoardListResDto> boardListResDtoList = new ArrayList<>();
-//        for(Board board : boardList){
-//            boardListResDtoList.add(new MemberBoardListResDto(board, board.getCommentList().size()));
-//        }
-//        return new ResponseEntity<>(boardList, HttpStatus.OK);
-//    }
+    @GetMapping("mypage/study-list/{memberId}")
+    public ResponseEntity<?> selectStudyList(@PathVariable Integer memberId){
+        List<Study> studyList = memberService.selectStudyList(memberId);
+
+        List<JoinStudyResDto> joinStudyList = new ArrayList<>();
+        for(Study study : studyList){
+            joinStudyList.add(new JoinStudyResDto(study, study.getStudyMemberList().size()));
+        }
+        return new ResponseEntity<>(joinStudyList, HttpStatus.OK);
+    }
+
+    //회원 신청스터디 반환
+    @GetMapping("mypage/application-list/{memberId}")
+    public ResponseEntity<?> selectApplicationStudyList(@PathVariable Integer memberId){
+        List<Study> applicantStudyList = memberService.selectApplicantStudyList(memberId);
+
+        List<ApplicantStudyResDto> applicantStudyResDtoList = new ArrayList<>();
+        for(Study study : applicantStudyList){
+            int applicantCount = study.getStudyApplicantList().size();
+            applicantStudyResDtoList.add( new ApplicantStudyResDto(
+                    study.getStudyId(), study.getStudyName(), study.getTotalMember(), applicantCount
+            ));
+        }
+
+        return new ResponseEntity<>(applicantStudyList, HttpStatus.OK);
+    }
+
+    //회원 작성 게시글 반환
+    @GetMapping("mypage/board-list/{memberId}")
+    public ResponseEntity<?> selectBoardList(@PathVariable Integer memberId){
+        List<Board> boardList = memberService.selectBoardList(memberId);
+
+        List<MemberBoardListResDto> boardListResDtoList = new ArrayList<>();
+        for(Board board : boardList){
+            boardListResDtoList.add(new MemberBoardListResDto(board, board.getCommentList().size()));
+        }
+        return new ResponseEntity<>(boardList, HttpStatus.OK);
+    }
 
     //입퇴실 내역 반환
     @GetMapping("mypage/sttendance-list/{memberId}")

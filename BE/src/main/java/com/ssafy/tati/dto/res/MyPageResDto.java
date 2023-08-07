@@ -1,5 +1,6 @@
 package com.ssafy.tati.dto.res;
 
+import com.ssafy.tati.entity.Attendance;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,10 +18,10 @@ public class MyPageResDto {
     private String img;
 
     @Schema(description = "오늘 공부시간")
-    private Integer todayStudyTime;
+    private String todayStudyTime;
 
     @Schema(description = "총 공부시간")
-    private Integer totalStudyTime;
+    private String totalStudyTime;
 
     @Schema(description = "열정지수")
     private Integer totalScore;
@@ -31,6 +32,7 @@ public class MyPageResDto {
     @Schema(description = "할 일 리스트")
     private List<ScheduleResDto> scheduleList;
 
-    //상 벌점 리스트
+    @Schema(description = "입퇴실 리스트")
+    private List<AttendanceResDto> attendanceList;
 
 }

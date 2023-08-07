@@ -68,6 +68,12 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     List<Attendance> attendanceList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Point> pointList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MemberSchedule> scheduleList = new ArrayList<>();
+
     @PrePersist
     public void prePersist(){
         createdDate = LocalDateTime.now();
