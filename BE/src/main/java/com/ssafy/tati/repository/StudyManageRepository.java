@@ -2,6 +2,7 @@ package com.ssafy.tati.repository;
 
 import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.entity.StudyMember;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -9,8 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
 
-@Repository
-public interface StudyManageRepository {
+public interface StudyManageRepository extends JpaRepository<Study, Integer> {
 
     @Query("select s from Study as s where s.studyEndDate<:today and s.depositEndYn=false")
     List<Study> findEndedStudyList(@Param("today") LocalDate today);
