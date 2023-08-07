@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Time;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -19,9 +20,9 @@ public class StudyScheduleReqDto {
     private String studyDay;
 
     @Schema(description = "시작 시간")
-    private String studyStartTime;
+    private LocalTime studyStartTime;
 
     @Schema(description = "종료 시간")
-    private String studyEndTime;
+    private LocalTime studyEndTime;
 
 }
