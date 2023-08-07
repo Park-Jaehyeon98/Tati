@@ -25,7 +25,7 @@ public class AttendanceResDto {
     private LocalDateTime outTime;
 
     @Schema(description = "출석여부")
-    private Integer isAttended;
+    private char isAttended;
 
     @Schema(description = "상벌점")
     private Integer score;

@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -42,4 +43,17 @@ public class StudyMemberService {
 //    public StudyMemberSecessionResDto studyMemberSecession(Integer studyId, Integer memberId) {
 //
 //    }
+
+
+    ////////////////////////
+    // 스터디룸 입실을 위해 스터디 멤버인지 확인
+    public StudyMember findStudyMember(Integer studyId, Integer memberId) {
+        Optional<StudyMember> optionalStudyMember = studyMemberRepository.findByStudyIdAndMemberId(studyId, memberId);
+        if (optionalStudyMember.isEmpty()) {
+            throw new RuntimeException();
+        }
+
+        StudyMember studyMember = optionalStudyMember.get();
+        return studyMember;
+    }
 }
