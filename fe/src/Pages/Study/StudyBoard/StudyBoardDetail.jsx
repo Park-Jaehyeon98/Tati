@@ -12,8 +12,9 @@ const StudyBoardDetail = () => {
 
     // Outlet context 로 props 가져오기
     const { studyId, boardType } = useOutletContext();
+    const isRep = true;
 
-    const [boardData, setBoardData] = useState({
+    const [boardData, setBoardData, memberId] = useState({
         boardTitle: '',
         boardContent: '',
 
@@ -26,6 +27,9 @@ const StudyBoardDetail = () => {
         memberNickname: '',
         memberId: 0
     });
+
+    const [commentContent, setCommentContent] = useState('');
+
 
 
     const config = {}
@@ -55,14 +59,30 @@ const StudyBoardDetail = () => {
     }, [])
 
     const handleRepBtnClick = () => {
-        console.log("대표글axios적용할것")
-        // apiClient.post('url', { boardId }, config)
-        //     .then((res) => { })
-        //     .catch((err) => { })
+        // console.log("대표글axios적용할것")
+        apiClient.post('study/notice/main', { boardId, memberId }, config)
+            .then((res) => {
+                console.log(res.data)
+            })
+            .catch((err) => { })
     }
 
     const handleBackBtnClick = () => {
         boardType === 2 ? navigate(`/Study/${studyId}/Board/`) : navigate(`/Study/${studyId}/Notice/`)
+    }
+
+    const handleCommentContentChange = (e) => {
+        setCommentContent(e.targetValue)
+    }
+    // 엔터키 눌러도되게 할까..
+    const handleCommentCreate = () => {
+        apiClient.post('study/board/comment', { memberId, commentContent })
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            });
     }
 
 
@@ -105,6 +125,9 @@ const StudyBoardDetail = () => {
                 boardType === 2 ?
                     <div>
                         댓글창
+                        <StudyBoardCommentList />
+                        새 댓글
+                        <input type="text" value={commentContent} onChange={handleCommentContentChange} />
                     </div>
                     : <></>
             }

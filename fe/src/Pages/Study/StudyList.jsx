@@ -13,7 +13,7 @@ const StudyList = () => {
     const [studyList, setStudyList] = useState([]);
     // 페이지네이션
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(3);
+    const [totalPages, setTotalPages] = useState(8);
     const firstPage = currentPage - (currentPage % 5) + 1
     // 카테고리 선택
     const [listCategory, setListCategory] = useState(null);
@@ -110,7 +110,7 @@ const StudyList = () => {
                 {/* 스터디 카드 리스트 */}
 
                 {studyList.map((studyDetail) => {
-                    <StudyCardItem studyDetail={studyDetail} />
+                    return <StudyCardItem studyDetail={studyDetail} />
                 })}
 
 
