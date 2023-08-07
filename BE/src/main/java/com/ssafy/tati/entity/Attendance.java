@@ -32,10 +32,13 @@ public class Attendance {
     private char isAttended;
 
     //상벌점
+    @Column(columnDefinition = "int default 0")
     private Integer score;
 
+
     //입퇴실 1건에 대한 벌금
-    @Column(name = "penalty_amt", columnDefinition = "smallint", nullable = false)
+    @Column(name = "penalty_amt", nullable = false, columnDefinition = "int default 0")
+
     private Short penaltyAmt;
 
     //내용

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StudyMemberRepository extends JpaRepository<StudyMember, Integer> {
+
     List<StudyMember> findAllByStudyStudyId(Integer studyId);
 
     Optional<StudyMember> findByStudyIdAndMemberId(Integer studyId, Integer memberId);

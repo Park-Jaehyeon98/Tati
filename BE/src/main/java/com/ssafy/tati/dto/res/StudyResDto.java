@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter @Setter
@@ -21,10 +22,10 @@ public class StudyResDto {
     private String studyName;
 
     @Schema(description = "스터디 시작 날짜")
-    private String studyStartDate;
+    private LocalDate studyStartDate;
 
     @Schema(description = "스터디 완료 날짜")
-    private String studyEndDate;
+    private LocalDate studyEndDate;
 
     @Schema(description = "스터디 일정 dto")
     private List<StudyScheduleResDto> studyScheduleList;

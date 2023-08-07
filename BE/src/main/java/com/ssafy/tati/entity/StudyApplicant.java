@@ -5,8 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
 @EqualsAndHashCode(of = "studyApplicantId")
 @NoArgsConstructor
 @AllArgsConstructor

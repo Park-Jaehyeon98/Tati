@@ -150,7 +150,7 @@ public class MemberController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam(value = "file") MultipartFile multipartFile) throws IOException {
+    public ResponseEntity<String> uploadFile(@RequestPart(value = "file") MultipartFile multipartFile) throws IOException {
         return new ResponseEntity<>( s3Service.uploadFile(multipartFile), HttpStatus.OK );
     }
 

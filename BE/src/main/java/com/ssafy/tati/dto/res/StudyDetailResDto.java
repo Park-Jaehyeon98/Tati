@@ -12,6 +12,9 @@ public class StudyDetailResDto {
     @Schema(description = "스터디 식별번호")
     private Integer studyId;
 
+    @Schema(description = "이미지 url")
+    private String img;
+
     @Schema(description = "스터디 명")
     private String studyName;
 

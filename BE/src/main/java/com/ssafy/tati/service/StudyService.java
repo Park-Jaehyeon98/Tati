@@ -1,9 +1,9 @@
 package com.ssafy.tati.service;
 
 import com.ssafy.tati.dto.req.StudyModifyReqDto;
-import com.ssafy.tati.dto.res.StudyDeleteResDto;
 import com.ssafy.tati.dto.res.StudyIdResDto;
 import com.ssafy.tati.entity.*;
+import com.ssafy.tati.exception.DataNotFoundException;
 import com.ssafy.tati.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,12 +23,16 @@ public class StudyService {
     private final MemberRepository memberRepository;
     private final StudyMemberRepository studyMemberRepository;
 
-    public void createStudy(Study study, Integer categoryId) {
+    public Category checkCategory(Integer categoryId){
         Optional<Category> category = categoryRepository.findByCategoryId(categoryId);
         if(!category.isPresent()){
             throw new RuntimeException("해당 카테고리가 존재하지 않습니다.");
         }
-        study.setCategory(category.get());
+
+        return category.get();
+    }
+
+    public void createStudy(Study study) {
         studyRepository.save(study);
         setStudyMemberHost(study.getStudyId(), study.getStudyHost());
     }
@@ -73,28 +77,6 @@ public class StudyService {
         return studyIdResDto;
     }
 
-    public StudyDeleteResDto removeStudy(Integer studyId, Integer memberId){
-        Optional<Study> optionalStudy = studyRepository.findById(studyId);
-        if(!optionalStudy.isPresent()){
-            throw new RuntimeException("해당 스터디가 존재하지 않습니다.");
-        }
-        Study study = optionalStudy.get();
-        StudyDeleteResDto studyDeleteResDto = new StudyDeleteResDto();
-        studyDeleteResDto.setStudyName(study.getStudyName());
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
-        if(!optionalMember.isPresent()){
-            throw new RuntimeException("회원 정보가 존재하지 않습니다.");
-        }
-        Member member = optionalMember.get();
-
-        if(study.getStudyHost().equals(member.getMemberNickName())){
-            studyRepository.deleteById(studyId);
-            return studyDeleteResDto;
-        }else {
-            throw new RuntimeException("스터디 방장이 아닙니다.");
-        }
-    }
-
     @Transactional(readOnly = true)
     public List<Study> getStudyList() {
         List<Study> studyList = studyRepository.findAll();
@@ -108,8 +90,9 @@ public class StudyService {
     }
 
     public void setStudyMemberHost(Integer studyId, String studyHost) {
-        Member member = memberRepository.findByMemberNickName(studyHost).orElseThrow(() -> new RuntimeException("study Host가 일치하지 않습니다"));
+        Member member = memberRepository.findByMemberNickName(studyHost).orElseThrow(() -> new RuntimeException("등록된 회원이 아닙니다."));
         Study study = studyRepository.findById(studyId).orElseThrow(() -> new RuntimeException("study가 존재하지 않습니다."));
+
         Integer point = member.getTotalPoint() - study.getStudyDeposit();
         if(point < 0){
             studyRepository.deleteById(studyId);
@@ -118,8 +101,13 @@ public class StudyService {
 
         member.updateTotalPoint(point);
         LocalDate currentDate = LocalDate.now();
-        StudyMember studyMember = new StudyMember(study.getStudyDeposit(), currentDate, study, member);
+        StudyMember studyMember = new StudyMember(0, currentDate, 0, 0, study, member);
         studyMemberRepository.save(studyMember);
+    }
+
+    public Study findById(Integer studyId){
+        Study study = studyRepository.findById(studyId).orElseThrow(() -> new RuntimeException("해당 스터디가 존재하지 않습니다."));
+        return study;
     }
 
 }

@@ -38,7 +38,7 @@ public class CommentService {
             throw new RuntimeException();
         }
         comment.setMember(member);
-        comment.setBoard(board);
+//        comment.setBoard(board);
         commentRepository.save(comment);
     }
 

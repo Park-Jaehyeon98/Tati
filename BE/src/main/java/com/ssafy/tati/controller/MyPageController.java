@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,9 +51,30 @@ public class MyPageController {
         String img = member.getImg();
 
         //오늘 공부시간
+        int todayStudyTime = 0;
+        List<Attendance> attendances = memberService.attendanceList(memberId);
+
+        LocalDateTime now = LocalDateTime.now();
+        for(Attendance attendance : attendances){
+            if(attendance.getIsAttended()==0) continue;
+
+            LocalDate studyDay = attendance.getInTime().toLocalDate();
+
+            Period piff = Period.between(now.toLocalDate(), studyDay);
+
+            if(piff.isZero()) {
+                Duration diff = Duration.between( attendance.getOutTime(),attendance.getInTime());
+                todayStudyTime+=diff.toMillis();
+            }
+        }
+
+        String studyTime = (todayStudyTime / (1000 * 60 * 60)) + "시간 " +  (todayStudyTime / (1000 * 60)) + "분 "
+                + (todayStudyTime / 1000) + "초";
 
         //총 공부 시간
-        int totalStudyTime = member.getTotalStudyTime();
+        Integer totalTime = member.getTotalStudyTime();
+        String totalStudyTime = (totalTime/ (1000 * 60 * 60)) + "시간 " +  (totalTime / (1000 * 60)) + "분 "
+                + (totalTime / 1000) + "초";
 
         //열정 지수
         int totalScore = member.getTotalScore();
@@ -82,10 +104,14 @@ public class MyPageController {
                             schedule.getMemberScheduleTitle(), schedule.getMemberScheduleTitle()));
         }
 
-        //상벌점, 오늘 공부시간 추가 필요
-        MyPageResDto myPageResDto =  new MyPageResDto(img, 0, totalStudyTime, totalScore, mypageStudyResDto, scheduleResDtoList);
-        return new ResponseEntity<MyPageResDto>(myPageResDto, HttpStatus.OK);
+        // 입퇴실 내역
+        List<Attendance> attendance = memberService.attendanceList(memberId);
+        List<AttendanceResDto> attendanceList = attendanceMapper.attendanceListToAttendanceResDtoList(attendance);
 
+        MyPageResDto myPageResDto =  new MyPageResDto(img, studyTime, totalStudyTime, totalScore,
+                mypageStudyResDto, scheduleResDtoList, attendanceList);
+
+        return new ResponseEntity<>(myPageResDto, HttpStatus.OK);
     }
 
 
@@ -112,17 +138,17 @@ public class MyPageController {
     //닉네임 수정 consumes = {"multipart/form-data", "multipart/mixed", "application/json"}
     @Operation(summary = "닉네임 수정", description = "닉네임을 입력하면, db에서 회원을 찾고 닉네임을 수정")
     @PutMapping(value="/mypage/modifyNickName")
-    public ResponseEntity<?> modifyNickname(@RequestPart(value = "putMemberReqDto") PutMemberReqDto putMemberReqDto,
+    public ResponseEntity<?> modifyNickname(@RequestBody PutMemberReqDto putMemberReqDto,
                                 @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws IOException {
 
         Member member = putMemberMapper.PutMemberReqDtoToMember(putMemberReqDto);
         memberService.modifyNickName(member.getMemberId(), member.getMemberNickName());
 
-        System.out.println(member.getMemberNickName());
-        System.out.println(member.getPassword());
-
         String url = "";
         if(multipartFile != null) {
+            String memberImg = member.getImg();
+
+            if(memberImg!=null) s3Service.deleteFile(memberImg);
             url = s3Service.uploadFile(multipartFile);
             memberService.modifyImg(member.getMemberId(), url);
         }

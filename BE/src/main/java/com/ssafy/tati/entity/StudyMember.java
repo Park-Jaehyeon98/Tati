@@ -7,8 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
 @EqualsAndHashCode(of = "studyMemberId")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,12 +20,11 @@ public class StudyMember {
     @Column(name = "study_join_date", nullable = false)
     private LocalDate studyJoinDate;
 
-    @Column(name="total_penalty")
-    private Integer totalPenalty;
+    @Column(name="study_member_penalty", columnDefinition = "int default 0")
+    private Integer studyMemberPenalty;
 
     @Column(name="absence_count", columnDefinition = "tinyint")
     private Integer absenceCount;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "study_id")
@@ -37,7 +35,6 @@ public class StudyMember {
     private Member member;
 
     public StudyMember(LocalDate currentDate, Study study, Member member) {
-        this.totalPenalty = 0;
         this.studyJoinDate = currentDate;
         setMember(member);
         setStudy(study);

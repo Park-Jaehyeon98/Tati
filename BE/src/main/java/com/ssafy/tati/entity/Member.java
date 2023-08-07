@@ -57,17 +57,22 @@ public class Member {
     List<StudyMember> studyList = new ArrayList<>();
 
     //신청한 스터디 목록
-
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    List<StudyApplicant> ApplicantStudyList = new ArrayList<>();
 
     //내가 쓴 게시글 목록
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     List<Board> boardList = new ArrayList<>();
 
-
     //입퇴실 내역
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     List<Attendance> attendanceList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Point> pointList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MemberSchedule> scheduleList = new ArrayList<>();
 
     @PrePersist
     public void prePersist(){
