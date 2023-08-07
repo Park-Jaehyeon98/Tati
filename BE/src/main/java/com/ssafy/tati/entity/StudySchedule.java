@@ -14,6 +14,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudySchedule {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer studyScheduleId;

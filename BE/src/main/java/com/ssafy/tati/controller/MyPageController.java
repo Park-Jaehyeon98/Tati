@@ -138,7 +138,7 @@ public class MyPageController {
     //닉네임 수정
     @Operation(summary = "닉네임 수정", description = "닉네임을 입력하면, db에서 회원을 찾고 닉네임을 수정")
     @PutMapping(value="/mypage/modifyNickName", consumes = {"multipart/form-data"})
-    public ResponseEntity<?> modifyNickname(@RequestPart  PutMemberReqDto putMemberReqDto,
+    public ResponseEntity<?> modifyNickname(@RequestPart PutMemberReqDto putMemberReqDto,
                                 @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws IOException {
 
         Member member = putMemberMapper.PutMemberReqDtoToMember(putMemberReqDto);
