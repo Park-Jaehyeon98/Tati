@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import style from "./Login.module.css"
-
+import jwt_decode from "jwt-decode";
 
 export default function Login() {
 
   const navigate = useNavigate();
+
 
   const [formData, setFormData] = useState({
     email: "",
@@ -44,9 +45,12 @@ export default function Login() {
         localStorage.setItem('totalScore', res.data.totalScore);
         localStorage.setItem('totalStudyTime', res.data.totalStudyTime);
 
+       
         const authorizationHeader = res.headers.authorization;
-        const accessToken = authorizationHeader.substring(7);
-        localStorage.setItem('accessToken', accessToken);
+        const decodedToken = jwt_decode(authorizationHeader);
+        console.log(decodedToken)
+        // const accessToken = authorizationHeader.substring(7);
+        localStorage.setItem('decodedToken', decodedToken);
         localStorage.setItem('refreshtoken',res.headers.refreshtoken);
 
         navigate("/MyPage");
