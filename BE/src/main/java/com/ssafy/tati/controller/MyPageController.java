@@ -82,10 +82,9 @@ public class MyPageController {
                             schedule.getMemberScheduleTitle(), schedule.getMemberScheduleTitle()));
         }
 
-        //상벌점, 오늘 공부시간 추가 필요
+        //오늘 공부시간 추가 필요
         MyPageResDto myPageResDto =  new MyPageResDto(img, 0, totalStudyTime, totalScore, mypageStudyResDto, scheduleResDtoList);
         return new ResponseEntity<MyPageResDto>(myPageResDto, HttpStatus.OK);
-
     }
 
 
@@ -112,17 +111,17 @@ public class MyPageController {
     //닉네임 수정 consumes = {"multipart/form-data", "multipart/mixed", "application/json"}
     @Operation(summary = "닉네임 수정", description = "닉네임을 입력하면, db에서 회원을 찾고 닉네임을 수정")
     @PutMapping(value="/mypage/modifyNickName")
-    public ResponseEntity<?> modifyNickname(@RequestPart(value = "putMemberReqDto") PutMemberReqDto putMemberReqDto,
+    public ResponseEntity<?> modifyNickname(@RequestBody PutMemberReqDto putMemberReqDto,
                                 @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws IOException {
 
         Member member = putMemberMapper.PutMemberReqDtoToMember(putMemberReqDto);
         memberService.modifyNickName(member.getMemberId(), member.getMemberNickName());
 
-        System.out.println(member.getMemberNickName());
-        System.out.println(member.getPassword());
-
         String url = "";
         if(multipartFile != null) {
+            String memberImg = member.getImg();
+
+            if(memberImg!=null) s3Service.deleteFile(memberImg);
             url = s3Service.uploadFile(multipartFile);
             memberService.modifyImg(member.getMemberId(), url);
         }
@@ -156,44 +155,44 @@ public class MyPageController {
     }
 
     //회원 가입스터디 반환
-    @GetMapping("mypage/study-list/{memberId}")
-    public ResponseEntity<?> selectStudyList(@PathVariable Integer memberId){
-        List<Study> studyList = memberService.selectStudyList(memberId);
-
-        List<JoinStudyResDto> joinStudyList = new ArrayList<>();
-        for(Study study : studyList){
-            joinStudyList.add(new JoinStudyResDto(study, study.getStudyMemberList().size()));
-        }
-        return new ResponseEntity<>(joinStudyList, HttpStatus.OK);
-    }
-
-    //회원 신청스터디 반환
-    @GetMapping("mypage/application-list/{memberId}")
-    public ResponseEntity<?> selectApplicationStudyList(@PathVariable Integer memberId){
-        List<Study> applicantStudyList = memberService.selectApplicantStudyList(memberId);
-
-        List<ApplicantStudyResDto> applicantStudyResDtoList = new ArrayList<>();
-        for(Study study : applicantStudyList){
-            int applicantCount = study.getStudyApplicantList().size();
-            applicantStudyResDtoList.add( new ApplicantStudyResDto(
-                    study.getStudyId(), study.getStudyName(), study.getTotalMember(), applicantCount
-            ));
-        }
-
-        return new ResponseEntity<>(applicantStudyList, HttpStatus.OK);
-    }
-
-    //회원 작성 게시글 반환
-    @GetMapping("mypage/board-list/{memberId}")
-    public ResponseEntity<?> selectBoardList(@PathVariable Integer memberId){
-        List<Board> boardList = memberService.selectBoardList(memberId);
-
-        List<MemberBoardListResDto> boardListResDtoList = new ArrayList<>();
-        for(Board board : boardList){
-            boardListResDtoList.add(new MemberBoardListResDto(board, board.getCommentList().size()));
-        }
-        return new ResponseEntity<>(boardList, HttpStatus.OK);
-    }
+//    @GetMapping("mypage/study-list/{memberId}")
+//    public ResponseEntity<?> selectStudyList(@PathVariable Integer memberId){
+//        List<Study> studyList = memberService.selectStudyList(memberId);
+//
+//        List<JoinStudyResDto> joinStudyList = new ArrayList<>();
+//        for(Study study : studyList){
+//            joinStudyList.add(new JoinStudyResDto(study, study.getStudyMemberList().size()));
+//        }
+//        return new ResponseEntity<>(joinStudyList, HttpStatus.OK);
+//    }
+//
+//    //회원 신청스터디 반환
+//    @GetMapping("mypage/application-list/{memberId}")
+//    public ResponseEntity<?> selectApplicationStudyList(@PathVariable Integer memberId){
+//        List<Study> applicantStudyList = memberService.selectApplicantStudyList(memberId);
+//
+//        List<ApplicantStudyResDto> applicantStudyResDtoList = new ArrayList<>();
+//        for(Study study : applicantStudyList){
+//            int applicantCount = study.getStudyApplicantList().size();
+//            applicantStudyResDtoList.add( new ApplicantStudyResDto(
+//                    study.getStudyId(), study.getStudyName(), study.getTotalMember(), applicantCount
+//            ));
+//        }
+//
+//        return new ResponseEntity<>(applicantStudyList, HttpStatus.OK);
+//    }
+//
+//    //회원 작성 게시글 반환
+//    @GetMapping("mypage/board-list/{memberId}")
+//    public ResponseEntity<?> selectBoardList(@PathVariable Integer memberId){
+//        List<Board> boardList = memberService.selectBoardList(memberId);
+//
+//        List<MemberBoardListResDto> boardListResDtoList = new ArrayList<>();
+//        for(Board board : boardList){
+//            boardListResDtoList.add(new MemberBoardListResDto(board, board.getCommentList().size()));
+//        }
+//        return new ResponseEntity<>(boardList, HttpStatus.OK);
+//    }
 
     //입퇴실 내역 반환
     @GetMapping("mypage/sttendance-list/{memberId}")

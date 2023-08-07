@@ -32,10 +32,11 @@ public class Attendance {
     private Integer isAttended;
 
     //상벌점
+    @Column(columnDefinition = "int default 0")
     private Integer score;
 
     //회원이 제출한 누적 벌금 > 회원이 스터디 끝난 후 가져갈 보증금
-    @Column(name = "penalty_amt", columnDefinition = "smallint", nullable = false)
+    @Column(name = "penalty_amt", nullable = false, columnDefinition = "int default 0")
     private Short penaltyAmt;
 
     //내용

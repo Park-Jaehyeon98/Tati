@@ -1,6 +1,7 @@
 package com.ssafy.tati.repository;
 
 import com.ssafy.tati.entity.Member;
+//import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.entity.Study;
 import org.springframework.data.jpa.repository.JpaRepository;
 

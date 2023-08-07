@@ -1,12 +1,15 @@
 package com.ssafy.tati.service;
 
 import com.ssafy.tati.entity.Attendance;
+import com.ssafy.tati.entity.Board;
+import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.exception.DataNotFoundException;
 import com.ssafy.tati.exception.MismatchDataException;
-import com.ssafy.tati.dto.res.MemberBoardListResDto;
-import com.ssafy.tati.entity.Board;
+//import com.ssafy.tati.dto.res.MemberBoardListResDto;
+//import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.entity.Member;
-import com.ssafy.tati.entity.Study;
+//import com.ssafy.tati.entity.Study;
+//import com.ssafy.tati.repository.BoardRepository;
 import com.ssafy.tati.repository.BoardRepository;
 import com.ssafy.tati.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;

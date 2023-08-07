@@ -46,18 +46,18 @@ public class StudyApplicantController {
         return new ResponseEntity<>(studyApplicantMemberResDtoList, HttpStatus.OK);
     }
 
-    @Operation(summary = "진행 스터디 멤버로 변경", description = "방장이 스터디 신청자 목록에서 수락 버튼을 누르면 진행 스터디 회원으로 변경 후 스터디 신청자 목록에서 제거", responses = {
-            @ApiResponse(responseCode = "200", description = "진행 스터디 멤버로 변경 성공", content = @Content(schema = @Schema(implementation = StudyApplicantMemberResDto.class)))})
-    @PostMapping("/approval")
-    public ResponseEntity<?> studyApplicantApprovalMember(@RequestBody StudyApplicantApprovalMemberReqDto studyApplicantApprovalMemberReqDto){
-        StudyApplicantApprovalMemberResDto studyApplicantApprovalMemberResDto = studyApplicantService.getStudyApplicantApprovalMember(studyApplicantApprovalMemberReqDto.getStudyId(), studyApplicantApprovalMemberReqDto.getMemberId());
-        return new ResponseEntity<>(studyApplicantApprovalMemberResDto, HttpStatus.OK);
-    }
-
-    @PostMapping("/refuse")
-    public ResponseEntity<?> studyApplicantRefuseMember(@RequestBody StudyApplicantApprovalMemberReqDto studyApplicantApprovalMemberReqDto){
-        StudyApplicantApprovalMemberResDto studyApplicantApprovalMemberResDto = studyApplicantService.getStudyApplicantRefuseMember(studyApplicantApprovalMemberReqDto.getStudyId(), studyApplicantApprovalMemberReqDto.getMemberId());
-        return new ResponseEntity<>(studyApplicantApprovalMemberResDto, HttpStatus.OK);
-    }
+//    @Operation(summary = "진행 스터디 멤버로 변경", description = "방장이 스터디 신청자 목록에서 수락 버튼을 누르면 진행 스터디 회원으로 변경 후 스터디 신청자 목록에서 제거", responses = {
+//            @ApiResponse(responseCode = "200", description = "진행 스터디 멤버로 변경 성공", content = @Content(schema = @Schema(implementation = StudyApplicantMemberResDto.class)))})
+//    @PostMapping("/approval")
+//    public ResponseEntity<?> studyApplicantApprovalMember(@RequestBody StudyApplicantApprovalMemberReqDto studyApplicantApprovalMemberReqDto){
+//        StudyApplicantApprovalMemberResDto studyApplicantApprovalMemberResDto = studyApplicantService.getStudyApplicantApprovalMember(studyApplicantApprovalMemberReqDto.getStudyId(), studyApplicantApprovalMemberReqDto.getMemberId());
+//        return new ResponseEntity<>(studyApplicantApprovalMemberResDto, HttpStatus.OK);
+//    }
+//
+//    @PostMapping("/refuse")
+//    public ResponseEntity<?> studyApplicantRefuseMember(@RequestBody StudyApplicantApprovalMemberReqDto studyApplicantApprovalMemberReqDto){
+//        StudyApplicantApprovalMemberResDto studyApplicantApprovalMemberResDto = studyApplicantService.getStudyApplicantRefuseMember(studyApplicantApprovalMemberReqDto.getStudyId(), studyApplicantApprovalMemberReqDto.getMemberId());
+//        return new ResponseEntity<>(studyApplicantApprovalMemberResDto, HttpStatus.OK);
+//    }
 
 }
