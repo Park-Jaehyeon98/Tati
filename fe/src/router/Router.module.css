@@ -23,7 +23,7 @@ nav {
   font-weight: bold;
   width: 1520px;
   z-index: 3;
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   right: 0;

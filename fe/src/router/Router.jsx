@@ -47,6 +47,9 @@ import MyPagePoint from "../Pages/MyPage/_MyPagePoint";
 import MyPagePointHistory from "../Pages/MyPage/_MyPagePointHistory";
 import MyPagePointWithdraw from "../Pages/MyPage/_MyPagePointWithdraw";
 
+// openvidue
+import Room from "../Pages/Room/Room";
+
 
 
 // import { aX } from "@fullcalendar/core/internal-common";
@@ -91,6 +94,10 @@ export default function Router() {
     <BrowserRouter>
       <div className={style.navBox}>
         <nav>
+          {/* openvidu */}
+          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Room">
+            openvidu
+          </NavLink>
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Notice">
             공지사항
           </NavLink>
@@ -124,6 +131,9 @@ export default function Router() {
       <Routes>
 
         <Route path="/" element={<Main />} />
+
+        {/* openvidu */}
+        <Route path="/Room" element={<Room/>}/>
 
         {/* 공지사항 */}
         <Route path="/Notice" element={<Notice />}>
