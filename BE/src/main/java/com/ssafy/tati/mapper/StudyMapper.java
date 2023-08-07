@@ -16,8 +16,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface StudyMapper {
 
-    //defalut 메서드 만들기
-    default Study studyReqDtoToStudy(StudyReqDto studyReqDto, List<StudySchedule> studyScheduleList){
+    default Study studyReqDtoToStudy(StudyReqDto studyReqDto,
+                                     List<StudySchedule> studyScheduleList, Category category){
         if(studyReqDto == null){
             return null;
         }
@@ -40,7 +40,7 @@ public interface StudyMapper {
         study.setStudyPassword(studyReqDto.getStudyPassword());
         study.setStudyStartDate(startDate);
         study.setStudyEndDate(endDate);
-        study.setCategory(null);
+        study.setCategory(category);
         study.setStudyScheduleList(studyScheduleList);
 
         return study;

@@ -51,7 +51,7 @@ public class Study {
     @Column(name="total_deposit")
     private Integer totalDeposit;
 
-    @Column(name="total_penalty")
+    @Column(name="total_penalty", columnDefinition = "int default 0")
     private Integer totalPenalty;
 
     @Column(name = "deposit_end_yn")

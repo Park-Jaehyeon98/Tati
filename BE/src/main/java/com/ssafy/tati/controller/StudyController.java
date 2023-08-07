@@ -4,6 +4,7 @@ import com.ssafy.tati.dto.req.StudyModifyReqDto;
 import com.ssafy.tati.dto.req.StudyReqDto;
 import com.ssafy.tati.dto.req.StudyScheduleReqDto;
 import com.ssafy.tati.dto.res.*;
+import com.ssafy.tati.entity.Category;
 import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.entity.StudySchedule;
 import com.ssafy.tati.mapper.StudyMapper;
@@ -45,10 +46,11 @@ public class StudyController {
         List<StudyScheduleReqDto> studyScheduleReqDtoList = studyReqDto.getStudySchedule();
         List<StudySchedule> studyScheduleList = studyMapper.studyReqScheduleListToStudySchedule(studyScheduleReqDtoList);
 
-        Study study = studyMapper.studyReqDtoToStudy(studyReqDto, studyScheduleList);
+        Category category = studyService.checkCategory(studyReqDto.getCategoryId());
+        Study study = studyMapper.studyReqDtoToStudy(studyReqDto, studyScheduleList, category);
         study.setImg(img);
 
-        studyService.createStudy(study, studyReqDto.getCategoryId());
+        studyService.createStudy(study);
 
         for (StudySchedule studySchedule : studyScheduleList) {
             studySchedule.setStudy(study);

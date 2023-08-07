@@ -67,21 +67,21 @@ public class StudyApplicantService {
         return memberRepository.findByMemberIdIn(memberIds);
     }
 
-    public StudyApplicantApprovalMemberResDto getStudyApplicantApprovalMember(Integer studyId, Integer memberId){
-        StudyApplicant studyApplicant = studyApplicantRepository.findByMemberMemberIdAndStudyStudyId(memberId, studyId).orElseThrow(() -> new RuntimeException("해당 스터디 신청 회원이 아닙니다."));
-
-        LocalDate localDate = LocalDate.now();
-        studyMemberRepository.save(new StudyMember(studyApplicant.getStudyApplicantDeposit(), localDate, studyApplicant.getStudy(), studyApplicant.getMember()));
-        StudyApplicantApprovalMemberResDto studyApplicantApprovalMemberResDto = new StudyApplicantApprovalMemberResDto(memberId, studyId, studyApplicant.getMember().getMemberNickName());
-        studyApplicantRepository.deleteById(studyApplicant.getStudyApplicantId());
-        return studyApplicantApprovalMemberResDto;
-    }
-
-    public StudyApplicantApprovalMemberResDto getStudyApplicantRefuseMember(Integer studyId, Integer memberId) {
-        StudyApplicant studyApplicant = studyApplicantRepository.findByMemberMemberIdAndStudyStudyId(memberId, studyId).orElseThrow(() -> new RuntimeException("해당 스터디 신청 회원이 아닙니다."));
-        Member member = studyApplicant.getMember();
-        member.setTotalPoint(member.getTotalPoint() + studyApplicant.getStudyApplicantDeposit());
-        StudyApplicantApprovalMemberResDto studyApplicantApprovalMemberResDto = new StudyApplicantApprovalMemberResDto(memberId, studyId, studyApplicant.getMember().getMemberNickName());
-        return studyApplicantApprovalMemberResDto;
-    }
+//    public StudyApplicantApprovalMemberResDto getStudyApplicantApprovalMember(Integer studyId, Integer memberId){
+//        StudyApplicant studyApplicant = studyApplicantRepository.findByMemberMemberIdAndStudyStudyId(memberId, studyId).orElseThrow(() -> new RuntimeException("해당 스터디 신청 회원이 아닙니다."));
+//
+//        LocalDate localDate = LocalDate.now();
+//        studyMemberRepository.save(new StudyMember(studyApplicant.getStudyApplicantDeposit(), localDate, studyApplicant.getStudy(), studyApplicant.getMember()));
+//        StudyApplicantApprovalMemberResDto studyApplicantApprovalMemberResDto = new StudyApplicantApprovalMemberResDto(memberId, studyId, studyApplicant.getMember().getMemberNickName());
+//        studyApplicantRepository.deleteById(studyApplicant.getStudyApplicantId());
+//        return studyApplicantApprovalMemberResDto;
+//    }
+//
+//    public StudyApplicantApprovalMemberResDto getStudyApplicantRefuseMember(Integer studyId, Integer memberId) {
+//        StudyApplicant studyApplicant = studyApplicantRepository.findByMemberMemberIdAndStudyStudyId(memberId, studyId).orElseThrow(() -> new RuntimeException("해당 스터디 신청 회원이 아닙니다."));
+//        Member member = studyApplicant.getMember();
+//        member.setTotalPoint(member.getTotalPoint() + studyApplicant.getStudyApplicantDeposit());
+//        StudyApplicantApprovalMemberResDto studyApplicantApprovalMemberResDto = new StudyApplicantApprovalMemberResDto(memberId, studyId, studyApplicant.getMember().getMemberNickName());
+//        return studyApplicantApprovalMemberResDto;
+//    }
 }

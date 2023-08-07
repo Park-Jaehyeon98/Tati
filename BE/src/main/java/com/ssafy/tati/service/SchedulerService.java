@@ -71,14 +71,5 @@ public class SchedulerService {
         for(Study study : blankStudy){
             studyManageService.removeStudy(study.getStudyId());
         }
-
-
-
-
-
-
     }
-
-
-
 }

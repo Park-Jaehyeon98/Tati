@@ -20,7 +20,7 @@ public class StudyMember {
     @Column(name = "study_join_date", nullable = false)
     private LocalDate studyJoinDate;
 
-    @Column(name="study_member_penalty")
+    @Column(name="study_member_penalty", columnDefinition = "int default 0")
     private Integer studyMemberPenalty;
 
     @Column(name="absence_count", columnDefinition = "tinyint")

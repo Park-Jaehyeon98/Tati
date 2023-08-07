@@ -23,13 +23,16 @@ public class StudyService {
     private final MemberRepository memberRepository;
     private final StudyMemberRepository studyMemberRepository;
 
-    public void createStudy(Study study, Integer categoryId) {
+    public Category checkCategory(Integer categoryId){
         Optional<Category> category = categoryRepository.findByCategoryId(categoryId);
         if(!category.isPresent()){
             throw new RuntimeException("해당 카테고리가 존재하지 않습니다.");
         }
 
-        study.setCategory(category.get());
+        return category.get();
+    }
+
+    public void createStudy(Study study) {
         studyRepository.save(study);
         setStudyMemberHost(study.getStudyId(), study.getStudyHost());
     }
