@@ -75,7 +75,7 @@ public class StudyController {
             @ApiResponse(responseCode = "200", description = "스터디 수정 성공", content = @Content(schema = @Schema(implementation = StudyIdResDto.class)))})
     @PutMapping(value = "/{studyId}/modify",  consumes = {"multipart/form-data"})
     public ResponseEntity<?> modifyStudy(@PathVariable Integer studyId,
-                                         @RequestBody StudyModifyReqDto studyModifyReqDto, @RequestPart(value = "file") MultipartFile multipartFile) throws IOException {
+                                         @RequestPart StudyModifyReqDto studyModifyReqDto, @RequestPart(value = "file") MultipartFile multipartFile) throws IOException {
 
         if(multipartFile != null) {
             Study study = studyService.findById(studyId);

@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -21,10 +22,10 @@ public class StudySchedule {
     private String studyDay;
 
     @Column(name = "study_start_time", nullable = false)
-    private Time studyStartTime;
+    private LocalTime studyStartTime;
 
     @Column(name = "study_end_time", nullable = false)
-    private Time studyEndTime;
+    private LocalTime studyEndTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "study_id")
