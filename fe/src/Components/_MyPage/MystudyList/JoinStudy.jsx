@@ -24,7 +24,7 @@ export default function JoinStudy(){
     console.log(process.env.REACT_APP_URL)
     axios.get(`${process.env.REACT_APP_URL}/member/mypage/study-list/${memberId }`)
       .then((res) => {
-        console.log('=================================')
+        console.log('가입스터디=================================')
         console.log(res.data);
         console.log('==============================')
       })

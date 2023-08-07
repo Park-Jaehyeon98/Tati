@@ -37,11 +37,11 @@ export default function Withdraw() {
     setRechargeAmount(0);
 
     console.log(email)
-    const pContent = '제발 되라'
+    const pContent = '포인트 적립'
     console.log(process.env.REACT_APP_URL)
     axios.post(`${process.env.REACT_APP_URL}/member/point/withdrawal`, {
       email,
-      amount:3,
+      amount:10000,
       pointDate:currentDate,
       pContent
     })

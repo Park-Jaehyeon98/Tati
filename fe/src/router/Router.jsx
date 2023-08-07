@@ -7,7 +7,7 @@ import style from "./Router.module.css"
 import NoticePage from "../Pages/Notice/NoticePage";
 import NoticeCreate from "../Pages/Notice/NoticeCreate";
 
-import MyPage from "../Pages/MyPage/_MyPage";
+import MyPage from "../Pages/MyPage/Schedule/_MyPage";
 import SignUp from "../Pages/Auth/SignUp";
 import Login from "../Pages/Auth/Login";
 import LandingPage from './../Pages/LandingPage/LandingPage';
@@ -29,7 +29,7 @@ import StudyBoardCreate from "../Pages/Study/StudyBoard/StudyBoardCreate";
 import StudyBoardList from "../Pages/Study/StudyBoard/StudyBoardList";
 
 import Main from "../Pages/Main/Main";
-import KakaoPay from "../Components/_MyPage/KakaoPay";
+import KakaoPay from "../Components/_MyPage//Point/KakaoPay";
 
 import MyPageInfoModify from "../Pages/MyPage/_MyPageInfoModify";
 import MyPageApplyStudy from "../Pages/MyPage/_MyPageApplyStudy";
@@ -38,7 +38,7 @@ import MyPagePost from "../Pages/MyPage/_MyPagePost";
 import MyPagePoint from "../Pages/MyPage/_MyPagePoint";
 import MyPagePointHistory from "../Pages/MyPage/_MyPagePointHistory";
 import MyPagePointWithdraw from "../Pages/MyPage/_MyPagePointWithdraw";
-
+import MyPageRewardPoint from "../Pages/MyPage/_MyPageRewardPoint";
 
 
 // import { aX } from "@fullcalendar/core/internal-common";
@@ -152,6 +152,7 @@ export default function Router() {
         <Route path="/MyPage/ApplyStudy" element={<MyPageApplyStudy />} />
         <Route path="/MyPage/JoinStudy" element={<MyPageJoinStudy />} />
         <Route path="/MyPage/MyPagePost" element={<MyPagePost />} />
+        <Route path="/MyPage/MyPageRewardPoint" element={<MyPageRewardPoint />} />
 
         {/* 스터디 CRUD */}
         <Route exact path="/Study" element={<StudyList />} />

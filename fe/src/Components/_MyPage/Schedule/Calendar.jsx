@@ -7,7 +7,7 @@ import FullCalendar from '@fullcalendar/react';
 import style from "./Calendar.module.css"
 
 import { useSelector, useDispatch } from "react-redux";
-import {addEvent} from "../../redux/actions/actions"
+import {addEvent} from "../../../redux/actions/actions"
 import axios from "axios";
 
 
@@ -35,12 +35,12 @@ export default function Calendar(){
     console.log(events)
     console.log('===========================')
 
-    console.log('캘린더',memberId)
+    console.log('캘린더 memberId',memberId)
     console.log(`year---${year}///month---${month}`)
 
     console.log(process.env.REACT_APP_URL)
 
-    axios.get(`${process.env.REACT_APP_URL}/member/mypage/${1}`, {
+    axios.get(`${process.env.REACT_APP_URL}/member/mypage/${memberId}`, {
       params: {
         year,
         month

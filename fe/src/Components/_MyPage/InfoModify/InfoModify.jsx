@@ -9,8 +9,7 @@ export default function InfoModify() {
   const navigate = useNavigate();
 
   // 로컬의 유저pk값을 불러오기
-  const memberId = Number(localStorage.getItem('memberId'));
-  const email = localStorage.getItem('email');
+  const memberId = localStorage.getItem('memberId');
   const nick = localStorage.getItem('memberNickName');
   // 회원정보 리덕스에서 가져오기
   const userInfo = useSelector((state) => state.userInfo);
@@ -29,7 +28,7 @@ export default function InfoModify() {
     console.log(`닉네임 ${nickName}`)
     console.log(process.env.REACT_APP_URL)
     axios
-      .post(`${process.env.REACT_APP_URL}/member/nickname-check`, {
+      .post(`http://192.168.31.57:8080/member/nickname-check`, {
         memberNickName: nickName,
       })
       .then((res) => {
@@ -45,9 +44,8 @@ export default function InfoModify() {
   const [file, setFile] = useState(null)
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    console.log(file);
-    setFile(file);
+    console.log(e.target.files[0]);
+    setFile(e.target.files[0])
     // if (file) {
     //   const reader = new FileReader();
     //   reader.onloadend = () => {
@@ -61,37 +59,43 @@ export default function InfoModify() {
   // 유저의 pk 와 닉네임을 보냄
   // 요청 성공 후 다시 회원정보 수정 페이지로
   const handleNickNameupdata = () => {
-    const memberIdAsNumber = Number(memberId);
+    const memberIdAsNumber = memberId;
 
-    console.log(`memberId - ${typeof memberIdAsNumber} nickName - ${nickName} file - ${file}`)
-    
+    console.log(`memberId - ${memberIdAsNumber} nickName - ${nickName} file - ${file}`)
+
     const formData = new FormData();
-    formData.append('file',file)
 
+
+
+    // Id랑 닉네임 입력
     const putMemberReqDto = {
-      "memberId": memberIdAsNumber,
-      "memberNickName": nickName,
+      "memberId": memberId,
+      "memberNickName": nickName
     };
-    
-    formData.append('putMemberReqDto', JSON.stringify(putMemberReqDto));
-  
-    
+
+    formData.append('file', file)
+
+    formData.append('putMemberReqDto', new Blob([JSON.stringify(putMemberReqDto)], {
+      type: "application/json"
+    }));
+
     console.log('-------------------------------------------------')
-    
+
     for (const [key, value] of formData.entries()) {
       console.log(key, typeof value);
       console.log('============');
     }
 
 
-    console.log(process.env.REACT_APP_URL)
-    axios.post(`${process.env.REACT_APP_URL}/member/upload`, file,{
+    // console.log(process.env.REACT_APP_URL)
+    axios.put(`${process.env.REACT_APP_URL}/member/mypage/modifyNickName`, formData, {
       headers: {
         "Content-Type": "multipart/form-data", // 파일 업로드를 위해 Content-Type을 multipart/form-data로 설정
       },
     })
       .then((res) => {
         console.log(res);
+        setFile(file)
         alert("수정됨");
       })
       .catch((err) => {
@@ -141,9 +145,9 @@ export default function InfoModify() {
   // 회원탈퇴 
   // 유저 pk를 url에 삽입 후 보냄 (pk는 로컬에)
   const handleWithdrawal = () => {
+    const email = 'rlaalsrbs15@naver.com'
     console.log(process.env.REACT_APP_URL)
-    console.log(memberId)
-    axios.delete(`${process.env.REACT_APP_URL}/member/mypage/remove/${memberId}`, {
+    axios.delete(`${process.env.REACT_APP_URL}/member/mypage/remove/${email}`, {
     })
       .then((res) => {
         console.log(res)
@@ -165,7 +169,7 @@ export default function InfoModify() {
       <div className={style.contents}>
         <p className={style.InfoModify_text}>
           이메일
-          <p className={style.InfoModify_email}>{email}</p>
+          <p className={style.InfoModify_email}>{userData}</p>
         </p>
         <p className={style.InfoModify_text}>
           이름
@@ -173,10 +177,10 @@ export default function InfoModify() {
         </p>
         <p className={style.InfoModify_profile}>
           프로필
-          <input name="profile" accept="image/*"  onChange={handleImageChange} className={style.InfoModify_email} type="file" />
+          <input name="profile" accept="image/*" onChange={handleImageChange} className={style.InfoModify_email} type="file" />
           <input type="button" value="업로드" />
         </p>
-        {file && <img src={file} alt="Uploaded" className={style.file_img}/>}
+        {file && <img src={file} alt="Uploaded" className={style.file_img} />}
         <p>
           닉네임
           <input name="NickName"

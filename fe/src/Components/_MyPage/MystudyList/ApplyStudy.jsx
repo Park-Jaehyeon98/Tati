@@ -27,7 +27,7 @@ export default function ApplyStudy(){
     console.log(process.env.REACT_APP_URL)
     axios.get(`${process.env.REACT_APP_URL}/member/mypage/application-list/${memberId}`)
       .then((res) => {
-        console.log('=================================')
+        console.log('신청한스터디=================================')
         console.log(res.data);
         // dispatch(setMemberStudyList(res.data));
         console.log('==============================')

@@ -22,7 +22,7 @@ export default function MyPost(){
     console.log(process.env.REACT_APP_URL)
     axios.get(`${process.env.REACT_APP_URL}/member/mypage/board-list/${memberId}`)
       .then((res) => {
-        console.log('=================================')
+        console.log('내 작성글=================================')
         console.log(res.data);
         console.log('==============================')
       })
