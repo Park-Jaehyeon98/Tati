@@ -88,7 +88,7 @@ export default function InfoModify() {
       console.log('============');
     }
 
-
+    console.log(file)
     // console.log(process.env.REACT_APP_URL)
     axios.put(`${process.env.REACT_APP_URL}/member/mypage/modifyNickName`, formData, {
       headers: {
@@ -98,6 +98,7 @@ export default function InfoModify() {
       .then((res) => {
         console.log(res);
         setFile(file)
+        window.location.reload();
         alert("수정됨");
       })
       .catch((err) => {

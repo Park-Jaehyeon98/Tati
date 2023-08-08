@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from './KakaoPay.module.css';
 import axios from "axios";
 import { useLocation } from 'react-router-dom';
+import { param } from "jquery";
 
 
 export default function KakaoPay() {
@@ -36,7 +37,6 @@ export default function KakaoPay() {
       setTid(storedTid);
     }
 
-
     console.log(`tid${storedTid}--------------`)
     console.log(`pgToken: ${pgToken}--------------`)
     console.log(`email: ${parseJwt.sub}--------------`)
@@ -44,9 +44,9 @@ export default function KakaoPay() {
     if(pgToken){
       console.log(process.env.REACT_APP_URL)
       axios.post(`${process.env.REACT_APP_URL}/payment/success`,{
-        email:parseJwt.email,
         pg_token:pgToken,
-        tid:storedTid
+        tid:storedTid,
+        email:parseJwt.sub
       })
         .then((res)=>{
           console.log(res)
@@ -87,7 +87,7 @@ export default function KakaoPay() {
 
 
 
-const itemsPerPage = 13;
+const itemsPerPage = 7;
 const [currentPage, setCurrentPage] = useState(1);
 
 
@@ -104,6 +104,7 @@ const PointItem = ({ point, date, day, tid }) => {
     })
       .then((res)=>{
         console.log(res)
+        window.location.reload();
       })
       .catch((err)=>{
         console.log(err)
@@ -114,7 +115,12 @@ const PointItem = ({ point, date, day, tid }) => {
     <div>
       <div className={style.PointItem_text}>
         <p className={style.p_text}>{date} {point} 
-        <h6 className={style.text}>{day} <button className={style.cancel_btn}onClick={handleCancel}>결제취소</button></h6></p>
+        <h6 className={style.text}>{day} 
+        </h6>{date == '포인트 적립' && ( // date가 '포인트 인출일'이 아닐 때에만 버튼 렌더링
+              <button className={style.cancel_btn} onClick={handleCancel}>
+                결제취소
+              </button>
+            )}</p>
         <hr />
       </div>
     </div>

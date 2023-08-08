@@ -16,7 +16,7 @@
     justify-content: center;
     gap: 10px; /* 버튼 사이에 간격을 주기 위해 gap 설정 */
     position: absolute;
-    top: 980px;
+    top: 900px;
     left: 650px;
     padding: 10px;
 }

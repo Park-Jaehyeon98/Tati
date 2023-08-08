@@ -4,8 +4,16 @@ import axios from "axios";
 
 export default function Change() {
 
-  const [currentPoint, setCurrentPoint] = useState(0);
+  // 로컬에 있는 포인트
+  const totalPoint = localStorage.getItem('totalPoint');
+
+  const [currentPoint, setCurrentPoint] = useState(totalPoint);
   const [rechargeAmount, setRechargeAmount] = useState(0);
+
+  // 로컬의 decodedToken가져오기
+  const tokenInfo = localStorage.getItem('decodedToken');
+  console.log(JSON.parse(tokenInfo));
+  const parseJwt = JSON.parse(tokenInfo);
 
   const handleRecharge = () => {
     const roundedAmount = Math.ceil(rechargeAmount / 1000) * 1000;
@@ -30,8 +38,9 @@ export default function Change() {
     setCurrentPoint((prevPoint) => prevPoint + rechargeAmount);
     setRechargeAmount(0);
     console.log(process.env.REACT_APP_URL)
+
     axios.post(`${process.env.REACT_APP_URL}/payment/ready`, {
-      email: 'rlaalsrbs15@naver.com',
+      email: parseJwt.sub,
       amount
     })
       .then((res) => {
