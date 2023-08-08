@@ -38,6 +38,10 @@ public interface GetBoardMapper {
         studyBoardDetailResDto.setModifiedDate(board.getModifiedDate());
         studyBoardDetailResDto.setCommentCount(board.getCommentList().size());
         studyBoardDetailResDto.setBoardFile(board.getBoardFile());
+        String fileName = board.getBoardFile();
+        int lastIndexOfSlash = fileName.lastIndexOf("_") + 1;
+        String originalFileName = fileName.substring(lastIndexOfSlash);
+        studyBoardDetailResDto.setBoardFileName(originalFileName);
 
         return studyBoardDetailResDto;
     }

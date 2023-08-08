@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,4 +34,6 @@ public class StudyBoardDetailResDto {
     private Integer commentCount;
     @Schema(description = "게시판 파일")
     private String boardFile;
+    @Schema(description = "게시판 파일 이름")
+    private String boardFileName;
 }
