@@ -9,6 +9,8 @@ export default function ApplyStudy(){
 
   const navigate = useNavigate();
 
+  // 신청한 스터디 목록
+  const [applyStudy, setApplyStudy] = useState(null)
   const handleButtonClick = (tab) => {
     navigate(tab);
   };
@@ -27,6 +29,7 @@ export default function ApplyStudy(){
       .then((res) => {
         console.log('신청한스터디=================================')
         console.log(res.data);
+        setApplyStudy(res.data)
         console.log('==============================')
       })
       .catch((err) => {

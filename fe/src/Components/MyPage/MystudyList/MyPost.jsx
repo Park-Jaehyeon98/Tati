@@ -8,6 +8,9 @@ export default function MyPost(){
 
   const navigate = useNavigate();
 
+  // 내가 작성한 글 목록
+  const [myPost, setMyPost] = useState(null)
+
   const handleButtonClick = (tab) => {
     navigate(tab);
   };
@@ -26,6 +29,7 @@ export default function MyPost(){
       .then((res) => {
         console.log('내 작성글=================================')
         console.log(res.data);
+        setMyPost(res.data)
         console.log('==============================')
       })
       .catch((err) => {

@@ -10,10 +10,12 @@ export default function KakaoPay() {
   const location = useLocation();
   const [tid, setTid] = useState(null);
   const [pg_token, setPg_token] = useState(null)
-  const [memberId, setMemberId] = useState('')
-  const [point, setPoint] = useState([])
 
-  const email = localStorage.getItem('email');
+  // 로컬의 decodedToken가져오기
+  const tokenInfo = localStorage.getItem('decodedToken');
+  const parseJwt = JSON.parse(tokenInfo);
+
+  const [point, setPoint] = useState([])
   
 
   useEffect(() => {
@@ -37,12 +39,12 @@ export default function KakaoPay() {
 
     console.log(`tid${storedTid}--------------`)
     console.log(`pgToken: ${pgToken}--------------`)
-    console.log(`email: ${email}--------------`)
+    console.log(`email: ${parseJwt.sub}--------------`)
     // 결제 완료시 토큰 값이 있을 때 최종 결제 
     if(pgToken){
       console.log(process.env.REACT_APP_URL)
       axios.post(`${process.env.REACT_APP_URL}/payment/success`,{
-        email,
+        email:parseJwt.email,
         pg_token:pgToken,
         tid:storedTid
       })
@@ -50,6 +52,7 @@ export default function KakaoPay() {
           console.log(res)
           // 요청이 성공하면 tid와 pgToken을 로컬 스토리지에서 삭제
           localStorage.removeItem('pgToken');
+          localStorage.removeItem('tid');
         })
         .catch((err)=>{
           console.log(err)
@@ -58,14 +61,13 @@ export default function KakaoPay() {
     // kakaokakaokakaokakaokakaokakaokakaokakao
 
 
-    const memberId = localStorage.getItem('memberId');
     // 회원포인트 내역 pointpointpointpointpointpointpointpointvpoint
-    if (memberId) {
-      console.log("memberId:", memberId);
-      setMemberId(memberId)
+    if (parseJwt.memberId) {
+      console.log("memberId:", parseJwt.memberId);
+      // setMemberId(parseJwt.memberId)
     }
     console.log(process.env.REACT_APP_URL)
-    axios.get(`${process.env.REACT_APP_URL}/member/mypage/point/${memberId}`,{
+    axios.get(`${process.env.REACT_APP_URL}/member/mypage/point/${parseJwt.memberId}`,{
       })
         .then((res)=>{
           console.log('---------------------------------------------')
@@ -89,15 +91,16 @@ const itemsPerPage = 13;
 const [currentPage, setCurrentPage] = useState(1);
 
 
-const PointItem = ({ point, date, day }) => {
+const PointItem = ({ point, date, day, tid }) => {
 
   // 결제 취소
   const handleCancel =()=>{
-    console.log(`amount - ${point} tid - ${tid} email - ${email}`)
-    axios.post(`http://${process.env.REACT_APP_URL}/payment/cancel`,{
+    console.log('결제취소----------------------------------------')
+    console.log(`amount - ${point} tid - ${tid} email - ${parseJwt.sub}`)
+    axios.post(`${process.env.REACT_APP_URL}/payment/cancel`,{
       amount :point,
       tid,
-      email
+      email:parseJwt.sub
     })
       .then((res)=>{
         console.log(res)
@@ -119,55 +122,6 @@ const PointItem = ({ point, date, day }) => {
 };
 
 
-
-// // 데이터
-// const dates = [
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-//   { amount:10000 ,pcontent: 'tati_point', pointDate: '23.07.31'},
-//   { amount:12000 ,pcontent: 'tati_point', pointDate: '23.07.23'},
-
-// ];
 //====================================
 
   const totalPages = Math.ceil(point.length / itemsPerPage);
@@ -189,6 +143,7 @@ const PointItem = ({ point, date, day }) => {
                 point={point.amount}
                 date={point.pcontent}
                 day={point.pointDate}
+                tid={point.tid}
               />
             ))}
           </div>
