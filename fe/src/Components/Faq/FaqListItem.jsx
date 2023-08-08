@@ -1,18 +1,44 @@
 import React, { useState } from 'react'
 import { apiClient } from '../../api/apiClient';
+import { useSelector } from 'react-redux';
 
 const FaqListItem = ({ boardItemInfo }) => {
+    const [isShow, setIsShow] = useState(false);
+    // const { memberNickName } = useSelector((state) => { return state.user })
+    const memberNickName = "관리자"
     const { boardTitle, boardContent } = boardItemInfo
 
+    // 제목 누르면 내용 펼쳐짐
+    const handleTitleClick = () => {
+        setIsShow((isShow) => { return !isShow })
+    }
+    // 수정버튼 클릭
+    const handleModifyBtnClick = () => {
 
+    }
+    // 삭제버튼 클릭
+    const handleDeleteBtnClick = () => {
+
+    }
     return (
         <div>
-            <div>
+            <hr />
+            <div onClick={handleTitleClick}>
                 Q : {boardTitle}
             </div>
-            <div>
-                A : {boardContent}
-            </div>
+            {!isShow ||
+                <div>
+                    A : {boardContent}
+                    {!(memberNickName === "admin") ||
+                        <>
+                            <button onClick={handleDeleteBtnClick}>수정버튼</button>
+                            <button onClick={handleModifyBtnClick}>삭제버튼</button>
+                        </>
+                    }
+
+                </div>
+            }
+            <hr />
         </div>
     )
 }
