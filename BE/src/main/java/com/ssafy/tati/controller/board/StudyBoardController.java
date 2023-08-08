@@ -40,7 +40,6 @@ public class StudyBoardController {
     @Operation(summary = "스터디 게시글 작성 요청", description = "스터디 게시글을 작성 후 글 작성 요청", responses = {
             @ApiResponse(responseCode = "200", description = "글 등록 성공"),
     })
-    @PostMapping("/board")
     public ResponseEntity<?> studyBoardAdd(@RequestPart PostStudyBoardReqDto postStudyBoardReqDto, @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws IOException {
         Integer memberId = postStudyBoardReqDto.getMemberId();
         Integer studyId = postStudyBoardReqDto.getStudyId();
