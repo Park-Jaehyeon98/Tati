@@ -77,3 +77,37 @@ display: flex;
   width: 250px;
   height: 150px;
 }
+
+/* ======================================================== */
+.customFileInput {
+  margin-left: 90px;
+  width: 140px;
+  height: 15px;
+  background-color: #3498db;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.centeredText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.customFileInput:hover {
+  background-color: #2980b9;
+}
+
+/* 파일 입력 필드 숨김 */
+input[type="file"] {
+  display: none;
+}
+
+
+
+
+

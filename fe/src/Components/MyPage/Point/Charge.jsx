@@ -5,7 +5,7 @@ import axios from "axios";
 export default function Change() {
 
   // 로컬에 있는 포인트
-  const totalPoint = localStorage.getItem('totalPoint');
+  const totalPoint = Number(localStorage.getItem('totalPoint'));
 
   const [currentPoint, setCurrentPoint] = useState(totalPoint);
   const [rechargeAmount, setRechargeAmount] = useState(0);

@@ -180,8 +180,19 @@ export default function InfoModify() {
         </p>
         <p className={style.InfoModify_profile}>
           프로필
-          <input name="profile" accept="image/*" onChange={handleImageChange} className={style.InfoModify_email} type="file" />
-          <input type="button" value="업로드" />
+
+          <label htmlFor="profile" className={`${style.customFileInput} ${style.centeredText}`}>
+            이미지 업로드
+            <input 
+              id="profile" // htmlFor와 연결할 ID
+              name="profile" 
+              accept="image/*" 
+              onChange={handleImageChange} 
+              type="file"
+              style={{ display: 'none' }} // 파일 입력 필드를 숨김
+            />
+          </label>  
+
         </p>
         {file && <img src={file} alt="Uploaded" className={style.file_img} />}
         <p>

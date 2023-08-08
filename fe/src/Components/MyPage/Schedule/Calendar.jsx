@@ -134,7 +134,7 @@ export default function Calendar(){
           scheduleId: res.data.memberScheduleId,
         };
         dispatch(addSchedule(newEvent))
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((err) => {
         console.log(err,' 일정 추가 실패 ------------------');
