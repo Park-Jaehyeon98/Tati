@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import style from './StudyModify.module.css';
-import StudyDeleteButton from '../../Components/Study/StudyDeleteButton';
 import { apiClient } from '../../api/apiClient';
 
 const StudyModify = () => {
@@ -132,11 +131,22 @@ const StudyModify = () => {
         navigate(`/Study/${studyId}`);
     }
 
+    // 삭제 버튼
+    const handleDeleteBtnClick = () => {
+        const memberId = localStorage.getItem("memberId")
+        apiClient.delete(`study/${studyId}/delete/${memberId}`)
+            .then((res) => {
+                console.log(res.data)
+                navigate('/Study')
+            })
+            .catch((err) => { console.log(err.data) })
+    }
+
 
     return (
         <div className='box'>
             <h3>스터디 정보 수정하기</h3>
-            <StudyDeleteButton studyId={studyId} />
+            <button onClick={handleDeleteBtnClick}>스터디삭제버튼</button>
             <div>
 
                 <div>
