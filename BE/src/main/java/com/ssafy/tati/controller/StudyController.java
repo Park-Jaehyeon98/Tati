@@ -6,6 +6,7 @@ import com.ssafy.tati.dto.req.StudyScheduleReqDto;
 import com.ssafy.tati.dto.res.*;
 import com.ssafy.tati.entity.Category;
 import com.ssafy.tati.entity.Study;
+import com.ssafy.tati.entity.StudyMember;
 import com.ssafy.tati.entity.StudySchedule;
 import com.ssafy.tati.mapper.StudyMapper;
 import com.ssafy.tati.service.S3Service;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Tag(name = "스터디", description = "스터디 API 문서")
@@ -36,7 +38,7 @@ public class StudyController {
     @Operation(summary = "스터디 생성", description = "스터디(이름, 설명, 허용인원, 비밀번호, 스터디 시작 기간, 스터디 종료 기간, 카테고리 식별번호, 공개여부, 스터디 방장, 신청 보증금), 스터디 할 요일과 시작 시간, 종료 시간을 객체 형태로 받아서 저장", responses = {
             @ApiResponse(responseCode = "200", description = "스터디 생성 성공", content = @Content(schema = @Schema(implementation = Study.class)))})
     @PostMapping(value = "/create", consumes = {"multipart/form-data"})
-    public ResponseEntity<?> createStudy(@RequestPart StudyReqDto studyReqDto, @RequestPart(value = "file") MultipartFile multipartFile) throws IOException {
+    public ResponseEntity<?> createStudy(@RequestPart StudyReqDto studyReqDto, @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws IOException {
 
         String img = null;
         if(multipartFile != null) {
@@ -44,27 +46,43 @@ public class StudyController {
         }
 
         List<StudyScheduleReqDto> studyScheduleReqDtoList = studyReqDto.getStudySchedule();
-        List<StudySchedule> studyScheduleList = studyMapper.studyReqScheduleListToStudySchedule(studyScheduleReqDtoList);
+
+        List<StudySchedule> studyScheduleList = new ArrayList<>();
+        for(StudyScheduleReqDto studyScheduleReqDto : studyScheduleReqDtoList){
+            studyScheduleList.add(studyMapper.studyReqScheduleToStudySchedule(studyScheduleReqDto));
+        }
+
 
         Category category = studyService.checkCategory(studyReqDto.getCategoryId());
         Study study = studyMapper.studyReqDtoToStudy(studyReqDto, studyScheduleList, category);
+
         study.setImg(img);
 
-        studyService.createStudy(study);
-
+        List<StudySchedule> savedSchedule = new ArrayList<>();
         for (StudySchedule studySchedule : studyScheduleList) {
-            studySchedule.setStudy(study);
-            studyService.createStudySchedule(studySchedule);
+            studySchedule.setStudyScheduleId(0);
+            StudySchedule schedule = studyService.createStudySchedule(studySchedule);
+
+            savedSchedule.add(schedule);
         }
 
+        Study savedStudy = studyService.createStudy(study);
+
+        for (StudySchedule studySchedule : savedSchedule) {
+            studySchedule.setStudy(savedStudy);
+        }
+
+        studyService.setStudyMemberHost(savedStudy.getStudyId(), savedStudy.getStudyHost());
+
         StudyCreateResDto studyCreateResDto = new StudyCreateResDto();
-        studyCreateResDto.setStudyId(study.getStudyId());
+        studyCreateResDto.setStudyId(savedStudy.getStudyId());
+        studyCreateResDto.setImg(savedStudy.getImg());
         return new ResponseEntity<>(studyCreateResDto, HttpStatus.OK);
     }
 
     @Operation(summary = "스터디 상세 조회", description = "스터디 식별 번호로 스터디 상세 조회", responses = {
             @ApiResponse(responseCode = "200", description = "스터디 상세 조회 성공", content = @Content(schema = @Schema(implementation = StudyDetailResDto.class)))})
-    @GetMapping(value = "/{studyId}",  consumes = {"multipart/form-data"})
+    @GetMapping(value = "/{studyId}")
     public ResponseEntity<?> detailStudy(@PathVariable Integer studyId) {
         Study study = studyService.getStudyDetail(studyId);
         StudyDetailResDto studyDetailResDto = studyMapper.studyToStudyDetailResDto(study, study.getCategory());
@@ -75,7 +93,7 @@ public class StudyController {
             @ApiResponse(responseCode = "200", description = "스터디 수정 성공", content = @Content(schema = @Schema(implementation = StudyIdResDto.class)))})
     @PutMapping(value = "/{studyId}/modify",  consumes = {"multipart/form-data"})
     public ResponseEntity<?> modifyStudy(@PathVariable Integer studyId,
-                                         @RequestBody StudyModifyReqDto studyModifyReqDto, @RequestPart(value = "file") MultipartFile multipartFile) throws IOException {
+                                         @RequestPart StudyModifyReqDto studyModifyReqDto, @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws IOException {
 
         if(multipartFile != null) {
             Study study = studyService.findById(studyId);

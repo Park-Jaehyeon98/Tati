@@ -16,5 +16,4 @@ public interface StudyRepository extends JpaRepository<Study, Integer> {
 
 
 
-
 }
