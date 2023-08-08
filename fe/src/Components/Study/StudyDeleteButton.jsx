@@ -1,15 +1,20 @@
 import axios from 'axios'
 import React from 'react'
+import { apiClient } from '../../api/apiClient';
+import { useNavigate } from 'react-router-dom';
 
 const StudyDeleteButton = ({ studyId }) => {
+    const navigate = useNavigate();
     const memberId = 1;
 
+
     const handleDeleteBtnClick = () => {
-        axios({
-            method: 'delete',
-            url: `http://192.168.31.58:8080/study/${studyId}/delete/${memberId}`,
-        })
-            .then((res) => { console.log(res.data) })
+        navigate('/Study')
+        apiClient.delete(`study/${studyId}/delete/${memberId}`)
+            .then((res) => {
+                console.log(res.data)
+                navigate('/Study')
+            })
             .catch((err) => { console.log(err.data) })
     }
 
