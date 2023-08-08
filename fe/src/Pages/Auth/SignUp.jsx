@@ -123,7 +123,7 @@ export default function SignUp() {
       .then((res) => {
         console.log(res);
         dispatch(signUpSuccess(res.data));
-        navigate('/Study')
+        navigate('/Login')
       })
       .catch((err) => {
         console.log(err);

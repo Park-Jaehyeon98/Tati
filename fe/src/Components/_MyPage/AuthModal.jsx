@@ -5,12 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserInfo } from '../../redux/actions/actions'
 
+import Login from "../../Pages/Auth/Login";
 
 export default function AuthModal({ setAuthModal }) {
   
   const navigate = useNavigate();
   // 로컬의 유저pk값을 불러오기
   const memberId = localStorage.getItem('memberId');
+
   const email = localStorage.getItem('email');
 
   const [password, setPassword] = useState("")

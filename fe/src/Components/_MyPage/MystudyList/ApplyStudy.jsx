@@ -1,12 +1,17 @@
 import React,{useState, useEffect} from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import style from './ApplyStudy.module.css'
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { setMemberStudyList } from "../../../redux/actions/actions"
+
 
 export default function ApplyStudy(){
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // const memberStudyList = useSelector((state) => state.memberStudyList);
 
   const handleButtonClick = (tab) => {
     navigate(tab);
@@ -22,8 +27,9 @@ export default function ApplyStudy(){
     console.log(process.env.REACT_APP_URL)
     axios.get(`${process.env.REACT_APP_URL}/member/mypage/application-list/${memberId}`)
       .then((res) => {
-        console.log('=================================')
+        console.log('신청한스터디=================================')
         console.log(res.data);
+        // dispatch(setMemberStudyList(res.data));
         console.log('==============================')
       })
       .catch((err) => {
@@ -42,10 +48,9 @@ export default function ApplyStudy(){
   const NoticeItem = ({ studyName, totalMember, currentMemberCount }) => {
     return (
       <div>
-        <div className={style.NoticeItem_text}>
-          <p className={style.p_text}>{studyName} 
-            <h6 className={style.text}>{currentMemberCount}/{totalMember}</h6></p>
-          <hr />
+        <div className={style.ApplyStudy_box}>
+          <p className={style.ApplyStudy_text}>{studyName} - {currentMemberCount}/{totalMember} 인원</p>
+          <hr className={style.Study_hr}/>
         </div>
       </div>
     );

@@ -24,7 +24,7 @@ export default function JoinStudy(){
     console.log(process.env.REACT_APP_URL)
     axios.get(`${process.env.REACT_APP_URL}/member/mypage/study-list/${memberId }`)
       .then((res) => {
-        console.log('=================================')
+        console.log('가입스터디=================================')
         console.log(res.data);
         console.log('==============================')
       })
@@ -42,9 +42,9 @@ export default function JoinStudy(){
     return (
       <div>
         <div className={style.NoticeItem_text}>
-          <p className={style.p_text}>{studyName} - {studyMembercount}/{totalMember} 인원
-            <h6 className={style.text}>{studyStartDate} ~ {studyEndDate} 기간</h6></p>
-          <hr />
+          <p className={style.JoinStudy_text}>{studyName} - {studyMembercount}/{totalMember} 인원
+            <h6 className={style.JoinStudy_text_day}>{studyStartDate} ~ {studyEndDate} 기간</h6></p>
+          <hr className={style.Study_hr}/>
         </div>
       </div>
     );

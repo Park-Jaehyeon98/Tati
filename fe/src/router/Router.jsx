@@ -14,7 +14,7 @@ import Faq from "../Pages/Faq/Faq";
 import FaqCreate from "../Pages/Faq/FaqCreate";
 import FaqList from "../Pages/Faq/FaqList";
 
-import MyPage from "../Pages/MyPage/_MyPage";
+import MyPage from "../Pages/MyPage/Schedule/_MyPage";
 import SignUp from "../Pages/Auth/SignUp";
 import Login from "../Pages/Auth/Login";
 import LandingPage from './../Pages/LandingPage/LandingPage';
@@ -37,16 +37,16 @@ import StudyBoardCreate from "../Pages/Study/StudyBoard/StudyBoardCreate";
 import StudyBoardList from "../Pages/Study/StudyBoard/StudyBoardList";
 
 import Main from "../Pages/Main/Main";
-import KakaoPay from "../Components/_MyPage/KakaoPay";
+import KakaoPay from "../Components/_MyPage//Point/KakaoPay";
 
 import MyPageInfoModify from "../Pages/MyPage/_MyPageInfoModify";
-import MyPageApplyStudy from "../Pages/MyPage/_MyPageApplyStudy";
-import MyPageJoinStudy from "../Pages/MyPage/_MyPageJoinStudy";
-import MyPagePost from "../Pages/MyPage/_MyPagePost";
-import MyPagePoint from "../Pages/MyPage/_MyPagePoint";
-import MyPagePointHistory from "../Pages/MyPage/_MyPagePointHistory";
-import MyPagePointWithdraw from "../Pages/MyPage/_MyPagePointWithdraw";
-
+import MyPageApplyStudy from "../Pages/MyPage/Study/_MyPageApplyStudy";
+import MyPageJoinStudy from "../Pages/MyPage/Study/_MyPageJoinStudy";
+import MyPagePost from "../Pages/MyPage/Study/_MyPagePost";
+import MyPagePoint from "../Pages/MyPage/Point/_MyPagePoint";
+import MyPagePointHistory from "../Pages/MyPage/Point/_MyPagePointHistory";
+import MyPagePointWithdraw from "../Pages/MyPage/Point/_MyPagePointWithdraw";
+import MyPageRewardPoint from "../Pages/MyPage/_MyPageRewardPoint"
 
 
 // import { aX } from "@fullcalendar/core/internal-common";
@@ -58,23 +58,38 @@ export default function Router() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 
-  const handleschedule = () => {
-    const email = 't01045999371@gmail.com'
-    console.log(email)
-    axios.get(`${process.env.REACT_APP_URL}/member/mypage/schedule/${email}`, {
-      params: 7
-    })
-      .then((res) => {
-        console.log(res)
-        alert('요청 성공')
-      })
-      .catch((err) => {
-        console.log(err)
-      });
-  };
+  // const handleschedule = () => {
+  //   const email = 't01045999371@gmail.com'
+  //   console.log(email)
+  //   axios.get(`${process.env.REACT_APP_URL}/member/mypage/schedule/${email}`, {
+  //     params: 7
+  //   })
+  //     .then((res) => {
+  //       console.log(res)
+  //       alert('요청 성공')
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     });
+  // };
 
   const handleLogout = () => {
-    localStorage.removeItem("memberId");
+
+    const token = localStorage.getItem("accessToken");
+
+    axios.get(`${process.env.REACT_APP_URL}/member/logout`,{
+      headers:{
+        token:token
+      }
+    })
+    .then((res)=>
+    console.log(res)
+    )
+    .catch((err)=>
+      console.log(err)
+    )
+
+    localStorage.clear();
     setIsLoggedIn(false);
   };
 
@@ -100,7 +115,7 @@ export default function Router() {
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Study">
             스터디
           </NavLink>
-          <NavLink onClick={handleschedule} className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage">
+          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage">
             마이페이지
           </NavLink>
           {!isLoggedIn && (
@@ -157,6 +172,7 @@ export default function Router() {
         <Route path="/MyPage/ApplyStudy" element={<MyPageApplyStudy />} />
         <Route path="/MyPage/JoinStudy" element={<MyPageJoinStudy />} />
         <Route path="/MyPage/MyPagePost" element={<MyPagePost />} />
+        <Route path="/MyPage/MyPageRewardPoint" element={<MyPageRewardPoint />} />
 
         {/* 스터디 CRUD */}
 

@@ -7,7 +7,7 @@ import FullCalendar from '@fullcalendar/react';
 import style from "./Calendar.module.css"
 
 import { useSelector, useDispatch } from "react-redux";
-import {addEvent} from "../../redux/actions/actions"
+import {addEvent} from "../../../redux/actions/actions"
 import axios from "axios";
 
 
@@ -18,7 +18,7 @@ export default function Calendar(){
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth() + 1;
 
-  // const events = useSelector((state) => state.events);
+  const events = useSelector((state) => state.events);
 
   const dispatch = useDispatch();
 
@@ -26,21 +26,24 @@ export default function Calendar(){
   const email = localStorage.getItem('email');
 
   const [img,setImg] = useState(null)
+  const [totalScore,setTotalScore] = useState('')
+  const [totalStudyTime,setTotalStudyTime] = useState('')
+  const [todayStudyTime,setTodayStudyTime] = useState('')
 
-  const [events,setEvents] = useState([])
+  // const [events,setEvents] = useState([])
 
   useEffect(() => {
 
-    console.log('events ===========================')
-    console.log(events)
-    console.log('===========================')
+    // console.log('events ===========================')
+    // console.log(events)
+    // console.log('===========================')
 
-    console.log('캘린더',memberId)
+    console.log('캘린더 memberId',memberId)
     console.log(`year---${year}///month---${month}`)
 
     console.log(process.env.REACT_APP_URL)
 
-    axios.get(`${process.env.REACT_APP_URL}/member/mypage/${1}`, {
+    axios.get(`${process.env.REACT_APP_URL}/member/mypage/${memberId}`, {
       params: {
         year,
         month
@@ -48,7 +51,8 @@ export default function Calendar(){
     })
       .then((res) => {
         console.log(' 일정 요청 성공=================================')
-        console.log(res.data.scheduleList);
+        console.log(res);
+        // console.log(res.data.scheduleList);
 
         const eventsToAdd = res.data.scheduleList.map((scheduleItem) => ({
           title: scheduleItem.memberScheduleTitle,
@@ -56,18 +60,11 @@ export default function Calendar(){
           date: scheduleItem.memberScheduleDate.slice(0, 10),
           scheduleId: scheduleItem.memberScheduleId,
         }));
-
-        // const events = eventsToAdd
-        setEvents(eventsToAdd);
-
         console.log(eventsToAdd[0])
-        // eventsToAdd 배열을 리덕스 스토어에 추가
-        // for (const event of eventsToAdd) {
-        //   console.log(event)
-        //   dispatch(addEvent(event));
-        // }
-
         setImg(res.data.img)
+        setTotalScore(res.data.totalScore)
+        setTotalStudyTime(res.data.todayStudyTime)
+        setTodayStudyTime(res.data.totalStudyTime)
         console.log('==============================')
       })
       .catch((err) => {
@@ -134,7 +131,7 @@ export default function Calendar(){
 
     console.log(newEvent)
     // 캘린더 이벤트 배열에 새 이벤트를 추가하고 모달을 닫습니다.
-    // dispatch(addEvent(newEvent));
+    dispatch(addEvent(newEvent));
     setSelectedDate(null);
     setEventTitle('');
     setEventTime('');
@@ -223,7 +220,6 @@ export default function Calendar(){
           </div>
         </div>
       )}
-      <img src={img} alt="Uploaded" className={style.file_img}/>
     </div>
   )
 }

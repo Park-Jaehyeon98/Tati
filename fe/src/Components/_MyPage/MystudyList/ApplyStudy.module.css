@@ -47,14 +47,33 @@
   font-size: 10px;
   margin-left: 310px;
 }
-.NoticeItem_text{
-  white-space: nowrap;
+
+
+.Study_hr{
+  width: 600px;
 }
-.p_text{
+
+.JoinStudy_text{
   margin: 0px;
 }
 
-.text{
+.MyPost_text_time{
+  margin: 0px;
+  margin-left: 530px;
+}
+
+.JoinStudy_text_day{
   margin: 0px;
   margin-left: 450px;
+}
+
+.ApplyStudy_text{
+  margin: 0px;
+  margin-bottom: 18px;
+  margin-left: 5px;
+}
+
+.MyPost_text{
+  margin: 0px;
+  margin-left: 5px;
 }
