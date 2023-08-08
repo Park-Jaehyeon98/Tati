@@ -51,7 +51,7 @@ const StudyBoardCreate = () => {
     const handleCancleBtnClick = () => {
         boardType === 1 ?
             navigate(`/Study/${studyId}/Notice`) :
-            navigate(`/Study/${studyId}/Notice`)
+            navigate(`/Study/${studyId}/Board`)
     }
 
 

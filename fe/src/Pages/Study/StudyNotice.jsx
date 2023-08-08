@@ -9,7 +9,6 @@ const StudyNotice = () => {
 
     return (
         <div>
-            <StudyBoardHeader studyId={studyId} boardType={boardType} />
             <Outlet context={{ studyId, boardType }} />
         </div>
     )

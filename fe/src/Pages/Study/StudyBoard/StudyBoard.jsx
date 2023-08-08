@@ -1,5 +1,4 @@
 import React from 'react'
-import StudyBoardHeader from '../../../Components/Study/StudyBoard/StudyBoardHeader';
 import { Outlet, useParams } from 'react-router-dom'
 
 
@@ -11,7 +10,6 @@ const StudyBoard = () => {
 
     return (
         <div >
-            <StudyBoardHeader studyId={studyId} boardType={boardType} />
             <Outlet context={{ studyId, boardType }} />
         </div>
     )

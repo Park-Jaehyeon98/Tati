@@ -24,17 +24,16 @@ import Study from "../Pages/Study/Study";
 import StudyCreate from "../Pages/Study/StudyCreate";
 import StudyList from "../Pages/Study/StudyList";
 import StudyDetail from "../Pages/Study/StudyDetail";
+import StudyDetailInfo from "../Pages/Study/StudyDetailInfo";
 import StudyModify from "../Pages/Study/StudyModify";
 
 import StudyNotice from "../Pages/Study/StudyNotice";
-// import StudyNoticeList from "../Pages/Study/StudyNotice/StudyNoticeList";
-// import StudyNoticeCreate from "../Pages/Study/StudyNotice/StudyNoticeCreate";
-// import StudyNoticeDetail from './../Pages/Study/StudyNotice/StudyNoticeDetail';
 
 import StudyBoard from "../Pages/Study/StudyBoard/StudyBoard";
 import StudyBoardDetail from "../Pages/Study/StudyBoard/StudyBoardDetail";
 import StudyBoardCreate from "../Pages/Study/StudyBoard/StudyBoardCreate";
 import StudyBoardList from "../Pages/Study/StudyBoard/StudyBoardList";
+
 
 import Main from "../Pages/Main/Main";
 import KakaoPay from "../Components/_MyPage//Point/KakaoPay";
@@ -80,17 +79,17 @@ export default function Router() {
 
     const token = localStorage.getItem("accessToken");
 
-    axios.get(`${process.env.REACT_APP_URL}/member/logout`,{
-      headers:{
-        token:token
+    axios.get(`${process.env.REACT_APP_URL}/member/logout`, {
+      headers: {
+        token: token
       }
     })
-    .then((res)=>
-    console.log(res)
-    )
-    .catch((err)=>
-      console.log(err)
-    )
+      .then((res) =>
+        console.log(res)
+      )
+      .catch((err) =>
+        console.log(err)
+      )
 
     localStorage.clear();
     setIsLoggedIn(false);
@@ -148,8 +147,8 @@ export default function Router() {
         <Route path="/" element={<Main />} />
 
         {/* openvidu */}
-        <Route path="/Room" element={<Room/> }/>
-        <Route path="/VideoRoom" element={<VideoRoomComponent/>}/>
+        <Route path="/Room" element={<Room />} />
+        <Route path="/VideoRoom" element={<VideoRoomComponent />} />
 
         {/* 공지사항 */}
         <Route path="/Notice" element={<Notice />}>
@@ -185,30 +184,28 @@ export default function Router() {
         <Route path="/MyPage/MyPagePost" element={<MyPagePost />} />
         <Route path="/MyPage/MyPageRewardPoint" element={<MyPageRewardPoint />} />
 
-        {/* 스터디 CRUD */}
-
         <Route path="/Study" element={<Study />}>
           <Route path="" element={<StudyList />} />
           <Route path="Create" element={<StudyCreate />} />
-          <Route path=":studyId" element={<StudyDetail />} />
-          {/* 스터디 공지사항, 스터디 게시판, 스터디 수정하기 -> 스터디 디테일 하위 라우터 설정하기 */}
-          <Route path=":studyId/Modify/" element={<StudyModify />} />
+          <Route path=":studyId" element={<StudyDetail />} >
+            <Route path="" element={<StudyDetailInfo />} />
+            <Route path="Modify" element={<StudyModify />} />
+
+            {/* 스터디 공지사항 */}
+            <Route path="Notice" element={<StudyNotice />}>
+              <Route path="" element={<StudyBoardList />} />
+              <Route path=":boardId" element={<StudyBoardDetail />} />
+              <Route path="Create" element={<StudyBoardCreate />} />
+            </Route>
+            {/* 스터디 게시판 */}
+            <Route path="Board" element={<StudyBoard />}>
+              <Route path="" element={<StudyBoardList />} />
+              <Route path=":boardId" element={<StudyBoardDetail />} />
+              <Route path="Create" element={<StudyBoardCreate />} />
+            </Route>
+          </Route>
         </Route>
 
-        {/* 스터디 공지사항 */}
-        <Route path="/Study/:studyId/Notice" element={<StudyNotice />}>
-          <Route path="" element={<StudyBoardList />} />
-          <Route path=":boardId" element={<StudyBoardDetail />} />
-          <Route path="Create" element={<StudyBoardCreate />} />
-        </Route>
-
-
-        {/* 스터디 게시판 */}
-        <Route path="/Study/:studyId/Board" element={<StudyBoard />}>
-          <Route path="" element={<StudyBoardList />} />
-          <Route path=":boardId" element={<StudyBoardDetail />} />
-          <Route path="Create" element={<StudyBoardCreate />} />
-        </Route>
         {/* 스터디 웹rtc 입실 */}
         {/* <Route path="/Study/:studyId/Board/Create" element={}/> */}
 
