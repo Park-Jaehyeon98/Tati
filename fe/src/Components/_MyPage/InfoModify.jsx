@@ -28,7 +28,7 @@ export default function InfoModify() {
     console.log(`닉네임 ${nickName}`)
     console.log(process.env.REACT_APP_URL)
     axios
-      .post(`${process.env.REACT_APP_URL}/member/nickname-check`, {
+      .post(`http://192.168.31.57:8080/member/nickname-check`, {
         memberNickName: nickName,
       })
       .then((res) => {
@@ -69,8 +69,8 @@ export default function InfoModify() {
 
     // Id랑 닉네임 입력
     const putMemberReqDto = {
-      "memberId": memberIdAsNumber,
-      "memberNickName": nickName,
+      "memberId": 5,
+      "memberNickName": "1234",
     };
 
     formData.append('file', file)
@@ -87,7 +87,7 @@ export default function InfoModify() {
 
 
     // console.log(process.env.REACT_APP_URL)
-    axios.put(`https://i9b305.p.ssafy.io/api/member/mypage/modifyNickName`, formData, {
+    axios.put(`http://192.168.31.57:8080/member/mypage/modifyNickName`, formData, {
       headers: {
         "Content-Type": "multipart/form-data", // 파일 업로드를 위해 Content-Type을 multipart/form-data로 설정
       },
