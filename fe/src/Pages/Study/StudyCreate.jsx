@@ -11,7 +11,9 @@ import { apiClient } from "../../api/apiClient";
 const StudyCreate = () => {
     // date -> stirng 함수
     const dateToString = (date) => {
-        return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        return date.getFullYear() + "-"
+            + (date.getMonth().length >= 2 ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1)) + "-")
+            + (date.getDate().length >= 2 ? date.getDate() : ('0' + date.getDate()));
     }
 
     // 오늘 날짜 Date 객체 받아오고 State를 초기화
@@ -40,7 +42,8 @@ const StudyCreate = () => {
         disclosure: true, // 공개 여부
         studyPassword: null, // 패스워드
         studyDeposit: 1,  //보증금 최대 50000
-        studyHost: localStorage.getItem("memberNickName"), // memberNickName으로 들어갈것 
+        // studyHost: localStorage.getItem("memberNickName"), // memberNickName으로 들어갈것 
+        studyHost: "123456", // memberNickName으로 들어갈것 
         studyStartDate: todayString, //스터디 시작일
         studyEndDate: todayString, //스터디 종료일
     });
@@ -162,11 +165,9 @@ const StudyCreate = () => {
 
     // 이미지 업로드
     const handleStudyImgUpload = (e) => {
-        const formData = new FormData();
         const file = e.target.files[0];
+        setStudyImg(() => { return file })
 
-        formData.append('file', file)
-        setStudyImg(() => { return formData })
         const reader = new FileReader();
         reader.readAsDataURL(file);
 
@@ -187,6 +188,7 @@ const StudyCreate = () => {
             studyStartDate: dateToString(startDate),
             studyEndDate: dateToString(endDate),
         }
+
         let formData = new FormData();
         formData.append('studyImg', studyImg)
 
@@ -194,6 +196,12 @@ const StudyCreate = () => {
         formData.append('studyReqDto', new Blob([JSON.stringify(studyReqDto)], {
             type: "application/json"
         }))
+        for (const [key, value] of formData.entries()) {
+            console.log(key, typeof value);
+            console.log('============');
+        }
+        console.log(studyReqDto)
+
 
         apiClient.post('study/create',
             formData,
