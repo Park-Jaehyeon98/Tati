@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import { signUpSuccess } from '../../redux/actions/authActions.js';
 
 import axios from "axios";
 import style from "./SignUp.module.css"
@@ -10,7 +9,6 @@ import style from "./SignUp.module.css"
 export default function SignUp() {
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [formData, setFormData] = useState(
     {
       email: "",
@@ -122,7 +120,6 @@ export default function SignUp() {
       })
       .then((res) => {
         console.log(res);
-        dispatch(signUpSuccess(res.data));
         navigate('/Login')
       })
       .catch((err) => {

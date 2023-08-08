@@ -1,35 +1,35 @@
 import React,{useState, useEffect} from "react";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import style from './ApplyStudy.module.css'
-import { useDispatch, useSelector } from 'react-redux';
-import { setMemberStudyList } from "../../../redux/actions/actions"
+import { useDispatch } from 'react-redux';
 
 
 export default function ApplyStudy(){
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // const memberStudyList = useSelector((state) => state.memberStudyList);
-
+  // 신청한 스터디 목록
+  const [applyStudy, setApplyStudy] = useState(null)
   const handleButtonClick = (tab) => {
     navigate(tab);
   };
 
-  const memberId = localStorage.getItem('memberId');
+  const tokenInfo = localStorage.getItem('decodedToken');
+  console.log(JSON.parse(tokenInfo));
+  const parseJwt = JSON.parse(tokenInfo);
 
   // 가입한 스터디 ======================================================================================
 
-  console.log(`memberId - ${memberId}`)
+  console.log(`memberId - ${parseJwt.memberId}`)
   useEffect(() => {
 
     console.log(process.env.REACT_APP_URL)
-    axios.get(`${process.env.REACT_APP_URL}/member/mypage/application-list/${memberId}`)
+    axios.get(`${process.env.REACT_APP_URL}/member/mypage/application-list/${parseJwt.memberId}`)
       .then((res) => {
         console.log('신청한스터디=================================')
         console.log(res.data);
-        // dispatch(setMemberStudyList(res.data));
+        setApplyStudy(res.data)
         console.log('==============================')
       })
       .catch((err) => {

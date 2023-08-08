@@ -9,7 +9,9 @@ export default function InfoModify() {
   const navigate = useNavigate();
 
   // 로컬의 유저pk값을 불러오기
-  const memberId = localStorage.getItem('memberId');
+  const tokenInfo = localStorage.getItem('decodedToken');
+  console.log(JSON.parse(tokenInfo));
+  const parseJwt = JSON.parse(tokenInfo);
   const nick = localStorage.getItem('memberNickName');
   // 회원정보 리덕스에서 가져오기
   const userInfo = useSelector((state) => state.userInfo);
@@ -59,7 +61,7 @@ export default function InfoModify() {
   // 유저의 pk 와 닉네임을 보냄
   // 요청 성공 후 다시 회원정보 수정 페이지로
   const handleNickNameupdata = () => {
-    const memberIdAsNumber = memberId;
+    const memberIdAsNumber = parseJwt.memberId;
 
     console.log(`memberId - ${memberIdAsNumber} nickName - ${nickName} file - ${file}`)
 
@@ -69,7 +71,7 @@ export default function InfoModify() {
 
     // Id랑 닉네임 입력
     const putMemberReqDto = {
-      "memberId": memberId,
+      "memberId": parseJwt.memberId,
       "memberNickName": nickName
     };
 
@@ -125,10 +127,10 @@ export default function InfoModify() {
     if (password !== password2) {
       alert('비밀번호가 일치하자 않습니다.')
     }
-    console.log(`비밀번호 변경: ${password} memberId: ${memberId}`)
+    console.log(`비밀번호 변경: ${password} memberId: ${parseJwt.memberId}`)
     console.log(process.env.REACT_APP_URL)
     axios.put(`${process.env.REACT_APP_URL}/member/mypage/modifyPassword`, {
-      memberId,
+      memberId:parseJwt.memberId,
       password
     })
       .then((res) => {
@@ -147,7 +149,7 @@ export default function InfoModify() {
   const handleWithdrawal = () => {
     const email = 'rlaalsrbs15@naver.com'
     console.log(process.env.REACT_APP_URL)
-    axios.delete(`${process.env.REACT_APP_URL}/member/mypage/remove/${email}`, {
+    axios.delete(`${process.env.REACT_APP_URL}/member/mypage/remove/${parseJwt.sub}`, {
     })
       .then((res) => {
         console.log(res)
