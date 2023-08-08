@@ -34,14 +34,9 @@ public class SchedulerService {
 
             List<StudyMember> studyMemberList = study.getStudyMemberList();
 
-            //스터디 총 벌금 구하기
-            int sumTotalPenalty = 0;
-            for(StudyMember studyMember : studyMemberList){
-                sumTotalPenalty+=studyMember.getStudyMemberPenalty();
-            }
 
             List<StudyMember> excellentMemberList = studyManageRepository.findExcellentMember();
-            int excellentPoint = sumTotalPenalty / excellentMemberList.size();
+            int excellentPoint = study.getTotalPenalty() / excellentMemberList.size();
 
             //각자 보증금 돌려받기
             Integer studyDeposit = study.getStudyDeposit();

@@ -1,9 +1,7 @@
 package com.ssafy.tati.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -13,6 +11,8 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(of = "studyId")
 public class Study {
 

@@ -14,4 +14,6 @@ public interface StudyMemberRepository extends JpaRepository<StudyMember, Intege
     List<StudyMember> findAllByStudyStudyId(Integer studyId);
 
     Optional<StudyMember> findByStudyStudyIdAndMember(Integer studyId, Member member);
+
+    Optional<StudyMember> findByStudyStudyIdAndMemberMemberId(Integer studyId, Integer memberId);
 }
