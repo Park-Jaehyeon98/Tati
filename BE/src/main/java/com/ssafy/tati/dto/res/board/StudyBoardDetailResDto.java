@@ -31,4 +31,6 @@ public class StudyBoardDetailResDto {
     private LocalDateTime modifiedDate;
     @Schema(description = "댓글수")
     private Integer commentCount;
+    @Schema(description = "게시판 파일")
+    private String boardFile;
 }
