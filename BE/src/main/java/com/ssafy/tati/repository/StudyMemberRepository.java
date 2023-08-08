@@ -1,5 +1,6 @@
 package com.ssafy.tati.repository;
 
+import com.ssafy.tati.entity.Member;
 import com.ssafy.tati.entity.StudyMember;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,5 +11,5 @@ public interface StudyMemberRepository extends JpaRepository<StudyMember, Intege
 
     List<StudyMember> findAllByStudyStudyId(Integer studyId);
 
-    Optional<StudyMember> findByStudyIdAndMemberId(Integer studyId, Integer memberId);
+    Optional<StudyMember> findByStudyStudyIdAndMember(Integer studyId, Member member);
 }
