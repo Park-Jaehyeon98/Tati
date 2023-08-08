@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { apiClient } from '../../api/apiClient';
 import FaqListItem from '../../Components/Faq/FaqListItem';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const FaqList = () => {
     // 여기서 요청 보낸 후 컴포넌트로 뿌려야함. Detail, Modify 둘다
     const [boardList, setBoardList] = useState([]);
+
+    const navigate = useNavigate();
+    const user = useSelector((state) => { return state.user });
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -24,6 +29,11 @@ const FaqList = () => {
     //             console.log(err)
     //         });
     // }, [])
+
+    // 생성버튼 클릭
+    const handleCreateBtnClick = () => {
+        navigate('Create')
+    }
 
     // 더미데이터용
     useEffect(() => {
@@ -78,8 +88,14 @@ const FaqList = () => {
             >
                 {">"}
             </button>
-        </div>
 
+            {/* 새 공지 작성하기 관리자만 */}
+            {!(user.memberNickName === 'admin') ||
+                <button onClick={handleCreateBtnClick}>
+                    새 글 작성
+                </button>
+            }
+        </div>
     )
 }
 

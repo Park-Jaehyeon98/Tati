@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { apiClient } from '../../api/apiClient';
 import NoticeListItem from '../../Components/Notice/NoticeListItem';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import style from './NoticeList.module.css';
+import { useSelector } from 'react-redux';
 
 const NoticeList = () => {
     // 여기서 요청 보냄
+    const navigate = useNavigate();
+    const user = useSelector((state) => { return state.user })
     const [boardList, setBoardList] = useState([]);
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -33,19 +36,31 @@ const NoticeList = () => {
         setBoardList([{ boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 }, { boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 }, { boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 }, { boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 }, { boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 },])
     }, [])
 
+    const handleCreateBtnClick = () => {
+        navigate('Create')
+    }
 
     return (
         <div>
             <h3>공지사항</h3>
             {/* 공지사항 리스트 */}
             <div>
-                {!(boardList.length === 0) ||
+                {!(boardList.length === 0) &&
                     boardList.map((boardItemInfo, index) =>
-                        <Link className={style.Link} key={index} to={`${boardItemInfo.boardId}`}>
-                            <NoticeListItem boardItemInfo={boardItemInfo} />
-                        </Link>)
+                        <>
+                            <hr />
+                            <Link className={style.Link} key={index} to={`${boardItemInfo.boardId}`}>
+                                <NoticeListItem boardItemInfo={boardItemInfo} />
+                            </Link>
+                            <hr />
+                        </>
+                    )
                 }
             </div>
+
+
+
+
             {/* 페이지네이션 */}
             <button
                 key={'<'}
@@ -81,8 +96,14 @@ const NoticeList = () => {
             >
                 {">"}
             </button>
-        </div>
+            {/* 새 공지 작성하기 관리자만 */}
+            {!(user.memberNickName === 'admin') ||
+                <button onClick={handleCreateBtnClick}>
+                    새 글 작성
+                </button>
+            }
 
+        </div>
     )
 }
 
