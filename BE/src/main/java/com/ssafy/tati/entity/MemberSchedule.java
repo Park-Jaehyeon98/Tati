@@ -3,6 +3,7 @@ package com.ssafy.tati.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -20,7 +21,7 @@ public class MemberSchedule {
 
     //날짜
     @Column(name = "member_schedule_date")
-    private LocalDateTime memberScheduleDate;
+    private LocalDate memberScheduleDate;
 
     //제목
     @Column(name = "member_schedule_title", length = 15, nullable = false)

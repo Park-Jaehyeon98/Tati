@@ -26,12 +26,11 @@ public class StudyMemberService {
         List<StudyMember> studyMemberList = studyMemberRepository.findAllByStudyStudyId(studyId);
         if(studyMemberList == null){
             throw new RuntimeException("스터디가 존재하지 않습니다.");
-
         }
         List<StudyMemberResDto> studyMemberResDtoList = new ArrayList<>();
         for (StudyMember studyMember : studyMemberList) {
             Member member = studyMember.getMember();
-            StudyMemberResDto studyMemberResDto = new StudyMemberResDto(member.getMemberNickName(), member.getTotalScore(), member.getCreatedDate());
+            StudyMemberResDto studyMemberResDto = new StudyMemberResDto(member.getMemberNickName(), member.getTotalScore(), member.getCreatedDate().toString());
             studyMemberResDtoList.add(studyMemberResDto);
         }
         return studyMemberResDtoList;

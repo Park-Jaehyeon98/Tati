@@ -21,9 +21,4 @@ public class StudyMemberResDto {
     @Schema(description = "회원 가입일")
     private String createdDate;
 
-    public StudyMemberResDto(String memberNickName, Integer totalScore, LocalDateTime createdDate) {
-        this.memberNickName = memberNickName;
-        this.totalScore = totalScore;
-        this.createdDate = createdDate.toString();
-    }
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter @Setter
@@ -18,7 +19,7 @@ public class ScheduleResDto {
     private Integer memberScheduleId;
 
     @Schema(description = "날짜")
-    private LocalDateTime memberScheduleDate;
+    private LocalDate memberScheduleDate;
 
     @Schema(description = "제목")
     private String memberScheduleTitle;

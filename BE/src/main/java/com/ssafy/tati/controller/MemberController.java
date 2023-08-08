@@ -176,6 +176,7 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //파일 이름만 가져오기
     private String extractOriginalFileName(String fileName) {
         int lastIndexOfSlash = fileName.lastIndexOf("_") + 1;
         return fileName.substring(lastIndexOfSlash);
