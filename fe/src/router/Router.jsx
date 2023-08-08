@@ -184,6 +184,7 @@ export default function Router() {
         <Route path="/MyPage/MyPagePost" element={<MyPagePost />} />
         <Route path="/MyPage/MyPageRewardPoint" element={<MyPageRewardPoint />} />
 
+        {/* 스터디 */}
         <Route path="/Study" element={<Study />}>
           <Route path="" element={<StudyList />} />
           <Route path="Create" element={<StudyCreate />} />
