@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class Member {
 
     //회원 가입 날짜
     @Column(name = "created_date", updatable = false)
-    private LocalDateTime createdDate;
+    private LocalDate createdDate;
 
     //가입한 스터디 목록
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
@@ -76,7 +77,7 @@ public class Member {
 
     @PrePersist
     public void prePersist(){
-        createdDate = LocalDateTime.now();
+        createdDate = LocalDate.now();
     }
 
     //총합 포인트 수정하기
