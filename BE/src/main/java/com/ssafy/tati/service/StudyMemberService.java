@@ -1,7 +1,9 @@
 package com.ssafy.tati.service;
 
 import com.ssafy.tati.dto.res.StudyMemberResDto;
+import com.ssafy.tati.dto.res.StudyMemberSecessionResDto;
 import com.ssafy.tati.entity.Member;
+import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.entity.StudyMember;
 import com.ssafy.tati.repository.MemberRepository;
 import com.ssafy.tati.repository.StudyMemberRepository;
@@ -31,15 +33,20 @@ public class StudyMemberService {
         List<StudyMemberResDto> studyMemberResDtoList = new ArrayList<>();
         for (StudyMember studyMember : studyMemberList) {
             Member member = studyMember.getMember();
-            StudyMemberResDto studyMemberResDto = new StudyMemberResDto(member.getMemberNickName(), member.getTotalScore(), member.getCreatedDate());
+            StudyMemberResDto studyMemberResDto = new StudyMemberResDto(member.getMemberNickName(), member.getTotalScore(), member.getCreatedDate().toString());
             studyMemberResDtoList.add(studyMemberResDto);
         }
         return studyMemberResDtoList;
     }
 
-//    public StudyMemberSecessionResDto studyMemberSecession(Integer studyId, Integer memberId) {
-//
-//    }
+    public StudyMemberSecessionResDto studyMemberSecession(Integer studyId, Integer memberId) {
+        StudyMember studyMember = studyMemberRepository.findByStudyStudyIdAndMemberMemberId(studyId, memberId).orElseThrow(() -> new RuntimeException("해당 스터디의 참가 회원이 아닙니다."));
+        int cur_point = studyMember.getStudy().getStudyDeposit() - studyMember.getStudyMemberPenalty();
+        studyMember.getStudy().setTotalPenalty(studyMember.getStudyMemberPenalty());
+        studyMember.getMember().setTotalPoint(studyMember.getMember().getTotalPoint() + cur_point);
+        StudyMemberSecessionResDto studyMemberSecessionResDto = new StudyMemberSecessionResDto(studyMember.getMember().getMemberNickName(), studyMember.getStudy().getStudyName());
+        return studyMemberSecessionResDto;
+    }
 
 
     ////////////////////////
