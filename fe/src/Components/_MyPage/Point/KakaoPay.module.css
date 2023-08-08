@@ -21,14 +21,19 @@
     padding: 10px;
 }
 .cancel_btn{
-    height: 17px;
+    height: 25px;
     font-size: 10px;
-    margin-left: 310px;
+    /* margin-left: 310px; */
+    background-color: #f37979;
+    border: 1px;
+    border-radius: 10px;
+    font-weight: bold;
 }
 .PointItem_text{
     white-space: nowrap;
 }
 .p_text{
+    font-size: 17px;
     margin: 0px;
 }
 

@@ -12,9 +12,3 @@ const eventsReducer = (state = initialState, action) => {
 };
 
 export default eventsReducer
-// import { createSlice } from '@reduxjs/toolkit'
-
-// const eventSlice = createSlice({
-//   nsme: 'event',
-//   initialSatate
-// })

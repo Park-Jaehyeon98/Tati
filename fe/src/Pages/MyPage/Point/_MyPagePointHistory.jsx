@@ -1,8 +1,8 @@
 import React from "react";
-import style from "./_Mypage.module.css"
+import style from "../_Mypage.module.css"
 
-import PointHistory from '../../Components/_MyPage/PointHistory'
-import Aside from "../../Components/_MyPage/Aside";
+import PointHistory from '../../../Components/_MyPage/Point/PointHistory'
+import Aside from "../../../Components/_MyPage/Aside";
 
 
 export default function MyPagePointHistory(){

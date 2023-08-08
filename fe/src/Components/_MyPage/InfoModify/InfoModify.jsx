@@ -61,7 +61,7 @@ export default function InfoModify() {
   const handleNickNameupdata = () => {
     const memberIdAsNumber = memberId;
 
-    console.log(`memberId - ${typeof memberIdAsNumber} nickName - ${nickName} file - ${file}`)
+    console.log(`memberId - ${memberIdAsNumber} nickName - ${nickName} file - ${file}`)
 
     const formData = new FormData();
 
@@ -69,15 +69,16 @@ export default function InfoModify() {
 
     // Id랑 닉네임 입력
     const putMemberReqDto = {
-      "memberId": 5,
-      "memberNickName": "1234",
+      "memberId": memberId,
+      "memberNickName": nickName
     };
 
     formData.append('file', file)
-    // formData.append('putMemberReqDto', JSON.stringify(putMemberReqDto));
+
     formData.append('putMemberReqDto', new Blob([JSON.stringify(putMemberReqDto)], {
       type: "application/json"
     }));
+
     console.log('-------------------------------------------------')
 
     for (const [key, value] of formData.entries()) {
@@ -87,13 +88,14 @@ export default function InfoModify() {
 
 
     // console.log(process.env.REACT_APP_URL)
-    axios.put(`http://192.168.31.57:8080/member/mypage/modifyNickName`, formData, {
+    axios.put(`${process.env.REACT_APP_URL}/member/mypage/modifyNickName`, formData, {
       headers: {
         "Content-Type": "multipart/form-data", // 파일 업로드를 위해 Content-Type을 multipart/form-data로 설정
       },
     })
       .then((res) => {
         console.log(res);
+        setFile(file)
         alert("수정됨");
       })
       .catch((err) => {
