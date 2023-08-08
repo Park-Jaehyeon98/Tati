@@ -56,4 +56,9 @@ public class StudyMember {
             study.getStudyMemberList().add(this);
         }
     }
+
+    public void deleteStudyMember() {
+        this.study = null;
+        this.member = null;
+    }
 }
