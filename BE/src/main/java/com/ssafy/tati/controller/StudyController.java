@@ -52,10 +52,6 @@ public class StudyController {
             studyScheduleList.add(studyMapper.studyReqScheduleToStudySchedule(studyScheduleReqDto));
         }
 
-        for(StudySchedule schedule : studyScheduleList){
-            System.out.println("----- studyScheduleList :  " +schedule.getStudyScheduleId() +", " +schedule.getStudyEndTime());
-        }
-
 
         Category category = studyService.checkCategory(studyReqDto.getCategoryId());
         Study study = studyMapper.studyReqDtoToStudy(studyReqDto, studyScheduleList, category);
@@ -78,11 +74,9 @@ public class StudyController {
 
         studyService.setStudyMemberHost(savedStudy.getStudyId(), savedStudy.getStudyHost());
 
-        System.out.println("-----여기까지???-------");
         StudyCreateResDto studyCreateResDto = new StudyCreateResDto();
         studyCreateResDto.setStudyId(savedStudy.getStudyId());
         studyCreateResDto.setImg(savedStudy.getImg());
-        System.out.println("-----여기까지다!!!-------");
         return new ResponseEntity<>(studyCreateResDto, HttpStatus.OK);
     }
 

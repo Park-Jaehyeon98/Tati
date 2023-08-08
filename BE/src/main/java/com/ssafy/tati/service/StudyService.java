@@ -34,14 +34,12 @@ public class StudyService {
 
 
     public Study createStudy(Study study) {
-        System.out.println("create Study : " +study.getStudyName() +", studyId : " +study.getStudyId());
         Study saveStudy = studyRepository.save(study);
 
         return saveStudy;
     }
 
     public StudySchedule createStudySchedule(StudySchedule studySchedule){
-        System.out.println(studySchedule.getStudyEndTime() + "  시간");
         StudySchedule schedule = studyScheduleRepository.save(studySchedule);
         return schedule;
     }
@@ -108,15 +106,8 @@ public class StudyService {
 
         member.updateTotalPoint(point);
         LocalDate currentDate = LocalDate.now();
-        System.out.println("--------------여기까지는 왔어-----------------");
-        System.out.println("member : " +member.getMemberNickName());
-        System.out.println("studyId : " +studyId);
         StudyMember studyMember = new StudyMember(0, currentDate, 0, 0, study, member);
-        System.out.println("--------------" +studyMember.getStudyJoinDate()+ "-----------------");
-
         StudyMember savedStudyMember = studyMemberRepository.save(studyMember);
-        System.out.println("savedStudyMember : " +savedStudyMember.getStudyMemberId());
-        System.out.println("--------------여기까지는 왔어22222222-----------------");
     }
 
     public Study findById(Integer studyId){
