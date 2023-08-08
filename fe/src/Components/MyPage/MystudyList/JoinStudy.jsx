@@ -15,14 +15,16 @@ export default function JoinStudy(){
   const itemsPerPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const memberId = localStorage.getItem('memberId');
+  const tokenInfo = localStorage.getItem('decodedToken');
+  console.log(JSON.parse(tokenInfo));
+  const parseJwt = JSON.parse(tokenInfo);
   // 가입한 스터디 ======================================================================================
   
-  console.log(`memberId - ${memberId}`)
+  console.log(`memberId - ${parseJwt.memberId}`)
   useEffect(() => {
 
     console.log(process.env.REACT_APP_URL)
-    axios.get(`${process.env.REACT_APP_URL}/member/mypage/study-list/${memberId }`)
+    axios.get(`${process.env.REACT_APP_URL}/member/mypage/study-list/${parseJwt.memberId }`)
       .then((res) => {
         console.log('가입스터디=================================')
         console.log(res.data);

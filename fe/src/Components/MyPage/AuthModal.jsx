@@ -2,8 +2,7 @@ import React,{useState} from "react";
 import style from "./AuthModal.module.css"
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { setUserInfo } from '../../redux/actions/actions'
+import { useDispatch } from 'react-redux';
 
 import Login from "../../Pages/Auth/Login";
 
@@ -16,8 +15,6 @@ export default function AuthModal({ setAuthModal }) {
   const email = localStorage.getItem('email');
 
   const [password, setPassword] = useState("")
-
-  const dispatch = useDispatch();
 
   // const userInfo = useSelector((state) => state.userReducer.userInfo);
 
@@ -49,7 +46,6 @@ export default function AuthModal({ setAuthModal }) {
     .then((res) => {
       console.log(res)
       setAuthModal(false);
-      // dispatch(setUserInfo(res.data));  
       navigate("/MyPage/MyPageInfoModify");
     })
     .catch((err) => {

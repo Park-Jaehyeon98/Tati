@@ -2,13 +2,9 @@ import React, { useEffect, useState } from "react";
 import style from './KakaoPay.module.css';
 import axios from "axios";
 import { useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux";
-import {setMemberPoint} from "../../../redux/actions/actions";
 
 
 export default function KakaoPay() {
-
-  const dispatch = useDispatch();
 
   // 건들지 않기 ======================================================================================
   const location = useLocation();
@@ -77,7 +73,6 @@ export default function KakaoPay() {
           setPoint(res.data)
           console.log('회원포인트내역')
           console.log('---------------------------------------------')
-          dispatch(setMemberPoint(res.data));
         })
         .catch((err)=>{
           console.log(err)
@@ -124,8 +119,6 @@ const PointItem = ({ point, date, day }) => {
 };
 
 
-// 포인트 내역 데이터를 리덕스 스토어에서 가져옴
-const pointData = useSelector((state) => state.memberPoint) || [];
 
 // // 데이터
 // const dates = [

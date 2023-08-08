@@ -6,24 +6,25 @@ import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from '@fullcalendar/react';
 import style from "./Calendar.module.css"
 
-import { useSelector, useDispatch } from "react-redux";
-import {addEvent} from "../../../redux/actions/actions"
 import axios from "axios";
 
+// 리덕스 저장
+import { useDispatch } from 'react-redux';
+import {addSchedule} from "../../../redux/reducers/userScheduleSlice";
 
 export default function Calendar(){
+
+  const dispatch = useDispatch();
 
   // 현재 년, 월
   const currentDate = new Date();
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth() + 1;
 
-  const events = useSelector((state) => state.events);
 
-  const dispatch = useDispatch();
-
-  const memberId = localStorage.getItem('memberId');
-  const email = localStorage.getItem('email');
+  const tokenInfo = localStorage.getItem('decodedToken');
+  console.log(JSON.parse(tokenInfo));
+  const parseJwt = JSON.parse(tokenInfo);
 
   const [img,setImg] = useState(null)
   const [totalScore,setTotalScore] = useState('')
@@ -38,12 +39,12 @@ export default function Calendar(){
     // console.log(events)
     // console.log('===========================')
 
-    console.log('캘린더 memberId',memberId)
+    console.log('캘린더 memberId',parseJwt.memberId)
     console.log(`year---${year}///month---${month}`)
 
     console.log(process.env.REACT_APP_URL)
 
-    axios.get(`${process.env.REACT_APP_URL}/member/mypage/${memberId}`, {
+    axios.get(`${process.env.REACT_APP_URL}/member/mypage/${parseJwt.memberId}`, {
       params: {
         year,
         month
@@ -60,7 +61,10 @@ export default function Calendar(){
           date: scheduleItem.memberScheduleDate.slice(0, 10),
           scheduleId: scheduleItem.memberScheduleId,
         }));
-        console.log(eventsToAdd[0])
+
+        dispatch(addSchedule(eventsToAdd))
+
+        console.log(eventsToAdd)
         setImg(res.data.img)
         setTotalScore(res.data.totalScore)
         setTotalStudyTime(res.data.todayStudyTime)
@@ -92,7 +96,7 @@ export default function Calendar(){
     }
 
     const postScheduleReqDto = {
-      email,
+      email:parseJwt.email,
       memberScheduleDate: new Date(),
       memberScheduleContent: eventContent,
       memberScheduleTitle: eventTitle
@@ -112,7 +116,6 @@ export default function Calendar(){
         };
 
         console.log(newEvent)
-        dispatch(addEvent(newEvent));
         console.log('==============================')
       })
       .catch((err) => {
@@ -131,7 +134,6 @@ export default function Calendar(){
 
     console.log(newEvent)
     // 캘린더 이벤트 배열에 새 이벤트를 추가하고 모달을 닫습니다.
-    dispatch(addEvent(newEvent));
     setSelectedDate(null);
     setEventTitle('');
     setEventTime('');
@@ -146,7 +148,7 @@ export default function Calendar(){
     const event = info.event._def.extendedProps
 
     if (window.confirm("이 일정를 삭제하시겠습니까?")) {
-      const filteredEvents = events.filter((event) => event.title !== info.event.title);
+      const filteredEvents = event.filter((event) => event.title !== info.event.title);
 
       const scheduleId = Number(info.event._def.extendedProps.scheduleId)
 
@@ -199,7 +201,7 @@ export default function Calendar(){
             { title: '추가 기능 구현', start: '2023-08-11', end : "2023-08-14", color : "#0000FF" },
             { title: 'UCC 및 발표 준비', color : "#FFCCE5"  , start: '2023-08-14', end : "2023-08-18", rendering : "background" },
             { title: '발표', date: '2023-08-18'},
-            ...events
+            
           ]}
  
           dateClick={handleDateClick}

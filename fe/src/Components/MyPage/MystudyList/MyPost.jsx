@@ -12,15 +12,17 @@ export default function MyPost(){
     navigate(tab);
   };
 
-  const memberId = localStorage.getItem('memberId');
+  const tokenInfo = localStorage.getItem('decodedToken');
+  console.log(JSON.parse(tokenInfo));
+  const parseJwt = JSON.parse(tokenInfo);
 
   // 가입한 스터디 ======================================================================================
 
-  console.log(`memberId - ${memberId}`)
+  console.log(`memberId - ${parseJwt.memberId}`)
   useEffect(() => {
 
     console.log(process.env.REACT_APP_URL)
-    axios.get(`${process.env.REACT_APP_URL}/member/mypage/board-list/${memberId}`)
+    axios.get(`${process.env.REACT_APP_URL}/member/mypage/board-list/${parseJwt.memberId}`)
       .then((res) => {
         console.log('내 작성글=================================')
         console.log(res.data);

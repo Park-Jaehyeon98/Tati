@@ -55,25 +55,14 @@ import axios from "axios";
 import NoticeDetail from "../Pages/Notice/NoticeDetail";
 import VideoRoomComponent from "../Pages/Room/VideoRoomComponent";
 
+// 리덕스 툴킷
+import { useSelector } from 'react-redux';
+
 
 export default function Router() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-
-  // const handleschedule = () => {
-  //   const email = 't01045999371@gmail.com'
-  //   console.log(email)
-  //   axios.get(`${process.env.REACT_APP_URL}/member/mypage/schedule/${email}`, {
-  //     params: 7
-  //   })
-  //     .then((res) => {
-  //       console.log(res)
-  //       alert('요청 성공')
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     });
-  // };
+  const memberId = useSelector((state) => state.user.memberId);
 
   const handleLogout = () => {
 
@@ -96,7 +85,6 @@ export default function Router() {
   };
 
   useEffect(() => {
-    const memberId = localStorage.getItem("memberId");
     if (memberId) {
       setIsLoggedIn(true);
     }
@@ -124,12 +112,12 @@ export default function Router() {
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage">
             마이페이지
           </NavLink>
-          {!isLoggedIn && (
+          {!memberId && (
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/SignUp">
               회원가입
             </NavLink>
           )}
-          {isLoggedIn ? (
+          {memberId ? (
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Logout" onClick={handleLogout}>
               로그아웃
             </NavLink>
