@@ -1,8 +1,8 @@
 import React from "react";
-import style from "../_Mypage.module.css"
+import style from "../Mypage.module.css"
 
-import Point from '../../../Components/_MyPage/Point/Point'
-import Aside from "../../../Components/_MyPage/Aside";
+import Point from '../../../Components/MyPage/Point/Point'
+import Aside from "../../../Components/MyPage/Aside";
 
 
 export default function MyPagePoint(){

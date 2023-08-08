@@ -14,7 +14,7 @@ import Faq from "../Pages/Faq/Faq";
 import FaqCreate from "../Pages/Faq/FaqCreate";
 import FaqList from "../Pages/Faq/FaqList";
 
-import MyPage from "../Pages/MyPage/Schedule/_MyPage";
+import MyPage from "../Pages/MyPage/Schedule/MyPage";
 import SignUp from "../Pages/Auth/SignUp";
 import Login from "../Pages/Auth/Login";
 import LandingPage from './../Pages/LandingPage/LandingPage';
@@ -36,16 +36,16 @@ import StudyBoardList from "../Pages/Study/StudyBoard/StudyBoardList";
 
 
 import Main from "../Pages/Main/Main";
-import KakaoPay from "../Components/_MyPage//Point/KakaoPay";
+import KakaoPay from "../Components/MyPage//Point/KakaoPay";
 
-import MyPageInfoModify from "../Pages/MyPage/_MyPageInfoModify";
-import MyPageApplyStudy from "../Pages/MyPage/Study/_MyPageApplyStudy";
-import MyPageJoinStudy from "../Pages/MyPage/Study/_MyPageJoinStudy";
-import MyPagePost from "../Pages/MyPage/Study/_MyPagePost";
-import MyPagePoint from "../Pages/MyPage/Point/_MyPagePoint";
-import MyPagePointHistory from "../Pages/MyPage/Point/_MyPagePointHistory";
-import MyPagePointWithdraw from "../Pages/MyPage/Point/_MyPagePointWithdraw";
-import MyPageRewardPoint from "../Pages/MyPage/_MyPageRewardPoint"
+import MyPageInfoModify from "../Pages/MyPage/MyPageInfoModify";
+import MyPageApplyStudy from "../Pages/MyPage/Study/MyPageApplyStudy";
+import MyPageJoinStudy from "../Pages/MyPage/Study/MyPageJoinStudy";
+import MyPagePost from "../Pages/MyPage/Study/MyPagePost";
+import MyPagePoint from "../Pages/MyPage/Point/MyPagePoint";
+import MyPagePointHistory from "../Pages/MyPage/Point/MyPagePointHistory";
+import MyPagePointWithdraw from "../Pages/MyPage/Point/MyPagePointWithdraw";
+import MyPageRewardPoint from "../Pages/MyPage/MyPageRewardPoint"
 
 // openvidue
 import Room from "../Pages/Room/Room";
