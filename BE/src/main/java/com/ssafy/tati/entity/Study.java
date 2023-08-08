@@ -57,6 +57,7 @@ public class Study {
     private Integer totalPenalty;
 
     @Column(name = "deposit_end_yn")
+    @ColumnDefault("false")
     private boolean depositEndYn;
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)

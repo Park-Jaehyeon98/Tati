@@ -88,7 +88,6 @@ public class StudyBoardController {
         Board board = putBoardMapper.putBoardReqDtoToBoard(putBoardReqDto);
         Integer memberId = putBoardReqDto.getMemberId();
 
-        // todo 수정 시 파일 삭제 처리
         String url;
         if (multipartFile != null) {
             String boardFile = board.getBoardFile();
