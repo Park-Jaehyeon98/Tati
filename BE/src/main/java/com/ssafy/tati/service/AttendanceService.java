@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,11 +27,38 @@ public class AttendanceService {
     private final MemberRepository memberRepository;
     private final StudyMemberRepository studyMemberRepository;
     private final StudyScheduleRepository studyScheduleRepository;
-    
+
     // 입실
     public Attendance addAttendance(Attendance attendance) {
-        Attendance createdAttendance = attendanceRepository.save(attendance);
-        return createdAttendance;
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+        LocalDateTime endOfDay = LocalDate.now().atTime(LocalTime.MAX);
+        Optional<Attendance> optionalAttendance = attendanceRepository.findByStudyMemberAndInTimeBetween(attendance.getStudyMember(), startOfDay, endOfDay);
+
+        if (optionalAttendance.isEmpty()) { // 스터디 멤버 중 처음 입실했다면
+            // 스터디 멤버 테이블에 있는 멤버들 모두 입/퇴실 시각 초기화
+            List<StudyMember> studyMemberList = studyMemberRepository.findAllByStudyStudyId(attendance.getStudyMember().getStudy().getStudyId());
+            Attendance createdAttendance = attendanceRepository.save(attendance);
+            for (StudyMember studyMember : studyMemberList) {
+                if (studyMember.equals(createdAttendance.getStudyMember()))
+                    continue;
+
+                Attendance initAttendance = new Attendance();
+                initAttendance.setInTime(createdAttendance.getInTime());
+                initAttendance.setOutTime(createdAttendance.getOutTime());
+                initAttendance.setStudyMember(studyMember);
+                initAttendance.setMember(studyMember.getMember());
+
+                attendanceRepository.save(initAttendance);
+            }
+            return createdAttendance;
+
+        } else { // 스터디 멤버 테이블의 입/퇴실 시간 갱신
+            Attendance modifiedAttendance = optionalAttendance.get();
+            modifiedAttendance.setInTime(attendance.getInTime());
+            modifiedAttendance.setOutTime(attendance.getOutTime());
+
+            return modifiedAttendance;
+        }
     }
 
     // 퇴실
@@ -48,8 +78,9 @@ public class AttendanceService {
         modifyAttendance.setOutTime(attendance.getOutTime());
         StudyMember modifyStudyMember = modifyAttendance.getStudyMember();
         Integer studyId = modifyStudyMember.getStudy().getStudyId();
+        Integer studyDayNumber = modifyAttendance.getInTime().getDayOfWeek().getValue();
 
-        Optional<StudySchedule> optionalStudySchedule = studyScheduleRepository.findByStudyIdAndStudyDay(studyId, "");
+        Optional<StudySchedule> optionalStudySchedule = studyScheduleRepository.findByStudyIdAndStudyDay(studyId, Integer.toString(studyDayNumber));
         if (optionalStudySchedule.isEmpty()) {
             throw new RuntimeException();
         }
@@ -87,7 +118,7 @@ public class AttendanceService {
             Integer pelaltyAmt = modifyStudyMember.getStudy().getStudyDeposit() / 3;
             modifyAttendance.setPenaltyAmt(pelaltyAmt.shortValue());
             modifyStudyMember.setStudyMemberPenalty(modifyMember.getTotalPoint() + pelaltyAmt);
-        } else if (attendanceStatus == '1'){ // 지각
+        } else if (attendanceStatus == '1') { // 지각
             // 출석 여부
             modifyAttendance.setIsAttended('1');
             // 상벌점
