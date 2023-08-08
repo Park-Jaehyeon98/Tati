@@ -68,7 +68,9 @@ public class MemberService {
 
     //비밀번호 확인
     public Member loginMember(Member member) {
+        System.out.println("member.getPassword() : " +member.getPassword());
         Member findMember = findVerifiedMember(member.getEmail());
+        System.out.println("findMember.getPassword() : " +findMember.getPassword());
         if (!passwordEncoder.matches(member.getPassword(), findMember.getPassword())) {
             throw new MismatchDataException("잘못된 비밀번호입니다.");
         }

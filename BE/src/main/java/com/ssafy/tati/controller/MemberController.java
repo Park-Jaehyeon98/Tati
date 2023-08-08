@@ -149,17 +149,34 @@ public class MemberController {
         return new ResponseEntity<>(member, HttpStatus.OK);
     }
 
-    @PostMapping("/upload")
+    @PostMapping(value="/upload", consumes = {"multipart/form-data"})
     public ResponseEntity<String> uploadFile(@RequestPart(value = "file") MultipartFile multipartFile) throws IOException {
         return new ResponseEntity<>( s3Service.uploadFile(multipartFile), HttpStatus.OK );
     }
 
+//    @GetMapping("/download")
+//    public ResponseEntity<ByteArrayResource> downloadFile(String fileName) throws IOException {
+//        System.out.println("controller fileName : " +fileName);
+//        byte[] data = s3Service.downloadFile(fileName);
+//        ByteArrayResource resource = new ByteArrayResource(data);
+//
+//        String encodedFileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+//        String originalFileName = modifyOriginal(encodedFileName);
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+//        httpHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename(originalFileName).build());
+//
+//        return new ResponseEntity<>(resource, httpHeaders, HttpStatus.OK);
+//    }
+
     @GetMapping("/download")
     public ResponseEntity<ByteArrayResource> downloadFile(String fileName) throws IOException {
+        System.out.println("controller fileName: " + fileName);
         byte[] data = s3Service.downloadFile(fileName);
         ByteArrayResource resource = new ByteArrayResource(data);
 
-        String encodedFileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+        String originalFileName = modifyOriginal(fileName); // Use the original file name
+        String encodedFileName = new String(originalFileName.getBytes("UTF-8"), "ISO-8859-1");
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         httpHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename(encodedFileName).build());
@@ -171,6 +188,16 @@ public class MemberController {
     public ResponseEntity<?> removeFile(String fileName){
         s3Service.deleteFile(fileName);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public String modifyOriginal(String fileName){
+        String baseUrl = "https___tatibucket.s3.ap-northeast-2.amazonaws.com_";
+
+        if (fileName.startsWith(baseUrl)) {
+            return fileName.substring(baseUrl.length());
+        } else {
+            return fileName;
+        }
     }
 
 

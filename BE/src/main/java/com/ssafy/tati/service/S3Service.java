@@ -37,17 +37,35 @@ public class S3Service implements FileService {
 
     @Override
     public byte[] downloadFile(String fileName) throws IOException {
-        validateFileExists(fileName);
 
-        S3Object s3Object = amazonS3.getObject(bucket, fileName);
+        String originalFileName = createOriginal(fileName);
+
+        System.out.println("service ImgName : " +originalFileName);
+        validateFileExists(originalFileName);
+
+        S3Object s3Object = amazonS3.getObject(bucket, originalFileName);
         S3ObjectInputStream s3ObjectContent = s3Object.getObjectContent();
 
         return IOUtils.toByteArray(s3ObjectContent);
     }
 
+//    @Override
+//    public byte[] downloadFile(String fileName) throws IOException {
+//        System.out.println("service ImgName: " + fileName);
+//        validateFileExists(fileName);
+//
+//        S3Object s3Object = amazonS3.getObject(bucket, fileName); // Use the original file name
+//        S3ObjectInputStream s3ObjectContent = s3Object.getObjectContent();
+//
+//        return IOUtils.toByteArray(s3ObjectContent);
+//    }
+
+
+
     @Override
     public void deleteFile(String fileName) {
-        amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
+        String originalFileName = createOriginal(fileName);
+        amazonS3.deleteObject(new DeleteObjectRequest(bucket, originalFileName));
     }
 
     private void validateFileExists(String fileName) throws FileNotFoundException {
@@ -59,6 +77,17 @@ public class S3Service implements FileService {
             throw new FileNotFoundException("존재하지 않는 파일입니다.");
         }
     }
+
+    public String createOriginal(String fileName){
+        String baseUrl = "https://tatibucket.s3.ap-northeast-2.amazonaws.com/";
+
+        if (fileName.startsWith(baseUrl)) {
+            return fileName.substring(baseUrl.length());
+        } else {
+            return fileName;
+        }
+    }
+
 
 
 
