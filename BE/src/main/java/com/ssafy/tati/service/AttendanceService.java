@@ -75,10 +75,10 @@ public class AttendanceService {
 
         modifyAttendance.setOutTime(attendance.getOutTime());
         StudyMember modifyStudyMember = modifyAttendance.getStudyMember();
-        Study study = modifyStudyMember.getStudy();
+        Study modifyStudy = modifyStudyMember.getStudy();
         Integer studyDayNumber = modifyAttendance.getInTime().getDayOfWeek().getValue();
 
-        Optional<StudySchedule> optionalStudySchedule = studyScheduleRepository.findByStudyAndStudyDay(study, Integer.toString(studyDayNumber));
+        Optional<StudySchedule> optionalStudySchedule = studyScheduleRepository.findByStudyAndStudyDay(modifyStudy, Integer.toString(studyDayNumber));
         if (optionalStudySchedule.isEmpty()) {
             throw new RuntimeException();
         }
@@ -94,6 +94,7 @@ public class AttendanceService {
         System.out.println("스터디 입실 시각: " + inTime);
         System.out.println("스터디 종료 시각: "+ endTime);
         System.out.println("스터디 퇴실 시각: " + outTime);
+
         if (inTime.isAfter(startTime)) { // 시작 시각보다 늦게 들어오면
             attendanceStatus = '1'; // 지각
         }
@@ -150,16 +151,29 @@ public class AttendanceService {
             modifyAttendance.setPenaltyAmt(0);
         }
 
-        System.out.println("score content : " + modifyStudyMember.getStudy().getStudyName() + modifyAttendance.getIsAttended());
-        System.out.println(modifyStudyMember.getAbsenceCount());
+        // 전체 벌금 퇴실 시 갱신
+        modifyStudy.setTotalPenalty(modifyAttendance.getPenaltyAmt());
 
-        // todo AbsenceCount가 6이상이면 진행 스터디회원에서 삭제
+        // 입퇴실 content 저장
+        String content = modifyStudyMember.getStudy().getStudyName();
+        if (modifyAttendance.getIsAttended() == '0') {
+            content += " 결석";
+        } else if (modifyAttendance.getIsAttended() == '1') {
+            content += " 지각";
+        } else {
+            content += " 출석";
+        }
+        modifyAttendance.setContent(content);
+
         if (modifyStudyMember.getAbsenceCount() >= 6) {
-            System.out.println(modifyStudyMember);
-            studyMemberRepository.deleteById(modifyStudyMember.getStudyMemberId());
 
-            System.out.println(modifyStudyMember.getStudyMemberId() +", " + modifyStudyMember.getAbsenceCount());
-            System.out.println("-------------");
+            // 연관관계 끊기
+            modifyStudy.getStudyMemberList().remove(modifyStudyMember);
+            modifyStudyMember.deleteStudyMember();
+            modifyAttendance.setStudyMember(null);
+
+            // 삭제
+            studyMemberRepository.deleteById(modifyStudyMember.getStudyMemberId());
         }
         return modifyAttendance;
     }
