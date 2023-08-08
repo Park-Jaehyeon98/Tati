@@ -50,4 +50,8 @@ public class Board {
 
     @Column(name = "main_notice_yn")
     private boolean mainNoticeYn;
+
+    // 파일
+    @Column(name = "board_file", length = 300)
+    private String boardFile;
 }

@@ -10,6 +10,7 @@ import com.ssafy.tati.entity.StudySchedule;
 import org.mapstruct.Mapper;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -46,9 +47,27 @@ public interface StudyMapper {
         return study;
     }
 
+    default StudySchedule studyReqScheduleToStudySchedule(StudyScheduleReqDto studyScheduleReqDto){
+        if(studyScheduleReqDto == null){
+            return null;
+        }
+
+        StudySchedule studySchedule = new StudySchedule();
+
+        LocalTime startTime = LocalTime.parse(studyScheduleReqDto.getStudyStartTime());
+        LocalTime endTime = LocalTime.parse(studyScheduleReqDto.getStudyEndTime());
+
+        studySchedule.setStudyScheduleId(0);
+        studySchedule.setStudyDay(studyScheduleReqDto.getStudyDay());
+        studySchedule.setStudyStartTime(startTime);
+        studySchedule.setStudyEndTime(endTime);
+
+        return studySchedule;
+    }
+
 
     StudyDetailResDto studyToStudyDetailResDto(Study study, Category category);
-    List<StudySchedule> studyReqScheduleListToStudySchedule(List<StudyScheduleReqDto> studyScheduleReqDtoList);
+
     List<StudyAllListResDto> studyListToStudyAllListResDtoList(List<Study> studyList);
 
 }

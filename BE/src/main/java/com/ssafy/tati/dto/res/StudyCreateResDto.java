@@ -10,4 +10,7 @@ import lombok.Setter;
 public class StudyCreateResDto {
     @Schema(description = "스터디 식별번호")
     private Integer StudyId;
+
+    @Schema(description = "이미지")
+    private String img;
 }

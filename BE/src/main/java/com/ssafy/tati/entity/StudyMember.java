@@ -1,6 +1,7 @@
 package com.ssafy.tati.entity;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -20,10 +21,12 @@ public class StudyMember {
     @Column(name = "study_join_date", nullable = false)
     private LocalDate studyJoinDate;
 
-    @Column(name="study_member_penalty", columnDefinition = "int default 0")
+    @Column(name="study_member_penalty")
+    @ColumnDefault("0")
     private Integer studyMemberPenalty;
 
-    @Column(name="absence_count", columnDefinition = "tinyint")
+    @Column(name="absence_count")
+    @ColumnDefault("0")
     private Integer absenceCount;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -144,6 +144,7 @@ public class BoardService {
         if (modifyBoard.getMember().getMemberId().equals(memberId)) {
             modifyBoard.setBoardTitle(board.getBoardTitle());
             modifyBoard.setBoardContent(board.getBoardContent());
+            modifyBoard.setBoardFile(board.getBoardFile());
         } else {
             throw new RuntimeException();
         }

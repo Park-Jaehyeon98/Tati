@@ -15,14 +15,15 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudyScheduleReqDto {
+
     @Schema(description = "요일")
     // 월, 화, 수, ...
     private String studyDay;
 
     @Schema(description = "시작 시간")
-    private LocalTime studyStartTime;
+    private String studyStartTime;
 
     @Schema(description = "종료 시간")
-    private LocalTime studyEndTime;
+    private String studyEndTime;
 
 }

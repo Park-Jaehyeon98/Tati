@@ -32,13 +32,16 @@ public class StudyService {
         return category.get();
     }
 
-    public void createStudy(Study study) {
-        studyRepository.save(study);
-        setStudyMemberHost(study.getStudyId(), study.getStudyHost());
+
+    public Study createStudy(Study study) {
+        Study saveStudy = studyRepository.save(study);
+
+        return saveStudy;
     }
 
-    public void createStudySchedule(StudySchedule studySchedule){
-        studyScheduleRepository.save(studySchedule);
+    public StudySchedule createStudySchedule(StudySchedule studySchedule){
+        StudySchedule schedule = studyScheduleRepository.save(studySchedule);
+        return schedule;
     }
 
     @Transactional(readOnly = true)
@@ -93,6 +96,8 @@ public class StudyService {
         Member member = memberRepository.findByMemberNickName(studyHost).orElseThrow(() -> new RuntimeException("등록된 회원이 아닙니다."));
         Study study = studyRepository.findById(studyId).orElseThrow(() -> new RuntimeException("study가 존재하지 않습니다."));
 
+        System.out.println("studyId : " +studyId +", studyHost : " +studyHost);
+
         Integer point = member.getTotalPoint() - study.getStudyDeposit();
         if(point < 0){
             studyRepository.deleteById(studyId);
@@ -102,7 +107,7 @@ public class StudyService {
         member.updateTotalPoint(point);
         LocalDate currentDate = LocalDate.now();
         StudyMember studyMember = new StudyMember(0, currentDate, 0, 0, study, member);
-        studyMemberRepository.save(studyMember);
+        StudyMember savedStudyMember = studyMemberRepository.save(studyMember);
     }
 
     public Study findById(Integer studyId){
