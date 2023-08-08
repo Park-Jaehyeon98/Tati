@@ -5,8 +5,9 @@ const NoticeListItem = ({ boardItemInfo }) => {
 
     return (
         <>
-            <div>{boardItemInfo.boardTitle}</div>
-            <div>{createdDate}</div>
+            <hr />
+            <div>{boardTitle}    {createdDate}</div>
+            <hr />
         </>
 
     )

@@ -7,22 +7,30 @@ import style from './NoticeList.module.css';
 const NoticeList = () => {
     // 여기서 요청 보냄
     const [boardList, setBoardList] = useState([]);
-    const [pageNum, setPageNum] = useState(0);
+
+    const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const firstPage = currentPage - (currentPage % 5) + 1
 
-    const subURL = 'notice'
-    const config = { params: { pageNum: pageNum } }
 
+    // const subURL = 'notice'
+    // const config = { params: { pageNum: currentPage } }
+
+    // useEffect(() => {
+    //     apiClient.get(subURL, config)
+    //         .then((res) => {
+    //             // console.log(res)
+    //             setBoardList(res.data.content)
+    //             setTotalPages(res.data.sort.totalPages)
+    //         })
+    //         .catch((err) => {
+    //             console.log(err)
+    //         });
+    // }, [])
+
+    // 더미데이터용
     useEffect(() => {
-        apiClient.get(subURL, config)
-            .then((res) => {
-                // console.log(res)
-                setBoardList(res.data.content)
-                setTotalPages(res.data.sort.totalPages)
-            })
-            .catch((err) => {
-                console.log(err)
-            });
+        setBoardList([{ boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 }, { boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 }, { boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 }, { boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 }, { boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 },])
     }, [])
 
 
@@ -31,17 +39,48 @@ const NoticeList = () => {
             <h3>공지사항</h3>
             {/* 공지사항 리스트 */}
             <div>
-                {boardList.length === 0 ? <></> :
+                {!(boardList.length === 0) ||
                     boardList.map((boardItemInfo, index) =>
                         <Link className={style.Link} key={index} to={`${boardItemInfo.boardId}`}>
                             <NoticeListItem boardItemInfo={boardItemInfo} />
-                        </Link>
-                    )}
+                        </Link>)
+                }
             </div>
             {/* 페이지네이션 */}
-            <div>
-                페이지네이션이 들어갑니다
-            </div>
+            <button
+                key={'<'}
+                onClick={() => setCurrentPage(currentPage - 1)}
+                disabled={currentPage === 1}
+            >
+                {"<"}
+            </button>
+            {Array.from({ length: 5 }, (_, i) =>
+                currentPage % 5 === 0 ?
+                    (firstPage - 5 + i) <= totalPages &&
+                    <button
+                        key={firstPage - 5 + i}
+                        onClick={() => setCurrentPage(firstPage - 5 + i)}
+                        disabled={firstPage - 5 + i === currentPage}
+                    >
+                        {firstPage - 5 + i}
+                    </button>
+                    :
+                    (firstPage + i) <= totalPages && <button
+                        key={firstPage + i}
+                        onClick={() => setCurrentPage(firstPage + i)}
+                        disabled={firstPage + i === currentPage}
+                    >
+                        {firstPage + i}
+                    </button>)}
+            <button
+                key={'>'}
+                onClick={() => {
+                    setCurrentPage(currentPage + 1)
+                }}
+                disabled={currentPage === totalPages || !totalPages}
+            >
+                {">"}
+            </button>
         </div>
 
     )
