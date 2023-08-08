@@ -35,7 +35,6 @@ public class StudyService {
 
     public Study createStudy(Study study) {
         Study saveStudy = studyRepository.save(study);
-
         return saveStudy;
     }
 

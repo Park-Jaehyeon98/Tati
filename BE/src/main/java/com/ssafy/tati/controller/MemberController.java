@@ -149,17 +149,20 @@ public class MemberController {
         return new ResponseEntity<>(member, HttpStatus.OK);
     }
 
-    @PostMapping("/upload")
+    @PostMapping(value="/upload", consumes = {"multipart/form-data"})
     public ResponseEntity<String> uploadFile(@RequestPart(value = "file") MultipartFile multipartFile) throws IOException {
         return new ResponseEntity<>( s3Service.uploadFile(multipartFile), HttpStatus.OK );
     }
 
+
     @GetMapping("/download")
     public ResponseEntity<ByteArrayResource> downloadFile(String fileName) throws IOException {
+        System.out.println("controller fileName: " + fileName);
         byte[] data = s3Service.downloadFile(fileName);
         ByteArrayResource resource = new ByteArrayResource(data);
 
-        String encodedFileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+        String originalFileName = extractOriginalFileName(fileName);
+        String encodedFileName = new String(originalFileName.getBytes("UTF-8"), "ISO-8859-1");
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         httpHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename(encodedFileName).build());
@@ -171,6 +174,11 @@ public class MemberController {
     public ResponseEntity<?> removeFile(String fileName){
         s3Service.deleteFile(fileName);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private String extractOriginalFileName(String fileName) {
+        int lastIndexOfSlash = fileName.lastIndexOf("_") + 1;
+        return fileName.substring(lastIndexOfSlash);
     }
 
 

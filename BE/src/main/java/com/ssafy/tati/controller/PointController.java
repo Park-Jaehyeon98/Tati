@@ -51,6 +51,7 @@ public class PointController {
         if(member.getTotalPoint()<pointReqDto.getAmount())
             throw new PointException("현재 가진 금액보다 더 큰 금액을 인출할 수 없습니다.");
 
+        pointReqDto.setPContent("포인트 인출");
         Point point = postPointMapper.pointReqDtoToPoint(member, pointReqDto);
         pointService.delete(point);
 

@@ -6,7 +6,6 @@ import com.ssafy.tati.dto.req.StudyScheduleReqDto;
 import com.ssafy.tati.dto.res.*;
 import com.ssafy.tati.entity.Category;
 import com.ssafy.tati.entity.Study;
-import com.ssafy.tati.entity.StudyMember;
 import com.ssafy.tati.entity.StudySchedule;
 import com.ssafy.tati.mapper.StudyMapper;
 import com.ssafy.tati.service.S3Service;
@@ -38,7 +37,8 @@ public class StudyController {
     @Operation(summary = "스터디 생성", description = "스터디(이름, 설명, 허용인원, 비밀번호, 스터디 시작 기간, 스터디 종료 기간, 카테고리 식별번호, 공개여부, 스터디 방장, 신청 보증금), 스터디 할 요일과 시작 시간, 종료 시간을 객체 형태로 받아서 저장", responses = {
             @ApiResponse(responseCode = "200", description = "스터디 생성 성공", content = @Content(schema = @Schema(implementation = Study.class)))})
     @PostMapping(value = "/create", consumes = {"multipart/form-data"})
-    public ResponseEntity<?> createStudy(@RequestPart StudyReqDto studyReqDto, @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws IOException {
+    public ResponseEntity<?> createStudy(@RequestPart StudyReqDto studyReqDto, @RequestPart(value = "studyImg", required = false) MultipartFile multipartFile) throws IOException {
+
 
         String img = null;
         if(multipartFile != null) {
@@ -93,7 +93,7 @@ public class StudyController {
             @ApiResponse(responseCode = "200", description = "스터디 수정 성공", content = @Content(schema = @Schema(implementation = StudyIdResDto.class)))})
     @PutMapping(value = "/{studyId}/modify",  consumes = {"multipart/form-data"})
     public ResponseEntity<?> modifyStudy(@PathVariable Integer studyId,
-                                         @RequestPart StudyModifyReqDto studyModifyReqDto, @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws IOException {
+                                         @RequestPart StudyModifyReqDto studyModifyReqDto, @RequestPart(value = "studyImg", required = false) MultipartFile multipartFile) throws IOException {
 
         if(multipartFile != null) {
             Study study = studyService.findById(studyId);
@@ -131,6 +131,5 @@ public class StudyController {
         List<StudyAllListResDto> studyAllListResDtoList = studyMapper.studyListToStudyAllListResDtoList(studyList);
         return new ResponseEntity<>(studyAllListResDtoList, HttpStatus.OK);
     }
-
 
 }
