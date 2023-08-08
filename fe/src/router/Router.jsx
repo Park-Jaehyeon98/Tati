@@ -55,6 +55,7 @@ import Room from "../Pages/Room/Room";
 // import { aX } from "@fullcalendar/core/internal-common";
 import axios from "axios";
 import NoticeDetail from "../Pages/Notice/NoticeDetail";
+import VideoRoomComponent from "../Pages/Room/VideoRoomComponent";
 
 
 export default function Router() {
@@ -133,7 +134,8 @@ export default function Router() {
         <Route path="/" element={<Main />} />
 
         {/* openvidu */}
-        <Route path="/Room" element={<Room/>}/>
+        <Route path="/Room" element={<Room/> }/>
+        <Route path="/VideoRoom" element={<VideoRoomComponent/>}/>
 
         {/* 공지사항 */}
         <Route path="/Notice" element={<Notice />}>
