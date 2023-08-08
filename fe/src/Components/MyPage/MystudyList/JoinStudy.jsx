@@ -14,7 +14,8 @@ export default function JoinStudy(){
 
   const itemsPerPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
-
+  // 가입된 스터디 리스트
+  const [joinStudy, setJoinStudy] = useState(null)
   const tokenInfo = localStorage.getItem('decodedToken');
   console.log(JSON.parse(tokenInfo));
   const parseJwt = JSON.parse(tokenInfo);
@@ -28,6 +29,7 @@ export default function JoinStudy(){
       .then((res) => {
         console.log('가입스터디=================================')
         console.log(res.data);
+        setJoinStudy(res.data)
         console.log('==============================')
       })
       .catch((err) => {

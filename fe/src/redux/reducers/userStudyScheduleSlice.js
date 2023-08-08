@@ -5,24 +5,27 @@ const userStudyScheduleSlice = createSlice({
   initialState: [], // 초기 상태
   reducers: {
 
-    addSchedule: (state, action) => {
+    addStudySchedule: (state, action) => {
       state.push(action.payload); // 스케줄 추가
     },
     
-    removeSchedule: (state, action) => {
+    removeStudySchedule: (state, action) => {
       return state.filter(schedule => schedule.id !== action.payload); // 스케줄 삭제
     },
 
-    updateSchedule: (state, action) => {
+    updateStudySchedule: (state, action) => {
       const { id, updatedData } = action.payload;
       const scheduleToUpdate = state.find(schedule => schedule.id === id);
       if (scheduleToUpdate) {
         Object.assign(scheduleToUpdate, updatedData); // 스케줄 업데이트
       }
     },
+    clearUserStudySchedule: (state, action) => {
+      return []; // 배열을 비우는 처리
+    },
   },
 });
 
-export const { addSchedule, removeSchedule, updateSchedule } = userStudyScheduleSlice.actions;
+export const { addStudySchedule, removeStudySchedule, updateStudySchedule, clearUserStudySchedule } = userStudyScheduleSlice.actions;
 
 export default userStudyScheduleSlice.reducer;

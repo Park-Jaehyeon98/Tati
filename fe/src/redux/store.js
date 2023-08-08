@@ -21,7 +21,7 @@ const persistedReducer = persistReducer(persistConfig, userSlice);
 const store = configureStore({
   reducer: {
     user: persistedReducer,
-    schedule:userScheduleSlice,
+    userSchedule:userScheduleSlice,
     userStudySchedule:userStudyScheduleSlice
   },
 });

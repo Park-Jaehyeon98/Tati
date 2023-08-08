@@ -20,9 +20,12 @@ const userScheduleSlice = createSlice({
         Object.assign(scheduleToUpdate, updatedData); // 스케줄 업데이트
       }
     },
+    clearUserSchedule: (state, action) => {
+      return []; // 배열을 비우는 처리
+    },
   },
 });
 
-export const { addSchedule, removeSchedule, updateSchedule } = userScheduleSlice.actions;
+export const { addSchedule, removeSchedule, updateSchedule, clearUserSchedule } = userScheduleSlice.actions;
 
 export default userScheduleSlice.reducer;
