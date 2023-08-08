@@ -14,12 +14,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -75,10 +75,25 @@ public class StudyBoardController {
     public ResponseEntity<?> studyBoardDetails(@PathVariable Integer boardId) {
         Board board = boardService.findBoardByBoardIdAndBoardType(boardId, '2');
         StudyBoardDetailResDto studyBoardDetailResDto = getBoardMapper.boardToStudyBoardDetailResDto(board);
-
         return new ResponseEntity(studyBoardDetailResDto, HttpStatus.OK);
     }
 
+    @Operation(summary = "스터디 게시글 파일 다운로드", description = "스터디 게시글 파일 다운로드 요청", responses = {
+            @ApiResponse(responseCode = "200", description = "파일 다운로드"),
+    })
+    @GetMapping("/board/file/download")
+    public ResponseEntity<ByteArrayResource> studyBoardFileDownload(String boardFile) throws IOException {
+        byte[] data = s3Service.downloadFile(boardFile);
+        ByteArrayResource resource = new ByteArrayResource(data);
+
+        String originalFileName = extractOriginalFileName(boardFile);
+        String encodedFileName = new String(originalFileName.getBytes("UTF-8"), "ISO-8859-1");
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        httpHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename(encodedFileName).build());
+
+        return new ResponseEntity<>(resource, httpHeaders, HttpStatus.OK);
+    }
 
     @Operation(summary = "스터디 게시글 수정 요청", description = "스터디  게시글 수정 요청", responses = {
             @ApiResponse(responseCode = "200", description = "글 수정 성공"),
@@ -112,5 +127,9 @@ public class StudyBoardController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    private String extractOriginalFileName(String fileName) {
+        int lastIndexOfSlash = fileName.lastIndexOf("_") + 1;
+        return fileName.substring(lastIndexOfSlash);
+    }
 
 }
