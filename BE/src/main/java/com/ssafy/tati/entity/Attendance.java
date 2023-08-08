@@ -3,6 +3,7 @@ package com.ssafy.tati.entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -37,9 +38,9 @@ public class Attendance {
 
 
     //입퇴실 1건에 대한 벌금
-    @Column(name = "penalty_amt", nullable = false, columnDefinition = "int default 0")
-
-    private Short penaltyAmt;
+    @Column(name = "penalty_amt")
+    @ColumnDefault("0")
+    private Integer penaltyAmt;
 
     //내용
     private String content;

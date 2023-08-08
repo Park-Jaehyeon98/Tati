@@ -20,6 +20,7 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class AttendanceService {
+
     private final AttendanceRepository attendanceRepository;
     private final MemberRepository memberRepository;
     private final StudyMemberRepository studyMemberRepository;
@@ -89,6 +90,10 @@ public class AttendanceService {
 
         char attendanceStatus = '2';
 
+        System.out.println("스터디 시작 시각: "+ startTime);
+        System.out.println("스터디 입실 시각: " + inTime);
+        System.out.println("스터디 종료 시각: "+ endTime);
+        System.out.println("스터디 퇴실 시각: " + outTime);
         if (inTime.isAfter(startTime)) { // 시작 시각보다 늦게 들어오면
             attendanceStatus = '1'; // 지각
         }
@@ -113,7 +118,7 @@ public class AttendanceService {
             modifyStudyMember.setAbsenceCount(beforeAbsenceCount + 2);
             // 벌금
             Integer pelaltyAmt = modifyStudyMember.getStudy().getStudyDeposit() / 3;
-            modifyAttendance.setPenaltyAmt(pelaltyAmt.shortValue());
+            modifyAttendance.setPenaltyAmt(pelaltyAmt);
             modifyStudyMember.setStudyMemberPenalty(modifyMember.getTotalPoint() + pelaltyAmt);
         } else if (attendanceStatus == '1') { // 지각
             // 출석 여부
@@ -128,7 +133,7 @@ public class AttendanceService {
 
             if (modifyStudyMember.getAbsenceCount() % 2 == 0) {
                 Integer pelaltyAmt = modifyStudyMember.getStudy().getStudyDeposit() / 3;
-                modifyAttendance.setPenaltyAmt(pelaltyAmt.shortValue());
+                modifyAttendance.setPenaltyAmt(pelaltyAmt);
                 modifyStudyMember.setStudyMemberPenalty(modifyMember.getTotalPoint() + pelaltyAmt);
             }
         } else { // 출석
@@ -141,11 +146,20 @@ public class AttendanceService {
             modifyMember.setTotalScore(beforeScore + 1);
             Integer beforeAbsenceCount = modifyStudyMember.getAbsenceCount();
             modifyStudyMember.setAbsenceCount(beforeAbsenceCount + 1);
+            // 벌금
+            modifyAttendance.setPenaltyAmt(0);
         }
 
-        // AbsenceCount가 6이상이면 진행 스터디회원에서 삭제
+        System.out.println("score content : " + modifyStudyMember.getStudy().getStudyName() + modifyAttendance.getIsAttended());
+        System.out.println(modifyStudyMember.getAbsenceCount());
+
+        // todo AbsenceCount가 6이상이면 진행 스터디회원에서 삭제
         if (modifyStudyMember.getAbsenceCount() >= 6) {
-            studyMemberRepository.delete(modifyStudyMember);
+            System.out.println(modifyStudyMember);
+            studyMemberRepository.deleteById(modifyStudyMember.getStudyMemberId());
+
+            System.out.println(modifyStudyMember.getStudyMemberId() +", " + modifyStudyMember.getAbsenceCount());
+            System.out.println("-------------");
         }
         return modifyAttendance;
     }
