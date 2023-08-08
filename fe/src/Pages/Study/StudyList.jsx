@@ -16,8 +16,8 @@ const StudyList = () => {
     const [totalPages, setTotalPages] = useState(1);
     const firstPage = currentPage - (currentPage % 5) + 1
     // 카테고리 선택
-    const [listCategory, setListCategory] = useState(null);
-    const categoryArray = ["자격증", "취업", "학교", "공시", "기타"];
+    const [categoryId, setCategoryId] = useState(null);
+    const categoryIdArray = ["자격증", "취업", "학교", "공시", "기타"];
     // 검색 키워드
     const [keywordInput, setKeywordInput] = useState('');
     const [keyword, setKeyword] = useState(null);
@@ -38,8 +38,8 @@ const StudyList = () => {
     }, [])
 
     // 카테고리변경시
-    const handleCategoryClick = (value) => {
-        (value === listCategory ? setListCategory(null) : setListCategory(value))
+    const handleCategoryIdClick = (value) => {
+        (value === categoryId - 1 ? setCategoryId(null) : setCategoryId(value + 1))
     }
     // 검색창입력 변경, 검색창 입력
     const handleKeywordInputChagne = (e) => {
@@ -51,12 +51,12 @@ const StudyList = () => {
     }
     // 키워드 조회
     useEffect(() => {
-        if (keyword || listCategory) {
+        if (keyword || categoryId) {
             console.log("키워드")
             apiClient.get('study', {
                 params: {
                     page: currentPage,
-                    category: listCategory,
+                    category: categoryId,
                     keyword: (keyword ? keyword : null)
                 }
             })
@@ -69,7 +69,7 @@ const StudyList = () => {
                     console.log(err);
                 })
         }
-    }, [currentPage, listCategory, keyword])
+    }, [currentPage, categoryId, keyword])
 
 
     // 하드코딩용
@@ -85,8 +85,8 @@ const StudyList = () => {
                 <hr />
                 <button onClick={() => { navigate('Create') }}>스터디 만들기</button>
                 <div>
-                    {categoryArray.map((category) =>
-                        <button key={category} className={category === listCategory ? style.selected : style.noSelected} onClick={() => handleCategoryClick(category)}>{category}</button>
+                    {categoryIdArray.map((categoryIdItem, index) =>
+                        <button key={categoryIdItem} className={index === categoryId - 1 ? style.selected : style.noSelected} onClick={() => handleCategoryIdClick(index)}>{categoryIdItem}</button>
                     )}
                 </div>
                 <div>
@@ -97,7 +97,7 @@ const StudyList = () => {
                 <button onClick={() => {
                     console.log({
                         page: currentPage,
-                        category: listCategory,
+                        category: categoryId,
                         keyword: keyword
                     })
                 }}>인풋값 콘솔 출력 테스트용</button>

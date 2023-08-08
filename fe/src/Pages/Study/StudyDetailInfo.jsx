@@ -4,7 +4,7 @@ import { useOutletContext } from 'react-router-dom'
 
 const StudyDetailInfo = () => {
     const {
-        category,
+        categoryId,
         studyName,
         studyDescription,
         studyStartDate,
@@ -26,7 +26,7 @@ const StudyDetailInfo = () => {
                 <div className={style.box}>
                     {studyDescription}
                 </div>
-                공지사항
+                공지사항x
                 <div className={style.box}>
                     여기는 대표글
                 </div>
@@ -39,9 +39,12 @@ const StudyDetailInfo = () => {
                 <div className={style.box}>
                     {
                         // 일정 표시
-                        studySchedule.map(({ studyDay, studyStartTime, studyEndTime }) => {
-                            return <div></div>
-                        })
+
+                        // (studySchedule.length >= 2) &&
+                        // studySchedule.map(({ studyDay, studyStartTime, studyEndTime }) => {
+                        //     return <div></div>
+                        // })
+
                     }
                 </div>
                 스터디 멤버

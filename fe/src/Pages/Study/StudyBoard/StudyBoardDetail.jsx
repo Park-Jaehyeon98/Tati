@@ -122,14 +122,13 @@ const StudyBoardDetail = () => {
                 게시글 내용~
             </div>
             {
-                boardType === 2 ?
-                    <div>
-                        댓글창
-                        <StudyBoardCommentList />
-                        새 댓글
-                        <input type="text" value={commentContent} onChange={handleCommentContentChange} />
-                    </div>
-                    : <></>
+                boardType === 2 &&
+                <div>
+                    댓글창
+                    <StudyBoardCommentList />
+                    새 댓글
+                    <input type="text" value={commentContent} onChange={handleCommentContentChange} />
+                </div>
             }
         </div >
     )
