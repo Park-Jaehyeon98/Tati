@@ -1,9 +1,6 @@
 package com.ssafy.tati.service;
 
-import com.ssafy.tati.entity.Attendance;
-import com.ssafy.tati.entity.Member;
-import com.ssafy.tati.entity.StudyMember;
-import com.ssafy.tati.entity.StudySchedule;
+import com.ssafy.tati.entity.*;
 import com.ssafy.tati.repository.AttendanceRepository;
 import com.ssafy.tati.repository.MemberRepository;
 import com.ssafy.tati.repository.StudyMemberRepository;
@@ -77,10 +74,10 @@ public class AttendanceService {
 
         modifyAttendance.setOutTime(attendance.getOutTime());
         StudyMember modifyStudyMember = modifyAttendance.getStudyMember();
-        Integer studyId = modifyStudyMember.getStudy().getStudyId();
+        Study study = modifyStudyMember.getStudy();
         Integer studyDayNumber = modifyAttendance.getInTime().getDayOfWeek().getValue();
 
-        Optional<StudySchedule> optionalStudySchedule = studyScheduleRepository.findByStudyIdAndStudyDay(studyId, Integer.toString(studyDayNumber));
+        Optional<StudySchedule> optionalStudySchedule = studyScheduleRepository.findByStudyAndStudyDay(study, Integer.toString(studyDayNumber));
         if (optionalStudySchedule.isEmpty()) {
             throw new RuntimeException();
         }

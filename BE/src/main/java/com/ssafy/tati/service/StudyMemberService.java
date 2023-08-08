@@ -1,10 +1,7 @@
 package com.ssafy.tati.service;
 
-import com.ssafy.tati.dto.res.StudyMemberListResDto;
 import com.ssafy.tati.dto.res.StudyMemberResDto;
-import com.ssafy.tati.dto.res.StudyMemberSecessionResDto;
 import com.ssafy.tati.entity.Member;
-import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.entity.StudyMember;
 import com.ssafy.tati.repository.MemberRepository;
 import com.ssafy.tati.repository.StudyMemberRepository;
@@ -48,7 +45,12 @@ public class StudyMemberService {
     ////////////////////////
     // 스터디룸 입실을 위해 스터디 멤버인지 확인
     public StudyMember findStudyMember(Integer studyId, Integer memberId) {
-        Optional<StudyMember> optionalStudyMember = studyMemberRepository.findByStudyIdAndMemberId(studyId, memberId);
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        if (optionalMember.isEmpty()) {
+            throw new RuntimeException();
+        }
+        Member member = optionalMember.get();
+        Optional<StudyMember> optionalStudyMember = studyMemberRepository.findByStudyStudyIdAndMember(studyId, member);
         if (optionalStudyMember.isEmpty()) {
             throw new RuntimeException();
         }
