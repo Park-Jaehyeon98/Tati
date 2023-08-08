@@ -9,6 +9,7 @@ import com.ssafy.tati.mapper.board.GetBoardMapper;
 import com.ssafy.tati.mapper.board.PostBoardMapper;
 import com.ssafy.tati.mapper.board.PutBoardMapper;
 import com.ssafy.tati.service.BoardService;
+import com.ssafy.tati.service.S3Service;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,6 +21,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 
 @Tag(name = "스터디 게시판", description = "스터디 게시판 API 문서")
@@ -31,16 +35,22 @@ public class StudyBoardController {
     private final PostBoardMapper postBoardMapper;
     private final GetBoardMapper getBoardMapper;
     private final PutBoardMapper putBoardMapper;
-
+    private final S3Service s3Service;
 
     @Operation(summary = "스터디 게시글 작성 요청", description = "스터디 게시글을 작성 후 글 작성 요청", responses = {
             @ApiResponse(responseCode = "200", description = "글 등록 성공"),
     })
     @PostMapping("/board")
-    public ResponseEntity<?> studyBoardAdd(@RequestBody PostStudyBoardReqDto postStudyBoardReqDto) {
+    public ResponseEntity<?> studyBoardAdd(@RequestPart PostStudyBoardReqDto postStudyBoardReqDto, @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws IOException {
         Integer memberId = postStudyBoardReqDto.getMemberId();
         Integer studyId = postStudyBoardReqDto.getStudyId();
         Board board = postBoardMapper.postStudyBoardReqDtoToBoard('2', postStudyBoardReqDto);
+
+        if (multipartFile != null) {
+
+            String url = s3Service.uploadFile(multipartFile);
+            board.setBoardFile(url);
+        }
         boardService.addStudyBoard(memberId, studyId, board);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -74,9 +84,20 @@ public class StudyBoardController {
             @ApiResponse(responseCode = "200", description = "글 수정 성공"),
     })
     @PutMapping("/board")
-    public ResponseEntity<?> studyBoardModify(@RequestBody PutBoardReqDto putBoardReqDto) {
+    public ResponseEntity<?> studyBoardModify(@RequestPart PutBoardReqDto putBoardReqDto, @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws IOException {
         Board board = putBoardMapper.putBoardReqDtoToBoard(putBoardReqDto);
         Integer memberId = putBoardReqDto.getMemberId();
+
+        // todo 수정 시 파일 삭제 처리
+        String url;
+        if (multipartFile != null) {
+            String boardFile = board.getBoardFile();
+
+            if (boardFile != null) s3Service.deleteFile(boardFile);
+            url = s3Service.uploadFile(multipartFile);
+            board.setBoardFile(url);
+        }
+
         boardService.modifyBoard(memberId, board);
 
         return new ResponseEntity(HttpStatus.OK);
