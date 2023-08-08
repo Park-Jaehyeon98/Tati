@@ -1,8 +1,8 @@
 import React from "react";
-import style from "./_Mypage.module.css"
+import style from "../_Mypage.module.css"
 
-import ApplyStudy from '../../Components/_MyPage/MystudyList/ApplyStudy'
-import Aside from "../../Components/_MyPage/Aside";
+import ApplyStudy from '../../../Components/_MyPage/MystudyList/ApplyStudy'
+import Aside from "../../../Components/_MyPage/Aside";
 
 
 export default function MyPageApplyStudy(){

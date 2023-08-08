@@ -1,8 +1,8 @@
 import React from "react";
-import style from "./_Mypage.module.css"
+import style from "../_Mypage.module.css"
 
-import PointWithdraw from '../../Components/_MyPage/PointWithdraw'
-import Aside from "../../Components/_MyPage/Aside";
+import PointWithdraw from '../../../Components/_MyPage/Point/PointWithdraw'
+import Aside from "../../../Components/_MyPage/Aside";
 
 
 export default function MyPagePointWithdraw(){

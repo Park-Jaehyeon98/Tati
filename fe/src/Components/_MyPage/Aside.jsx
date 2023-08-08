@@ -9,6 +9,8 @@ export default function Aside() {
 
   const [authModal, setAuthModal] = useState(false);
 
+  const totalPoint = localStorage.getItem('totalPoint');
+  const memberNickName = localStorage.getItem('memberNickName');
 
   const onButtonClick = (page) => {
     if (page === "schedule") {
@@ -21,6 +23,8 @@ export default function Aside() {
       navigate("/MyPage/MyPagePoint");
     } else if (page === "AuthModal") {
       handleButtonClick(); // 회원정보수정 모달을 열기
+    } else if (page === "RewardPoint") {
+      navigate("/MyPage/MyPageRewardPoint"); // 상벌점내역 페이지로 이동
     }
   };
 
@@ -39,8 +43,8 @@ export default function Aside() {
       </div>
 
       <div className={style.name_point}>
-        <p>김싸피</p>
-        <p>마일리지 30000pt</p>
+        <p>{memberNickName}</p>
+        <p>마일리지 {totalPoint}pt</p>
       </div>
       <div>
         <button className={style.bt} onClick={() => onButtonClick("schedule")}>
@@ -54,6 +58,9 @@ export default function Aside() {
         </button>
         <button className={style.bt} onClick={() => onButtonClick("AuthModal")}>
           회원정보수정
+        </button>
+        <button className={style.bt} onClick={() => onButtonClick("RewardPoint")}>
+          상벌점내역
         </button>
       </div>
 

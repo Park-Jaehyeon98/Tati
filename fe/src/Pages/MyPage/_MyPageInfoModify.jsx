@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./_Mypage.module.css"
 
-import InfoModify from "../../Components/_MyPage/InfoModify";
+import InfoModify from "../../Components/_MyPage/InfoModify/InfoModify";
 import Aside from "../../Components/_MyPage/Aside";
 
 
