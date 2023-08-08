@@ -48,10 +48,13 @@ import MyPagePointHistory from "../Pages/MyPage/Point/_MyPagePointHistory";
 import MyPagePointWithdraw from "../Pages/MyPage/Point/_MyPagePointWithdraw";
 import MyPageRewardPoint from "../Pages/MyPage/_MyPageRewardPoint"
 
+// openvidue
+import Room from "../Pages/Room/Room";
 
 // import { aX } from "@fullcalendar/core/internal-common";
 import axios from "axios";
 import NoticeDetail from "../Pages/Notice/NoticeDetail";
+import VideoRoomComponent from "../Pages/Room/VideoRoomComponent";
 
 
 export default function Router() {
@@ -106,6 +109,10 @@ export default function Router() {
     <BrowserRouter>
       <div className={style.navBox}>
         <nav>
+          {/* openvidu */}
+          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Room">
+            openvidu
+          </NavLink>
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Notice">
             공지사항
           </NavLink>
@@ -139,6 +146,10 @@ export default function Router() {
       <Routes>
 
         <Route path="/" element={<Main />} />
+
+        {/* openvidu */}
+        <Route path="/Room" element={<Room/> }/>
+        <Route path="/VideoRoom" element={<VideoRoomComponent/>}/>
 
         {/* 공지사항 */}
         <Route path="/Notice" element={<Notice />}>
