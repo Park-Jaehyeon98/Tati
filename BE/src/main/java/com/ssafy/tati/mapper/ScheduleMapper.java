@@ -6,6 +6,8 @@ import com.ssafy.tati.entity.Member;
 import com.ssafy.tati.entity.MemberSchedule;
 import org.mapstruct.Mapper;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
@@ -16,8 +18,10 @@ public interface ScheduleMapper {
 
         MemberSchedule schedule = new MemberSchedule();
 
+        LocalDate date = scheduleReqDto.getMemberScheduleDate().toLocalDate();
+
         schedule.setMemberScheduleId(0);
-        schedule.setMemberScheduleDate(scheduleReqDto.getMemberScheduleDate());
+        schedule.setMemberScheduleDate(date);
         schedule.setMemberScheduleTitle(scheduleReqDto.getMemberScheduleTitle());
         schedule.setMemberScheduleContent(scheduleReqDto.getMemberScheduleContent());
         schedule.setMember(member);

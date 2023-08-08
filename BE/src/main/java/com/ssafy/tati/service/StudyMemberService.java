@@ -28,7 +28,6 @@ public class StudyMemberService {
         List<StudyMember> studyMemberList = studyMemberRepository.findAllByStudyStudyId(studyId);
         if(studyMemberList == null){
             throw new RuntimeException("스터디가 존재하지 않습니다.");
-
         }
         List<StudyMemberResDto> studyMemberResDtoList = new ArrayList<>();
         for (StudyMember studyMember : studyMemberList) {

@@ -25,6 +25,7 @@ public class StudyMemberController {
         return new ResponseEntity<>(studyMemberListResDto, HttpStatus.OK);
     }
 
+
     @PostMapping("/sesession")
     public ResponseEntity<?> studyMemberSecession(@RequestBody StudyMemberSecessionReqDto studyMemberSecessionReqDto){
         StudyMemberSecessionResDto studyMemberSecessionResDto = studyMemberService.studyMemberSecession(studyMemberSecessionReqDto.getStudyId(), studyMemberSecessionReqDto.getMemberId());

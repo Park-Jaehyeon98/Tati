@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/study/attendance")
 @RequiredArgsConstructor
 public class AttendanceController {
+
     private final MemberService memberService;
     private final StudyMemberService studyMemberService;
     private final AttendanceMapper attendanceMapper;

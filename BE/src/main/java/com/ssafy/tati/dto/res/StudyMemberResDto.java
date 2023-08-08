@@ -20,4 +20,5 @@ public class StudyMemberResDto {
     private Integer totalScore;
     @Schema(description = "회원 가입일")
     private String createdDate;
+
 }
