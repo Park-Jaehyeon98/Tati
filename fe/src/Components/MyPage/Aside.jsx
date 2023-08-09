@@ -12,12 +12,6 @@ export default function Aside() {
 
   const [authModal, setAuthModal] = useState(false);
 
-  // const reader = new FileReader();
-  //   reader.onloadend = () => {
-  //     setFile(reader.result);
-  //   };
-  //   reader.readAsDataURL(img);
-
   const onButtonClick = (page) => {
     if (page === "schedule") {
       navigate("/MyPage");

@@ -199,7 +199,7 @@ export default function InfoModify() {
           <p className={style.InfoModify_name}>{user.memberName}</p>
         </p>
         <p className={style.InfoModify_profile}>
-          프로필
+          <p className={style.InfoModify_profile_p}>프로필</p>
 
           <label htmlFor="profile" className={`${style.customFileInput} ${style.centeredText}`}>
             이미지 업로드

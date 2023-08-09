@@ -65,6 +65,7 @@ export default function Router() {
 
   const user = useSelector((state) => state.user.user);
 
+  // 로그아웃
   const handleLogout = () => {
 
     const token = localStorage.getItem("accessToken");
@@ -85,6 +86,7 @@ export default function Router() {
     setIsLoggedIn(false);
   };
 
+  
   useEffect(() => {
     if (user) {
       setIsLoggedIn(true);

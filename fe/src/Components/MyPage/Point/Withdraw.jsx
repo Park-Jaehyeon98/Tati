@@ -2,19 +2,22 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./Charge.module.css"
 import axios from "axios";
+import { useSelector } from "react-redux";
+
+// 리덕스 저장
+import { useDispatch } from 'react-redux';
+import { updateUser } from '../../../redux/reducers/userSlice';
 
 export default function Withdraw() {
 
   const navigate = useNavigate();
 
   
-  // decodedToken가져오기
-  const tokenInfo = localStorage.getItem('decodedToken');
-  const parseJwt = JSON.parse(tokenInfo);
-  // 로컬에 있는 포인트
-  const totalPoint = localStorage.getItem('totalPoint');
+   // 리덕스 펄시스트 유저정보를 불러옴
+   const user = useSelector(state => state.user.user);
+
   
-  const [currentPoint, setCurrentPoint] = useState(totalPoint);
+  const [currentPoint, setCurrentPoint] = useState(user.totalPoint);
   const [rechargeAmount, setRechargeAmount] = useState(0);
   
   const handleRecharge = () => {
@@ -46,7 +49,7 @@ export default function Withdraw() {
     setRechargeAmount(0);
     const pContent = '포인트 인출'
 
-    console.log(`인출 email - ${parseJwt.sub} 
+    console.log(`인출 email - ${user.email} 
     amount - ${rechargeAmount} 
     pointDate - ${currentDate}
     pContent - ${pContent}`)
@@ -54,7 +57,7 @@ export default function Withdraw() {
     console.log(process.env.REACT_APP_URL)
 
     axios.post(`${process.env.REACT_APP_URL}/member/point/withdrawal`, {
-      email:parseJwt.sub,
+      email:user.email,
       amount:rechargeAmount,
       pointDate:currentDate,
       pContent
@@ -75,7 +78,7 @@ export default function Withdraw() {
 
   return (
     <div className={style.Change}>
-      <p className={style.point}>현재 포인트 <span className={style.currentPoint}>{currentPoint}</span></p>
+      <p className={style.point}>현재 포인트 <span className={style.currentPoint}>{user.totalPoint}</span></p>
       <p className={style.point}>
         인출 포인트
         <input  className={style.rechargeAmount} type="text" value={rechargeAmount} onChange={handleChange} />

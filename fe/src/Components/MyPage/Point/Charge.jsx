@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import style from "./Charge.module.css"
 import axios from "axios";
+import { useSelector } from "react-redux";
+
+// 리덕스 저장
+import { useDispatch } from 'react-redux';
+import { updateUser } from '../../../redux/reducers/userSlice';
 
 export default function Change() {
 
-  // 로컬에 있는 포인트
-  const totalPoint = Number(localStorage.getItem('totalPoint'));
+  const dispatch = useDispatch();
+  
+   // 리덕스 펄시스트 유저정보를 불러옴
+   const user = useSelector(state => state.user.user);
+  
 
-  const [currentPoint, setCurrentPoint] = useState(totalPoint);
+  const [currentPoint, setCurrentPoint] = useState(user.totalPoint);
   const [rechargeAmount, setRechargeAmount] = useState(0);
 
   // 로컬의 decodedToken가져오기
@@ -41,12 +49,16 @@ export default function Change() {
     console.log(process.env.REACT_APP_URL)
 
     axios.post(`${process.env.REACT_APP_URL}/payment/ready`, {
-      email: parseJwt.sub,
-      amount
+      email: user.email,
+      amount:rechargeAmount
     })
       .then((res) => {
         console.log('=================================')
         console.log(res.data);
+
+        const updatedUser = {totalPoint:amount};
+        dispatch(updateUser(updatedUser)); // Dispatch the action
+
         console.log('==============================')
         const { next_redirect_pc_url, tid } = res.data;
         // tid 로컬에 저장
