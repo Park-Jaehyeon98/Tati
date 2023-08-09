@@ -1,6 +1,6 @@
 package com.ssafy.tati.repository;
 
-import com.ssafy.tati.entity.Study;
+import com.ssafy.tati.entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,5 +15,19 @@ public interface StudyRepository extends JpaRepository<Study, Integer> {
     List<Study> findByCategoryAndStudyNameContaining(@Param("categoryId") Integer categoryId, @Param("keyword") String keyword);
 
 
+    @Query("select b from Board as b join fetch b.study as s where s.studyId = :studyId")
+    List<Board> findBoardByStudyId(Integer studyId);
+
+    @Query("select sc from StudySchedule as sc join fetch sc.study as s where s.studyId = :studyId")
+    List<StudySchedule> findScheduleById(Integer studyId);
+
+    @Query("select sa from StudyApplicant as sa join fetch sa.study as s where s.studyId = :studyId")
+    List<StudyApplicant> findApplicantById(Integer studyId);
+
+    @Query("select sm from StudyMember as sm join fetch sm.study as s where s.studyId = :studyId")
+    List<StudyMember> findStudyMemberById(Integer studyId);
+
+    @Query("select m from Member as m ")
+    List<Member> findMemberByStudyMemberId(Integer studyMemberId);
 
 }

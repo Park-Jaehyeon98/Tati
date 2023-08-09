@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Schema(description = "스터디 참가 회원 ResDto")
 public class StudyMemberResDto {
+
     @Schema(description = "회원 닉네임")
     private String memberNickName;
     @Schema(description = "회원 열정지수")
