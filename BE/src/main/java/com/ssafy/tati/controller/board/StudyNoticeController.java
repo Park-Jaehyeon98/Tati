@@ -23,6 +23,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 
 @Tag(name = "스터디 공지사항", description = "스터디 공지사항 API 문서")
 @RestController
@@ -66,7 +70,12 @@ public class StudyNoticeController {
     @GetMapping("/notice/{boardId}")
     public ResponseEntity<?> studyNoticeDetails(@PathVariable Integer boardId) {
         Board board = boardService.findBoardByBoardIdAndBoardType(boardId, '1');
-        StudyNoticeDetailResDto studyNoticeDetailResDto = getBoardMapper.boardToStudyNoticeDetailResDto(board);
+        String create = board.getCreatedDate().toLocalDate().toString();
+        String modify = board.getModifiedDate().toLocalDate().toString();
+
+        StudyNoticeDetailResDto studyNoticeDetailResDto = new StudyNoticeDetailResDto(
+                board.getBoardId(), board.getBoardTitle(), board.getMember().getMemberNickName(),
+                board.getBoardHit(),create, modify, board.isMainNoticeYn());
 
         return new ResponseEntity(studyNoticeDetailResDto, HttpStatus.OK);
     }
