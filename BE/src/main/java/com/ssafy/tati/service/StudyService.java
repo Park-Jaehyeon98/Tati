@@ -114,4 +114,28 @@ public class StudyService {
         return study;
     }
 
+    public List<Board> selectStudyBoard(Integer studyId){
+        List<Board> boardList = studyRepository.findBoardByStudyId(studyId);
+        return boardList;
+    }
+
+
+    public List<StudySchedule> selectStudySchedule(Integer studyId){
+        List<StudySchedule> scheduleList = studyRepository.findScheduleById(studyId);
+        return scheduleList;
+    }
+
+    public List<StudyApplicant> selectStudyApplicant(Integer studyId){
+        List<StudyApplicant> applicantList = studyRepository.findApplicantById(studyId);
+        return applicantList;
+    }
+
+    public List<StudyMember> selectStudyMember(Integer studyId){
+        List<StudyMember> memberList = studyRepository.findStudyMemberById(studyId);
+        return memberList;
+    }
+
+//    public List<Member> selectMember(Integer studyMemberId){
+//
+//    }
 }
