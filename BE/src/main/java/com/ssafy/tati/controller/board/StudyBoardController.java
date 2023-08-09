@@ -41,10 +41,10 @@ public class StudyBoardController {
             @ApiResponse(responseCode = "200", description = "글 등록 성공"),
     })
     @PostMapping(value = "/board", consumes = {"multipart/form-data"})
-    public ResponseEntity<?> studyBoardAdd(@RequestPart PostStudyBoardReqDto postStudyBoardReqDto, @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws IOException {
-        Integer memberId = postStudyBoardReqDto.getMemberId();
-        Integer studyId = postStudyBoardReqDto.getStudyId();
-        Board board = postBoardMapper.postStudyBoardReqDtoToBoard('2', postStudyBoardReqDto);
+    public ResponseEntity<?> studyBoardAdd(@RequestPart PostStudyBoardReqDto studyBoardCreateDto, @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws IOException {
+        Integer memberId = studyBoardCreateDto.getMemberId();
+        Integer studyId = studyBoardCreateDto.getStudyId();
+        Board board = postBoardMapper.postStudyBoardReqDtoToBoard('2', studyBoardCreateDto);
 
         if (multipartFile != null) {
 
@@ -99,9 +99,9 @@ public class StudyBoardController {
             @ApiResponse(responseCode = "200", description = "글 수정 성공"),
     })
     @PutMapping(value = "/board", consumes = {"multipart/form-data"})
-    public ResponseEntity<?> studyBoardModify(@RequestPart PutBoardReqDto putBoardReqDto, @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws IOException {
-        Board board = putBoardMapper.putBoardReqDtoToBoard(putBoardReqDto);
-        Integer memberId = putBoardReqDto.getMemberId();
+    public ResponseEntity<?> studyBoardModify(@RequestPart PutBoardReqDto studyBoardModifyDto, @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws IOException {
+        Board board = putBoardMapper.putBoardReqDtoToBoard(studyBoardModifyDto);
+        Integer memberId = studyBoardModifyDto.getMemberId();
 
         String url;
         if (multipartFile != null) {
