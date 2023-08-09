@@ -4,9 +4,10 @@ import com.ssafy.tati.dto.req.StudyReqDto;
 import com.ssafy.tati.dto.req.StudyScheduleReqDto;
 import com.ssafy.tati.dto.res.StudyAllListResDto;
 import com.ssafy.tati.dto.res.StudyDetailResDto;
-import com.ssafy.tati.entity.Category;
-import com.ssafy.tati.entity.Study;
-import com.ssafy.tati.entity.StudySchedule;
+import com.ssafy.tati.dto.res.StudyMemberResDto;
+import com.ssafy.tati.dto.res.StudyScheduleResDto;
+import com.ssafy.tati.entity.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.mapstruct.Mapper;
 
 import java.time.LocalDate;
@@ -42,6 +43,8 @@ public interface StudyMapper {
         study.setStudyStartDate(startDate);
         study.setStudyEndDate(endDate);
         study.setCategory(category);
+        study.setTotalDeposit(studyReqDto.getStudyDeposit());
+        study.setTotalPenalty(0);
         study.setStudyScheduleList(studyScheduleList);
 
         return study;
@@ -65,8 +68,9 @@ public interface StudyMapper {
         return studySchedule;
     }
 
-
-    StudyDetailResDto studyToStudyDetailResDto(Study study, Category category, boolean studyMemberYn);
+    StudyDetailResDto studyToStudyDetailResDto(Study study, Category category, boolean studyMemberYn,
+                                               List<Board> boardList, List<StudyScheduleResDto> studyScheduleResDtoList,
+                                               List<StudyApplicant> applicantList, List<StudyMemberResDto> studyMemberResDtoList);
 
     List<StudyAllListResDto> studyListToStudyAllListResDtoList(List<Study> studyList);
 

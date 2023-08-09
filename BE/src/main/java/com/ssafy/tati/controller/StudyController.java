@@ -4,11 +4,12 @@ import com.ssafy.tati.dto.req.StudyModifyReqDto;
 import com.ssafy.tati.dto.req.StudyReqDto;
 import com.ssafy.tati.dto.req.StudyScheduleReqDto;
 import com.ssafy.tati.dto.res.*;
-import com.ssafy.tati.entity.Category;
-import com.ssafy.tati.entity.Study;
-import com.ssafy.tati.entity.StudyMember;
-import com.ssafy.tati.entity.StudySchedule;
+import com.ssafy.tati.entity.*;
 import com.ssafy.tati.mapper.StudyMapper;
+import com.ssafy.tati.mapper.StudyMemberMapper;
+import com.ssafy.tati.mapper.StudyMemberMapperImpl;
+import com.ssafy.tati.mapper.StudyScheduleMapper;
+import com.ssafy.tati.service.MemberService;
 import com.ssafy.tati.service.S3Service;
 import com.ssafy.tati.service.StudyMemberService;
 import com.ssafy.tati.service.StudyService;
@@ -34,10 +35,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StudyController {
     private final StudyService studyService;
+    private final MemberService memberService;
     private final S3Service s3Service;
     private final StudyMemberService studyMemberService;
     private final StudyMapper studyMapper;
-
+    private final StudyScheduleMapper studyScheduleMapper;
+    private final StudyMemberMapper studyMemberMapper;
 
 
     @Operation(summary = "스터디 생성", description = "스터디(이름, 설명, 허용인원, 비밀번호, 스터디 시작 기간, 스터디 종료 기간, 카테고리 식별번호, 공개여부, 스터디 방장, 신청 보증금), 스터디 할 요일과 시작 시간, 종료 시간을 객체 형태로 받아서 저장", responses = {
@@ -99,8 +102,56 @@ public class StudyController {
             studyMemberYn = true;
         }
 
+        List<Board> boardList = studyService.selectStudyBoard(studyId);
+        List<StudySchedule> schedules = studyService.selectStudySchedule(studyId);
+        List<StudyScheduleResDto> studyScheduleResDtoList = studyScheduleMapper.studyScheduleListToStudyScheduleResDtoList(schedules);
+        List<StudyApplicant> applicantList = studyService.selectStudyApplicant(studyId);
+        List<StudyMember> studyMemberList = studyService.selectStudyMember(studyId);
+
+        List<StudyMemberResDto> studyMemberResDtoList = new ArrayList<>();
+        for(StudyMember findStudyMember : studyMemberList){
+            Integer studyMemberId = findStudyMember.getMember().getMemberId();
+            Member member = memberService.findById(studyMemberId);
+            studyMemberResDtoList.add(new StudyMemberResDto(member.getMemberNickName(),
+                    member.getTotalScore(), member.getCreatedDate().toString()));
+        }
+
+
+
+//        스터디 공지
+//        studyNotice - Notice객체
+//        noticeId - int
+//        noticeTitle - String
+//
+
+
+//        List<studySchedule> studySchedules
+//        day - String
+//        startTime - time
+//        endTime - time
+//
+//        스터디 게시판
+//        List<studyBoard> - Board 객체
+//        boardId - int
+//        boardTitle - String
+//        boardCreatedTime - date
+
+//
+//        totalMemberCount - int
+//        List<joinMember>
+//        memberId - int
+//        memberNickName - String
+//        passionScore - int
+//
+//        List<applyMember>
+//        memberId - int
+//        memberNickName - String
+//        passionScore - int
+
+
         Study study = studyService.getStudyDetail(studyId);
-        StudyDetailResDto studyDetailResDto = studyMapper.studyToStudyDetailResDto(study, study.getCategory(), studyMemberYn);
+        StudyDetailResDto studyDetailResDto = studyMapper.studyToStudyDetailResDto(study, study.getCategory(),
+                studyMemberYn, boardList, studyScheduleResDtoList, applicantList, studyMemberResDtoList );
         return new ResponseEntity<>(studyDetailResDto, HttpStatus.OK);
     }
 

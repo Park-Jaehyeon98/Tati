@@ -32,5 +32,4 @@ public class StudyMemberController {
         return new ResponseEntity<>(studyMemberSecessionResDto, HttpStatus.OK);
     }
 
-
 }
