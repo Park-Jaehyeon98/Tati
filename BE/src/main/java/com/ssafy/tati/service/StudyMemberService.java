@@ -32,7 +32,8 @@ public class StudyMemberService {
         List<StudyMemberResDto> studyMemberResDtoList = new ArrayList<>();
         for (StudyMember studyMember : studyMemberList) {
             Member member = studyMember.getMember();
-            StudyMemberResDto studyMemberResDto = new StudyMemberResDto(member.getMemberNickName(), member.getTotalScore(), member.getCreatedDate().toString());
+            StudyMemberResDto studyMemberResDto = new StudyMemberResDto(member.getMemberNickName(), member.getTotalScore(),
+                    member.getCreatedDate().toString(), member.getTotalStudyTime());
             studyMemberResDtoList.add(studyMemberResDto);
         }
         return studyMemberResDtoList;

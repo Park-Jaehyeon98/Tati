@@ -12,12 +12,24 @@ import lombok.Setter;
 @NoArgsConstructor
 @Schema(description = "스터디 전체 리스트 RessDto")
 public class StudyAllListResDto {
+
     @Schema(description = "스터디 식별번호")
     private Integer studyId;
+
     @Schema(description = "스터디 명")
     private String studyName;
+
     @Schema(description = "총 인원")
     private Integer totalMember;
+
+    @Schema(description = "현재 인원")
+    private Integer currentMember;
+
     @Schema(description = "공개 여부")
     private Boolean disclosure;
+
+    @Schema(description = "이미지")
+    private String imageUrl;
+
+
 }

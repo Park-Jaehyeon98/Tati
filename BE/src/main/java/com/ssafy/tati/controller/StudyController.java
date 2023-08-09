@@ -6,10 +6,7 @@ import com.ssafy.tati.dto.req.StudyScheduleReqDto;
 import com.ssafy.tati.dto.res.*;
 import com.ssafy.tati.dto.res.board.StudyNoticeDetailResDto;
 import com.ssafy.tati.entity.*;
-import com.ssafy.tati.mapper.StudyMapper;
-import com.ssafy.tati.mapper.StudyMemberMapper;
-import com.ssafy.tati.mapper.StudyMemberMapperImpl;
-import com.ssafy.tati.mapper.StudyScheduleMapper;
+import com.ssafy.tati.mapper.*;
 import com.ssafy.tati.mapper.board.GetBoardMapper;
 import com.ssafy.tati.service.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,6 +39,7 @@ public class StudyController {
     private final StudyScheduleMapper studyScheduleMapper;
     private final StudyMemberMapper studyMemberMapper;
     private final GetBoardMapper getBoardMapper;
+    private final StudyApplicantMapper studyApplicantMapper;
 
 
     @Operation(summary = "스터디 생성", description = "스터디(이름, 설명, 허용인원, 비밀번호, 스터디 시작 기간, 스터디 종료 기간, 카테고리 식별번호, 공개여부, 스터디 방장, 신청 보증금), 스터디 할 요일과 시작 시간, 종료 시간을 객체 형태로 받아서 저장", responses = {
@@ -105,26 +103,50 @@ public class StudyController {
 
         List<Board> boardList = studyService.selectStudyBoard(studyId);
         List<StudySchedule> schedules = studyService.selectStudySchedule(studyId);
-        List<StudyScheduleResDto> studyScheduleResDtoList = studyScheduleMapper.studyScheduleListToStudyScheduleResDtoList(schedules);
-        List<StudyApplicant> applicantList = studyService.selectStudyApplicant(studyId);
+        List<StudyScheduleResDto> studySchedule = new ArrayList<>();
+        for(StudySchedule schedule : schedules){
+            studySchedule.add(new StudyScheduleResDto(schedule.getStudyDay(),
+                    schedule.getStudyStartTime().toString(), schedule.getStudyEndTime().toString()));
+
+        }
+
+        List<StudyApplicant> applicants = studyService.selectStudyApplicant(studyId);
+        List<Member> memberList = new ArrayList<>();
+        for(StudyApplicant studyApplicant : applicants){
+            memberList.add(studyApplicant.getMember());
+        }
+
+        List<StudyApplicantMemberResDto> applicantList
+                = studyApplicantMapper.memberListToStudyApplicantMemberResDtoList(memberList);
+
+
         List<StudyMember> studyMemberList = studyService.selectStudyMember(studyId);
         Optional<Board> optionalStudyMainNotice = boardService.findMainNoticeByStudyId(studyId);
 
-        Board studyMainNotice;
-        if (optionalStudyMainNotice.isEmpty())
-            studyMainNotice = null;
-        else
+        Board studyMainNotice = null;
+        StudyNoticeDetailResDto studyNoticeDetailResDto;
+        if (optionalStudyMainNotice.isEmpty()){
+            studyNoticeDetailResDto = null;
+        }
+        else {
             studyMainNotice = optionalStudyMainNotice.get();
-        String create = studyMainNotice.getCreatedDate().toLocalDate().toString();
-        String modify = studyMainNotice.getModifiedDate().toLocalDate().toString();
 
-        StudyNoticeDetailResDto studyNoticeDetailResDto = new StudyNoticeDetailResDto(studyMainNotice.getBoardId(), studyMainNotice.getBoardTitle(), studyMainNotice.getMember().getMemberId(), studyMainNotice.getMember().getMemberNickName(), studyMainNotice.getBoardHit(), create, modify, studyMainNotice.isMainNoticeYn());
+            String create = studyMainNotice.getCreatedDate().toLocalDate().toString();
+            String modify = studyMainNotice.getModifiedDate().toLocalDate().toString();
+
+
+            studyNoticeDetailResDto = new StudyNoticeDetailResDto(studyMainNotice.getBoardId(), studyMainNotice.getBoardTitle(),
+                    studyMainNotice.getMember().getMemberId(), studyMainNotice.getMember().getMemberNickName(), studyMainNotice.getBoardHit(),
+                    create, modify, studyMainNotice.isMainNoticeYn());
+        }
+
+
         List<StudyMemberResDto> studyMemberResDtoList = new ArrayList<>();
         for(StudyMember findStudyMember : studyMemberList){
             Integer studyMemberId = findStudyMember.getMember().getMemberId();
             Member member = memberService.findById(studyMemberId);
             studyMemberResDtoList.add(new StudyMemberResDto(member.getMemberNickName(),
-                    member.getTotalScore(), member.getCreatedDate().toString()));
+                    member.getTotalScore(), member.getCreatedDate().toString(), member.getTotalStudyTime()));
         }
 
 
@@ -161,8 +183,14 @@ public class StudyController {
 
 
         Study study = studyService.getStudyDetail(studyId);
+
+        System.out.println("여기까지!----------------------------");
         StudyDetailResDto studyDetailResDto = studyMapper.studyToStudyDetailResDto(study, study.getCategory(),
-                studyMemberYn, studyScheduleResDtoList, applicantList, studyMemberResDtoList, studyNoticeDetailResDto);
+                studyMemberYn, studySchedule, applicantList, studyMemberResDtoList, studyNoticeDetailResDto);
+        System.out.println("여기까지22222222222222222!----------------------------");
+        System.out.println(
+                studyDetailResDto
+        );
         return new ResponseEntity<>(studyDetailResDto, HttpStatus.OK);
     }
 
@@ -192,7 +220,12 @@ public class StudyController {
     @GetMapping("/list")
     public ResponseEntity<?> selectAllStudy() {
         List<Study> studylist = studyService.getStudyList();
-        List<StudyAllListResDto> studyAllListResDtoList = studyMapper.studyListToStudyAllListResDtoList(studylist);
+        List<StudyAllListResDto> studyAllListResDtoList = new ArrayList<>();
+        for(Study study: studylist){
+            studyAllListResDtoList.add(new StudyAllListResDto( study.getStudyId(), study.getStudyName(), study.getTotalMember(),
+                    study.getStudyMemberList().size(), study.getDisclosure(), study.getImg()));
+        }
+
         return new ResponseEntity<>(studyAllListResDtoList, HttpStatus.OK);
 
     }
