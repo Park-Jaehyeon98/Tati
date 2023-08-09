@@ -62,8 +62,8 @@ import VideoRoomComponent from "../Pages/Room/VideoRoomComponent";
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { persistor } from '../redux/store';
-import { setUser } from '../redux/reducers/userSlice';
-
+import { setUser,clearUser } from '../redux/reducers/userSlice';
+import {clearUserSchedule} from '../redux/reducers/userScheduleSlice'
 
 export default function Router() {
 
@@ -77,34 +77,33 @@ export default function Router() {
 
   // 로그아웃
   const handleLogout = () => {
-
-    const token = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
 
     axios.get(`${process.env.REACT_APP_URL}/member/logout`, {
       headers: {
-        token: token
+        "Authorization": `Bearer ${accessToken}`,
+        "RefreshToken": refreshToken
       }
     })
-      .then((res) =>{
-        console.log(res)
-        dispatch(setUser(null))
-        persistor.purge() // 리덕스 스토어 초기화 후 스토리지에서 데이터 삭제
-  })
-      .catch((err) =>{
-        console.log(err)
-  })
-
-    localStorage.clear();
-    setIsLoggedIn(false);
+    .then((res) => {
+      console.log(res);
+      localStorage.clear();
+      dispatch(clearUserSchedule())
+      dispatch(clearUser());
+      setIsLoggedIn(false);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   };
 
-  
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setIsLoggedIn(true);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (user) {
+      setIsLoggedIn(true);
+    }
+  }, [isLoggedIn]);
 
 
 
@@ -128,12 +127,12 @@ export default function Router() {
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage">
             마이페이지
           </NavLink>
-          {!isLoggedIn && (
+          {!user && (
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/SignUp">
               회원가입
             </NavLink>
           )}
-          {isLoggedIn ? (
+          {user ? (
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Logout" onClick={handleLogout}>
               로그아웃
             </NavLink>

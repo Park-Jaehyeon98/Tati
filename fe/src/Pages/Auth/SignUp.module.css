@@ -1,6 +1,5 @@
 .SignUp_box{
-  /* display: flex; */
-  justify-content: flex-end;
+  display: flex;
 }
 .signup{
   width: 800px;

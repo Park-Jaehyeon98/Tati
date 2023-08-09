@@ -48,9 +48,9 @@ export default function Login() {
         
         // decodedToken, accessToken 로컬에 저장 - 유저 정보(memberId,memberName,sub,exp,iat)
         const authorizationHeader = res.headers.authorization;
-        const decodedToken = jwt_decode(authorizationHeader);
         const accessToken = authorizationHeader.substring(7);
         localStorage.setItem('accessToken', accessToken);
+        const decodedToken = jwt_decode(authorizationHeader);
         localStorage.setItem('decodedToken', JSON.stringify(decodedToken));
         localStorage.setItem('refreshtoken',res.headers.refreshtoken);
         
