@@ -70,7 +70,7 @@ const StudyBoardCreate = () => {
     }
 
     // 이미지 업로드
-    const handleStudyImgUpload = (e) => {
+    const handleUpload = (e) => {
         const file = e.target.files[0];
         setBoardFile(() => { return file })
 
@@ -108,7 +108,7 @@ const StudyBoardCreate = () => {
                     <>
                         <div>
                             <div>파일첨부 </div>
-                            <input type="file" name="studyBoardFile" onChange={handleStudyImgUpload} />
+                            <input type="file" name="studyBoardFile" onChange={handleUpload} />
                         </div>
 
                         {/* <div style={{ width: 100, height: 100 }}>

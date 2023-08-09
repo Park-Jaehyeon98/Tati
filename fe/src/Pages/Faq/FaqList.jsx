@@ -3,6 +3,7 @@ import { apiClient } from '../../api/apiClient';
 import FaqListItem from '../../Components/Faq/FaqListItem';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Button } from '@material-ui/core';
 
 const FaqList = () => {
     // 여기서 요청 보낸 후 컴포넌트로 뿌려야함. Detail, Modify 둘다
@@ -54,32 +55,32 @@ const FaqList = () => {
                         </div>)}
             </div>
             {/* 페이지네이션 */}
-            <button
+            <Button
                 key={'<'}
                 onClick={() => setCurrentPage(currentPage - 1)}
                 disabled={currentPage === 1}
             >
                 {"<"}
-            </button>
+            </Button>
             {Array.from({ length: 5 }, (_, i) =>
                 currentPage % 5 === 0 ?
                     (firstPage - 5 + i) <= totalPages &&
-                    <button
+                    <Button
                         key={firstPage - 5 + i}
                         onClick={() => setCurrentPage(firstPage - 5 + i)}
                         disabled={firstPage - 5 + i === currentPage}
                     >
                         {firstPage - 5 + i}
-                    </button>
+                    </Button>
                     :
-                    (firstPage + i) <= totalPages && <button
+                    (firstPage + i) <= totalPages && <Button
                         key={firstPage + i}
                         onClick={() => setCurrentPage(firstPage + i)}
                         disabled={firstPage + i === currentPage}
                     >
                         {firstPage + i}
-                    </button>)}
-            <button
+                    </Button>)}
+            <Button
                 key={'>'}
                 onClick={() => {
                     setCurrentPage(currentPage + 1)
@@ -87,13 +88,13 @@ const FaqList = () => {
                 disabled={currentPage === totalPages || !totalPages}
             >
                 {">"}
-            </button>
+            </Button>
 
             {/* 새 공지 작성하기 관리자만 */}
             {!(user.memberNickName === 'admin') ||
-                <button onClick={handleCreateBtnClick}>
+                <Button onClick={handleCreateBtnClick}>
                     새 글 작성
-                </button>
+                </Button>
             }
         </div>
     )

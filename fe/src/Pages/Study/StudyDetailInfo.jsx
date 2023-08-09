@@ -10,14 +10,12 @@ const StudyDetailInfo = () => {
         studyStartDate,
         studyEndDate,
         studySchedule,
-        // studyImg,
         totalMember,
-        // studyDay,
-        // studyStartTime,
-        // studyEndTime,
         studyDeposit,
         disclosure,
     } = useOutletContext();
+    const dayList = ["월", "화", "수", "목", "금", "토", "일",]
+
     return (
         <div>
             <div>
@@ -38,13 +36,9 @@ const StudyDetailInfo = () => {
                 스터디 일정
                 <div className={style.box}>
                     {
-                        // 일정 표시
-
-                        // (studySchedule.length >= 2) &&
-                        // studySchedule.map(({ studyDay, studyStartTime, studyEndTime }) => {
-                        //     return <div></div>
-                        // })
-
+                        studySchedule.map(({ studyDay, studyStartTime, studyEndTime }) => {
+                            return <div>{dayList[studyDay]} 요일   {studyStartTime} ~  {studyEndTime}</div>
+                        })
                     }
                 </div>
                 스터디 멤버

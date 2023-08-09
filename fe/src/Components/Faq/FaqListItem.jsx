@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { apiClient } from '../../api/apiClient';
 import { useSelector } from 'react-redux';
+import { Button } from '@material-ui/core';
+
 
 const FaqListItem = ({ boardItemInfo }) => {
     const [isShow, setIsShow] = useState(false);
@@ -31,8 +33,8 @@ const FaqListItem = ({ boardItemInfo }) => {
                     A : {boardContent}
                     {!(memberNickName === "admin") ||
                         <>
-                            <button onClick={handleDeleteBtnClick}>수정버튼</button>
-                            <button onClick={handleModifyBtnClick}>삭제버튼</button>
+                            <Button onClick={handleDeleteBtnClick}>수정버튼</Button>
+                            <Button onClick={handleModifyBtnClick}>삭제버튼</Button>
                         </>
                     }
 
