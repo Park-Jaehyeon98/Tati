@@ -4,10 +4,17 @@ import { useNavigate } from "react-router-dom";
 import style from "./Login.module.css"
 import jwt_decode from "jwt-decode";
 
+import RefreshToken from "../../Components/RefreshToken";
+
+// 리덕스 저장
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/reducers/userSlice';
+
+
 export default function Login() {
 
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -37,28 +44,27 @@ export default function Login() {
         console.log(res)
         console.log(res.headers)
         // 로컬 스토리지에 데이터 저장
-        localStorage.setItem('memberId', res.data.memberId);
-        localStorage.setItem('email', res.data.email);
         localStorage.setItem('memberNickName', res.data.memberNickName);
-
         localStorage.setItem('totalPoint', res.data.totalPoint);
         localStorage.setItem('totalScore', res.data.totalScore);
         localStorage.setItem('totalStudyTime', res.data.totalStudyTime);
-
-       
+        
+        // decodedToken, accessToken 로컬에 저장 - 유저 정보(memberId,memberName,sub,exp,iat)
         const authorizationHeader = res.headers.authorization;
         const decodedToken = jwt_decode(authorizationHeader);
-
         const accessToken = authorizationHeader.substring(7);
+        localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('decodedToken', JSON.stringify(decodedToken));
 
-        const token = localStorage.getItem('accessToken');
+        // 로컬에서 decodedToken꺼내기
         const tokenInfo = localStorage.getItem('decodedToken');
         console.log(JSON.parse(tokenInfo));
         const parseJwt = JSON.parse(tokenInfo);
         console.log(parseJwt.sub);
         localStorage.setItem('refreshtoken',res.headers.refreshtoken);
 
+        RefreshToken()
+        dispatch(setUser(res.data));
         navigate("/MyPage");
       })
       .catch((err) => {

@@ -14,7 +14,7 @@ import Faq from "../Pages/Faq/Faq";
 import FaqCreate from "../Pages/Faq/FaqCreate";
 import FaqList from "../Pages/Faq/FaqList";
 
-import MyPage from "../Pages/MyPage/Schedule/_MyPage";
+import MyPage from "../Pages/MyPage/Schedule/MyPage";
 import SignUp from "../Pages/Auth/SignUp";
 import Login from "../Pages/Auth/Login";
 import LandingPage from './../Pages/LandingPage/LandingPage';
@@ -36,16 +36,16 @@ import StudyBoardList from "../Pages/Study/StudyBoard/StudyBoardList";
 
 
 import Main from "../Pages/Main/Main";
-import KakaoPay from "../Components/_MyPage//Point/KakaoPay";
+import KakaoPay from "../Components/MyPage//Point/KakaoPay";
 
-import MyPageInfoModify from "../Pages/MyPage/_MyPageInfoModify";
-import MyPageApplyStudy from "../Pages/MyPage/Study/_MyPageApplyStudy";
-import MyPageJoinStudy from "../Pages/MyPage/Study/_MyPageJoinStudy";
-import MyPagePost from "../Pages/MyPage/Study/_MyPagePost";
-import MyPagePoint from "../Pages/MyPage/Point/_MyPagePoint";
-import MyPagePointHistory from "../Pages/MyPage/Point/_MyPagePointHistory";
-import MyPagePointWithdraw from "../Pages/MyPage/Point/_MyPagePointWithdraw";
-import MyPageRewardPoint from "../Pages/MyPage/_MyPageRewardPoint"
+import MyPageInfoModify from "../Pages/MyPage/MyPageInfoModify";
+import MyPageApplyStudy from "../Pages/MyPage/Study/MyPageApplyStudy";
+import MyPageJoinStudy from "../Pages/MyPage/Study/MyPageJoinStudy";
+import MyPagePost from "../Pages/MyPage/Study/MyPagePost";
+import MyPagePoint from "../Pages/MyPage/Point/MyPagePoint";
+import MyPagePointHistory from "../Pages/MyPage/Point/MyPagePointHistory";
+import MyPagePointWithdraw from "../Pages/MyPage/Point/MyPagePointWithdraw";
+import MyPageRewardPoint from "../Pages/MyPage/MyPageRewardPoint"
 
 // openvidue
 import Room from "../Pages/Room/Room";
@@ -55,25 +55,17 @@ import axios from "axios";
 import NoticeDetail from "../Pages/Notice/NoticeDetail";
 import VideoRoomComponent from "../Pages/Room/VideoRoomComponent";
 
+// 리덕스 툴킷
+import { useSelector } from 'react-redux';
+
 
 export default function Router() {
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-
-  // const handleschedule = () => {
-  //   const email = 't01045999371@gmail.com'
-  //   console.log(email)
-  //   axios.get(`${process.env.REACT_APP_URL}/member/mypage/schedule/${email}`, {
-  //     params: 7
-  //   })
-  //     .then((res) => {
-  //       console.log(res)
-  //       alert('요청 성공')
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     });
-  // };
+  const memberId = useSelector((state) => state.user.memberId);
+  // 로컬 닉네임
+  const memberNickName = localStorage.getItem('memberNickName');
 
   const handleLogout = () => {
 
@@ -96,8 +88,7 @@ export default function Router() {
   };
 
   useEffect(() => {
-    const memberId = localStorage.getItem("memberId");
-    if (memberId) {
+    if (memberNickName) {
       setIsLoggedIn(true);
     }
   }, []);
@@ -124,12 +115,12 @@ export default function Router() {
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage">
             마이페이지
           </NavLink>
-          {!isLoggedIn && (
+          {!memberNickName && (
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/SignUp">
               회원가입
             </NavLink>
           )}
-          {isLoggedIn ? (
+          {memberNickName ? (
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Logout" onClick={handleLogout}>
               로그아웃
             </NavLink>

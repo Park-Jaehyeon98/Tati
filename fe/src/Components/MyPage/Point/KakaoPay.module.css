@@ -1,0 +1,43 @@
+.point_History_box{
+    width: 550px;
+    height: 700px;
+    /* border: 1px solid black; */
+}
+.box{
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+  flex-wrap: wrap; /* 컨테이너 크기를 넘어가면 자동으로 다음 줄로 넘어감 */
+  gap: 10px; /* 요소들 사이의 간격을 조정 */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* 버튼 사이에 간격을 주기 위해 gap 설정 */
+    position: absolute;
+    top: 900px;
+    left: 650px;
+    padding: 10px;
+}
+.cancel_btn{
+    height: 25px;
+    font-size: 10px;
+    /* margin-left: 310px; */
+    background-color: #f37979;
+    border: 1px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+.PointItem_text{
+    white-space: nowrap;
+}
+.p_text{
+    font-size: 17px;
+    margin: 0px;
+}
+
+.text{
+    margin: 0px;
+    margin-left: 500px;
+}
