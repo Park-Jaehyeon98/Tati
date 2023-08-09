@@ -5,7 +5,6 @@ import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import style from "./Router.module.css"
 
 import Notice from "../Pages/Notice/Notice";
-import NoticePage from "../Pages/Notice/NoticePage";
 import NoticeList from "../Pages/Notice/NoticeList";
 import NoticeCreate from "../Pages/Notice/NoticeCreate";
 import NoticeModify from "../Pages/Notice/NoticeModify";
@@ -14,22 +13,18 @@ import Faq from "../Pages/Faq/Faq";
 import FaqCreate from "../Pages/Faq/FaqCreate";
 import FaqList from "../Pages/Faq/FaqList";
 
-import MyPage from "../Pages/MyPage/Schedule/_MyPage";
+import MyPage from "../Pages/MyPage/Schedule/MyPage";
 import SignUp from "../Pages/Auth/SignUp";
 import Login from "../Pages/Auth/Login";
-import LandingPage from './../Pages/LandingPage/LandingPage';
-
 
 import Study from "../Pages/Study/Study";
 import StudyCreate from "../Pages/Study/StudyCreate";
 import StudyList from "../Pages/Study/StudyList";
 import StudyDetail from "../Pages/Study/StudyDetail";
+import StudyDetailInfo from "../Pages/Study/StudyDetailInfo";
 import StudyModify from "../Pages/Study/StudyModify";
 
 import StudyNotice from "../Pages/Study/StudyNotice";
-// import StudyNoticeList from "../Pages/Study/StudyNotice/StudyNoticeList";
-// import StudyNoticeCreate from "../Pages/Study/StudyNotice/StudyNoticeCreate";
-// import StudyNoticeDetail from './../Pages/Study/StudyNotice/StudyNoticeDetail';
 
 import StudyBoard from "../Pages/Study/StudyBoard/StudyBoard";
 import StudyBoardDetail from "../Pages/Study/StudyBoard/StudyBoardDetail";
@@ -37,16 +32,16 @@ import StudyBoardCreate from "../Pages/Study/StudyBoard/StudyBoardCreate";
 import StudyBoardList from "../Pages/Study/StudyBoard/StudyBoardList";
 
 import Main from "../Pages/Main/Main";
-import KakaoPay from "../Components/_MyPage//Point/KakaoPay";
+import KakaoPay from "../Components/MyPage//Point/KakaoPay";
 
-import MyPageInfoModify from "../Pages/MyPage/_MyPageInfoModify";
-import MyPageApplyStudy from "../Pages/MyPage/Study/_MyPageApplyStudy";
-import MyPageJoinStudy from "../Pages/MyPage/Study/_MyPageJoinStudy";
-import MyPagePost from "../Pages/MyPage/Study/_MyPagePost";
-import MyPagePoint from "../Pages/MyPage/Point/_MyPagePoint";
-import MyPagePointHistory from "../Pages/MyPage/Point/_MyPagePointHistory";
-import MyPagePointWithdraw from "../Pages/MyPage/Point/_MyPagePointWithdraw";
-import MyPageRewardPoint from "../Pages/MyPage/_MyPageRewardPoint"
+import MyPageInfoModify from "../Pages/MyPage/MyPageInfoModify";
+import MyPageApplyStudy from "../Pages/MyPage/Study/MyPageApplyStudy";
+import MyPageJoinStudy from "../Pages/MyPage/Study/MyPageJoinStudy";
+import MyPagePost from "../Pages/MyPage/Study/MyPagePost";
+import MyPagePoint from "../Pages/MyPage/Point/MyPagePoint";
+import MyPagePointHistory from "../Pages/MyPage/Point/MyPagePointHistory";
+import MyPagePointWithdraw from "../Pages/MyPage/Point/MyPagePointWithdraw";
+import MyPageRewardPoint from "../Pages/MyPage/MyPageRewardPoint"
 
 // openvidue
 import Room from "../Pages/Room/Room";
@@ -56,49 +51,40 @@ import axios from "axios";
 import NoticeDetail from "../Pages/Notice/NoticeDetail";
 import VideoRoomComponent from "../Pages/Room/VideoRoomComponent";
 
+// 리덕스 툴킷
+import { useSelector } from 'react-redux';
+
 
 export default function Router() {
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-
-  // const handleschedule = () => {
-  //   const email = 't01045999371@gmail.com'
-  //   console.log(email)
-  //   axios.get(`${process.env.REACT_APP_URL}/member/mypage/schedule/${email}`, {
-  //     params: 7
-  //   })
-  //     .then((res) => {
-  //       console.log(res)
-  //       alert('요청 성공')
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     });
-  // };
+  const memberId = useSelector((state) => state.user.memberId);
+  // 로컬 닉네임
+  const memberNickName = localStorage.getItem('memberNickName');
 
   const handleLogout = () => {
 
     const token = localStorage.getItem("accessToken");
 
-    axios.get(`${process.env.REACT_APP_URL}/member/logout`,{
-      headers:{
-        token:token
+    axios.get(`${process.env.REACT_APP_URL}/member/logout`, {
+      headers: {
+        token: token
       }
     })
-    .then((res)=>
-    console.log(res)
-    )
-    .catch((err)=>
-      console.log(err)
-    )
+      .then((res) =>
+        console.log(res)
+      )
+      .catch((err) =>
+        console.log(err)
+      )
 
     localStorage.clear();
     setIsLoggedIn(false);
   };
 
   useEffect(() => {
-    const memberId = localStorage.getItem("memberId");
-    if (memberId) {
+    if (memberNickName) {
       setIsLoggedIn(true);
     }
   }, []);
@@ -125,12 +111,12 @@ export default function Router() {
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage">
             마이페이지
           </NavLink>
-          {!isLoggedIn && (
+          {!memberNickName && (
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/SignUp">
               회원가입
             </NavLink>
           )}
-          {isLoggedIn ? (
+          {memberNickName ? (
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Logout" onClick={handleLogout}>
               로그아웃
             </NavLink>
@@ -148,8 +134,8 @@ export default function Router() {
         <Route path="/" element={<Main />} />
 
         {/* openvidu */}
-        <Route path="/Room" element={<Room/> }/>
-        <Route path="/VideoRoom" element={<VideoRoomComponent/>}/>
+        <Route path="/Room" element={<Room />} />
+        <Route path="/VideoRoom" element={<VideoRoomComponent />} />
 
         {/* 공지사항 */}
         <Route path="/Notice" element={<Notice />}>
@@ -185,30 +171,29 @@ export default function Router() {
         <Route path="/MyPage/MyPagePost" element={<MyPagePost />} />
         <Route path="/MyPage/MyPageRewardPoint" element={<MyPageRewardPoint />} />
 
-        {/* 스터디 CRUD */}
-
+        {/* 스터디 */}
         <Route path="/Study" element={<Study />}>
           <Route path="" element={<StudyList />} />
           <Route path="Create" element={<StudyCreate />} />
-          <Route path=":studyId" element={<StudyDetail />} />
-          {/* 스터디 공지사항, 스터디 게시판, 스터디 수정하기 -> 스터디 디테일 하위 라우터 설정하기 */}
-          <Route path=":studyId/Modify/" element={<StudyModify />} />
+          <Route path=":studyId" element={<StudyDetail />} >
+            <Route path="" element={<StudyDetailInfo />} />
+            <Route path="Modify" element={<StudyModify />} />
+
+            {/* 스터디 공지사항 */}
+            <Route path="Notice" element={<StudyNotice />}>
+              <Route path="" element={<StudyBoardList />} />
+              <Route path=":boardId" element={<StudyBoardDetail />} />
+              <Route path="Create" element={<StudyBoardCreate />} />
+            </Route>
+            {/* 스터디 게시판 */}
+            <Route path="Board" element={<StudyBoard />}>
+              <Route path="" element={<StudyBoardList />} />
+              <Route path=":boardId" element={<StudyBoardDetail />} />
+              <Route path="Create" element={<StudyBoardCreate />} />
+            </Route>
+          </Route>
         </Route>
 
-        {/* 스터디 공지사항 */}
-        <Route path="/Study/:studyId/Notice" element={<StudyNotice />}>
-          <Route path="" element={<StudyBoardList />} />
-          <Route path=":boardId" element={<StudyBoardDetail />} />
-          <Route path="Create" element={<StudyBoardCreate />} />
-        </Route>
-
-
-        {/* 스터디 게시판 */}
-        <Route path="/Study/:studyId/Board" element={<StudyBoard />}>
-          <Route path="" element={<StudyBoardList />} />
-          <Route path=":boardId" element={<StudyBoardDetail />} />
-          <Route path="Create" element={<StudyBoardCreate />} />
-        </Route>
         {/* 스터디 웹rtc 입실 */}
         {/* <Route path="/Study/:studyId/Board/Create" element={}/> */}
 

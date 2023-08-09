@@ -4,7 +4,6 @@ import style from '../Common/StudyCardItem.module.css';
 
 const StudyCardItem = ({ studyDetail }) => {
     const { studyId, studyName, totalMember, disclosure, currentMember, imageUrl } = studyDetail
-    console.log(studyDetail)
     return (
         <Link to={`/Study/${studyId}`}>
             <div className={style.card}>

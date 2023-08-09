@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import StudyDeleteButton from '../../Components/Study/StudyDeleteButton';
+
+import style from './StudyModify.module.css';
 import { apiClient } from '../../api/apiClient';
 
 const StudyModify = () => {
@@ -10,105 +10,164 @@ const StudyModify = () => {
     const params = useParams();
     const studyId = params.studyId;
 
-    const [studyData, setStudyData] = useState({
-        categoryId: 0, //스터디 카테고리
+    const [studyModifyData, setStudyModifyData] = useState({
+        categoryId: 1, //스터디 카테고리
         studyName: "스터디", //스터디 이름
         studyDescription: "스터디설명", //스터디 설명
-        studyDay: "", //스터디 요일, 시간
-        totalMember: "", //스터디 멤버 수x`
-        // studyImg: "", //스터디 대표 이미지
+        // totalMember: "", //스터디 멤버 수x`
         disclosure: true, // 공개 여부
         studyPassword: null // 패스워드
     });
 
-    useEffect(() => {
-        // axios.get(`http://192.168.31.58:8080/study/${studyId}`
-        // )
-        apiClient.get(`study/${studyId}`)
-            .then((res) => {
-                console.log(res.data);
-                setStudyData(res.data);
-            })
-    }, []);
+    // 스터디 이미지
+    const [studyImg, setStudyImg] = useState(null);
+    // 스터디 이미지 미리보기
+    const [studyImgView, setStudyImgView] = useState(null);
+
+
+    // 처음 데이터 받아옴
+    // useEffect(() => {
+    //     apiClient.get(`study/${studyId}`)
+    //         .then((res) => {
+    //             console.log(res.data);
+    //             setStudyModifyData(res.data);
+    //         })
+    // }, []);
 
     const { categoryId,
         studyName,
         studyDescription,
-        totalMember,
+        // totalMember,
         disclosure,
         studyPassword,
-        // studyImg, 
-    } = studyData
+    } = studyModifyData
 
+    // Modify Form input 변경시
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setStudyData({
-            ...studyData,
-            [name]: value,
+        setStudyModifyData((studyModifyData) => {
+            return {
+                ...studyModifyData,
+                [name]: value,
+            }
         });
     };
 
-    const handleCategoryClick = (value) => {
-        setStudyData({
-            ...studyData,
-            categoryId: value
+    // 카테고리 선택
+    const handleCategoryIdClick = (value) => {
+        setStudyModifyData((studyModifyData) => {
+            return {
+                ...studyModifyData,
+                categoryId: value + 1
+            }
         })
     }
-    const categoryArray = ["자격증", "취업", "학교", "공시", "기타"]
+    const categoryIdArray = ["자격증", "취업", "학교", "공시", "기타"]
 
+
+    // 공개여부 선택
     const handleIsDisclosureClick = (value) => {
-        value ? setStudyData({
-            ...studyData,
-            disclosure: value,
-            studyPassword: null
-        }) : setStudyData({
-            ...studyData,
-            disclosure: value,
+        value ? setStudyModifyData((studyModifyData) => {
+            return {
+                ...studyModifyData,
+                disclosure: value,
+                studyPassword: null
+            }
+        }) : setStudyModifyData((studyModifyData) => {
+            return {
+                ...studyModifyData,
+                disclosure: value,
+            }
         })
     }
 
+    // 이미지 업로드 -> 파일, 미리보기 변경
+    const handleStudyImgUpload = (e) => {
+        const file = e.target.files[0];
 
+        setStudyImg(() => { return file })
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        return new Promise((resolve) => {
+            reader.onload = () => {
+                setStudyImgView(() => { return reader.result || null }); // 파일의 컨텐츠
+                resolve();
+            };
+        });
+    }
+
+
+
+    // Modify Put axios
     const handleStudyModifySubmit = () => {
-        // 
+        const studyModifyReqDto = {
+            ...studyModifyData,
+        }
+        let formData = new FormData();
+        formData.append('studyImg', studyImg)
+        formData.append('studyModifyReqDto', new Blob([JSON.stringify(studyModifyData)], {
+            type: "application/json"
+        }))
 
-        // axios({
-        //     method: 'put',
-        //     url: `http://192.168.31.58:8080/study/${studyId}/modify`,
-        //     header: {},
-        //     data: studyData
-        // })
-        // 모듈화
-        apiClient.put(`study/${studyId}/modify`, studyData)
+        apiClient.put(`study/${studyId}/modify`, formData,
+            {
+                header: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            })
             .then((res) => {
                 console.log(res);
-                setStudyData(res.data);
+                setStudyModifyData(res.data);
             })
             .catch((err) => {
-
+                console.log(err);
+                setStudyModifyData(err.data);
             })
     }
 
+    // 뒤로가기 버튼 -> detail Main으로 돌아감
     const handleBackButtonClick = () => {
-        navigate('');
+        navigate(`/Study/${studyId}`);
+    }
+
+    // 삭제 버튼
+    const handleDeleteBtnClick = () => {
+        const memberId = localStorage.getItem("memberId")
+        apiClient.delete(`study/${studyId}/delete/${memberId}`)
+            .then((res) => {
+                console.log(res.data)
+                navigate('/Study')
+            })
+            .catch((err) => { console.log(err.data) })
     }
 
 
     return (
         <div className='box'>
-            <h3>스터디 수정하기</h3>
-            <StudyDeleteButton studyId={studyId} />
+            <h3>스터디 정보 수정하기</h3>
+            <button onClick={handleDeleteBtnClick}>스터디삭제버튼</button>
             <div>
+
                 <div>
-                    <span>카테고리</span>
-                    {categoryArray.map((categoryItem, index) =>
-                        <button key={categoryItem} className={index === categoryId ? "selected" : "noSelected"} onClick={() => handleCategoryClick(index)}>{categoryItem}</button>
+                    <div>스터디 대표이미지</div>
+                    <input type="file" name="studyImg" onChange={handleStudyImgUpload} />
+                </div>
+                스터디 이미지
+                <div style={{ width: 100, height: 100 }}>
+                    {studyImgView && <img src={studyImgView} alt="" width={100} height={100} />}
+                </div>
+                <div>
+                    <div>카테고리</div>
+                    {categoryIdArray.map((categoryIdItem, index) =>
+                        <button key={categoryIdItem} className={index === categoryId - 1 ? style.selected : style.noSelected} onClick={() => handleCategoryIdClick(index)}>{categoryIdItem}</button>
                     )}
                 </div>
 
                 <div>
                     <span>공개 여부</span>
-                    <button name="disclosure" className={disclosure ? "selected" : "noSelected"} value={disclosure} onClick={() => handleIsDisclosureClick(true)}> 공개</button>
-                    <button name="disclosure" className={!disclosure ? "selected" : "noSelected"} value={disclosure} onClick={() => handleIsDisclosureClick(false)}> 비공개</button>
+                    <button name="disclosure" className={disclosure ? style.selected : style.noSelected} value={disclosure} onClick={() => handleIsDisclosureClick(true)}> 공개</button>
+                    <button name="disclosure" className={!disclosure ? style.selected : style.noSelected} value={disclosure} onClick={() => handleIsDisclosureClick(false)}> 비공개</button>
                 </div>
                 {!disclosure &&
                     <div>
@@ -126,11 +185,11 @@ const StudyModify = () => {
                     <input style={{ width: 500, height: 100 }} type="text" name="studyDescription" value={studyDescription} onChange={handleChange} />
                 </div>
 
-                <div>
+                {/* <div>
                     <span>스터디 멤버수</span>
                     <input type="number" name="totalMember" value={totalMember} max={8} onChange={handleChange} />
                     <span>2명 ~ 8명</span>
-                </div>
+                </div> */}
 
                 <div>
                     <button onClick={handleStudyModifySubmit}>스터디 수정</button>

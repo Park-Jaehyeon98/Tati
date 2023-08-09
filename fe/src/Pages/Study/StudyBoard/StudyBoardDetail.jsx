@@ -4,16 +4,18 @@ import StudyBoardCommentList from '../../../Components/Study/StudyBoard/StudyBoa
 
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { apiClient } from '../../../api/apiClient';
+import { useSelector } from 'react-redux';
 
 const StudyBoardDetail = () => {
     const params = useParams();
     const boardId = params.boardId;
     const navigate = useNavigate();
-
+    const { userId } = useSelector((state) => { return state.user })
     // Outlet context 로 props 가져오기
     const { studyId, boardType } = useOutletContext();
+    const isRep = true;
 
-    const [boardData, setBoardData] = useState({
+    const [boardData, setBoardData, memberId] = useState({
         boardTitle: '',
         boardContent: '',
 
@@ -26,6 +28,9 @@ const StudyBoardDetail = () => {
         memberNickname: '',
         memberId: 0
     });
+
+    const [commentContent, setCommentContent] = useState('');
+
 
 
     const config = {}
@@ -54,15 +59,54 @@ const StudyBoardDetail = () => {
         })
     }, [])
 
+    // 대표글 설정 버튼
     const handleRepBtnClick = () => {
-        console.log("대표글axios적용할것")
-        // apiClient.post('url', { boardId }, config)
-        //     .then((res) => { })
-        //     .catch((err) => { })
+        // console.log("대표글axios적용할것")
+        apiClient.post('study/notice/main', { boardId, memberId }, config)
+            .then((res) => {
+                console.log(res.data)
+            })
+            .catch((err) => {
+                console.log(err.data)
+            })
     }
-
+    // 뒤로가기 버튼
     const handleBackBtnClick = () => {
         boardType === 2 ? navigate(`/Study/${studyId}/Board/`) : navigate(`/Study/${studyId}/Notice/`)
+    }
+    // 삭제버튼
+    const handleDeleteBtnClick = () => {
+        // console.log("대표글axios적용할것")
+        apiClient.post('study/notice/main', { boardId, memberId }, config)
+            .then((res) => {
+                console.log(res.data)
+            })
+            .catch((err) => {
+                console.log(err.data)
+            })
+    }
+    const handleModifyBtnClick = () => {
+        // console.log("대표글axios적용할것")
+        apiClient.post('study/notice/main', { boardId, memberId }, config)
+            .then((res) => {
+                console.log(res.data)
+            })
+            .catch((err) => {
+                console.log(err.data)
+            })
+    }
+    const handleCommentContentChange = (e) => {
+        setCommentContent(e.target.Value)
+    }
+    // 엔터키 눌러도되게 할까..
+    const handleCommentCreate = () => {
+        apiClient.post('study/board/comment', { memberId, commentContent })
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            });
     }
 
 
@@ -82,11 +126,11 @@ const StudyBoardDetail = () => {
                 </div>
                 {/* 대표글 설정 조건부 렌더링 */}
                 <div>
-                    {boardType === 1 ?
+                    {
+                        boardType === 1 &&
                         <div onClick={handleRepBtnClick} className={`${style.btn} ${style.gray}`}>
                             대표글로 설정
-                        </div> :
-                        <></>
+                        </div>
                     }
                 </div>
                 {/* 게시글 목록으로 가기 버튼 렌더링 */}
@@ -95,6 +139,27 @@ const StudyBoardDetail = () => {
                         목록으로 가기
                     </div>
                 </div>
+                <div></div>
+
+                {/* 글의 작성자(memberId) 와 userId가 같아야만 삭제, 수정버튼 활성화 */}
+                {memberId === userId &&
+                    <>
+                        {/* 삭제 */}
+
+                        < div >
+                            <div onClick={handleDeleteBtnClick} className={`${style.btn} ${style.blue}`}>
+                                삭제
+                            </div>
+                        </div>
+                        {/* 삭제 */}
+
+                        <div>
+                            <div onClick={handleModifyBtnClick} className={`${style.btn} ${style.blue}`}>
+                                수정
+                            </div>
+                        </div>
+                    </>
+                }
             </div>
 
             {/* 게시글 내용 */}
@@ -102,11 +167,13 @@ const StudyBoardDetail = () => {
                 게시글 내용~
             </div>
             {
-                boardType === 2 ?
-                    <div>
-                        댓글창
-                    </div>
-                    : <></>
+                boardType === 2 &&
+                <div>
+                    댓글창
+                    <StudyBoardCommentList />
+                    새 댓글
+                    <input type="text" value={commentContent} onChange={handleCommentContentChange} />
+                </div>
             }
         </div >
     )

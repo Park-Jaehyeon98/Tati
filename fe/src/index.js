@@ -4,12 +4,15 @@ import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import store from "./redux/store"; // 리덕스 스토어 파일
+import {store, persistor}  from "./redux/store";
+import { PersistGate } from 'redux-persist/integration/react'; // Redux Persist와 통합
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>,
 );
 

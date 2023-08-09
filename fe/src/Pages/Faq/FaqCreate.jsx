@@ -4,11 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 const FaqCreate = () => {
     const naviate = useNavigate();
+    // 멤버아이디 리덕스로 받아와야함.
     const [boardData, setBoardData] = useState({
         boardTitle: '',
         boardContent: '',
-        // 멤버아이디 리덕스로 받아와야함.
-        memberId: 1,
     });
 
     const boardType = 9;
@@ -18,7 +17,6 @@ const FaqCreate = () => {
     const {
         boardTitle,
         boardContent,
-        memberId,
     } = boardData;
 
     const handleChange = (e) => {
