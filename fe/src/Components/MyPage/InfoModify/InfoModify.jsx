@@ -29,8 +29,7 @@ export default function InfoModify() {
   const handleSendNickName = () => {
     console.log(`닉네임 ${nickName}`)
     console.log(process.env.REACT_APP_URL)
-    axios
-      .post(`http://192.168.31.57:8080/member/nickname-check`, {
+    axios.post(`http://192.168.31.57:8080/member/nickname-check`, {
         memberNickName: nickName,
       })
       .then((res) => {
@@ -98,7 +97,7 @@ export default function InfoModify() {
       .then((res) => {
         console.log(res);
         setFile(file)
-        window.location.reload();
+        navigate("/MyPage/MyPageInfoModify");
         alert("수정됨");
       })
       .catch((err) => {
