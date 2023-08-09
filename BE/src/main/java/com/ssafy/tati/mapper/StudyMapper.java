@@ -6,6 +6,7 @@ import com.ssafy.tati.dto.res.StudyAllListResDto;
 import com.ssafy.tati.dto.res.StudyDetailResDto;
 import com.ssafy.tati.dto.res.StudyMemberResDto;
 import com.ssafy.tati.dto.res.StudyScheduleResDto;
+import com.ssafy.tati.dto.res.board.StudyNoticeDetailResDto;
 import com.ssafy.tati.entity.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.mapstruct.Mapper;
@@ -69,8 +70,8 @@ public interface StudyMapper {
     }
 
     StudyDetailResDto studyToStudyDetailResDto(Study study, Category category, boolean studyMemberYn,
-                                               List<Board> boardList, List<StudyScheduleResDto> studyScheduleResDtoList,
-                                               List<StudyApplicant> applicantList, List<StudyMemberResDto> studyMemberResDtoList);
+                                               List<StudyScheduleResDto> studyScheduleResDtoList,
+                                               List<StudyApplicant> applicantList, List<StudyMemberResDto> studyMemberResDtoList, StudyNoticeDetailResDto studyNoticeDetailResDto);
 
     List<StudyAllListResDto> studyListToStudyAllListResDtoList(List<Study> studyList);
 

@@ -103,6 +103,20 @@ public class BoardService {
         return board;
     }
 
+    public Optional<Board> findMainNoticeByStudyId(Integer studyId){
+        Optional<Study> optionalStudy = studyRepository.findById(studyId);
+        if (optionalStudy.isEmpty()) {
+            throw new RuntimeException();
+        }
+        Study study = optionalStudy.get();
+        Optional<Board> optionalBoard = boardRepository.findByBoardTypeAndStudyAndMainNoticeYnTrue('1', study);
+        if (optionalBoard.isEmpty()){
+            return Optional.empty();
+        }
+
+        return optionalBoard;
+    }
+
     // boardType에 맞는 모든 게시글 조회
     public List<Board> findBoardByBoardType(char boardType){
         return boardRepository.findByBoardType(boardType);

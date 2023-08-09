@@ -36,4 +36,6 @@ public class StudyBoardDetailResDto {
     private String boardFile;
     @Schema(description = "게시판 파일 이름")
     private String boardFileName;
+    @Schema(description = "스터디 대표 공지 여부")
+    private boolean mainNoticeYn;
 }

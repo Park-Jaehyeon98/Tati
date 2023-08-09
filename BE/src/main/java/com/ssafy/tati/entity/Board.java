@@ -42,14 +42,14 @@ public class Board {
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Comment> commentList = new ArrayList<>();
 
+    @Column(name = "main_notice_yn")
+    private boolean mainNoticeYn;
+
     @CreatedDate
     private LocalDateTime createdDate;
 
     @LastModifiedDate
     private LocalDateTime modifiedDate;
-
-    @Column(name = "main_notice_yn")
-    private boolean mainNoticeYn;
 
     // 파일
     @Column(name = "board_file", length = 300)

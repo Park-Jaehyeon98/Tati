@@ -37,6 +37,8 @@ public interface GetBoardMapper {
         studyBoardDetailResDto.setCreatedDate(board.getCreatedDate());
         studyBoardDetailResDto.setModifiedDate(board.getModifiedDate());
         studyBoardDetailResDto.setCommentCount(board.getCommentList().size());
+        studyBoardDetailResDto.setMainNoticeYn(board.isMainNoticeYn());
+
         studyBoardDetailResDto.setBoardFile(board.getBoardFile());
         String fileName = board.getBoardFile();
         int lastIndexOfSlash = fileName.lastIndexOf("_") + 1;

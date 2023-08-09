@@ -1,5 +1,6 @@
 package com.ssafy.tati.dto.res;
 
+import com.ssafy.tati.dto.res.board.StudyNoticeDetailResDto;
 import com.ssafy.tati.entity.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -57,9 +58,6 @@ public class StudyDetailResDto {
     @Schema(description = "총 보증금")
     private Integer totalDeposit;
 
-    @Schema(description = "게시글 목록")
-    private List<Board> boardList;
-
     @Schema(description = "스터디 일정 목록")
     private List<StudyScheduleResDto> studyScheduleResDtoList;
 
@@ -69,6 +67,7 @@ public class StudyDetailResDto {
     @Schema(description = "스터디 멤버 목록")
     private List<StudyMemberResDto> studyMemberResDtoList;
 
-
+    @Schema(description = "스터디 대표 공지")
+    private StudyNoticeDetailResDto studyNoticeDetailResDto;
 
 }

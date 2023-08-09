@@ -4,15 +4,14 @@ import com.ssafy.tati.dto.req.StudyModifyReqDto;
 import com.ssafy.tati.dto.req.StudyReqDto;
 import com.ssafy.tati.dto.req.StudyScheduleReqDto;
 import com.ssafy.tati.dto.res.*;
+import com.ssafy.tati.dto.res.board.StudyNoticeDetailResDto;
 import com.ssafy.tati.entity.*;
 import com.ssafy.tati.mapper.StudyMapper;
 import com.ssafy.tati.mapper.StudyMemberMapper;
 import com.ssafy.tati.mapper.StudyMemberMapperImpl;
 import com.ssafy.tati.mapper.StudyScheduleMapper;
-import com.ssafy.tati.service.MemberService;
-import com.ssafy.tati.service.S3Service;
-import com.ssafy.tati.service.StudyMemberService;
-import com.ssafy.tati.service.StudyService;
+import com.ssafy.tati.mapper.board.GetBoardMapper;
+import com.ssafy.tati.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -37,10 +36,12 @@ public class StudyController {
     private final StudyService studyService;
     private final MemberService memberService;
     private final S3Service s3Service;
+    private final BoardService boardService;
     private final StudyMemberService studyMemberService;
     private final StudyMapper studyMapper;
     private final StudyScheduleMapper studyScheduleMapper;
     private final StudyMemberMapper studyMemberMapper;
+    private final GetBoardMapper getBoardMapper;
 
 
     @Operation(summary = "스터디 생성", description = "스터디(이름, 설명, 허용인원, 비밀번호, 스터디 시작 기간, 스터디 종료 기간, 카테고리 식별번호, 공개여부, 스터디 방장, 신청 보증금), 스터디 할 요일과 시작 시간, 종료 시간을 객체 형태로 받아서 저장", responses = {
@@ -107,6 +108,14 @@ public class StudyController {
         List<StudyScheduleResDto> studyScheduleResDtoList = studyScheduleMapper.studyScheduleListToStudyScheduleResDtoList(schedules);
         List<StudyApplicant> applicantList = studyService.selectStudyApplicant(studyId);
         List<StudyMember> studyMemberList = studyService.selectStudyMember(studyId);
+        Optional<Board> optionalStudyMainNotice = boardService.findMainNoticeByStudyId(studyId);
+
+        Board studyMainNotice;
+        if (optionalStudyMainNotice.isEmpty())
+            studyMainNotice = null;
+        else
+            studyMainNotice = optionalStudyMainNotice.get();
+        StudyNoticeDetailResDto studyNoticeDetailResDto = getBoardMapper.boardToStudyNoticeDetailResDto(studyMainNotice);
 
         List<StudyMemberResDto> studyMemberResDtoList = new ArrayList<>();
         for(StudyMember findStudyMember : studyMemberList){
@@ -151,7 +160,7 @@ public class StudyController {
 
         Study study = studyService.getStudyDetail(studyId);
         StudyDetailResDto studyDetailResDto = studyMapper.studyToStudyDetailResDto(study, study.getCategory(),
-                studyMemberYn, boardList, studyScheduleResDtoList, applicantList, studyMemberResDtoList );
+                studyMemberYn, studyScheduleResDtoList, applicantList, studyMemberResDtoList, studyNoticeDetailResDto);
         return new ResponseEntity<>(studyDetailResDto, HttpStatus.OK);
     }
 
