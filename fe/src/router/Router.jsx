@@ -197,7 +197,6 @@ export default function Router() {
         {/* 스터디 웹rtc 입실 */}
         {/* <Route path="/Study/:studyId/Board/Create" element={}/> */}
 
-
       </Routes>
     </BrowserRouter>
   );
