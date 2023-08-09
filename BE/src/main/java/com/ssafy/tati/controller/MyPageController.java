@@ -89,7 +89,7 @@ public class MyPageController {
             List<StudyScheduleResDto> studyScheduleResList = new ArrayList<>();
             for(StudySchedule schedule : studyScheduleList){
                 studyScheduleResList.add(new StudyScheduleResDto(schedule.getStudyDay(),
-                        schedule.getStudyStartTime(), schedule.getStudyEndTime()));
+                        schedule.getStudyStartTime().toString(), schedule.getStudyEndTime().toString()));
             }
 
             mypageStudyResDto.add(new StudyResDto(study.getStudyId(), study.getStudyName(),

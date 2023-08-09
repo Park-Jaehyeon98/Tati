@@ -2,10 +2,7 @@ package com.ssafy.tati.mapper;
 
 import com.ssafy.tati.dto.req.StudyReqDto;
 import com.ssafy.tati.dto.req.StudyScheduleReqDto;
-import com.ssafy.tati.dto.res.StudyAllListResDto;
-import com.ssafy.tati.dto.res.StudyDetailResDto;
-import com.ssafy.tati.dto.res.StudyMemberResDto;
-import com.ssafy.tati.dto.res.StudyScheduleResDto;
+import com.ssafy.tati.dto.res.*;
 import com.ssafy.tati.dto.res.board.StudyNoticeDetailResDto;
 import com.ssafy.tati.entity.*;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -70,8 +67,10 @@ public interface StudyMapper {
     }
 
     StudyDetailResDto studyToStudyDetailResDto(Study study, Category category, boolean studyMemberYn,
-                                               List<StudyScheduleResDto> studyScheduleResDtoList,
-                                               List<StudyApplicant> applicantList, List<StudyMemberResDto> studyMemberResDtoList, StudyNoticeDetailResDto studyNoticeDetailResDto);
+                                               List<StudyScheduleResDto> studySchedule,
+                                               List<StudyApplicantMemberResDto> applicantList,
+                                               List<StudyMemberResDto> studyMemberResDtoList,
+                                               StudyNoticeDetailResDto studyNoticeDetailResDto);
 
     List<StudyAllListResDto> studyListToStudyAllListResDtoList(List<Study> studyList);
 
