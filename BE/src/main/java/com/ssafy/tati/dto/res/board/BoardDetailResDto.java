@@ -27,7 +27,7 @@ public class BoardDetailResDto {
     @Schema(description = "조회수")
     private Integer boardHit;
     @Schema(description = "작성일")
-    private LocalDateTime createdDate;
+    private String createdDate;
     @Schema(description = "수정일")
-    private LocalDateTime modifiedDate;
+    private String modifiedDate;
 }
