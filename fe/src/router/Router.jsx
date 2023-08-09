@@ -47,23 +47,33 @@ import MyPagePointHistory from "../Pages/MyPage/Point/MyPagePointHistory";
 import MyPagePointWithdraw from "../Pages/MyPage/Point/MyPagePointWithdraw";
 import MyPageRewardPoint from "../Pages/MyPage/MyPageRewardPoint"
 
+
 // openvidue
 import Room from "../Pages/Room/Room";
+
 
 // import { aX } from "@fullcalendar/core/internal-common";
 import axios from "axios";
 import NoticeDetail from "../Pages/Notice/NoticeDetail";
 import VideoRoomComponent from "../Pages/Room/VideoRoomComponent";
 
+
 // 리덕스 툴킷
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { persistor } from '../redux/store';
+import { setUser } from '../redux/reducers/userSlice';
 
 
 export default function Router() {
 
+  const dispatch = useDispatch();
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // 유저 정보 리덕스에서 가져오기
   const user = useSelector((state) => state.user.user);
+
 
   // 로그아웃
   const handleLogout = () => {
@@ -75,23 +85,26 @@ export default function Router() {
         token: token
       }
     })
-      .then((res) =>
+      .then((res) =>{
         console.log(res)
-      )
-      .catch((err) =>
+        dispatch(setUser(null))
+        persistor.purge() // 리덕스 스토어 초기화 후 스토리지에서 데이터 삭제
+  })
+      .catch((err) =>{
         console.log(err)
-      )
+  })
 
     localStorage.clear();
     setIsLoggedIn(false);
   };
 
   
-  useEffect(() => {
-    if (user) {
-      setIsLoggedIn(true);
-    }
-  }, []);
+
+  // useEffect(() => {
+  //   if (user) {
+  //     setIsLoggedIn(true);
+  //   }
+  // }, []);
 
 
 

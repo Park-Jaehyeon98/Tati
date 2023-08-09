@@ -6,6 +6,8 @@ import jwt_decode from "jwt-decode";
 
 import RefreshToken from "../../Components/RefreshToken";
 
+import setIsLoggedIn from "../../router/Router";
+
 // 리덕스 저장
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/reducers/userSlice';

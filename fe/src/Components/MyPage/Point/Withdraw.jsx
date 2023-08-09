@@ -10,6 +10,7 @@ import { updateUser } from '../../../redux/reducers/userSlice';
 
 export default function Withdraw() {
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   
@@ -20,6 +21,7 @@ export default function Withdraw() {
   const [currentPoint, setCurrentPoint] = useState(user.totalPoint);
   const [rechargeAmount, setRechargeAmount] = useState(0);
   
+
   const handleRecharge = () => {
     console.log(currentPoint - rechargeAmount)
     if(currentPoint - rechargeAmount>0){
@@ -28,19 +30,23 @@ export default function Withdraw() {
     }
   };
 
+
   const handleDecrease = () => {
     const roundedAmount = Math.floor(rechargeAmount / 1000) * 1000;
     const newRechargeAmount = Math.max(roundedAmount - 1000, 0);
     setRechargeAmount(newRechargeAmount);
   };
 
+
   const handleChange = (e) => {
     const value = Number(e.target.value);
     setRechargeAmount(value);
   };
 
+
   // 현재 시간
   const currentDate = new Date();;
+
 
 
   // 인출 =================================================================
@@ -67,6 +73,8 @@ export default function Withdraw() {
         console.log(res.data);
         console.log('==============================')
         navigate("/MyPage/PointHistory")
+        const updatedUser = {totalPoint:currentPoint - rechargeAmount};
+        dispatch(updateUser(updatedUser)); // Dispatch the action
       })
       .catch((err) => {
         console.log(err,'------------------');

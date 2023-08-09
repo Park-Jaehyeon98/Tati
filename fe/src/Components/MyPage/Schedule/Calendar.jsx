@@ -6,8 +6,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from '@fullcalendar/react';
 import listPlugin from "@fullcalendar/list";
 import style from "./Calendar.module.css"
-// 차트
-import { Bar } from 'react-chartjs-2';
+
 
 import axios from "axios";
 
@@ -57,7 +56,7 @@ export default function Calendar(){
     loadData()
 
     // 열정지수 bar
-    setGraphWidth(50 * 5.6);
+    setGraphWidth(user.totalScore * 5.82);
 
     }, [totalScore]);
 
@@ -90,9 +89,11 @@ export default function Calendar(){
 
         const eventsToAdd = res.data.scheduleList.map((scheduleItem) => ({
           title: scheduleItem.memberScheduleTitle,
-          content: scheduleItem.memberScheduleContent,
           date: scheduleItem.memberScheduleDate.slice(0, 10),
-          scheduleId: scheduleItem.memberScheduleId
+          scheduleId: scheduleItem.memberScheduleId,
+          extendedProps: {
+            content: scheduleItem.memberScheduleContent,
+          }
         }));
 
         dispatch(clearUserSchedule());
@@ -140,9 +141,11 @@ export default function Calendar(){
 
         const newEvent = {
           title: res.data.memberScheduleTitle,
-          content:res.data.memberScheduleContent,
           data:res.data.memberScheduleDate.slice(0,10),
           scheduleId: res.data.memberScheduleId,
+          extendedProps: {
+            content: res.data.memberScheduleContent,
+          }
         };
 
         dispatch(addSchedule(newEvent))
@@ -151,15 +154,6 @@ export default function Calendar(){
       .catch((err) => {
         console.log(err,' 일정 추가 실패 ------------------');
       });
-
-
-    // 모달에서 입력한 이벤트 내용과 일시를 캘린더에 추가하는 로직을 작성합니다.
-    const newEvent = {
-      title: eventTitle,
-      content:eventContent,
-      start: new Date(selectedDate + "T" + eventTime).toISOString(),
-      end: new Date(selectedDate + "T" + eventTime).toISOString(),
-    };
 
     // 캘린더 이벤트 배열에 새 이벤트를 추가하고 모달을 닫습니다.
     setSelectedDate(null);
@@ -171,7 +165,7 @@ export default function Calendar(){
 
 
   // 일정 삭제 =======================================================================
-  const handleEventClick = (info) => {
+  const EventDelete = (info) => {
 
     if (window.confirm("이 일정를 삭제하시겠습니까?")) {
 
@@ -217,7 +211,23 @@ export default function Calendar(){
   };
   //==========================================================================================
 
-  
+
+  const [selectedEvent, setSelectedEvent] = useState(null); 
+
+  // 일정 클릭시 모달 열기===================================================================
+  const handleEventClick = (info) => {
+    const clickedEvent = info.event;
+
+    console.log(info)
+    // 클릭한 이벤트 정보 저장 후 모달 열기
+    setSelectedEvent({
+      title: clickedEvent.title,
+      content: clickedEvent.extendedProps.content,
+      date: clickedEvent.start.toISOString().slice(0, 10), // 날짜 형식 변환
+    });
+  };
+  //========================================================================================
+
   // 일정
   const events=[
     ...userSchedule
@@ -276,6 +286,21 @@ export default function Calendar(){
             <textarea value={eventContent} onChange={(e) => setEventContent(e.target.value)} id="" cols="30" rows="10"></textarea>
             <button onClick={handleModalSubmit}>추가</button>
             <button onClick={() => setSelectedDate(null)}>닫기</button>
+          </div>
+        </div>
+      )}
+
+      {selectedEvent && (
+        <div className={style.detail_modal}>
+          <div className={style.detail_modal_content}>
+            <div className={style.left_align}>
+            <h2>일정 내용</h2>
+            <p><strong>제목:</strong> {selectedEvent.title}</p>
+            <p><strong>날짜:</strong> {selectedEvent.date}</p>
+            <p><strong>내용:</strong> {selectedEvent.content}</p>
+
+            </div>
+            <button onClick={() => setSelectedEvent(null)}>닫기</button>
           </div>
         </div>
       )}
