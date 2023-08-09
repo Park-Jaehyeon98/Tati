@@ -5,8 +5,7 @@ const NoticeListItem = ({ boardItemInfo }) => {
 
     return (
         <>
-            <div>{boardItemInfo.boardTitle}</div>
-            <div>{createdDate}</div>
+            <div>{boardTitle} 작성일{createdDate}</div>
         </>
 
     )
