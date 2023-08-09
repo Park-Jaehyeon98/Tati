@@ -8,7 +8,7 @@ const StudyDetailTest = () => {
     const params = useParams();
     const navigate = useNavigate();
     const userInfo = useSelector((state) => { return state.user })
-
+    const user = useSelector(state => state.user.user);
     const [viewType, setViewType] = useState(0);
 
     const [studyData, setStudyData] = useState({
@@ -59,7 +59,7 @@ const StudyDetailTest = () => {
 
     // 처음 렌더링시 스터디 상세정보를 받아옴
     useEffect(() => {
-        apiClient.get(`study/${studyId}`)
+        apiClient.get(`study/${studyId}/${user.memberId}`)
             .then(res => {
                 // console.log(res.data);
                 setStudyData(res.data);
