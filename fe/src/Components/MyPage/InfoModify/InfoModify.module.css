@@ -74,8 +74,10 @@ display: flex;
 }
 
 .file_img{
+  position: relative;
   width: 250px;
   height: 150px;
+  margin-left: 50px;
 }
 
 /* ======================================================== */
@@ -103,11 +105,78 @@ display: flex;
 }
 
 /* 파일 입력 필드 숨김 */
-input[type="file"] {
+.customFileInput[type="file"] {
   display: none;
 }
 
+/* 회원탈퇴 버튼 */
+.Withdrawal_btn {
+  width: 140px;
+  height: 30px;
+  /* font-weight: bold; */
+  font-size: 15px;
+  border-radius: 20px;
+  background-color: #f68976; /* Coral color */
+  color: white; /* Text color */
+  border: none; /* No border */
+  cursor: pointer;
+}
 
+.Withdrawal_btn:hover {
+  background-color: #f17053; /* Darker coral color on hover */
+}
+/*  */
 
+/* InfoModify.module.css */
+
+.container {
+  /* ... existing container styles ... */
+}
+
+/* Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+
+.modal {
+  width: 300px;
+  height: 170px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.modal h3 {
+  margin-bottom: 20px;
+}
+
+.modal p {
+  margin-bottom: 30px;
+}
+
+.modal button {
+  margin: 0 10px;
+  padding: 10px 40px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.modal button:hover {
+  background-color: #0056b3;
+}
 
 

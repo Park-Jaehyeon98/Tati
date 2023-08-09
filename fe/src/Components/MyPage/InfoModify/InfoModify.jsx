@@ -8,17 +8,21 @@ export default function InfoModify() {
 
   const navigate = useNavigate();
 
+  const [imageDataURL, setImageDataURL] = useState(null);
+
+  // 리덕스 펄시스트 유저정보를 불러옴
+  const user = useSelector(state => state.user.user);
+  
   // 로컬의 유저pk값을 불러오기
   const tokenInfo = localStorage.getItem('decodedToken');
   console.log(JSON.parse(tokenInfo));
   const parseJwt = JSON.parse(tokenInfo);
-  const nick = localStorage.getItem('memberNickName');
-  // 회원정보 리덕스에서 가져오기
-  const userInfo = useSelector((state) => state.userInfo);
+
   // 닉네임 중복 확인
-  const [nickName, serNickName] = useState(nick)
+  const [nickName, serNickName] = useState(user.memberNickName)
+  
   // 회원정보
-  const [userData, setUserData] = useState(userInfo);
+  const [userData, setUserData] = useState(user);
 
   const handleChange = (e) => {
     const { value } = e.target;
@@ -29,7 +33,7 @@ export default function InfoModify() {
   const handleSendNickName = () => {
     console.log(`닉네임 ${nickName}`)
     console.log(process.env.REACT_APP_URL)
-    axios.post(`http://192.168.31.57:8080/member/nickname-check`, {
+    axios.post(`${process.env.REACT_APP_URL}/member/nickname-check`, {
         memberNickName: nickName,
       })
       .then((res) => {
@@ -47,20 +51,20 @@ export default function InfoModify() {
   const handleImageChange = (e) => {
     console.log(e.target.files[0]);
     setFile(e.target.files[0])
-    // if (file) {
-    //   const reader = new FileReader();
-    //   reader.onloadend = () => {
-    //     setFile(reader.result);
-    //   };
-    //   reader.readAsDataURL(file);
-    // }
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageDataURL(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
 
   // 유저의 pk 와 닉네임을 보냄
   // 요청 성공 후 다시 회원정보 수정 페이지로
   const handleNickNameupdata = () => {
-    const memberIdAsNumber = parseJwt.memberId;
+    const memberIdAsNumber = user.memberId;
 
     console.log(`memberId - ${memberIdAsNumber} nickName - ${nickName} file - ${file}`)
 
@@ -70,7 +74,7 @@ export default function InfoModify() {
 
     // Id랑 닉네임 입력
     const putMemberReqDto = {
-      "memberId": parseJwt.memberId,
+      "memberId": user.memberId,
       "memberNickName": nickName
     };
 
@@ -82,10 +86,6 @@ export default function InfoModify() {
 
     console.log('-------------------------------------------------')
 
-    for (const [key, value] of formData.entries()) {
-      console.log(key, typeof value);
-      console.log('============');
-    }
 
     console.log(file)
     // console.log(process.env.REACT_APP_URL)
@@ -96,7 +96,7 @@ export default function InfoModify() {
     })
       .then((res) => {
         console.log(res);
-        setFile(file)
+
         navigate("/MyPage/MyPageInfoModify");
         alert("수정됨");
       })
@@ -127,10 +127,9 @@ export default function InfoModify() {
     if (password !== password2) {
       alert('비밀번호가 일치하자 않습니다.')
     }
-    console.log(`비밀번호 변경: ${password} memberId: ${parseJwt.memberId}`)
-    console.log(process.env.REACT_APP_URL)
+    console.log(`비밀번호 변경: ${password} memberId: ${user.memberId}`)
     axios.put(`${process.env.REACT_APP_URL}/member/mypage/modifyPassword`, {
-      memberId:parseJwt.memberId,
+      memberId:user.memberId,
       password
     })
       .then((res) => {
@@ -146,21 +145,42 @@ export default function InfoModify() {
 
   // 회원탈퇴 
   // 유저 pk를 url에 삽입 후 보냄 (pk는 로컬에)
-  const handleWithdrawal = () => {
-    const email = 'rlaalsrbs15@naver.com'
-    console.log(process.env.REACT_APP_URL)
-    axios.delete(`${process.env.REACT_APP_URL}/member/mypage/remove/${parseJwt.sub}`, {
-    })
-      .then((res) => {
-        console.log(res)
-        alert('회원탈퇴성공')
-        navigate.push("/Login");
-      })
-      .catch((err) => {
-        console.log(err)
-      });
-  }
+  const [showWithdrawalModal, setShowWithdrawalModal] = useState(false);
 
+  // const handleWithdrawal = () => {
+  //   axios.delete(`${process.env.REACT_APP_URL}/member/mypage/remove/${parseJwt.sub}`, {
+  //   })
+  //     .then((res) => {
+  //       console.log(res)
+  //       alert('회원탈퇴성공')
+  //       navigate.push("/Login");
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     });
+  // }
+
+
+  const handleWithdrawal = () => {
+      setShowWithdrawalModal(true);
+    };
+
+    const confirmWithdrawal = () => {
+      axios
+        .delete(`${process.env.REACT_APP_URL}/member/mypage/remove/${parseJwt.sub}`, {})
+        .then((res) => {
+          console.log(res);
+          alert("회원탈퇴성공");
+          navigate.push("/Login");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    const cancelWithdrawal = () => {
+      setShowWithdrawalModal(false);
+    };
 
   return (
     <div className={style.container}>
@@ -171,11 +191,11 @@ export default function InfoModify() {
       <div className={style.contents}>
         <p className={style.InfoModify_text}>
           이메일
-          <p className={style.InfoModify_email}>{userData}</p>
+          <p className={style.InfoModify_email}>{user.email}</p>
         </p>
         <p className={style.InfoModify_text}>
           이름
-          <p className={style.InfoModify_name}>김싸피</p>
+          <p className={style.InfoModify_name}>{user.memberName}</p>
         </p>
         <p className={style.InfoModify_profile}>
           프로필
@@ -192,8 +212,8 @@ export default function InfoModify() {
             />
           </label>  
 
+        {imageDataURL && <img src={imageDataURL} alt="Uploaded" className={style.file_img} />}
         </p>
-        {file && <img src={file} alt="Uploaded" className={style.file_img} />}
         <p>
           닉네임
           <input name="NickName"
@@ -231,7 +251,18 @@ export default function InfoModify() {
         onClick={handleSendPassword}
       >완료</button>
 
-      <button onClick={handleWithdrawal}>회원탈퇴</button>
+      <button onClick={handleWithdrawal} className={style.Withdrawal_btn}>회원탈퇴</button>
+
+      {showWithdrawalModal && (
+        <div className={style.modalOverlay}>
+          <div className={style.modal}>
+            <h3>회원탈퇴 경고</h3>
+            <p>정말로 회원탈퇴 하시겠습니까?</p>
+            <button onClick={confirmWithdrawal}>확인</button>
+            <button onClick={cancelWithdrawal}>취소</button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -15,6 +15,7 @@ export default function Change() {
   console.log(JSON.parse(tokenInfo));
   const parseJwt = JSON.parse(tokenInfo);
 
+
   const handleRecharge = () => {
     const roundedAmount = Math.ceil(rechargeAmount / 1000) * 1000;
     setRechargeAmount((prevAmount) => prevAmount + 1000); //1000 단위로 올림

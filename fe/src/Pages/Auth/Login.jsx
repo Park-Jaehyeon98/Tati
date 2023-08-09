@@ -43,11 +43,6 @@ export default function Login() {
       .then((res) => {
         console.log(res)
         console.log(res.headers)
-        // 로컬 스토리지에 데이터 저장
-        localStorage.setItem('memberNickName', res.data.memberNickName);
-        localStorage.setItem('totalPoint', res.data.totalPoint);
-        localStorage.setItem('totalScore', res.data.totalScore);
-        localStorage.setItem('totalStudyTime', res.data.totalStudyTime);
         
         // decodedToken, accessToken 로컬에 저장 - 유저 정보(memberId,memberName,sub,exp,iat)
         const authorizationHeader = res.headers.authorization;
@@ -55,16 +50,21 @@ export default function Login() {
         const accessToken = authorizationHeader.substring(7);
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('decodedToken', JSON.stringify(decodedToken));
-
-        // 로컬에서 decodedToken꺼내기
-        const tokenInfo = localStorage.getItem('decodedToken');
-        console.log(JSON.parse(tokenInfo));
-        const parseJwt = JSON.parse(tokenInfo);
-        console.log(parseJwt.sub);
         localStorage.setItem('refreshtoken',res.headers.refreshtoken);
-
-        RefreshToken()
-        dispatch(setUser(res.data));
+        
+        const user = {
+          createdDate:res.data.createdDate,
+          email:res.data.email,
+          memberId:res.data.memberId,
+          memberName:res.data.memberName,
+          memberNickName:res.data.memberNickName,
+          totalPoint:res.data.totalPoint,
+          totalScore:res.data.totalScore,
+          totalStudyTime:res.data.totalStudyTime,
+          img:null
+        }
+        
+        dispatch(setUser(user));
         navigate("/MyPage");
       })
       .catch((err) => {

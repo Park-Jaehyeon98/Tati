@@ -3,7 +3,6 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // 로컬 스토리지 사용
 import rootReducer from './rootReducer';
 
-import userSlice from './reducers/userSlice';
 import userScheduleSlice from './reducers/userScheduleSlice';
 import userStudyScheduleSlice from './reducers/userStudyScheduleSlice';
 

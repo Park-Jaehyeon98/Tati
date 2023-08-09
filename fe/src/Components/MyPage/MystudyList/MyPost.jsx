@@ -19,7 +19,7 @@ export default function MyPost(){
   console.log(JSON.parse(tokenInfo));
   const parseJwt = JSON.parse(tokenInfo);
 
-  // 가입한 스터디 ======================================================================================
+  // 내 작성글  ======================================================================================
 
   console.log(`memberId - ${parseJwt.memberId}`)
   useEffect(() => {

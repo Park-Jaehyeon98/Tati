@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./Aside.module.css"
 import AuthModal from "./AuthModal";
+import { useSelector } from 'react-redux';
 
 export default function Aside() {
 
   const navigate = useNavigate();
+  // 리덕스 펄시스트 유저정보를 불러옴
+  const user = useSelector(state => state.user.user);
 
   const [authModal, setAuthModal] = useState(false);
 
-  const totalPoint = localStorage.getItem('totalPoint');
-  const memberNickName = localStorage.getItem('memberNickName');
   const img = localStorage.getItem('img');
 
 
@@ -59,8 +60,8 @@ export default function Aside() {
       </div>
 
       <div className={style.name_point}>
-        <p>{memberNickName}</p>
-        <p>마일리지 {totalPoint}pt</p>
+        <p>{user.memberNickName}</p>
+        <p>마일리지 {user.totalPoint}pt</p>
       </div>
       <div>
         <button className={style.bt} onClick={() => onButtonClick("schedule")}>
