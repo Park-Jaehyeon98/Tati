@@ -63,7 +63,7 @@ export default function Router() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const memberId = useSelector((state) => state.user.user.memberId);
+  const user = useSelector((state) => state.user.user);
 
   const handleLogout = () => {
 
@@ -86,8 +86,7 @@ export default function Router() {
   };
 
   useEffect(() => {
-    console.log(memberId,'kkkkkkk')
-    if (memberId) {
+    if (user) {
       setIsLoggedIn(true);
     }
   }, []);

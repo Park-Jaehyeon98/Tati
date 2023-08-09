@@ -32,31 +32,23 @@ export default function Calendar(){
   const month = currentDate.getMonth() + 1;
 
 
-  const tokenInfo = localStorage.getItem('decodedToken');
-  console.log(JSON.parse(tokenInfo));
-  const parseJwt = JSON.parse(tokenInfo);
 
-  const [img,setImg] = useState(null)
   const [totalScore,setTotalScore] = useState('')
   const [totalStudyTime,setTotalStudyTime] = useState('')
   const [todayStudyTime,setTodayStudyTime] = useState('')
 
+  // 리덕스의 유저정보 와 일정 가져오기
   const userSchedule = useSelector(state => state.userSchedule);
+  const user = useSelector(state => state.user.user);
 
-  // const [events,setEvents] = useState([])
 
   useEffect(() => {
 
-    // console.log('events ===========================')
-    // console.log(events)
-    // console.log('===========================')
-
-    console.log('캘린더 memberId',parseJwt.memberId)
+    console.log('캘린더 memberId',user.memberId)
     console.log(`year---${year}///month---${month}`)
 
-    console.log(process.env.REACT_APP_URL)
 
-    axios.get(`${process.env.REACT_APP_URL}/member/mypage/${parseJwt.memberId}`, {
+    axios.get(`${process.env.REACT_APP_URL}/member/mypage/${user.memberId}`, {
       params: {
         year,
         month
@@ -75,15 +67,12 @@ export default function Calendar(){
         }));
 
 
-        
-        dispatch(clearUserSchedule())
-        eventsToAdd.forEach(event => {
-          dispatch(addSchedule(event)); // 각 이벤트를 Redux 스토어에 추가
-        });
+        console.log(eventsToAdd)
+        dispatch(clearUserSchedule());
+        dispatch(addSchedule(eventsToAdd));
         
 
-        setImg(res.data.img)
-        localStorage.setItem('img', res.data.img);
+
         setTotalScore(res.data.totalScore)
         setTotalStudyTime(res.data.todayStudyTime)
         setTodayStudyTime(res.data.totalStudyTime)
@@ -93,7 +82,7 @@ export default function Calendar(){
         console.log(err,'일정 요청 실패------------------');
       });
 
-  }, [])
+  },[])
 
   const [selectedDate, setSelectedDate] = useState(null);
   const [eventTitle, setEventTitle] = useState('');
@@ -105,7 +94,6 @@ export default function Calendar(){
   };
 
 
-
   // 회원일정등록 =======================================================
   const handleModalSubmit = () => {
 
@@ -114,33 +102,35 @@ export default function Calendar(){
       return;
     }
 
+    const selectedDateTime = new Date(`${selectedDate}T${eventTime}`);
+
     const postScheduleReqDto = {
-      email:parseJwt.sub,
-      memberScheduleDate: new Date(),
+      email:user.email,
+      memberScheduleDate: selectedDateTime,
       memberScheduleContent: eventContent,
       memberScheduleTitle: eventTitle
     }
-    console.log(postScheduleReqDto.sub)
-    axios.post(`${process.env.REACT_APP_URL}/member/mypage/schedule`,
-    postScheduleReqDto 
-    )
+    console.log(postScheduleReqDto.memberScheduleDate)
+
+    axios.post(`${process.env.REACT_APP_URL}/member/mypage/schedule`,postScheduleReqDto)
       .then((res) => {
         console.log(' 일정 추가 성공 =================================')
+
         console.log(res.data);
+
         const newEvent = {
           title: res.data.memberScheduleTitle,
           content:res.data.memberScheduleContent,
           data:res.data.memberScheduleDate.slice(0,10),
           scheduleId: res.data.memberScheduleId,
         };
+
         dispatch(addSchedule(newEvent))
-        // window.location.reload();
       })
       .catch((err) => {
         console.log(err,' 일정 추가 실패 ------------------');
       });
 
-      //postScheduleReqDto{ email - String, memberScheduleDate- String(20230726), memberScheduleContent- String, memberScheduleTitle- String}
 
     // 모달에서 입력한 이벤트 내용과 일시를 캘린더에 추가하는 로직을 작성합니다.
     const newEvent = {
@@ -150,13 +140,13 @@ export default function Calendar(){
       end: new Date(selectedDate + "T" + eventTime).toISOString(),
     };
 
-    console.log(newEvent)
     // 캘린더 이벤트 배열에 새 이벤트를 추가하고 모달을 닫습니다.
     setSelectedDate(null);
     setEventTitle('');
     setEventTime('');
     setEventContent('');
   };
+
 
 
   // 일정 삭제 =======================================================================
@@ -174,20 +164,18 @@ export default function Calendar(){
         console.log(res.data);
         console.log('==============================')
         dispatch(removeSchedule(scheduleId))
-        window.location.reload();
       })
       .catch((err) => {
         console.log(err,' 일정 추가 ------------------');
       });
-
-      // ============================================================
-
     }
   };
+  // =========================================================================
 
 
   // 일정
   const events=[
+    {title: '222', content: '222', date: '2023-08-09', scheduleId: 9},
     ...userSchedule
   ];
 
@@ -213,13 +201,14 @@ export default function Calendar(){
           
           dateClick={handleDateClick}
           eventClick={handleEventClick}
-          // firstDay={3}
           />
+
           <div>
             <h1>{totalScore} - 열정지수</h1>
             <h1>{totalStudyTime} - 총 공부시간</h1>
             <h1>{todayStudyTime} - 오늘 공부 시간</h1>
           </div>
+
       </div>
           
       {selectedDate && (

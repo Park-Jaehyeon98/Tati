@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./InfoModify.module.css"
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+// 리덕스 저장
+import { useDispatch } from 'react-redux';
+import { updateUser } from '../../../redux/reducers/userSlice';
+
+
 export default function InfoModify() {
 
+  const dispatch = useDispatch(); 
   const navigate = useNavigate();
 
-  const [imageDataURL, setImageDataURL] = useState(null);
+  const [imageDataURL, setImageDataURL] = useState();
 
   // 리덕스 펄시스트 유저정보를 불러옴
   const user = useSelector(state => state.user.user);
@@ -50,7 +56,10 @@ export default function InfoModify() {
 
   const handleImageChange = (e) => {
     console.log(e.target.files[0]);
-    setFile(e.target.files[0])
+    setFile(()=>{return e.target.files[0]})
+  };
+  
+  useEffect(() => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -58,9 +67,10 @@ export default function InfoModify() {
       };
       reader.readAsDataURL(file);
     }
-  };
+  }, [file]);
 
 
+  
   // 유저의 pk 와 닉네임을 보냄
   // 요청 성공 후 다시 회원정보 수정 페이지로
   const handleNickNameupdata = () => {
@@ -87,7 +97,7 @@ export default function InfoModify() {
     console.log('-------------------------------------------------')
 
 
-    console.log(file)
+    console.log(imageDataURL)
     // console.log(process.env.REACT_APP_URL)
     axios.put(`${process.env.REACT_APP_URL}/member/mypage/modifyNickName`, formData, {
       headers: {
@@ -96,6 +106,9 @@ export default function InfoModify() {
     })
       .then((res) => {
         console.log(res);
+
+        const updatedUser = { memberNickName: nickName , img:imageDataURL};
+        dispatch(updateUser(updatedUser)); // Dispatch the action
 
         navigate("/MyPage/MyPageInfoModify");
         alert("수정됨");
@@ -147,19 +160,6 @@ export default function InfoModify() {
   // 유저 pk를 url에 삽입 후 보냄 (pk는 로컬에)
   const [showWithdrawalModal, setShowWithdrawalModal] = useState(false);
 
-  // const handleWithdrawal = () => {
-  //   axios.delete(`${process.env.REACT_APP_URL}/member/mypage/remove/${parseJwt.sub}`, {
-  //   })
-  //     .then((res) => {
-  //       console.log(res)
-  //       alert('회원탈퇴성공')
-  //       navigate.push("/Login");
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     });
-  // }
-
 
   const handleWithdrawal = () => {
       setShowWithdrawalModal(true);
@@ -181,6 +181,7 @@ export default function InfoModify() {
     const cancelWithdrawal = () => {
       setShowWithdrawalModal(false);
     };
+
 
   return (
     <div className={style.container}>

@@ -12,9 +12,6 @@ export default function Aside() {
 
   const [authModal, setAuthModal] = useState(false);
 
-  const img = localStorage.getItem('img');
-
-
   // const reader = new FileReader();
   //   reader.onloadend = () => {
   //     setFile(reader.result);
@@ -48,8 +45,8 @@ export default function Aside() {
   return (
     <div className={style.box1}>
       <div className={style.box4}>
-        {img ? (
-          <img className={style.box4} src={img}/>
+        {user.img ? (
+          <img className={style.box4} src={user.img}/>
         ) : (
           <img
             className={style.box4}
