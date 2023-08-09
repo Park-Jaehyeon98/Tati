@@ -5,6 +5,8 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from '@fullcalendar/react';
 import style from "./Calendar.module.css"
+// 차트
+import { Bar } from 'react-chartjs-2';
 
 import axios from "axios";
 
@@ -16,10 +18,9 @@ import { updateUser } from "../../../redux/reducers/userSlice"
 
 // 리덕스 꺼내기
 import { useSelector } from 'react-redux';
+
 import { event } from "jquery";
 
-
-// 스터디 일정도 등록
 
 
 export default function Calendar(){
@@ -32,7 +33,7 @@ export default function Calendar(){
   const month = currentDate.getMonth() + 1;
 
 
-
+  const [graphWidth, setGraphWidth] = useState(0);
   const [totalScore,setTotalScore] = useState('')
   const [totalStudyTime,setTotalStudyTime] = useState('')
   const [todayStudyTime,setTodayStudyTime] = useState('')
@@ -50,7 +51,8 @@ export default function Calendar(){
 
     loadData()
 
-  },[])
+      setGraphWidth(50 * 5.5);
+    }, [totalScore]);
 
   const [selectedDate, setSelectedDate] = useState(null);
   const [eventTitle, setEventTitle] = useState('');
@@ -185,12 +187,13 @@ export default function Calendar(){
   };
   // =========================================================================
 
-
+  
   // 일정
   const events=[
     ...userSchedule
   ];
 
+  // const graphWidth = totalScore * 3;
 
   //  월:1, 화:2, 수:3, 목:4, 금:5, 토:6, 일:0
   return (
@@ -216,7 +219,13 @@ export default function Calendar(){
           />
 
           <div>
-            <h1>{totalScore} - 열정지수</h1>
+            <div className={style.totalScore_box}>
+              <h1 className={style.totalScore_h1}>열정지수</h1>
+              <div className={style.graph_container}>
+                <div className={style.bar} style={{ width: `${graphWidth}px` }}>{totalScore}</div>
+              </div>
+            </div>
+
             <h1>{totalStudyTime} - 총 공부시간</h1>
             <h1>{todayStudyTime} - 오늘 공부 시간</h1>
           </div>

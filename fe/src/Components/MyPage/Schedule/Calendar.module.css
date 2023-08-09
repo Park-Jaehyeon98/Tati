@@ -73,3 +73,31 @@
  ④ backgroundColor : 이벤트 배경색의 색상만을 변경한다.
  ⑤ borderColor : 이벤트 테두리의 색상만을 변경한다.
  ⑥ rendering : "bakground"라고 입력하면 color, backgroundColor의 색상으로 해당일 전체의 내용이 채워진다. */
+
+ .totalScore_box{
+  display: flex;
+  margin-top: 20px;
+ }
+
+ .graph_container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  width: 582px;
+  height: 30px;
+  border: 1px solid black;
+  margin-top: 17px;
+}
+
+.bar {
+  height: 30px;
+  background-color: rgba(75, 192, 192, 0.7);
+  transition: width 0.5s ease-in-out;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.totalScore_h1 {
+  margin-right: 20px;
+  font-size: 24px;
+}
