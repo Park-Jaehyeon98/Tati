@@ -44,4 +44,7 @@ public class StudyDetailResDto {
 
     @Schema(description = "카테코리 식별번호")
     private Integer categoryId;
+
+    @Schema(description = "스터디 회원 여부")
+    private boolean studyMemberYn;
 }
