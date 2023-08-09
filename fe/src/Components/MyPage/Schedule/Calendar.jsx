@@ -4,6 +4,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from '@fullcalendar/react';
+import listPlugin from "@fullcalendar/list";
 import style from "./Calendar.module.css"
 // 차트
 import { Bar } from 'react-chartjs-2';
@@ -42,8 +43,12 @@ export default function Calendar(){
   const userSchedule = useSelector(state => state.user.userSchedule);
   const user = useSelector(state => state.user.user);
 
+  // 사용자의 시간대 출력
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   useEffect(() => {
+
+    console.log(userTimeZone); 
 
     console.log(userSchedule)
     console.log('캘린더 memberId',user.memberId)
@@ -51,7 +56,9 @@ export default function Calendar(){
 
     loadData()
 
-      setGraphWidth(50 * 5.5);
+    // 열정지수 bar
+    setGraphWidth(50 * 5.6);
+
     }, [totalScore]);
 
   const [selectedDate, setSelectedDate] = useState(null);
@@ -187,6 +194,29 @@ export default function Calendar(){
   };
   // =========================================================================
 
+
+  // 일정 수정 ===========================================================================
+  const handleEventDrop = (info) => {
+
+    const scheduleId = Number(info.event._def.extendedProps.scheduleId);
+    const updatedDate = info.event.start.toISOString();
+
+    axios
+      .put(`${process.env.REACT_APP_URL}/member/mypage/schedule/${scheduleId}`, {
+        memberScheduleDate: updatedDate,
+      })
+      .then((res) => {
+        console.log("일정 변경 성공 ==============================");
+        console.log(res.data);
+        console.log("=========================================");
+        loadData();
+      })
+      .catch((err) => {
+        console.log(err, "일정 변경 실패 -----------------------");
+      });
+  };
+  //==========================================================================================
+
   
   // 일정
   const events=[
@@ -201,21 +231,26 @@ export default function Calendar(){
       {/* 캘린더 */}
       <div className={style.calendar}>
         <FullCalendar
+          timeZone = 'userTimeZone'
           defaultView="dayGridMonth" 
+          editable = {true} // 수정 가능
+          resourceAreaHeaderContent="Rooms"
           initialView={'dayGridMonth'}
           locale={"ko"}
+          views={{ listWeek: { type: "listWeek", buttonText: "주간 목록" } }}
           headerToolbar={
               {
                   start: 'today prev,next',
                   center: 'title',
-                  end: 'dayGridMonth,timeGridWeek,timeGridDay' 
+                  end: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek' 
               }
           }
-          plugins={[dayGridPlugin,timeGridPlugin,interactionPlugin]}
+          plugins={[dayGridPlugin,timeGridPlugin,interactionPlugin,listPlugin]}
           events={events}
-          
+          resources = {events}
           dateClick={handleDateClick}
           eventClick={handleEventClick}
+          eventDrop={handleEventDrop}
           />
 
           <div>
@@ -226,8 +261,8 @@ export default function Calendar(){
               </div>
             </div>
 
-            <h1>{totalStudyTime} - 총 공부시간</h1>
-            <h1>{todayStudyTime} - 오늘 공부 시간</h1>
+            <h1>총 공부시간 - {totalStudyTime}</h1>
+            <h1>오늘 공부 시간 - {todayStudyTime}</h1>
           </div>
 
       </div>

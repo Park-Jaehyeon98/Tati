@@ -110,6 +110,7 @@ export default function InfoModify() {
         const updatedUser = { memberNickName: nickName , img:imageDataURL};
         dispatch(updateUser(updatedUser)); // Dispatch the action
 
+        setImageDataURL()
         navigate("/MyPage/MyPageInfoModify");
         alert("수정됨");
       })
