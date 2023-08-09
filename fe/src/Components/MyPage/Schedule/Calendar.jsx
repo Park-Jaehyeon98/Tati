@@ -65,6 +65,8 @@ export default function Calendar(){
   const [eventContent, setEventContent] = useState('');
   const [eventTime, setEventTime] = useState('');
 
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
   const handleDateClick = (info) => {
     setSelectedDate(info.dateStr);
   };
@@ -165,26 +167,24 @@ export default function Calendar(){
 
 
   // 일정 삭제 =======================================================================
-  const EventDelete = (info) => {
+  const handleConfirmDelete = () => {
+    const scheduleId = selectedEvent.extendedProps.scheduleId;
 
-    if (window.confirm("이 일정를 삭제하시겠습니까?")) {
-
-      const scheduleId = Number(info.event._def.extendedProps.scheduleId)
-
-      // 일정 삭제 요청===================================================
-
-      axios.delete(`${process.env.REACT_APP_URL}/member/mypage/schedule/${scheduleId}`)
+    axios
+      .delete(`${process.env.REACT_APP_URL}/member/mypage/schedule/${scheduleId}`)
       .then((res) => {
-        console.log('일정 삭제 성공시=================================')
+        console.log("일정 삭제 성공시=================================");
         console.log(res.data);
-        console.log('==============================')
-        dispatch(removeSchedule(scheduleId))
-        loadData()
+        console.log("==============================");
+        dispatch(removeSchedule(scheduleId));
+        loadData();
+        setSelectedEvent(null);
       })
       .catch((err) => {
-        console.log(err,' 일정 추가 ------------------');
+        console.log(err, "일정 추가 ------------------");
       });
-    }
+
+    setShowConfirmation(false); // Close the confirmation dialog
   };
   // =========================================================================
 
@@ -212,28 +212,27 @@ export default function Calendar(){
   //==========================================================================================
 
 
+  
+  const handleEventClick = (info) => {
+    setSelectedEvent(info.event);
+    setShowConfirmation(true); // Open the confirmation dialog
+  };
+
   const [selectedEvent, setSelectedEvent] = useState(null); 
 
   // 일정 클릭시 모달 열기===================================================================
-  const handleEventClick = (info) => {
-    const clickedEvent = info.event;
-
-    console.log(info)
-    // 클릭한 이벤트 정보 저장 후 모달 열기
-    setSelectedEvent({
-      title: clickedEvent.title,
-      content: clickedEvent.extendedProps.content,
-      date: clickedEvent.start.toISOString().slice(0, 10), // 날짜 형식 변환
-    });
+  const handleCancelDelete = () => {
+    setSelectedEvent(null);
+    setShowConfirmation(false); // Close the confirmation dialog
   };
   //========================================================================================
+
 
   // 일정
   const events=[
     ...userSchedule
   ];
 
-  // const graphWidth = totalScore * 3;
 
   //  월:1, 화:2, 수:3, 목:4, 금:5, 토:6, 일:0
   return (
@@ -290,17 +289,18 @@ export default function Calendar(){
         </div>
       )}
 
-      {selectedEvent && (
-        <div className={style.detail_modal}>
-          <div className={style.detail_modal_content}>
-            <div className={style.left_align}>
-            <h2>일정 내용</h2>
-            <p><strong>제목:</strong> {selectedEvent.title}</p>
-            <p><strong>날짜:</strong> {selectedEvent.date}</p>
-            <p><strong>내용:</strong> {selectedEvent.content}</p>
-
+      {showConfirmation && (
+        <div className={style.confirmation_modal}>
+          <div className={style.confirmation_modal_content}>
+            <p>이 일정를 삭제하시겠습니까?</p>
+            <div className={style.confirmation_buttons}>
+              <button className={style.confirm_button} onClick={handleConfirmDelete}>
+                확인
+              </button>
+              <button className={style.cancel_button} onClick={handleCancelDelete}>
+                취소
+              </button>
             </div>
-            <button onClick={() => setSelectedEvent(null)}>닫기</button>
           </div>
         </div>
       )}
