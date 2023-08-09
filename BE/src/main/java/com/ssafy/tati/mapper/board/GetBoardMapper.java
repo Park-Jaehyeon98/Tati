@@ -19,8 +19,13 @@ public interface GetBoardMapper {
         boardDetailResDto.setMemberId(board.getMember().getMemberId());
         boardDetailResDto.setMemberNickname(board.getMember().getMemberNickName());
         boardDetailResDto.setBoardHit(board.getBoardHit());
-        boardDetailResDto.setCreatedDate(board.getCreatedDate());
-        boardDetailResDto.setModifiedDate(board.getModifiedDate());
+
+
+        String create = board.getCreatedDate().toLocalDate().toString();
+        String modify = board.getModifiedDate().toLocalDate().toString();
+
+        boardDetailResDto.setCreatedDate(create);
+        boardDetailResDto.setModifiedDate(modify);
 
         return boardDetailResDto;
     }
@@ -34,8 +39,12 @@ public interface GetBoardMapper {
         studyBoardDetailResDto.setMemberId(board.getMember().getMemberId());
         studyBoardDetailResDto.setMemberNickname(board.getMember().getMemberNickName());
         studyBoardDetailResDto.setBoardHit(board.getBoardHit());
-        studyBoardDetailResDto.setCreatedDate(board.getCreatedDate());
-        studyBoardDetailResDto.setModifiedDate(board.getModifiedDate());
+
+        String create = board.getCreatedDate().toLocalDate().toString();
+        String modify = board.getModifiedDate().toLocalDate().toString();
+
+        studyBoardDetailResDto.setCreatedDate(create);
+        studyBoardDetailResDto.setModifiedDate(modify);
         studyBoardDetailResDto.setCommentCount(board.getCommentList().size());
         studyBoardDetailResDto.setMainNoticeYn(board.isMainNoticeYn());
 

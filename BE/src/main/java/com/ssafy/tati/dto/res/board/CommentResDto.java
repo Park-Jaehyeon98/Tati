@@ -22,15 +22,17 @@ public class CommentResDto {
     @Schema(description = "작성자 닉네임")
     private String memberNickName;
     @Schema(description = "작성일")
-    private LocalDateTime createdDate;
+    private String createdDate;
     @Schema(description = "수정일")
-    private LocalDateTime modifiedDate;
+    private String modifiedDate;
 
     public CommentResDto(Comment comment) {
         this.commentId = comment.getCommentId();
         this.commentContent = comment.getCommentContent();
         this.memberNickName = comment.getMember().getMemberNickName();
-        this.createdDate = comment.getCreatedDate();
-        this.modifiedDate = comment.getModifiedDate();
+        String create = comment.getCreatedDate().toLocalDate().toString();
+        String modify = comment.getModifiedDate().toLocalDate().toString();
+        this.createdDate = create;
+        this.modifiedDate = modify;
     }
 }

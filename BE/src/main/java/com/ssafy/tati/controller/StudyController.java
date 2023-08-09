@@ -115,8 +115,10 @@ public class StudyController {
             studyMainNotice = null;
         else
             studyMainNotice = optionalStudyMainNotice.get();
-        StudyNoticeDetailResDto studyNoticeDetailResDto = getBoardMapper.boardToStudyNoticeDetailResDto(studyMainNotice);
+        String create = studyMainNotice.getCreatedDate().toLocalDate().toString();
+        String modify = studyMainNotice.getModifiedDate().toLocalDate().toString();
 
+        StudyNoticeDetailResDto studyNoticeDetailResDto = new StudyNoticeDetailResDto(studyMainNotice.getBoardId(), studyMainNotice.getBoardTitle(), studyMainNotice.getMember().getMemberId(), studyMainNotice.getMember().getMemberNickName(), studyMainNotice.getBoardHit(), create, modify, studyMainNotice.isMainNoticeYn());
         List<StudyMemberResDto> studyMemberResDtoList = new ArrayList<>();
         for(StudyMember findStudyMember : studyMemberList){
             Integer studyMemberId = findStudyMember.getMember().getMemberId();

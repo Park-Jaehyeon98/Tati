@@ -24,16 +24,18 @@ public class BoardListResDto {
     @Schema(description = "조회수")
     private Integer boardHit;
     @Schema(description = "작성일")
-    private LocalDateTime createdDate;
+    private String createdDate;
     @Schema(description = "수정일")
-    private LocalDateTime modifiedDate;
+    private String modifiedDate;
 
     public BoardListResDto(Board board) {
         this.boardId = board.getBoardId();
         this.boardTitle = board.getBoardTitle();
         this.memberNickname = board.getMember().getMemberNickName();
         this.boardHit = board.getBoardHit();
-        this.createdDate = board.getCreatedDate();
-        this.modifiedDate = board.getModifiedDate();
+        String create = board.getCreatedDate().toLocalDate().toString();
+        String modify = board.getModifiedDate().toLocalDate().toString();
+        this.createdDate = create;
+        this.modifiedDate = modify;
     }
 }
