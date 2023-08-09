@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import style from "./Login.module.css"
 import jwt_decode from "jwt-decode";
 
+import RefreshToken from "../../Components/RefreshToken";
+
 // 리덕스 저장
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/reducers/userSlice';
@@ -61,6 +63,7 @@ export default function Login() {
         console.log(parseJwt.sub);
         localStorage.setItem('refreshtoken',res.headers.refreshtoken);
 
+        RefreshToken()
         dispatch(setUser(res.data));
         navigate("/MyPage");
       })

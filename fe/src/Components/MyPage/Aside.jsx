@@ -11,6 +11,14 @@ export default function Aside() {
 
   const totalPoint = localStorage.getItem('totalPoint');
   const memberNickName = localStorage.getItem('memberNickName');
+  const img = localStorage.getItem('img');
+
+
+  // const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     setFile(reader.result);
+  //   };
+  //   reader.readAsDataURL(img);
 
   const onButtonClick = (page) => {
     if (page === "schedule") {
@@ -39,7 +47,15 @@ export default function Aside() {
   return (
     <div className={style.box1}>
       <div className={style.box4}>
-        <img className={style.box4} src="https://images.squarespace-cdn.com/content/v1/5dec67bb31a1cc1ad78a7326/1602465793445-KHV22QMIC8VPDWDFKE4D/0b2f8a51314ab1ebe0505aee843a33b1.jpg" alt="" />
+        {img ? (
+          <img className={style.box4} src={img}/>
+        ) : (
+          <img
+            className={style.box4}
+            src="https://images.squarespace-cdn.com/content/v1/5dec67bb31a1cc1ad78a7326/1602465793445-KHV22QMIC8VPDWDFKE4D/0b2f8a51314ab1ebe0505aee843a33b1.jpg"
+            alt=""
+          />
+        )}
       </div>
 
       <div className={style.name_point}>

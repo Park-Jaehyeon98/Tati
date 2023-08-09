@@ -56,9 +56,12 @@ import { useSelector } from 'react-redux';
 
 
 export default function Router() {
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const memberId = useSelector((state) => state.user.memberId);
+  // 로컬 닉네임
+  const memberNickName = localStorage.getItem('memberNickName');
 
   const handleLogout = () => {
 
@@ -81,7 +84,7 @@ export default function Router() {
   };
 
   useEffect(() => {
-    if (memberId) {
+    if (memberNickName) {
       setIsLoggedIn(true);
     }
   }, []);
@@ -108,12 +111,12 @@ export default function Router() {
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage">
             마이페이지
           </NavLink>
-          {!memberId && (
+          {!memberNickName && (
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/SignUp">
               회원가입
             </NavLink>
           )}
-          {memberId ? (
+          {memberNickName ? (
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Logout" onClick={handleLogout}>
               로그아웃
             </NavLink>

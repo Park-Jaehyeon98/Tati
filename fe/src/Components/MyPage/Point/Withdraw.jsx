@@ -1,12 +1,21 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import style from "./Charge.module.css"
 import axios from "axios";
 
 export default function Withdraw() {
-  const [currentPoint, setCurrentPoint] = useState(3000);
-  const [rechargeAmount, setRechargeAmount] = useState(0);
 
+  const navigate = useNavigate();
+
+  
+  // decodedToken가져오기
+  const tokenInfo = localStorage.getItem('decodedToken');
+  const parseJwt = JSON.parse(tokenInfo);
+  // 로컬에 있는 포인트
+  const totalPoint = localStorage.getItem('totalPoint');
+  
+  const [currentPoint, setCurrentPoint] = useState(totalPoint);
+  const [rechargeAmount, setRechargeAmount] = useState(0);
   
   const handleRecharge = () => {
     console.log(currentPoint - rechargeAmount)
@@ -28,20 +37,25 @@ export default function Withdraw() {
   };
 
   // 현재 시간
-  const currentDate = new Date();
-  const email = localStorage.getItem('email');
+  const currentDate = new Date();;
+
 
   // 인출 =================================================================
   const handleTotal = (e) => {
     setCurrentPoint((prevPoint) => prevPoint - rechargeAmount);
     setRechargeAmount(0);
+    const pContent = '포인트 인출'
 
-    console.log(email)
-    const pContent = '포인트 적립'
+    console.log(`인출 email - ${parseJwt.sub} 
+    amount - ${rechargeAmount} 
+    pointDate - ${currentDate}
+    pContent - ${pContent}`)
+
     console.log(process.env.REACT_APP_URL)
+
     axios.post(`${process.env.REACT_APP_URL}/member/point/withdrawal`, {
-      email,
-      amount:10000,
+      email:parseJwt.sub,
+      amount:rechargeAmount,
       pointDate:currentDate,
       pContent
     })
@@ -49,6 +63,7 @@ export default function Withdraw() {
         console.log('=================================')
         console.log(res.data);
         console.log('==============================')
+        navigate("/MyPage/PointHistory")
       })
       .catch((err) => {
         console.log(err,'------------------');

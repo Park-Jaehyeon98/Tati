@@ -12,6 +12,7 @@ import axios from "axios";
 import { useDispatch } from 'react-redux';
 import {addSchedule, removeSchedule, clearUserSchedule} from "../../../redux/reducers/userScheduleSlice";
 import {addStudySchedule, removeStudySchedule, clearUserStudySchedule} from "../../../redux/reducers/userStudyScheduleSlice";
+import { updateUse } from "../../../redux/reducers/userSlice"
 
 // 리덕스 꺼내기
 import { useSelector } from 'react-redux';
@@ -74,6 +75,7 @@ export default function Calendar(){
         }));
 
 
+        
         dispatch(clearUserSchedule())
         eventsToAdd.forEach(event => {
           dispatch(addSchedule(event)); // 각 이벤트를 Redux 스토어에 추가
@@ -81,6 +83,7 @@ export default function Calendar(){
         
 
         setImg(res.data.img)
+        localStorage.setItem('img', res.data.img);
         setTotalScore(res.data.totalScore)
         setTotalStudyTime(res.data.todayStudyTime)
         setTodayStudyTime(res.data.totalStudyTime)
@@ -131,7 +134,7 @@ export default function Calendar(){
           scheduleId: res.data.memberScheduleId,
         };
         dispatch(addSchedule(newEvent))
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((err) => {
         console.log(err,' 일정 추가 실패 ------------------');
@@ -207,11 +210,16 @@ export default function Calendar(){
           }
           plugins={[dayGridPlugin,timeGridPlugin,interactionPlugin]}
           events={events}
- 
+          
           dateClick={handleDateClick}
           eventClick={handleEventClick}
           // firstDay={3}
-        />
+          />
+          <div>
+            <h1>{totalScore} - 열정지수</h1>
+            <h1>{totalStudyTime} - 총 공부시간</h1>
+            <h1>{todayStudyTime} - 오늘 공부 시간</h1>
+          </div>
       </div>
           
       {selectedDate && (
