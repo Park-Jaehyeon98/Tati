@@ -50,7 +50,7 @@ public class StudyMemberService {
 
     ////////////////////////
     // 스터디룸 입실을 위해 스터디 멤버인지 확인
-    public StudyMember findStudyMember(Integer studyId, Integer memberId) {
+    public Optional<StudyMember> findStudyMember(Integer studyId, Integer memberId) {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         if (optionalMember.isEmpty()) {
             throw new RuntimeException();
@@ -58,10 +58,9 @@ public class StudyMemberService {
         Member member = optionalMember.get();
         Optional<StudyMember> optionalStudyMember = studyMemberRepository.findByStudyStudyIdAndMember(studyId, member);
         if (optionalStudyMember.isEmpty()) {
-            throw new RuntimeException();
+            return Optional.empty();
         }
 
-        StudyMember studyMember = optionalStudyMember.get();
-        return studyMember;
+        return optionalStudyMember;
     }
 }

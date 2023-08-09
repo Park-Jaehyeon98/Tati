@@ -21,6 +21,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Tag(name = "스터디 입퇴실(출결)", description = "스터디 입퇴실(출결) API 문서")
 @RestController
 @RequestMapping("/study/attendance")
@@ -39,7 +41,13 @@ public class AttendanceController {
     public ResponseEntity<?> attendanceAdd(@RequestBody AttendanceInReqDto attendanceInReqDto) {
         Integer studyId = attendanceInReqDto.getStudyId();
         Integer memberId = attendanceInReqDto.getMemberId();
-        StudyMember studyMember = studyMemberService.findStudyMember(studyId, memberId);
+        Optional<StudyMember> optionalStudyMember = studyMemberService.findStudyMember(studyId, memberId);
+
+        if (optionalStudyMember.isEmpty()) {
+            throw new RuntimeException();
+        }
+
+        StudyMember studyMember = optionalStudyMember.get();
         Member member = memberService.findById(memberId);
 
         Attendance attendance = attendanceMapper.attendanceInReqDtoToAttendance(attendanceInReqDto, studyMember, member);

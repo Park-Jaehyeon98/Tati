@@ -6,9 +6,11 @@ import com.ssafy.tati.dto.req.StudyScheduleReqDto;
 import com.ssafy.tati.dto.res.*;
 import com.ssafy.tati.entity.Category;
 import com.ssafy.tati.entity.Study;
+import com.ssafy.tati.entity.StudyMember;
 import com.ssafy.tati.entity.StudySchedule;
 import com.ssafy.tati.mapper.StudyMapper;
 import com.ssafy.tati.service.S3Service;
+import com.ssafy.tati.service.StudyMemberService;
 import com.ssafy.tati.service.StudyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Tag(name = "스터디", description = "스터디 API 문서")
 @RestController
@@ -32,6 +35,7 @@ import java.util.List;
 public class StudyController {
     private final StudyService studyService;
     private final S3Service s3Service;
+    private final StudyMemberService studyMemberService;
     private final StudyMapper studyMapper;
 
 
@@ -84,10 +88,19 @@ public class StudyController {
 
     @Operation(summary = "스터디 상세 조회", description = "스터디 식별 번호로 스터디 상세 조회", responses = {
             @ApiResponse(responseCode = "200", description = "스터디 상세 조회 성공", content = @Content(schema = @Schema(implementation = StudyDetailResDto.class)))})
-    @GetMapping(value = "/{studyId}")
-    public ResponseEntity<?> detailStudy(@PathVariable Integer studyId) {
+    @GetMapping(value = "/{studyId}/{memberId}")
+    public ResponseEntity<?> detailStudy(@PathVariable Integer studyId, @PathVariable Integer memberId) {
+        Optional<StudyMember> studyMember = studyMemberService.findStudyMember(studyId, memberId);
+
+        boolean studyMemberYn;
+        if (studyMember.isEmpty()) {
+            studyMemberYn = false;
+        } else {
+            studyMemberYn = true;
+        }
+
         Study study = studyService.getStudyDetail(studyId);
-        StudyDetailResDto studyDetailResDto = studyMapper.studyToStudyDetailResDto(study, study.getCategory());
+        StudyDetailResDto studyDetailResDto = studyMapper.studyToStudyDetailResDto(study, study.getCategory(), studyMemberYn);
         return new ResponseEntity<>(studyDetailResDto, HttpStatus.OK);
     }
 
