@@ -105,11 +105,23 @@ public class MyPageController {
         }
 
         // 입퇴실 내역
-        List<Attendance> attendance = memberService.attendanceList(memberId);
-        List<AttendanceResDto> attendanceList = attendanceMapper.attendanceListToAttendanceResDtoList(attendance);
+        List<Attendance> attendancesList = memberService.attendanceList(memberId);
 
-        MyPageResDto myPageResDto =  new MyPageResDto(img, studyTime, totalStudyTime, totalScore,
-                mypageStudyResDto, scheduleResDtoList, attendanceList);
+        List<AttendanceResDto> attendanceList = new ArrayList<>();
+        for(Attendance attendance : attendancesList){
+            LocalTime inTime = attendance.getInTime().toLocalTime();
+            LocalTime outTime = attendance.getOutTime().toLocalTime();
+
+            LocalDate date = attendance.getInTime().toLocalDate();
+
+            attendanceList.add(new AttendanceResDto(date, inTime, outTime,
+                    attendance.getIsAttended(), attendance.getScore()+"점", attendance.getContent()));
+        }
+
+        MyPageResDto myPageResDto = new MyPageResDto(
+                img, totalStudyTime, totalStudyTime, totalScore,
+                mypageStudyResDto, scheduleResDtoList, attendanceList
+        );
 
         return new ResponseEntity<>(myPageResDto, HttpStatus.OK);
     }
