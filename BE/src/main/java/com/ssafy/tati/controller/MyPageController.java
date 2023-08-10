@@ -51,30 +51,43 @@ public class MyPageController {
         String img = member.getImg();
 
         //오늘 공부시간
-        int todayStudyTime = 0;
+        Long todayStudyTime = 0l;
         List<Attendance> attendances = memberService.attendanceList(memberId);
 
         LocalDateTime now = LocalDateTime.now();
         for(Attendance attendance : attendances){
-            if(attendance.getIsAttended()==0) continue;
+//            if(attendance.getIsAttended()==0) continue;
 
             LocalDate studyDay = attendance.getInTime().toLocalDate();
 
             Period piff = Period.between(now.toLocalDate(), studyDay);
 
             if(piff.isZero()) {
-                Duration diff = Duration.between( attendance.getOutTime(),attendance.getInTime());
-                todayStudyTime+=diff.toMillis();
+                Long diff = Duration.between(attendance.getInTime(), attendance.getOutTime()).getSeconds();
+                todayStudyTime+=diff;
             }
         }
 
-        String studyTime = (todayStudyTime / (1000 * 60 * 60)) + "시간 " +  (todayStudyTime / (1000 * 60)) + "분 "
-                + (todayStudyTime / 1000) + "초";
+        long hour = todayStudyTime / 3600;
+        todayStudyTime %= 3600;
+        long min = todayStudyTime / 60;
+        todayStudyTime %= 60;
+        long sec = todayStudyTime;
+
+        String studyTime = hour + "시간 " + min + "분 "
+                + sec + "초";
 
         //총 공부 시간
+
         Integer totalTime = member.getTotalStudyTime();
-        String totalStudyTime = (totalTime/ (1000 * 60 * 60)) + "시간 " +  (totalTime / (1000 * 60)) + "분 "
-                + (totalTime / 1000) + "초";
+
+        long thour = totalTime / 3600;
+        totalTime %= 3600;
+        long tmin = totalTime / 60;
+        totalTime %= 60;
+        long tsec = totalTime;
+        String totalStudyTime = thour + "시간 " +  tmin + "분 "
+                + tsec + "초";
 
         //열정 지수
         int totalScore = member.getTotalScore();
@@ -119,7 +132,7 @@ public class MyPageController {
         }
 
         MyPageResDto myPageResDto = new MyPageResDto(
-                img, totalStudyTime, totalStudyTime, totalScore,
+                img, studyTime, totalStudyTime, totalScore,
                 mypageStudyResDto, scheduleResDtoList, attendanceList
         );
 
