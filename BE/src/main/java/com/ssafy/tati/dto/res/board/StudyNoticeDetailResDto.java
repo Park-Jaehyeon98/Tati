@@ -1,13 +1,10 @@
 package com.ssafy.tati.dto.res.board;
 
-import com.ssafy.tati.entity.Board;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -31,6 +28,6 @@ public class StudyNoticeDetailResDto {
     private String createdDate;
     @Schema(description = "수정일")
     private String modifiedDate;
-    @Schema(description = "대표글 여부")
+    @Schema(description = "스터디 대표 공지 여부")
     private boolean mainNoticeYn;
 }

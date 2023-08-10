@@ -47,7 +47,6 @@ public interface GetBoardMapper {
         studyBoardDetailResDto.setCreatedDate(create);
         studyBoardDetailResDto.setModifiedDate(modify);
         studyBoardDetailResDto.setCommentCount(board.getCommentList().size());
-        studyBoardDetailResDto.setMainNoticeYn(board.isMainNoticeYn());
 
         studyBoardDetailResDto.setBoardFile(board.getBoardFile());
         String fileName = board.getBoardFile();
