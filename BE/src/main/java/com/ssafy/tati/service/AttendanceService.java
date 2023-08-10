@@ -35,25 +35,27 @@ public class AttendanceService {
         if (optionalAttendance.isEmpty()) { // 스터디 멤버 중 처음 입실했다면
             // 스터디 멤버 테이블에 있는 멤버들 모두 입/퇴실 시각 초기화
             List<StudyMember> studyMemberList = studyMemberRepository.findAllByStudyStudyId(attendance.getStudyMember().getStudy().getStudyId());
-            Attendance createdAttendance = attendanceRepository.save(attendance);
-            for (StudyMember studyMember : studyMemberList) {
-                if (studyMember.equals(createdAttendance.getStudyMember()))
-                    continue;
 
+            Attendance createdAttendance = null;
+            for (StudyMember studyMember : studyMemberList) {
                 Attendance initAttendance = new Attendance();
-                initAttendance.setInTime(createdAttendance.getInTime());
-                initAttendance.setOutTime(createdAttendance.getOutTime());
+                initAttendance.setInTime(attendance.getInTime());
+                initAttendance.setOutTime(attendance.getInTime());
                 initAttendance.setStudyMember(studyMember);
                 initAttendance.setMember(studyMember.getMember());
 
                 attendanceRepository.save(initAttendance);
+
+                if (studyMember.equals(attendance.getStudyMember())){
+                    createdAttendance = initAttendance;
+                }
             }
             return createdAttendance;
 
         } else { // 스터디 멤버 테이블의 입/퇴실 시간 갱신
             Attendance modifiedAttendance = optionalAttendance.get();
             modifiedAttendance.setInTime(attendance.getInTime());
-            modifiedAttendance.setOutTime(attendance.getOutTime());
+            modifiedAttendance.setOutTime(attendance.getInTime());
 
             return modifiedAttendance;
         }
@@ -69,7 +71,7 @@ public class AttendanceService {
         }
         Attendance modifyAttendance = optionalAttendance.get();
         Member modifyMember = optionalMember.get();
-        if (!modifyAttendance.getMember().equals(modifyMember)) {
+        if (!modifyAttendance.getMember().equals(modifyMember) || modifyAttendance.getIsAttended() != 0) {
             throw new RuntimeException();
         }
 
@@ -105,7 +107,10 @@ public class AttendanceService {
             attendanceStatus = '0'; // 결석
         }
         // 총 공부 시간
+        System.out.println("총 공부 시간(전): "+modifyMember.getTotalStudyTime());
+
         modifyMember.setTotalStudyTime(modifyMember.getTotalStudyTime() + realStudyTime.intValue());
+        System.out.println("총 공부 시간(후): "+modifyMember.getTotalStudyTime());
 
         if (attendanceStatus == '0') { // 결석
             // 출석 여부
@@ -116,11 +121,12 @@ public class AttendanceService {
             Integer beforeScore = modifyMember.getTotalScore();
             modifyMember.setTotalScore(beforeScore - 4);
             Integer beforeAbsenceCount = modifyStudyMember.getAbsenceCount();
+            System.out.println("beforeAbsenceCount: " + beforeAbsenceCount);
             modifyStudyMember.setAbsenceCount(beforeAbsenceCount + 2);
             // 벌금
             Integer pelaltyAmt = modifyStudyMember.getStudy().getStudyDeposit() / 3;
             modifyAttendance.setPenaltyAmt(pelaltyAmt);
-            modifyStudyMember.setStudyMemberPenalty(modifyMember.getTotalPoint() + pelaltyAmt);
+            modifyStudyMember.setStudyMemberPenalty(modifyStudyMember.getStudyMemberPenalty() + pelaltyAmt);
         } else if (attendanceStatus == '1') { // 지각
             // 출석 여부
             modifyAttendance.setIsAttended('1');
@@ -135,7 +141,7 @@ public class AttendanceService {
             if (modifyStudyMember.getAbsenceCount() % 2 == 0) {
                 Integer pelaltyAmt = modifyStudyMember.getStudy().getStudyDeposit() / 3;
                 modifyAttendance.setPenaltyAmt(pelaltyAmt);
-                modifyStudyMember.setStudyMemberPenalty(modifyMember.getTotalPoint() + pelaltyAmt);
+                modifyStudyMember.setStudyMemberPenalty(modifyStudyMember.getStudyMemberPenalty() + pelaltyAmt);
             }
         } else { // 출석
             // 출석 여부
@@ -145,14 +151,12 @@ public class AttendanceService {
             // 멤버 누적 상벌점 (열정지수)
             Integer beforeScore = modifyMember.getTotalScore();
             modifyMember.setTotalScore(beforeScore + 1);
-            Integer beforeAbsenceCount = modifyStudyMember.getAbsenceCount();
-            modifyStudyMember.setAbsenceCount(beforeAbsenceCount + 1);
             // 벌금
             modifyAttendance.setPenaltyAmt(0);
         }
 
         // 전체 벌금 퇴실 시 갱신
-        modifyStudy.setTotalPenalty(modifyAttendance.getPenaltyAmt());
+        modifyStudy.setTotalPenalty(modifyStudy.getTotalPenalty() + modifyAttendance.getPenaltyAmt());
 
         // 입퇴실 content 저장
         String content = modifyStudyMember.getStudy().getStudyName();
@@ -165,6 +169,7 @@ public class AttendanceService {
         }
         modifyAttendance.setContent(content);
 
+        System.out.println("absenceCount: " + modifyStudyMember.getAbsenceCount());
         if (modifyStudyMember.getAbsenceCount() >= 6) {
 
             // 연관관계 끊기

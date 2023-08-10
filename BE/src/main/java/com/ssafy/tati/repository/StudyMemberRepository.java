@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface StudyMemberRepository extends JpaRepository<StudyMember, Integer> {
 
-    void deleteById(Integer id);
+//    void deleteById(Integer id);
 
     List<StudyMember> findAllByStudyStudyId(Integer studyId);
 

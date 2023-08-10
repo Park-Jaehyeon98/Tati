@@ -1,11 +1,10 @@
 package com.ssafy.tati.service;
 
-import com.ssafy.tati.entity.Board;
-import com.ssafy.tati.entity.Comment;
-import com.ssafy.tati.entity.Member;
+import com.ssafy.tati.entity.*;
 import com.ssafy.tati.repository.BoardRepository;
 import com.ssafy.tati.repository.CommentRepository;
 import com.ssafy.tati.repository.MemberRepository;
+import com.ssafy.tati.repository.StudyMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +21,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
+    private final StudyMemberRepository studyMemberRepository;
 
     // 스터디 게시판 댓글 등록
     public void addComment(Integer memberId, Integer boardId, Comment comment) {
@@ -37,17 +37,25 @@ public class CommentService {
         if (board.getBoardType() != '2') {
             throw new RuntimeException();
         }
+
+        // 스터디 멤버일때만 댓글 쓸수 있어야 함
+        Optional<StudyMember> optionalStudyMember = studyMemberRepository.findByStudyStudyIdAndMember(board.getStudy().getStudyId(), member);
+        if (optionalStudyMember.isEmpty()) {
+            throw new RuntimeException();
+        }
+
         comment.setMember(member);
-//        comment.setBoard(board);
+        comment.setBoard(board);
+
         commentRepository.save(comment);
     }
 
     // 하나의 게시글에 대한 댓글 조회
     public Page<Comment> findCommentByBoardId(Integer boardId, Pageable pageable) {
-//        Optional<Board> optionalBoard = boardRepository.findById(boardId);
-//        if (optionalBoard.isEmpty()){
-//            throw new RuntimeException();
-//        }
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+        if (optionalBoard.isEmpty()){
+            throw new RuntimeException();
+        }
         return commentRepository.findByBoardId(boardId, pageable);
     }
 
