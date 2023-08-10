@@ -6,6 +6,7 @@ import com.ssafy.tati.service.KakaoPayService;
 import com.ssafy.tati.service.MemberService;
 import com.ssafy.tati.service.PointService;
 import com.ssafy.tati.util.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static java.time.LocalDateTime.now;
 
-
+@Tag(name = "결제", description = "결제 API 문서")
 @Controller
 @RequestMapping("/payment")
 @RequiredArgsConstructor
