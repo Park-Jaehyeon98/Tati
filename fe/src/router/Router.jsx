@@ -69,7 +69,7 @@ export default function Router() {
 
   const dispatch = useDispatch();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // 유저 정보 리덕스에서 가져오기
   const user = useSelector((state) => state.user.user);
@@ -91,7 +91,7 @@ export default function Router() {
       localStorage.clear();
       dispatch(clearUserSchedule())
       dispatch(clearUser());
-      setIsLoggedIn(false);
+      // setIsLoggedIn(false);
     })
     .catch((err) => {
       console.log(err);
@@ -99,11 +99,11 @@ export default function Router() {
   };
 
 
-  useEffect(() => {
-    if (user) {
-      setIsLoggedIn(true);
-    }
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   if (user) {
+  //     setIsLoggedIn(true);
+  //   }
+  // }, [isLoggedIn]);
 
 
 
@@ -124,9 +124,9 @@ export default function Router() {
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Study">
             스터디
           </NavLink>
-          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage">
+          {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage">
             마이페이지
-          </NavLink>
+          </NavLink>)}
           {!user && (
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/SignUp">
               회원가입
