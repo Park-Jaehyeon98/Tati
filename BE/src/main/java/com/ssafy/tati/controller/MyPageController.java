@@ -119,7 +119,7 @@ public class MyPageController {
         }
 
         MyPageResDto myPageResDto = new MyPageResDto(
-                img, totalStudyTime, totalStudyTime, totalScore,
+                img, studyTime, totalStudyTime, totalScore,
                 mypageStudyResDto, scheduleResDtoList, attendanceList
         );
 
