@@ -216,7 +216,10 @@ public class MyPageController {
 
         List<MemberBoardListResDto> boardListResDtoList = new ArrayList<>();
         for(Board board : boardList){
-            boardListResDtoList.add(new MemberBoardListResDto(board, board.getCommentList().size()));
+            String create = board.getCreatedDate().toLocalDate().toString();
+
+            boardListResDtoList.add(new MemberBoardListResDto(board.getBoardId(), board.getBoardTitle(),
+                    board.getBoardHit(), board.getCommentList().size(), create));
         }
         return new ResponseEntity<>(boardListResDtoList, HttpStatus.OK);
     }

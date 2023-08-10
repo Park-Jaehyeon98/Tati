@@ -29,15 +29,6 @@ public class MemberBoardListResDto {
     private Integer boardCommentCount;
 
     @Schema(description = "작성 날짜")
-    private LocalDateTime createdDate;
+    private String createdDate;
 
-    public MemberBoardListResDto(Board board, Integer boardCommentCount){
-        this.boardId = board.getBoardId();
-        this.boardTitle = board.getBoardTitle();
-        this.boardHit = board.getBoardHit();
-        this.createdDate = board.getCreatedDate();
-        this.boardCommentCount = boardCommentCount;
-
-
-    }
 }
