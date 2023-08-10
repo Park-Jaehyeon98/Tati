@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -19,16 +20,16 @@ public class AttendanceResDto {
     private LocalDate attendanceDate;
 
     @Schema(description = "입실시간")
-    private LocalDateTime inTime;
+    private LocalTime inTime;
 
     @Schema(description = "퇴실시간")
-    private LocalDateTime outTime;
+    private LocalTime outTime;
 
     @Schema(description = "출석여부")
     private char isAttended;
 
     @Schema(description = "상벌점")
-    private Integer score;
+    private String score;
 
     @Schema(description = "내용")
     private String content;
