@@ -222,7 +222,7 @@ public class MyPageController {
     }
 
     //입퇴실 내역 반환
-    @GetMapping("mypage/sttendance-list/{memberId}")
+    @GetMapping("mypage/attendance-list/{memberId}")
     public ResponseEntity<?> selectAttendanceList(@PathVariable Integer memberId){
         List<Attendance> attendances = memberService.attendanceList(memberId);
 
