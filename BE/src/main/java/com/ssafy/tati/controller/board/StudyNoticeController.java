@@ -117,7 +117,7 @@ public class StudyNoticeController {
     @Operation(summary = "스터디 공지사항 대표글 내리기 요청", description = "스터디 공지사항을 대표글 내리기 요청", responses = {
             @ApiResponse(responseCode = "200", description = "대표글 삭제 성공"),
     })
-    @DeleteMapping("/notice/main")
+    @PutMapping("/notice/main")
     public ResponseEntity<?> studyMainNoticeRemove(@RequestBody NoticeMainReqDto boardMainReqDto) {
         Board board = noticeMainMapper.noticeMainReqDtoToBoard(boardMainReqDto);
         boardService.removeStudyMainNotice(boardMainReqDto.getMemberId(), board);
