@@ -6,6 +6,7 @@ import com.ssafy.tati.entity.Member;
 import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.entity.StudyApplicant;
 import com.ssafy.tati.entity.StudyMember;
+import com.ssafy.tati.exception.PointException;
 import com.ssafy.tati.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class StudyApplicantService {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("회원 정보가 존재하지 않습니다"));
         Study study = studyRepository.findById(studyId).orElseThrow(() -> new RuntimeException("해당 스터디가 존재하지 않습니다."));
         Integer point = member.getTotalPoint() - study.getStudyDeposit();
-        if (point < 0) { new RuntimeException("해당 스터디에 참가하는데 포인트가 부족합니다");  }
+        if (point < 0) { new PointException("해당 스터디에 참가하는데 포인트가 부족합니다");  }
 
         member.updateTotalPoint(point);
         Optional<StudyApplicant> optionalStudyApplicant = studyApplicantRepository.findByMemberMemberIdAndStudyStudyId(memberId, studyId);
@@ -39,7 +40,7 @@ public class StudyApplicantService {
         StudyApplicant studyApplicant = new StudyApplicant(study, member);
 
         studyApplicantRepository.save(studyApplicant);
-        StudyIdResDto studyIdResDto = new StudyIdResDto(memberId);
+        StudyIdResDto studyIdResDto = new StudyIdResDto(studyId);
         return studyIdResDto;
     }
 

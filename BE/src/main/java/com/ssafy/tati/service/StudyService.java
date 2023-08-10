@@ -4,6 +4,7 @@ import com.ssafy.tati.dto.req.StudyModifyReqDto;
 import com.ssafy.tati.dto.res.StudyIdResDto;
 import com.ssafy.tati.entity.*;
 import com.ssafy.tati.exception.DataNotFoundException;
+import com.ssafy.tati.exception.PointException;
 import com.ssafy.tati.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,15 @@ public class StudyService {
         return category.get();
     }
 
+    public void checkPoint(String studyHost, Integer studyDeposit){
+        Optional<Member> member = memberRepository.findByMemberNickName(studyHost);
+        if(!member.isPresent()){
+            throw new RuntimeException("해당 회원이 존재하지 않습니다.");
+        }
+        if(studyDeposit > member.get().getTotalPoint()){
+            new PointException("스터디를 만드는데 포인트가 부족합니다.");
+        }
+    }
 
     public Study createStudy(Study study) {
         Study saveStudy = studyRepository.save(study);
@@ -98,15 +108,11 @@ public class StudyService {
         System.out.println("studyId : " +studyId +", studyHost : " +studyHost);
 
         Integer point = member.getTotalPoint() - study.getStudyDeposit();
-        if(point < 0){
-            studyRepository.deleteById(studyId);
-            new RuntimeException("스터디를 생성하는데 포인트가 부족합니다");
-        }
 
         member.updateTotalPoint(point);
         LocalDate currentDate = LocalDate.now();
         StudyMember studyMember = new StudyMember(0, currentDate, 0, 0, study, member);
-        StudyMember savedStudyMember = studyMemberRepository.save(studyMember);
+        studyMemberRepository.save(studyMember);
     }
 
     public Study findById(Integer studyId){

@@ -49,6 +49,7 @@ public class StudyController {
     @PostMapping(value = "/create", consumes = {"multipart/form-data"})
     public ResponseEntity<?> createStudy(@RequestPart StudyReqDto studyReqDto, @RequestPart(value = "studyImg", required = false) MultipartFile multipartFile) throws IOException {
 
+        studyService.checkPoint(studyReqDto.getStudyHost(), studyReqDto.getStudyDeposit());
 
         String img = null;
         if(multipartFile != null) {
