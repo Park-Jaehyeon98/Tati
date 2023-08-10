@@ -69,7 +69,14 @@ export default function Router() {
 
   const dispatch = useDispatch();
 
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // 모달을 표시할지 여부를 상태로 관리
+  const [showModal, setShowModal] = useState(false); 
+
+  // 모달을 열고 닫는 함수
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+
 
   // 유저 정보 리덕스에서 가져오기
   const user = useSelector((state) => state.user.user);
@@ -128,14 +135,22 @@ export default function Router() {
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Faq">
             FAQ
           </NavLink>
-          {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage">
+          {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage" onMouseEnter={toggleModal} onMouseLeave={toggleModal}>
             마이페이지
+            {showModal && (
+              <div className={style.modal}>
+                <div className={style.modal_content}>
+                  <NavLink to="/MyPage/ApplyStudy">스터디 목록</NavLink>
+                  <NavLink to="/MyPage/MyPagePoint">마일리지</NavLink>
+                  <NavLink >회원정보수정</NavLink>
+                  <NavLink to="/Logout" onClick={handleLogout}>
+                     로그아웃
+                  </NavLink>
+                </div>
+              </div>
+            )}
           </NavLink>)}
-          {user ? (
-            <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Logout" onClick={handleLogout}>
-              로그아웃
-            </NavLink>
-          ) : (
+          {!user &&(
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Login">
               로그인
             </NavLink>
