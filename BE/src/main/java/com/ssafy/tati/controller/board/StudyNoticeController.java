@@ -74,7 +74,7 @@ public class StudyNoticeController {
         String modify = board.getModifiedDate().toLocalDate().toString();
 
         StudyNoticeDetailResDto studyNoticeDetailResDto = new StudyNoticeDetailResDto(
-                board.getBoardId(), board.getBoardTitle(), board.getMember().getMemberId(), board.getMember().getMemberNickName(),
+                board.getBoardId(), board.getBoardTitle(), board.getBoardContent(), board.getMember().getMemberId(), board.getMember().getMemberNickName(),
                 board.getBoardHit(),create, modify, board.isMainNoticeYn());
 
         return new ResponseEntity(studyNoticeDetailResDto, HttpStatus.OK);
