@@ -218,7 +218,7 @@ public class MyPageController {
         for(Board board : boardList){
             boardListResDtoList.add(new MemberBoardListResDto(board, board.getCommentList().size()));
         }
-        return new ResponseEntity<>(boardList, HttpStatus.OK);
+        return new ResponseEntity<>(boardListResDtoList, HttpStatus.OK);
     }
 
     //입퇴실 내역 반환
