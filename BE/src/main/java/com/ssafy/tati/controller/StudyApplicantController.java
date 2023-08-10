@@ -55,9 +55,9 @@ public class StudyApplicantController {
 
     @Operation(summary = "스터디 신청 취소", description = "방장이 스터디 신청자 목록에서 거절 버튼을 누르면 스터디 신청자 목록에서 제거", responses = {
             @ApiResponse(responseCode = "200", description = "스터디 신청 취소 성공", content = @Content(schema = @Schema(implementation = StudyApplicantApprovalMemberResDto.class)))})
-    @PostMapping("/refuse")
-    public ResponseEntity<?> studyApplicantRefuseMember(@RequestBody StudyApplicantApprovalMemberReqDto studyApplicantApprovalMemberReqDto){
-        StudyApplicantApprovalMemberResDto studyApplicantApprovalMemberResDto = studyApplicantService.getStudyApplicantRefuseMember(studyApplicantApprovalMemberReqDto.getStudyId(), studyApplicantApprovalMemberReqDto.getMemberId());
+    @DeleteMapping("{studyId}/refuse/{memberId}")
+    public ResponseEntity<?> studyApplicantRefuseMember(@PathVariable Integer studyId, @PathVariable Integer memberId){
+        StudyApplicantApprovalMemberResDto studyApplicantApprovalMemberResDto = studyApplicantService.getStudyApplicantRefuseMember(studyId, memberId);
         return new ResponseEntity<>(studyApplicantApprovalMemberResDto, HttpStatus.OK);
     }
 

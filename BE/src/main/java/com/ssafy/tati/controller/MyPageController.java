@@ -206,7 +206,7 @@ public class MyPageController {
             ));
         }
 
-        return new ResponseEntity<>(applicantStudyList, HttpStatus.OK);
+        return new ResponseEntity<>(applicantStudyResDtoList, HttpStatus.OK);
     }
 
     //회원 작성 게시글 반환
