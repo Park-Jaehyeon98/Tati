@@ -66,6 +66,8 @@ export default function Login() {
           img:null
         }
         
+        RefreshToken()
+        
         dispatch(setUser(user));
         navigate("/MyPage");
       })

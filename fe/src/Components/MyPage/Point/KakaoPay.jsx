@@ -120,28 +120,30 @@ const [currentPage, setCurrentPage] = useState(1);
 
 const PointItem = ({ point, date, day, tid }) => {
 
-  // 결제 취소
+  // 결제 취소 
+  // 포인트가 부족하면 경고창 아닐 시 실행
   const handleCancel =()=>{
     console.log('결제취소----------------------------------------')
     console.log(`amount - ${point} tid - ${tid} email - ${parseJwt.sub}`)
     if(point>user.totalPoint){
       alert('포인트가 부족합니다')
+    } else{
+      axios.post(`${process.env.REACT_APP_URL}/payment/cancel`,{
+        amount :point,
+        tid,
+        email:parseJwt.sub
+      })
+        .then((res)=>{
+          console.log(res)
+  
+          const updatedUser = {totalPoint:user.totalPoint - point};
+          dispatch(updateUser(updatedUser)); // Dispatch the action
+          pointHistory()
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
     }
-    axios.post(`${process.env.REACT_APP_URL}/payment/cancel`,{
-      amount :point,
-      tid,
-      email:parseJwt.sub
-    })
-      .then((res)=>{
-        console.log(res)
-
-        const updatedUser = {totalPoint:user.totalPoint - point};
-        dispatch(updateUser(updatedUser)); // Dispatch the action
-        pointHistory()
-      })
-      .catch((err)=>{
-        console.log(err)
-      })
   };
 
   return (
