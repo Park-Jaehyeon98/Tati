@@ -229,7 +229,16 @@ public class MyPageController {
     public ResponseEntity<?> selectAttendanceList(@PathVariable Integer memberId){
         List<Attendance> attendances = memberService.attendanceList(memberId);
 
-        List<AttendanceResDto> attendanceList = attendanceMapper.attendanceListToAttendanceResDtoList(attendances);
+        List<AttendanceResDto> attendanceList = new ArrayList<>();
+        for(Attendance attendance : attendances){
+            LocalTime inTime = attendance.getInTime().toLocalTime();
+            LocalTime outTime = attendance.getOutTime().toLocalTime();
+
+            LocalDate date = attendance.getInTime().toLocalDate();
+
+            attendanceList.add(new AttendanceResDto(date, inTime, outTime,
+                    attendance.getIsAttended(), attendance.getScore()+"점", attendance.getContent()));
+        }
         return new ResponseEntity<>(attendanceList, HttpStatus.OK);
     }
  }
