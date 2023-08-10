@@ -1,13 +1,37 @@
+.Calendar_box{
+  margin-left: 5px;
+  width: 1000px;
+  height: 730px;
+  background-color: #e8e9ea;
+   margin-top: 80px;
+   margin-bottom: 100px;
+   border-radius: 10px;
+   padding: 20px;
+   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+.Calendar_box_box{
+  width: 800px;
+  height: 690px;
+  background-color: white;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  border: 1px solid gray;
+}
 .calendar{
-  width: 700px;
+  width: 750px;
   height: 600px; 
-  margin-left: 100px;
-  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 30px;
+  background-color: white;
   font-size: 13px;
+  margin-top: 20px;
 }
 
 .fc-day-sun a {
-  color: red;
+  color: #ec2c54;
 }
 
 /* 토요일 날짜: 파란색 */
@@ -59,7 +83,7 @@
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
-  background-color: #007bff;
+  background-color: #3396f4;
   color: #fff;
   cursor: pointer;
   font-size: 14px;
@@ -67,7 +91,7 @@
 }
 
 .modal_content button:last-child {
-  background-color: #dc3545; /* 닫기 버튼은 빨간색 배경으로 */
+  background-color: #ec2c54; /* 닫기 버튼은 빨간색 배경으로 */
 }
 
 /* FullCalendar 이벤트 속성
@@ -126,15 +150,11 @@
 }
 
 .confirm_button {
-  background-color: #007bff;
+  background-color: #3396f4;
   color: #fff;
 }
 /*  */
 
- .totalScore_box{
-  display: flex;
-  margin-top: 20px;
- }
 
  .graph_container {
   display: flex;
@@ -142,22 +162,11 @@
   margin-bottom: 10px;
   width: 582px;
   height: 30px;
-  border: 1px solid black;
+  border: 3px solid white;
+  background-color: white;
   margin-top: 17px;
 }
 
-.bar {
-  height: 30px;
-  background-color: #3797fd;
-  transition: width 0.5s ease-in-out;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.totalScore_h1 {
-  margin-right: 20px;
-  font-size: 24px;
-}
 
 .color_button{
   height: 20px;
@@ -168,3 +177,15 @@
 .color_button:hover{
   transform: scale(1.05);
 }
+
+.user_score{
+  font-size: 10px;
+  border-radius: 10px;
+  width: 1000px;
+  background-color: #3396f4;
+  color: white;
+  padding: 8px;
+  padding-left: 40px;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+}
+

@@ -14,14 +14,14 @@ nav {
 .nav-link.click {
   font-weight: bold;
   font-size: 15px;
-  color: #007BFF;
+  color: #3396f4;
 }
 
 .navBox {
   background-color: white;
   font-size: 14px;
   font-weight: bold;
-  width: 1520px;
+  width: 100%;
   z-index: 3;
   /* position: relative; */
   top: 0;
@@ -35,7 +35,7 @@ nav {
 }
 
 .logo{
-  margin-left: 220px;
+  margin-left: 22%;
   top: 20px;
   right: 360px;
   font-size: 35px;
@@ -43,7 +43,13 @@ nav {
 
 .navBoxIn{
   margin-top: 15px;
-  margin-left: 300px;
+  margin-left: 10%;
+}
+/* 화면이 줄어들었을 때 로고가 안 보이게 */
+@media (max-width: 1250px) {
+  .logo {
+    display: none;
+  }
 }
 
 .logo_img{

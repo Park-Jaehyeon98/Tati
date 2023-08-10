@@ -9,8 +9,8 @@ import Schedule from "../../../Components/MyPage/Schedule/Schedule";
 export default function MyPage() {
 
   return (
-    <div className={style.myPage}>
-      <Aside />
+    <div className={`${style.box}`}>
+      {/* <Aside /> */}
       <div className={style.box2}>
         <Schedule />
       </div>

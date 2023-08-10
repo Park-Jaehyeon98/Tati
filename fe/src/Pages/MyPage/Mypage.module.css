@@ -1,4 +1,4 @@
-.myPage {
+.myPage{
   background-color: white;
   width: 200px;
   height: 700px;
@@ -26,4 +26,17 @@
   align-items: center;
   justify-content: center;
   z-index: 2;
+}
+.box{
+  background-color: white;
+  width: 200px;
+  height: 700px;
+  /* margin-left: 190px; */
+  margin-right: 900px;
+  border-radius: 10px;
+  right: 100px;
+  margin-bottom: 150px;
+  display: flex;
+  margin-top: 60px;
+  margin-bottom: 500px;
 }

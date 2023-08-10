@@ -1,8 +1,11 @@
 .box1 {
-  background-color: #f9f6f2;
+  background-color: #fafbfc;
   padding: 30px;
   width: 150px;
   height: 540px;
+  border-radius: 10px;
+
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
   border-radius: 10px;
 }
 
@@ -25,7 +28,7 @@
   width: 150px;
   height: 35px;
   border-radius: 8px;
-  background-color: #f9f6f2;
+  background-color: #fafbfc;
   color: black;
   border: 1px; 
   font-weight: bold;
@@ -41,7 +44,7 @@
 
 .bt:hover{
   transform: scale(1.03);
-  background-color: #469dfa;
+  background-color: #3396f4;
   color: white;
 }
 

@@ -3,8 +3,8 @@
 }
 .login {
   position: absolute;
-  top: 380px;
-  left: 1280px;
+  top: 400px;
+  left: 85%;
   width: 450px;
   height: 600px;
   transform: translate(-50%, -50%);
@@ -34,8 +34,7 @@
 }
 
 .login_img{
-  width: 1519px;
-  height: 700px;
+  width: 100%;
 }
 
 .loginInput{
@@ -101,7 +100,7 @@
   height: 33px;
   margin-bottom: 8px;
   margin-top: 20px;
-  background-color: #007bffd1;
+  background-color: #3396f4;
   color: white;
   border: 1px solid #a0d3f1;
   border-radius: 5px;

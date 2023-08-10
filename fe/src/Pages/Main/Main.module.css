@@ -1,6 +1,6 @@
 
 .img01{
-    width: 1519px;
+    width: 100%;
     height: 780px;
 }
 
@@ -41,15 +41,18 @@
     word-spacing: 10px;
     letter-spacing: 1.5px;
 }
+
 .img02{
-    width: 1519px;
+    width: 100%;
     height: 680px;
     top:1000px
 }
+
 .img03{
-    width: 1519px;
+    width: 100%;
     height: 700px;
 }
+
 .Main_start_btn:hover{
     background-color: #0056B3;
 }

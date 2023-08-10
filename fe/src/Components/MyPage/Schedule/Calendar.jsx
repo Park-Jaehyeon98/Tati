@@ -6,7 +6,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from '@fullcalendar/react';
 import listPlugin from "@fullcalendar/list";
 import style from "./Calendar.module.css"
-
+import MyPageHeader from "../header";
 
 import axios from "axios";
 
@@ -33,11 +33,6 @@ export default function Calendar(){
   const month = currentDate.getMonth() + 1;
 
 
-  const [graphWidth, setGraphWidth] = useState(0);
-  const [totalScore,setTotalScore] = useState('')
-  const [totalStudyTime,setTotalStudyTime] = useState('')
-  const [todayStudyTime,setTodayStudyTime] = useState('')
-
   const [selectedColor, setSelectedColor] = useState('');
   const [col, setCol] = useState()
   const [eventColor, seteventColor] = useState({})
@@ -62,11 +57,7 @@ export default function Calendar(){
     console.log(`year---${year}///month---${month}`)
 
     loadData()
-
-    // 열정지수 bar
-    setGraphWidth(user.totalScore * 5.82);
-
-    }, [totalScore]);
+    },[]);
 
   const [selectedDate, setSelectedDate] = useState(null);
   const [eventTitle, setEventTitle] = useState('');
@@ -112,9 +103,12 @@ export default function Calendar(){
           dispatch(addSchedule(event));
         });
 
-        setTotalScore(res.data.totalScore);
-        setTotalStudyTime(res.data.todayStudyTime);
-        setTodayStudyTime(res.data.totalStudyTime);
+        dispatch(updateUser({
+          totalScore:res.data.totalScore,
+          todayStudyTime:res.data.todayStudyTime,
+          totalStudyTime:res.data.totalStudyTime
+        }))
+
         console.log("==============================");
       })
       .catch((err) => {
@@ -199,6 +193,7 @@ export default function Calendar(){
   // =========================================================================
 
 
+
   // 일정 수정 ===========================================================================
   const handleEventDrop = (info) => {
 
@@ -245,7 +240,9 @@ export default function Calendar(){
   };
 
 
+
   const [selectedEvent, setSelectedEvent] = useState(null); 
+
 
   // 일정 클릭시 모달 열기===================================================================
   const handleCancelDelete = (info) => {
@@ -254,12 +251,14 @@ export default function Calendar(){
   };
   //========================================================================================
 
+
   //
   const handleColor = ()=>{
     console.log(eventColor)
     updateSchedule(eventColor)
     setShowConfirmation(false);
   };
+
 
   // 색상변경
   const handleColorChange=(color)=>{
@@ -277,7 +276,12 @@ export default function Calendar(){
   //  월:1, 화:2, 수:3, 목:4, 금:5, 토:6, 일:0
   return (
     <div>
+      
+      <MyPageHeader/>
+
       {/* 캘린더 */}
+      <div className={style.Calendar_box}>
+        <div className={style.Calendar_box_box}>
       <div className={style.calendar}>
         <FullCalendar
           timeZone = 'userTimeZone'
@@ -301,20 +305,12 @@ export default function Calendar(){
           eventClick={handleEventClick}
           eventDrop={handleEventDrop}
           />
-
-          <div>
-            <div className={style.totalScore_box}>
-              <h1 className={style.totalScore_h1}>열정지수</h1>
-              <div className={style.graph_container}>
-                <div className={style.bar} style={{ width: `${graphWidth}px` }}>{totalScore}</div>
-              </div>
-            </div>
-
-            <h1>총 공부시간 - {totalStudyTime}</h1>
-            <h1>오늘 공부 시간 - {todayStudyTime}</h1>
-          </div>
+      </div>
+        </div>
 
       </div>
+      
+
           
       {selectedDate && (
         <div className={style.modal}>
@@ -328,6 +324,7 @@ export default function Calendar(){
           </div>
         </div>
       )}
+
 
       {showConfirmation && (
         <div className={style.confirmation_modal}>
