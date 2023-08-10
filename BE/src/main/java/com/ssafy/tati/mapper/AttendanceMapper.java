@@ -28,10 +28,6 @@ public interface AttendanceMapper {
     }
 
 
-    AttendanceResDto attendanceToAttendanceResDto(Attendance attendance);
-
-    List<AttendanceResDto> attendanceListToAttendanceResDtoList(List<Attendance> attendance);
-
     AttendanceInResDto attendanceToAttendanceInResDto(Attendance attendance);
 
     Attendance attendanceOutReqDtoToAttendance(AttendanceOutReqDto attendanceOutReqDto);
