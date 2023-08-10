@@ -44,6 +44,7 @@ public class StudyMemberService {
         int cur_point = studyMember.getStudy().getStudyDeposit() - studyMember.getStudyMemberPenalty();
         studyMember.getStudy().setTotalPenalty(studyMember.getStudyMemberPenalty());
         studyMember.getMember().setTotalPoint(studyMember.getMember().getTotalPoint() + cur_point);
+        studyMemberRepository.deleteById(studyMember.getStudyMemberId());
         StudyMemberSecessionResDto studyMemberSecessionResDto = new StudyMemberSecessionResDto(studyMember.getMember().getMemberNickName(), studyMember.getStudy().getStudyName());
         return studyMemberSecessionResDto;
     }
