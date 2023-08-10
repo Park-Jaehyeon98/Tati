@@ -2,13 +2,15 @@ import React, { useState } from 'react'
 import { apiClient } from '../../api/apiClient';
 import { useSelector } from 'react-redux';
 import { Button } from '@material-ui/core';
-
+import { useNavigate } from 'react-router-dom';
 
 const FaqListItem = ({ boardItemInfo }) => {
     const [isShow, setIsShow] = useState(false);
-    // const { memberNickName } = useSelector((state) => { return state.user })
-    const memberNickName = "관리자"
-    const { boardTitle, boardContent } = boardItemInfo
+    const user = useSelector((state) => { return state.user.user })
+    const { memberNickName } = user.memberNickName
+    // const memberNickName = "관리자"
+    const { boardId, boardTitle, boardContent } = boardItemInfo
+    const naviate = useNavigate();
 
     // 제목 누르면 내용 펼쳐짐
     const handleTitleClick = () => {
@@ -21,6 +23,20 @@ const FaqListItem = ({ boardItemInfo }) => {
     // 삭제버튼 클릭
     const handleDeleteBtnClick = () => {
 
+        const subURL = `/faq/${boardId}`;
+        console.log(subURL)
+        apiClient.delete(subURL+`/${user.memberId}`)
+            .then((res) => {
+                console.log(res);
+                if (res.request.status === 200) {
+                    naviate('../faq')
+                    window.location.reload()
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+
     }
     return (
         <div>
@@ -31,10 +47,11 @@ const FaqListItem = ({ boardItemInfo }) => {
             {!isShow ||
                 <div>
                     A : {boardContent}
-                    {!(memberNickName === "admin") ||
+                    {(memberNickName === "admin") ||
                         <>
-                            <Button onClick={handleDeleteBtnClick}>수정버튼</Button>
-                            <Button onClick={handleModifyBtnClick}>삭제버튼</Button>
+                            <Button onClick={handleModifyBtnClick}>수정버튼</Button>
+                            <Button onClick={handleDeleteBtnClick}>삭제버튼</Button>
+                            
                         </>
                     }
 

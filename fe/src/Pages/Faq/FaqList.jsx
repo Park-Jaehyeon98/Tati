@@ -10,26 +10,26 @@ const FaqList = () => {
     const [boardList, setBoardList] = useState([]);
 
     const navigate = useNavigate();
-    const user = useSelector((state) => { return state.user });
+    const user = useSelector((state) => { return state.user.user });
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const firstPage = currentPage - (currentPage % 5) + 1
 
-    // const subURL = 'faq'
-    // const config = { params: { pageNum: currentPage } }
+    const subURL = 'faq'
+    const config = { params: { pageNum: currentPage } }
 
-    // useEffect(() => {
-    //     apiClient.get(subURL, config)
-    //         .then((res) => {
-    //             // console.log(res)
-    //             setBoardList(res.data.content)
-    //             setTotalPages(res.data.sort.totaPages)
-    //         })
-    //         .catch((err) => {
-    //             console.log(err)
-    //         });
-    // }, [])
+    useEffect(() => {
+        apiClient.get(subURL, config)
+            .then((res) => {
+                // console.log(res)
+                setBoardList(res.data.content)
+                setTotalPages(res.data.sort.totaPages)
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    }, [])
 
     // 생성버튼 클릭
     const handleCreateBtnClick = () => {
@@ -37,9 +37,9 @@ const FaqList = () => {
     }
 
     // 더미데이터용
-    useEffect(() => {
-        setBoardList([{ boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 }, { boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 }, { boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 }, { boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 }, { boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 },])
-    }, [])
+    // useEffect(() => {
+    //     setBoardList([{ boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 }, { boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 }, { boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 }, { boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 }, { boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 },])
+    // }, [])
 
 
 
@@ -91,7 +91,7 @@ const FaqList = () => {
             </Button>
 
             {/* 새 공지 작성하기 관리자만 */}
-            {!(user.memberNickName === 'admin') ||
+            {(user.memberNickName === 'admin') &&
                 <Button onClick={handleCreateBtnClick}>
                     새 글 작성
                 </Button>
