@@ -44,3 +44,30 @@
 .MyPage{
   margin-top: 50px;
 }
+
+.Point_box{
+  width: 1000px;
+  height: 700px;
+  background-color: #e8e9ea;
+  margin: 50px;
+  margin-left: 20px;
+  border-radius: 10px;
+}
+
+.study_box{
+  width: 1000px;
+  height: 700px;
+  background-color: #e8e9ea;
+  margin: 50px;
+  margin-left: 20px;
+  border-radius: 10px;
+}
+
+.RewardPoint_box{
+  width: 1000px;
+  height: 700px;
+  background-color: #e8e9ea;
+  margin: 50px;
+  margin-left: 20px;
+  border-radius: 10px;
+}

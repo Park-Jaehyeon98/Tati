@@ -56,7 +56,9 @@ export default function MyPost(){
       <div>
         <div className={style.NoticeItem_text}>
           <p className={style.MyPost_text}> {boardTitle} - 조회수 {boardHit} 댓글수 {boardCommentCount}
-            <h6 className={style.MyPost_text_time}>{boardDate.slice(0, 10)}</h6></p>
+            <h6 className={style.MyPost_text_time}>
+              {/* {boardDate.slice(0, 10)} */}
+              </h6></p>
           <hr className={style.Study_hr}/>
         </div>
       </div>
@@ -76,11 +78,11 @@ export default function MyPost(){
   
   
 
-  const totalPages = Math.ceil(myPost.length / itemsPerPage);
+  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNotices = myPost.slice(startIndex, endIndex);
+  const currentNotices = dummyData.slice(startIndex, endIndex);
 
   return(
     <div className={style.point}>

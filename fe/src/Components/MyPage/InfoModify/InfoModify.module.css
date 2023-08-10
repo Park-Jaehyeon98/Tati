@@ -8,6 +8,7 @@
   background-color: #e8e9ea;
   margin-bottom: 50px;
   border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
 }
 
 .contents{
@@ -216,4 +217,5 @@ display: flex;
   border-radius: 10px;
   padding: 60px;
   padding-left: 80px;
+  border: 1px solid #e3e7eb;
 }

@@ -1,6 +1,6 @@
 .point{
-  margin-left: 150px;
-  margin-top: 10px;
+  padding: 70px;
+  padding-left: 200px;
 }
 
 .point_nav_btn{
@@ -39,8 +39,8 @@
   justify-content: center;
   gap: 10px; /* 버튼 사이에 간격을 주기 위해 gap 설정 */
   position: absolute;
-  top: 760px;
-  left: 650px;
+  top: 1000px;
+  left: 40%;
   padding: 10px;
 }
 

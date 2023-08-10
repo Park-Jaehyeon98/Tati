@@ -67,11 +67,11 @@ export default function JoinStudy(){
   ];
   
 
-  const totalPages = Math.ceil(joinStudy.length / itemsPerPage);
+  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNotices = joinStudy.slice(startIndex, endIndex);
+  const currentNotices = dummyData.slice(startIndex, endIndex);
 
   return(
     <div className={style.point}>

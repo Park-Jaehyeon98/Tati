@@ -37,7 +37,8 @@ export default function MyPageHeader(){
                     <p className={style.memberNickName_p}>{user.memberNickName}</p>
 
                     <div className={style.Mileage_img_box}>
-                        <img src="./Assets/Mileage.png" className={style.Mileage_img}/>
+                        {/* <img src="./Assets/Mileage.png" className={style.Mileage_img}/> */}
+                        <img src="https://cdn-icons-png.flaticon.com/128/2953/2953423.png" className={style.Mileage_img}/>
                         <p className={style.totalPoint_p}>{user.totalPoint}</p>
                         <div className={style.M}>M</div>
                     </div>
