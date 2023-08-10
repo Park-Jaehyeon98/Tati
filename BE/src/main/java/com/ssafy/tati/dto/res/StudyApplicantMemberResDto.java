@@ -14,12 +14,20 @@ import lombok.Setter;
 public class StudyApplicantMemberResDto {
     @Schema(description = "회원 식별번호")
     private Integer memberId;
+
     @Schema(description = "회원 닉네임")
     private String memberNickName;
+
     @Schema(description = "회원 열정지수")
     private Integer totalScore;
+
     @Schema(description = "회원 총 공부시간")
     private Integer totalStudyTime;
+
+    @Schema(description = "회원 가입일")
+    private String createdDate;
+
+
 
 
 }

@@ -5,11 +5,12 @@ import com.ssafy.tati.entity.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Getter @Setter
+@ToString
 @Schema(description = "스터디 상세 ResDto")
 public class StudyDetailResDto {
 
@@ -59,10 +60,10 @@ public class StudyDetailResDto {
     private Integer totalDeposit;
 
     @Schema(description = "스터디 일정 목록")
-    private List<StudyScheduleResDto> studyScheduleResDtoList;
+    private List<StudyScheduleResDto> studySchedule;
 
     @Schema(description = "스터디 신청 목록")
-    private List<StudyApplicant> applicantList;
+    private List<StudyApplicantMemberResDto> applicantList;
 
     @Schema(description = "스터디 멤버 목록")
     private List<StudyMemberResDto> studyMemberResDtoList;
