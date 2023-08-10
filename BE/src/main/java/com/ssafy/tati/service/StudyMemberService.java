@@ -42,8 +42,11 @@ public class StudyMemberService {
     public StudyMemberSecessionResDto studyMemberSecession(Integer studyId, Integer memberId) {
         StudyMember studyMember = studyMemberRepository.findByStudyStudyIdAndMemberMemberId(studyId, memberId).orElseThrow(() -> new RuntimeException("해당 스터디의 참가 회원이 아닙니다."));
         int cur_point = studyMember.getStudy().getStudyDeposit() - studyMember.getStudyMemberPenalty();
-        studyMember.getStudy().setTotalPenalty(studyMember.getStudyMemberPenalty());
+        
+        studyMember.getStudy().setTotalPenalty( studyMember.getStudy().getTotalPenalty() +
+                studyMember.getStudyMemberPenalty());
         studyMember.getMember().setTotalPoint(studyMember.getMember().getTotalPoint() + cur_point);
+
         studyMemberRepository.deleteById(studyMember.getStudyMemberId());
         StudyMemberSecessionResDto studyMemberSecessionResDto = new StudyMemberSecessionResDto(studyMember.getMember().getMemberNickName(), studyMember.getStudy().getStudyName());
         return studyMemberSecessionResDto;
