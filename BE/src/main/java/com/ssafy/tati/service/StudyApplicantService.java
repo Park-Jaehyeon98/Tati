@@ -65,6 +65,7 @@ public class StudyApplicantService {
         StudyApplicant studyApplicant = studyApplicantRepository.findByMemberMemberIdAndStudyStudyId(memberId, studyId).orElseThrow(() -> new RuntimeException("해당 스터디 신청 회원이 아닙니다."));
         Member member = studyApplicant.getMember();
         member.setTotalPoint(member.getTotalPoint() + studyApplicant.getStudy().getStudyDeposit());
+        studyApplicantRepository.deleteById(studyApplicant.getStudyApplicantId());
         StudyApplicantApprovalMemberResDto studyApplicantApprovalMemberResDto = new StudyApplicantApprovalMemberResDto(memberId, studyId, studyApplicant.getMember().getMemberNickName());
         return studyApplicantApprovalMemberResDto;
     }
