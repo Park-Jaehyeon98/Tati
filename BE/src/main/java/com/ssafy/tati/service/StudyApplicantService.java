@@ -30,7 +30,7 @@ public class StudyApplicantService {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("회원 정보가 존재하지 않습니다"));
         Study study = studyRepository.findById(studyId).orElseThrow(() -> new RuntimeException("해당 스터디가 존재하지 않습니다."));
         Integer point = member.getTotalPoint() - study.getStudyDeposit();
-        if (point < 0) { new PointException("해당 스터디에 참가하는데 포인트가 부족합니다");  }
+        if (point < 0) { throw new PointException("해당 스터디에 참가하는데 포인트가 부족합니다");  }
 
         member.updateTotalPoint(point);
         Optional<StudyApplicant> optionalStudyApplicant = studyApplicantRepository.findByMemberMemberIdAndStudyStudyId(memberId, studyId);
