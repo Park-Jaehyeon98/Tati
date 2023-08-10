@@ -3,6 +3,7 @@ package com.ssafy.tati.service;
 import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.entity.Member;
 import com.ssafy.tati.entity.Study;
+import com.ssafy.tati.entity.StudyMember;
 import com.ssafy.tati.repository.BoardRepository;
 import com.ssafy.tati.repository.MemberRepository;
 import com.ssafy.tati.repository.StudyMemberRepository;
@@ -71,10 +72,10 @@ public class BoardService {
         Study study = optionalStudy.get();
 
         // 스터디 멤버일때만 글 쓸수 있어야 함
-//        Optional<StudyMember> optionalStudyMember = studyMemberRepository.findByMemberIdAndStudyId(memberId, studyId);
-//        if (optionalStudyMember.isEmpty()) {
-//            throw new RuntimeException();
-//        }
+        Optional<StudyMember> optionalStudyMember = studyMemberRepository.findByStudyStudyIdAndMember(study.getStudyId(), member);
+        if (optionalStudyMember.isEmpty()) {
+            throw new RuntimeException();
+        }
 
         board.setMember(member);
         board.setStudy(study);
