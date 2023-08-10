@@ -32,7 +32,7 @@ public class StudyMemberController {
 
     @Operation(summary = "스터디 탈퇴", description = "스터디 탈퇴 버튼을 누르면 해당 스터디 탈퇴 후 보증금 계산 후 반환", responses = {
             @ApiResponse(responseCode = "200", description = "스터디 탈퇴 성공", content = @Content(schema = @Schema(implementation = StudyMemberSecessionResDto.class)))})
-    @DeleteMapping("/{memberId}/sesession/{studyId}")
+    @DeleteMapping("/{memberId}/secession/{studyId}")
     public ResponseEntity<?> studyMemberSecession(@PathVariable Integer memberId, @PathVariable  Integer studyId ){
         StudyMemberSecessionResDto studyMemberSecessionResDto = studyMemberService.studyMemberSecession(studyId, memberId);
         return new ResponseEntity<>(studyMemberSecessionResDto, HttpStatus.OK);

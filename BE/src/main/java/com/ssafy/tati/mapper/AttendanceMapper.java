@@ -20,7 +20,6 @@ public interface AttendanceMapper {
 
         Attendance attendance = new Attendance();
         attendance.setInTime(attendanceInReqDto.getInTime());
-        attendance.setOutTime(attendanceInReqDto.getInTime());
         attendance.setStudyMember(studyMember);
         attendance.setMember(member);
 

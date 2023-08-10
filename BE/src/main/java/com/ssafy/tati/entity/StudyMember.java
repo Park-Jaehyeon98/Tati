@@ -39,6 +39,8 @@ public class StudyMember {
 
     public StudyMember(LocalDate currentDate, Study study, Member member) {
         this.studyJoinDate = currentDate;
+        this.absenceCount = 0;
+        this.studyMemberPenalty = 0;
         setMember(member);
         setStudy(study);
     }
