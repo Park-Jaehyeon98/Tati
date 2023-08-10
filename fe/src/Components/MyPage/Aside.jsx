@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux';
 export default function Aside() {
 
   const navigate = useNavigate();
+
+
   // 리덕스 펄시스트 유저정보를 불러옴
   const user = useSelector(state => state.user.user);
 
@@ -55,19 +57,19 @@ export default function Aside() {
         <p>마일리지 {user.totalPoint}pt</p>
       </div>
       <div>
-        <button className={style.bt} onClick={() => onButtonClick("schedule")}>
+        <button className={`${style.bt}`} onClick={() => onButtonClick("schedule")}>
           일정
         </button>
-        <button className={style.bt} onClick={() => onButtonClick("StudyList")}>
+        <button className={`${style.bt}`} onClick={() => onButtonClick("StudyList")}>
           스터디목록
         </button>
-        <button className={style.bt} onClick={() => onButtonClick("Point")}>
+        <button className={`${style.bt}`} onClick={() => onButtonClick("Point")}>
           마일리지
         </button>
-        <button className={style.bt} onClick={() => onButtonClick("AuthModal")}>
+        <button className={`${style.bt}`} onClick={() => onButtonClick("AuthModal")}>
           회원정보수정
         </button>
-        <button className={style.bt} onClick={() => onButtonClick("RewardPoint")}>
+        <button className={`${style.bt}`} onClick={() => onButtonClick("RewardPoint")}>
           상벌점내역
         </button>
       </div>

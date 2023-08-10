@@ -10,7 +10,7 @@ export default function ApplyStudy(){
   const navigate = useNavigate();
 
   // 신청한 스터디 목록
-  const [applyStudy, setApplyStudy] = useState(null)
+  const [applyStudy, setApplyStudy] = useState([])
   const handleButtonClick = (tab) => {
     navigate(tab);
   };
@@ -97,15 +97,14 @@ export default function ApplyStudy(){
   ];
   
 
-  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
+  const totalPages = Math.ceil(applyStudy.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNotices = dummyData.slice(startIndex, endIndex);
+  const currentNotices = applyStudy.slice(startIndex, endIndex);
 
   return(
     <div className={style.point}>
-      <h1>신청한스터디</h1>
       <nav className={style.point_nav_btn}>
         <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/JoinStudy")}>가입된스터디</button>
         <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/ApplyStudy")}>신청한스터디</button>

@@ -34,10 +34,11 @@ display: flex;
 }
 
 .InfoModify_nickname_check_btn{
-  margin-left: 73px;
+  margin-left: 75px;
   height: 30px;
-  border-radius: 10px;
-  background-color: #A5DAF8;
+  border-radius: 5px;
+  background-color: #007BFF;
+  color: white;
   border: 1px;
 }
 
@@ -52,8 +53,9 @@ display: flex;
   margin-bottom: 20px;
   margin-top: 20px;
   height: 30px;
-  border-radius: 10px;
-  background-color: #A5DAF8;
+  border-radius: 5px;
+  background-color: #007BFF;
+  color: white;
   border: 1px;
   width: 65px
 }
@@ -90,7 +92,7 @@ display: flex;
   margin-left: 40px;
   width: 140px;
   height: 15px;
-  background-color: #3498db;
+  background-color: #007BFF;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -106,7 +108,7 @@ display: flex;
 }
 
 .customFileInput:hover {
-  background-color: #2980b9;
+  background-color: #0056B3;
 }
 
 /* 파일 입력 필드 숨김 */
@@ -121,14 +123,14 @@ display: flex;
   margin: 20px;
   font-size: 15px;
   border-radius: 5px;
-  background-color: #f68976; /* Coral color */
+  background-color: #fd320f; /* Coral color */
   color: white; /* Text color */
   border: none; /* No border */
   cursor: pointer;
 }
 
 .Withdrawal_btn:hover {
-  background-color: #f17053; /* Darker coral color on hover */
+  background-color: #a84933; /* Darker coral color on hover */
 }
 /*  */
 
@@ -185,3 +187,7 @@ display: flex;
 }
 
 
+/* .info_box{
+  width: 600px;
+  background-color: rgb(201, 198, 198);
+} */

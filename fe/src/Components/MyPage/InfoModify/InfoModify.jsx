@@ -193,48 +193,50 @@ export default function InfoModify() {
   return (
     <div className={style.container}>
 
-      <h2>내정보 수정</h2>
+      <div className={style.info_box}>
+        <h2>내정보 수정</h2>
 
-      {/* 내정보 */}
-      <div className={style.contents}>
-        <p className={style.InfoModify_text}>
-          이메일
-          <p className={style.InfoModify_email}>{user.email}</p>
-        </p>
-        <p className={style.InfoModify_text}>
-          이름
-          <p className={style.InfoModify_name}>{user.memberName}</p>
-        </p>
-        <p className={style.InfoModify_profile}>
-          <p className={style.InfoModify_profile_p}>프로필</p>
+        {/* 내정보 */}
+        <div className={style.contents}>
+          <p className={style.InfoModify_text}>
+            이메일
+            <p className={style.InfoModify_email}>{user.email}</p>
+          </p>
+          <p className={style.InfoModify_text}>
+            이름
+            <p className={style.InfoModify_name}>{user.memberName}</p>
+          </p>
+          <p className={style.InfoModify_profile}>
+            <p className={style.InfoModify_profile_p}>프로필</p>
 
-          <label htmlFor="profile" className={`${style.customFileInput} ${style.centeredText}`}>
-            이미지 업로드
-            <input 
-              id="profile" // htmlFor와 연결할 ID
-              name="profile" 
-              accept="image/*" 
-              onChange={handleImageChange} 
-              type="file"
-              style={{ display: 'none' }} // 파일 입력 필드를 숨김
+            <label htmlFor="profile" className={`${style.customFileInput} ${style.centeredText}`}>
+              이미지 업로드
+              <input 
+                id="profile" // htmlFor와 연결할 ID
+                name="profile" 
+                accept="image/*" 
+                onChange={handleImageChange} 
+                type="file"
+                style={{ display: 'none' }} // 파일 입력 필드를 숨김
+              />
+            </label>  
+
+          {imageDataURL && <img src={imageDataURL} alt="Uploaded" className={style.file_img} />}
+          </p>
+          <p>
+            닉네임
+            <input name="NickName"
+              value={nickName}
+              onChange={handleChange}
+              className={style.InfoModify_nickname}
+              type="text"
             />
-          </label>  
-
-        {imageDataURL && <img src={imageDataURL} alt="Uploaded" className={style.file_img} />}
-        </p>
-        <p>
-          닉네임
-          <input name="NickName"
-            value={nickName}
-            onChange={handleChange}
-            className={style.InfoModify_nickname}
-            type="text"
-          />
-          <button className={style.InfoModify_nickname_check_btn}
-            onClick={handleSendNickName}
-          >중복체크</button>
-        </p>
-        <button className={style.InfoModify_change} onClick={handleNickNameupdata}>완료</button>
+            <button className={style.InfoModify_nickname_check_btn}
+              onClick={handleSendNickName}
+            >중복체크</button>
+          </p>
+          <button className={style.InfoModify_change} onClick={handleNickNameupdata}>완료</button>
+        </div>
       </div>
 
       <div className={style.InfoModify_line}></div>

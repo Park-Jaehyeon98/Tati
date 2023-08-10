@@ -173,7 +173,6 @@ const PointItem = ({ point, date, day, tid }) => {
 
   return (
     <div className={style.point_History_box}>
-     <h2>포인트 내역</h2>
      <br />
       
       <div>
@@ -191,6 +190,7 @@ const PointItem = ({ point, date, day, tid }) => {
           <div className={style.pagination}>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
               <button
+              className={style.pagination_button}
                 key={pageNum}
                 onClick={() => setCurrentPage(pageNum)}
                 disabled={currentPage === pageNum}

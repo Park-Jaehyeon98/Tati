@@ -14,7 +14,7 @@ nav {
 .nav-link.click {
   font-weight: bold;
   font-size: 15px;
-  color: blue;
+  color: #007BFF;
 }
 
 .navBox {

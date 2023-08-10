@@ -12,7 +12,7 @@ import axios from "axios";
 
 // 리덕스 저장
 import { useDispatch } from 'react-redux';
-import {addSchedule, removeSchedule, clearUserSchedule} from "../../../redux/reducers/userScheduleSlice";
+import {addSchedule, updateSchedule,removeSchedule, clearUserSchedule} from "../../../redux/reducers/userScheduleSlice";
 import {addStudySchedule, removeStudySchedule, clearUserStudySchedule} from "../../../redux/reducers/userStudyScheduleSlice";
 import { updateUser } from "../../../redux/reducers/userSlice"
 
@@ -22,10 +22,10 @@ import { useSelector } from 'react-redux';
 import { event } from "jquery";
 
 
-
 export default function Calendar(){
 
   const dispatch = useDispatch();
+  
 
   // 현재 년, 월
   const currentDate = new Date();
@@ -38,18 +38,26 @@ export default function Calendar(){
   const [totalStudyTime,setTotalStudyTime] = useState('')
   const [todayStudyTime,setTodayStudyTime] = useState('')
 
+  const [selectedColor, setSelectedColor] = useState('');
+  const [col, setCol] = useState()
+  const [eventColor, seteventColor] = useState({})
+  const colors = [
+    'red', 'green', 'blue', 'yellow', 'orange', 'purple', 'cyan'
+  ];
+
+
   // 리덕스의 유저정보 와 일정 가져오기
   const userSchedule = useSelector(state => state.user.userSchedule);
   const user = useSelector(state => state.user.user);
 
+
   // 사용자의 시간대 출력
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
 
   useEffect(() => {
 
     console.log(userTimeZone); 
-
-    console.log(userSchedule)
     console.log('캘린더 memberId',user.memberId)
     console.log(`year---${year}///month---${month}`)
 
@@ -95,7 +103,8 @@ export default function Calendar(){
           scheduleId: scheduleItem.memberScheduleId,
           extendedProps: {
             content: scheduleItem.memberScheduleContent,
-          }
+          },
+          color:'null'
         }));
 
         dispatch(clearUserSchedule());
@@ -147,7 +156,8 @@ export default function Calendar(){
           scheduleId: res.data.memberScheduleId,
           extendedProps: {
             content: res.data.memberScheduleContent,
-          }
+          },
+          color:'null'
         };
 
         dispatch(addSchedule(newEvent))
@@ -214,18 +224,48 @@ export default function Calendar(){
 
   
   const handleEventClick = (info) => {
-    setSelectedEvent(info.event);
+    console.log('handleEventClick',info.event._def)
+    setSelectedEvent(info.event._def);
+
+    const now = new Date();
+    const formattedNow = `${now.getFullYear()}-${(now.getMonth() + 1)}`
+    
+    console.log(formattedNow)
+    const event = {
+      title: info.event._def.title,
+      data:formattedNow,
+      scheduleId: info.event._def.sourceId,
+      extendedProps: {
+        content: info.event._def.extendedProps,
+      },
+      color:col,
+    }
+    seteventColor(event)
     setShowConfirmation(true); // Open the confirmation dialog
   };
+
 
   const [selectedEvent, setSelectedEvent] = useState(null); 
 
   // 일정 클릭시 모달 열기===================================================================
-  const handleCancelDelete = () => {
+  const handleCancelDelete = (info) => {
     setSelectedEvent(null);
     setShowConfirmation(false); // Close the confirmation dialog
   };
   //========================================================================================
+
+  //
+  const handleColor = ()=>{
+    console.log(eventColor)
+    updateSchedule(eventColor)
+    setShowConfirmation(false);
+  };
+
+  // 색상변경
+  const handleColorChange=(color)=>{
+    console.log(color)
+    setCol(color)
+  };
 
 
   // 일정
@@ -293,7 +333,23 @@ export default function Calendar(){
         <div className={style.confirmation_modal}>
           <div className={style.confirmation_modal_content}>
             <p>이 일정를 삭제하시겠습니까?</p>
+
+            <div className={style.color_palette}>
+              {colors.map((color, index) => (
+                <button
+                  key={index}
+                  className={`${style.color_button} ${selectedColor === color ? style.selected : ''}`}
+                  style={{ backgroundColor: color }}
+                  onClick={()=>handleColorChange(color)}
+                ></button>
+              ))}
+            </div>
+            
             <div className={style.confirmation_buttons}>
+
+              <button className={style.confirm_button} onClick={handleColor}>
+                색상변경
+              </button>
               <button className={style.confirm_button} onClick={handleConfirmDelete}>
                 확인
               </button>
