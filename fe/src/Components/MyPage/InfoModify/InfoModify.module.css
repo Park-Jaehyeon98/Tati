@@ -1,7 +1,13 @@
 .container{
-  margin-left: 170px;
+  width: 930px;
   margin-top: 40px;
-  height: 1000px;
+  margin-left: 5px;
+  padding-top: 70px;
+  padding-left: 100px;
+  height: 830px;
+  background-color: #e8e9ea;
+  margin-bottom: 50px;
+  border-radius: 10px;
 }
 
 .contents{
@@ -15,15 +21,18 @@ display: flex;
 .InfoModify_email{
   margin: 0px;
   margin-left: 90px;
+  margin-bottom: 20px;
 }
 
 .InfoModify_name{
   margin: 0px;
   margin-left: 105px;
+  margin-bottom: 20px;
 }
 
 .InfoModify_profile{
   display: flex;
+  padding-bottom: 40px;
 }
 
 .InfoModify_nickname{
@@ -31,6 +40,10 @@ display: flex;
   height: 25px;
   width: 170px;
   font-size: 13px;
+}
+
+.btns{
+  display: flex;
 }
 
 .InfoModify_nickname_check_btn{
@@ -42,14 +55,9 @@ display: flex;
   border: 1px;
 }
 
-.InfoModify_line{
-  border: 1px solid black;
-  width: 500px;
-  margin-bottom: 40px;
-}
 
 .InfoModify_change{
-  margin-left: 390px;
+  margin-left: 30px;
   margin-bottom: 20px;
   margin-top: 20px;
   height: 30px;
@@ -57,7 +65,11 @@ display: flex;
   background-color: #007BFF;
   color: white;
   border: 1px;
-  width: 65px
+  width: 100px
+}
+
+.profile_btn{
+  margin-left: 550px;
 }
 
 .InfoModify_password{
@@ -65,6 +77,7 @@ display: flex;
   height: 20px;
   width: 170px;
   margin-left: 73px;
+  margin-top: 50px;
   font-size: 25px;
 }
 
@@ -74,12 +87,17 @@ display: flex;
   width: 170px;
   font-size: 25px;
   margin-left: 42px;
+  margin-top: 20px;
+}
+
+.user_profile{
+  margin-left: 40px;
 }
 
 .file_img{
   position: relative;
   width: 250px;
-  height: 150px;
+  height: 200px;
   margin-left: 50px;
 }
 
@@ -116,12 +134,20 @@ display: flex;
   display: none;
 }
 
+.password_change{
+  margin-left: 120px;
+}
+
+.password_btn{
+  margin-left: 500px;
+}
 /* 회원탈퇴 버튼 */
 .Withdrawal_btn {
-  width: 140px;
+  width: 100px;
   height: 30px;
   margin: 20px;
-  font-size: 15px;
+  margin-left: 30px;
+  font-size: 14px;
   border-radius: 5px;
   background-color: #fd320f; /* Coral color */
   color: white; /* Text color */
@@ -135,10 +161,6 @@ display: flex;
 /*  */
 
 /* InfoModify.module.css */
-
-.container {
-  /* ... existing container styles ... */
-}
 
 /* Modal Styles */
 .modalOverlay {
@@ -187,7 +209,11 @@ display: flex;
 }
 
 
-/* .info_box{
-  width: 600px;
-  background-color: rgb(201, 198, 198);
-} */
+.info_box{
+  width: 700px;
+  height: 600px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 60px;
+  padding-left: 80px;
+}

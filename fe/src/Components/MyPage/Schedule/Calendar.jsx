@@ -6,7 +6,6 @@ import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from '@fullcalendar/react';
 import listPlugin from "@fullcalendar/list";
 import style from "./Calendar.module.css"
-import MyPageHeader from "../header";
 
 import axios from "axios";
 
@@ -276,9 +275,6 @@ export default function Calendar(){
   //  월:1, 화:2, 수:3, 목:4, 금:5, 토:6, 일:0
   return (
     <div>
-      
-      <MyPageHeader/>
-
       {/* 캘린더 */}
       <div className={style.Calendar_box}>
         <div className={style.Calendar_box_box}>

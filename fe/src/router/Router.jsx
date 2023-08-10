@@ -65,9 +65,22 @@ import { persistor } from '../redux/store';
 import { setUser,clearUser } from '../redux/reducers/userSlice';
 import {clearUserSchedule} from '../redux/reducers/userScheduleSlice'
 
+
+import AuthModal from "../Components/MyPage/AuthModal";
+
 export default function Router() {
 
   const dispatch = useDispatch();
+
+  const [authModal, setAuthModal] = useState(false);
+
+  const handleButtonClick = () => {
+    setAuthModal(true);
+  };
+
+  const closeModal = () => {
+    setAuthModal(false);
+  };
 
   // 모달을 표시할지 여부를 상태로 관리
   const [showModal, setShowModal] = useState(false); 
@@ -142,7 +155,8 @@ export default function Router() {
                 <div className={style.modal_content}>
                   <NavLink to="/MyPage/ApplyStudy">스터디 목록</NavLink>
                   <NavLink to="/MyPage/MyPagePoint">마일리지</NavLink>
-                  <NavLink >회원정보수정</NavLink>
+                  <NavLink onClick={()=>handleButtonClick()}>회원정보수정</NavLink>
+                  <NavLink to="/MyPage/MyPageRewardPoint">상벌점내역</NavLink>
                   <NavLink to="/Logout" onClick={handleLogout}>
                      로그아웃
                   </NavLink>
@@ -158,6 +172,17 @@ export default function Router() {
         </div>
         </nav>
         <hr className={style.nav_hr} />
+
+
+        {/* 회원정보수정페이지로 가는 모달 */}
+        <div>
+        {authModal &&
+          <div className={style.modal_backdrop}>
+            <AuthModal setAuthModal={setAuthModal} onButtonClick={handleButtonClick} closeModal={closeModal} />
+          </div>
+        }
+      </div>
+
       </div>
 
       <Routes>

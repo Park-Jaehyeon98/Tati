@@ -14,6 +14,9 @@ export default function InfoModify() {
   const dispatch = useDispatch(); 
   const navigate = useNavigate();
 
+  // 프로필 수정 상태 관리
+  const [showProfileEdit, setShowProfileEdit] = useState(true); 
+
   
   // 리덕스 펄시스트 유저정보를 불러옴
   const user = useSelector(state => state.user.user);
@@ -194,10 +197,32 @@ export default function InfoModify() {
     <div className={style.container}>
 
       <div className={style.info_box}>
-        <h2>내정보 수정</h2>
+
+          <div className={style.btns}>
+            <h2>내정보 수정</h2>
+
+          <button
+            className={style.InfoModify_change}
+            onClick={() => setShowProfileEdit(!showProfileEdit)}
+          >
+            프로필 수정
+          </button>
+          <button
+            className={style.InfoModify_change}
+            onClick={() => setShowProfileEdit(!showProfileEdit)}
+          >
+            비밀번호 변경
+          </button>
+
+          <button onClick={handleWithdrawal} className={style.Withdrawal_btn}>회원탈퇴</button>
+          </div>
 
         {/* 내정보 */}
         <div className={style.contents}>
+
+          {showProfileEdit && (
+          <>
+          <div className={style.user_profile}>
           <p className={style.InfoModify_text}>
             이메일
             <p className={style.InfoModify_email}>{user.email}</p>
@@ -235,13 +260,15 @@ export default function InfoModify() {
               onClick={handleSendNickName}
             >중복체크</button>
           </p>
-          <button className={style.InfoModify_change} onClick={handleNickNameupdata}>완료</button>
-        </div>
-      </div>
+          </div>
 
-      <div className={style.InfoModify_line}></div>
-
+          <button className={`${style.InfoModify_change} ${style.profile_btn}`} onClick={handleNickNameupdata}>완료</button>
+          </>
+          )}
+          </div>
       {/* 비밀번호 */}
+      {!showProfileEdit &&(<>
+      <div className={style.password_change}>
       <h2>비밀번호 변경</h2>
       <p>비밀번호
         <input
@@ -256,12 +283,18 @@ export default function InfoModify() {
           onChange={handlePassword2Change}
           type="password" />
       </p>
+      </div>
       <button
-        className={style.InfoModify_change}
+        className={`${style.InfoModify_change} ${style.password_btn}`}
         onClick={handleSendPassword}
-      >완료</button>
+      >완료</button></>
+      )}
+        </div>
 
-      <button onClick={handleWithdrawal} className={style.Withdrawal_btn}>회원탈퇴</button>
+      {/* <div className={style.InfoModify_line}></div> */}
+
+        
+
 
       {showWithdrawalModal && (
         <div className={style.modalOverlay}>

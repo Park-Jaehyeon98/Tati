@@ -94,3 +94,16 @@ nav {
 .modal_content a:hover {
   background-color: #f2f2f2;
 }
+
+.modal_backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 불투명도 조절 가능 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
