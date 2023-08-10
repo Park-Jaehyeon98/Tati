@@ -24,3 +24,11 @@
 .App_Footer_name_text {
   margin-right: 20px;
 }
+
+.centeredContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* 화면의 높이를 최소한으로 차지하도록 설정 */
+}

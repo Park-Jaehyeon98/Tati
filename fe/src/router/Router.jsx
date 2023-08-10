@@ -111,9 +111,16 @@ export default function Router() {
     <BrowserRouter>
       <div className={style.navBox}>
         <nav>
+        <div className={style.logo}>타티
+        <img  className={style.logo_img} src="/Assets/logo.png" alt="" />
+        </div>
+        <div className={style.navBoxIn}>
           {/* openvidu */}
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Room">
             openvidu
+          </NavLink>
+          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Study">
+            스터디
           </NavLink>
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Notice">
             공지사항
@@ -121,17 +128,9 @@ export default function Router() {
           <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Faq">
             FAQ
           </NavLink>
-          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Study">
-            스터디
-          </NavLink>
           {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage">
             마이페이지
           </NavLink>)}
-          {!user && (
-            <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/SignUp">
-              회원가입
-            </NavLink>
-          )}
           {user ? (
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Logout" onClick={handleLogout}>
               로그아웃
@@ -141,6 +140,7 @@ export default function Router() {
               로그인
             </NavLink>
           )}
+        </div>
         </nav>
         <hr className={style.nav_hr} />
       </div>

@@ -1,14 +1,14 @@
 nav {
-  margin-left: 580px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  /* width: 1835px; */
+  margin-bottom: 10px;
+  display: flex;
+  margin-top: 10px;
 }
 .nav-link {
   color: black;
   text-decoration: none;
   padding-left: 30px;
   font-size: 12px;
+  margin-top: 10px;
 }
 
 .nav-link.click {
@@ -23,7 +23,7 @@ nav {
   font-weight: bold;
   width: 1520px;
   z-index: 3;
-  position: relative;
+  /* position: relative; */
   top: 0;
   left: 0;
   right: 0;
@@ -32,4 +32,21 @@ nav {
 .nav_hr {
   width: 100%;
   margin-bottom: 0px;
+}
+
+.logo{
+  margin-left: 220px;
+  top: 20px;
+  right: 360px;
+  font-size: 35px;
+}
+
+.navBoxIn{
+  margin-top: 15px;
+  margin-left: 300px;
+}
+
+.logo_img{
+  width: 20px;
+  transform: rotate(10deg);
 }
