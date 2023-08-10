@@ -36,6 +36,7 @@ public interface GetBoardMapper {
         studyBoardDetailResDto.setBoardId(board.getBoardId());
         studyBoardDetailResDto.setBoardTitle(board.getBoardTitle());
         studyBoardDetailResDto.setBoardContent(board.getBoardContent());
+        studyBoardDetailResDto.setBoardContent(board.getBoardContent());
         studyBoardDetailResDto.setMemberId(board.getMember().getMemberId());
         studyBoardDetailResDto.setMemberNickname(board.getMember().getMemberNickName());
         studyBoardDetailResDto.setBoardHit(board.getBoardHit());

@@ -135,7 +135,7 @@ public class StudyController {
             String modify = studyMainNotice.getModifiedDate().toLocalDate().toString();
 
 
-            studyNoticeDetailResDto = new StudyNoticeDetailResDto(studyMainNotice.getBoardId(), studyMainNotice.getBoardTitle(),
+            studyNoticeDetailResDto = new StudyNoticeDetailResDto(studyMainNotice.getBoardId(), studyMainNotice.getBoardTitle(), studyMainNotice.getBoardContent(),
                     studyMainNotice.getMember().getMemberId(), studyMainNotice.getMember().getMemberNickName(), studyMainNotice.getBoardHit(),
                     create, modify, studyMainNotice.isMainNoticeYn());
         }
