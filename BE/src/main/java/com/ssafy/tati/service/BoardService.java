@@ -52,7 +52,7 @@ public class BoardService {
         Member member = optionalMember.get();
         Study study = optionalStudy.get();
 
-        if (!member.getMemberNickName().equals(study.getStudyHost())) {
+        if (!member.getMemberId().equals(study.getStudyHost())) {
             throw new RuntimeException();
         }
 

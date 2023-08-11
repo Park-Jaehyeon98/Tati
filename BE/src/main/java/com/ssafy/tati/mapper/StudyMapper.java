@@ -7,6 +7,7 @@ import com.ssafy.tati.dto.res.board.StudyNoticeDetailResDto;
 import com.ssafy.tati.entity.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.mapstruct.Mapper;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -72,7 +73,6 @@ public interface StudyMapper {
                                                List<StudyMemberResDto> studyMemberResDtoList,
                                                StudyNoticeDetailResDto studyNoticeDetailResDto);
 
-    List<StudyAllListResDto> studyListToStudyAllListResDtoList(List<Study> studyList);
 
 }
 

@@ -15,6 +15,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -219,14 +223,9 @@ public class StudyController {
     @Operation(summary = "스터디 전체 조회", description = "스터디 페이지 접속 시 모든 스터디 내림차순으로 조회", responses = {
             @ApiResponse(responseCode = "200", description = "스터디 전체 조회 성공", content = @Content(schema = @Schema(implementation = StudyAllListResDto.class)))})
     @GetMapping("/list")
-    public ResponseEntity<?> selectAllStudy() {
-        List<Study> studylist = studyService.getStudyList();
-        List<StudyAllListResDto> studyAllListResDtoList = new ArrayList<>();
-        for(Study study: studylist){
-            studyAllListResDtoList.add(new StudyAllListResDto( study.getStudyId(), study.getStudyName(), study.getTotalMember(),
-                    study.getStudyMemberList().size(), study.getDisclosure(), study.getImg()));
-        }
-
+    public ResponseEntity<?> selectAllStudy(@PageableDefault(size = 8, sort = "studyId", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<Study> studyList = studyService.getStudyList(pageable);
+        Page<StudyAllListResDto> studyAllListResDtoList = studyList.map(StudyAllListResDto::new);
         return new ResponseEntity<>(studyAllListResDtoList, HttpStatus.OK);
 
     }
@@ -234,12 +233,12 @@ public class StudyController {
     @Operation(summary = "카테고리, 키워드로 스터디 조회", description = "스터디 페이지에서 카테고리와 키워드로 스터디 리스트를 내림차순으로 조회", responses = {
             @ApiResponse(responseCode = "200", description = "스터디 카테고리, 키워드 조회 성공", content = @Content(schema = @Schema(implementation = StudyAllListResDto.class)))})
     @GetMapping("/search")
-    public ResponseEntity<?> searchStudy(@RequestParam(value = "page", defaultValue = "1") Integer pageNum,
-                                         @RequestParam(value = "category", defaultValue = "1") Integer categoryId,
+    public ResponseEntity<?> searchStudy(@PageableDefault(size = 8, sort = "studyId", direction = Sort.Direction.DESC) Pageable pageable,
+                                         @RequestParam(value = "category", defaultValue = "0") Integer categoryId,
                                          @RequestParam(value = "keyword", defaultValue = "") String keyword) {
 
-        List<Study> studyList = studyService.getSearchStudy(pageNum, categoryId, keyword);
-        List<StudyAllListResDto> studyAllListResDtoList = studyMapper.studyListToStudyAllListResDtoList(studyList);
+        Page<Study> studyList = studyService.getSearchStudy(pageable, categoryId, keyword);
+        Page<StudyAllListResDto> studyAllListResDtoList = studyList.map(StudyAllListResDto::new);
         return new ResponseEntity<>(studyAllListResDtoList, HttpStatus.OK);
     }
 

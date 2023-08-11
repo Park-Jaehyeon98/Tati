@@ -28,7 +28,7 @@ public class StudyReqDto {
     private Boolean disclosure;
 
     @Schema(description = "스터디 방장")
-    private String studyHost;
+    private Integer studyHost;
 
     @Schema(description = "신청 보증금")
     private Integer studyDeposit;

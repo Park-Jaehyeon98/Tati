@@ -7,6 +7,8 @@ import com.ssafy.tati.exception.DataNotFoundException;
 import com.ssafy.tati.exception.PointException;
 import com.ssafy.tati.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,8 +35,8 @@ public class StudyService {
         return category.get();
     }
 
-    public void checkPoint(String studyHost, Integer studyDeposit){
-        Optional<Member> member = memberRepository.findByMemberNickName(studyHost);
+    public void checkPoint(Integer studyHost, Integer studyDeposit){
+        Optional<Member> member = memberRepository.findById(studyHost);
         if(!member.isPresent()){
             throw new RuntimeException("해당 회원이 존재하지 않습니다.");
         }
@@ -90,22 +92,27 @@ public class StudyService {
     }
 
     @Transactional(readOnly = true)
-    public List<Study> getStudyList() {
-        List<Study> studyList = studyRepository.findAll();
+    public Page<Study> getStudyList(Pageable pageable) {
+        Page<Study> studyList = studyRepository.findAll(pageable);
         return studyList;
     }
 
     @Transactional(readOnly = true)
-    public List<Study> getSearchStudy(Integer pageNum, Integer categoryId, String keyword){
-        List<Study> searchStudyList = studyRepository.findByCategoryAndStudyNameContaining(categoryId, keyword);
+    public Page<Study> getSearchStudy(Pageable pageable, Integer categoryId, String keyword){
+        Page<Study> searchStudyList;
+        if(categoryId == 0){
+            searchStudyList = studyRepository.findByStudyNameContaining(keyword, pageable);
+        }else {
+            searchStudyList = studyRepository.findByCategoryAndStudyNameContaining(categoryId, keyword, pageable);
+        }
         return searchStudyList;
     }
 
-    public void setStudyMemberHost(Integer studyId, String studyHost) {
-        Member member = memberRepository.findByMemberNickName(studyHost).orElseThrow(() -> new RuntimeException("등록된 회원이 아닙니다."));
+    public void setStudyMemberHost(Integer studyId, Integer studyHost) {
+        Member member = memberRepository.findById(studyHost).orElseThrow(() -> new RuntimeException("등록된 회원이 아닙니다."));
         Study study = studyRepository.findById(studyId).orElseThrow(() -> new RuntimeException("study가 존재하지 않습니다."));
 
-        System.out.println("studyId : " +studyId +", studyHost : " +studyHost);
+//        System.out.println("studyId : " +studyId +", studyHost : " +studyHost);
 
         Integer point = member.getTotalPoint() - study.getStudyDeposit();
 
@@ -141,7 +148,4 @@ public class StudyService {
         return memberList;
     }
 
-//    public List<Member> selectMember(Integer studyMemberId){
-//
-//    }
 }
