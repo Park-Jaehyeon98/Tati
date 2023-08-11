@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import style from "./Login.module.css"
 import jwt_decode from "jwt-decode";
 
 import RefreshToken from "../../Components/RefreshToken";
+
+import setIsLoggedIn from "../../router/Router";
 
 // 리덕스 저장
 import { useDispatch } from 'react-redux';
@@ -43,32 +45,35 @@ export default function Login() {
       .then((res) => {
         console.log(res)
         console.log(res.headers)
-        // 로컬 스토리지에 데이터 저장
-        localStorage.setItem('memberNickName', res.data.memberNickName);
-        localStorage.setItem('totalPoint', res.data.totalPoint);
-        localStorage.setItem('totalScore', res.data.totalScore);
-        localStorage.setItem('totalStudyTime', res.data.totalStudyTime);
         
         // decodedToken, accessToken 로컬에 저장 - 유저 정보(memberId,memberName,sub,exp,iat)
         const authorizationHeader = res.headers.authorization;
-        const decodedToken = jwt_decode(authorizationHeader);
         const accessToken = authorizationHeader.substring(7);
         localStorage.setItem('accessToken', accessToken);
+        const decodedToken = jwt_decode(authorizationHeader);
         localStorage.setItem('decodedToken', JSON.stringify(decodedToken));
-
-        // 로컬에서 decodedToken꺼내기
-        const tokenInfo = localStorage.getItem('decodedToken');
-        console.log(JSON.parse(tokenInfo));
-        const parseJwt = JSON.parse(tokenInfo);
-        console.log(parseJwt.sub);
         localStorage.setItem('refreshtoken',res.headers.refreshtoken);
-
+        
+        const user = {
+          createdDate:res.data.createdDate,
+          email:res.data.email,
+          memberId:res.data.memberId,
+          memberName:res.data.memberName,
+          memberNickName:res.data.memberNickName,
+          totalPoint:res.data.totalPoint,
+          totalScore:res.data.totalScore,
+          totalStudyTime:res.data.totalStudyTime,
+          img:null
+        }
+        
         RefreshToken()
-        dispatch(setUser(res.data));
+
+        dispatch(setUser(user));
         navigate("/MyPage");
       })
       .catch((err) => {
         console.log(err)
+        alert(`${err.response.data}`)
       });
   }
 
@@ -76,50 +81,69 @@ export default function Login() {
 
   return (
     <div className={style.Login_box}>
-      <img className={style.login_img} src="./Assets/Login_img01.jpg" alt="" />
+    <img
+      className={style.login_img}
+      src="./Assets/Login_img01.jpg"
+      alt="Login background"
+    />
 
-      <div className={style.login}>
-            <h1 className={style.login_title}>로그인</h1>
-            <p>
-              <input className={style.loginInput}
-                type="text"
-                placeholder="이메일"
-                name="email"
-                value={formData.email}
-                onChange={handleChange} />
-              <br />
-              <input className={style.loginInput}
-                type="password"
-                placeholder="비밀번호"
-                name="password"
-                value={formData.passWord}
-                onChange={handleChange} />
-            </p>
-            <div className={style.Login_box_find}>
-              <h5 className={style.password_find}>
-                비밀번호 찾기</h5>
-              <h5 className={style.signup}>
-                회원가입</h5>
-            </div>
-            <button className={style.loginBtn}
-              onClick={handleLogin}>
-              로그인</button>
+    <div className={style.login}>
+      <h1 className={style.login_title}>로그인</h1>
+      <div>
+        <input
+          className={style.loginInput}
+          type="text"
+          placeholder="이메일"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <input
+          className={style.loginInput}
+          type="password"
+          placeholder="비밀번호"
+          name="password"
+          value={formData.passWord}
+          onChange={handleChange}
+        />
+      </div>
+      <div className={style.Login_box_find}>
+        <NavLink to="/PasswordReset" className={style.password_find}>
+          비밀번호 찾기
+        </NavLink>
+        <NavLink to="/SignUp" className={style.signup}>
+          회원가입
+        </NavLink>
+      </div>
+      
+      <button className={style.loginBtn} onClick={handleLogin}>
+        로그인
+      </button>
 
-        <div className={style.line1}></div>
-        <p>간편로그인</p>
-        <div className={style.line2}></div>
+      <div className={style.line1}></div>
+      <p>간편로그인</p>
+      <div className={style.line2}></div>
 
-        <img className={style.loginGoogleLogo}
-          src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="" />
-        {/* kakao 로그인 */}
-        <img className={style.loginKakaoLogo}
+      <div className={style.socialLogos}>
+        <img
+          className={style.loginGoogleLogo}
+          src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
+          alt="Google 로그인"
+        />
+        <img
+          className={style.loginKakaoLogo}
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/KakaoTalk_logo.svg/800px-KakaoTalk_logo.svg.png"
-          alt="" />
-
-        <img className={style.loginNaverLogo}
-          src="/Assets/네이버.png" alt="" />
-
+          alt="Kakao 로그인"
+        />
+        <img
+          className={style.loginNaverLogo}
+          src="/Assets/네이버.png"
+          alt="Naver 로그인"
+        />
       </div>
     </div>
-  )
+  </div>
+);
 }

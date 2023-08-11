@@ -132,6 +132,7 @@ export default function SignUp() {
   return (
     <div className={style.SignUp_box}>
       <img className={style.img01} src="./Assets/signup02.jpg" alt="" />
+      
       <div className={`${style.signup}`}>
         <h1 className={style.signup_title}>회원가입</h1>
         <p className={style.signup_text}>

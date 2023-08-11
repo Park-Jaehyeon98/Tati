@@ -1,13 +1,14 @@
-.myPage {
+.myPage{
   background-color: white;
   width: 200px;
   height: 700px;
-  margin-left: 220px;
+  /* margin-left: 190px; */
+  margin-right: 900px;
   border-radius: 10px;
   right: 100px;
-  margin-bottom: 300px;
+  margin-bottom: 150px;
   display: flex;
-  margin-top: 120px;
+  margin-top: 60px;
 }
 .box3{
   margin-top: 70px;
@@ -26,3 +27,50 @@
   justify-content: center;
   z-index: 2;
 }
+.box{
+  background-color: white;
+  width: 200px;
+  height: 700px;
+  /* margin-left: 190px; */
+  margin-right: 900px;
+  border-radius: 10px;
+  right: 100px;
+  margin-bottom: 150px;
+  display: flex;
+  margin-top: 60px;
+  margin-bottom: 500px;
+}
+
+.MyPage{
+  margin-top: 50px;
+  border-radius: 10px;
+}
+
+.Point_box{
+  width: 1000px;
+  height: 800px;
+  background-color: #e8e9ea;
+  margin: 50px;
+  margin-left: 20px;
+  border-radius: 10px;
+  margin-bottom: 100px;
+}
+
+.study_box{
+  width: 1000px;
+  height: 700px;
+  background-color: #e8e9ea;
+  margin: 50px;
+  margin-left: 20px;
+  border-radius: 10px;
+}
+
+.RewardPoint_box{
+  width: 1000px;
+  height: 700px;
+  background-color: #e8e9ea;
+  margin: 50px;
+  margin-left: 20px;
+  border-radius: 10px;
+}
+

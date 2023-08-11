@@ -16,7 +16,7 @@ export default function Main() {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   const handleScroll = () => {
-    if (window.scrollY > 200) {
+    if (window.scrollY > 500) {
       setShowScrollToTop(true);
     } else {
       setShowScrollToTop(false);

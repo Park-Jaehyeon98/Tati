@@ -1,14 +1,19 @@
 .point{
-  margin-left: 100px;
-  margin-top: 10px;
+  padding: 50px;
+  padding-left: 120px;
 }
 
 .point_nav_btn{
   display: flex;
-  margin-left: 50px;
-  margin-bottom: 30px;
+  margin-left: 100px;
 }
 
+.point_box{
+  width: 700px;
+  height: 600px;
+  background-color: white;
+  padding: 30px;
+}
 .nav_btn{
   margin-right: 50px;
   margin-bottom: 30px;
