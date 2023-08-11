@@ -16,10 +16,10 @@ const StudyList = () => {
     const [totalPages, setTotalPages] = useState(1);
     const firstPage = currentPage - (currentPage % 5) + 1
     // 카테고리 선택
-    const [categoryId, setCategoryId] = useState(null);
+    const [categoryId, setCategoryId] = useState(1);
     const categoryIdArray = ["자격증", "취업", "학교", "공시", "기타"];
     // 검색 키워드
-    const [keywordInput, setKeywordInput] = useState('');
+    const [keywordInput, setKeywordInput] = useState(null);
     const [keyword, setKeyword] = useState(null);
 
 
@@ -39,7 +39,7 @@ const StudyList = () => {
 
     // 카테고리변경시
     const handleCategoryIdClick = (value) => {
-        (value === categoryId - 1 ? setCategoryId(null) : setCategoryId(value + 1))
+        (value === categoryId - 1 ? setCategoryId(1) : setCategoryId(value + 1))
     }
     // 검색창입력 변경, 검색창 입력
     const handleKeywordInputChagne = (e) => {

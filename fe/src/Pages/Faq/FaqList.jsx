@@ -91,7 +91,7 @@ const FaqList = () => {
             </Button>
 
             {/* 새 공지 작성하기 관리자만 */}
-            {(user.memberNickName === 'admin') &&
+            {user && (user.memberNickName === 'admin') &&
                 <Button onClick={handleCreateBtnClick}>
                     새 글 작성
                 </Button>

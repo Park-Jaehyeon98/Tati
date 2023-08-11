@@ -55,8 +55,6 @@ const StudyCreate = () => {
     const { categoryId,
         studyName,
         studyDescription,
-        // studyStartDate,
-        // studyEndDate,
         totalMember,
         studyDeposit,
         disclosure,
@@ -222,10 +220,6 @@ const StudyCreate = () => {
     }
 
 
-
-
-
-
     return (
         <div>
             <div >
@@ -281,8 +275,6 @@ const StudyCreate = () => {
                         />
                     </div>
                 </div>
-
-
 
                 <div>
                     <div>스터디 멤버수</div>

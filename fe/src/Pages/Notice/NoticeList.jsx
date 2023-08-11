@@ -20,6 +20,11 @@ const NoticeList = () => {
     const config = { params: { pageNum: currentPage } }
 
     useEffect(() => {
+        board()
+        
+    }, [])
+
+    const board = ()=>{
         apiClient.get(subURL, config)
             .then((res) => {
                 // console.log(res)
@@ -29,7 +34,7 @@ const NoticeList = () => {
             .catch((err) => {
                 console.log(err)
             });
-    }, [])
+    }
 
     // 더미데이터용
     // useEffect(() => {
@@ -97,7 +102,7 @@ const NoticeList = () => {
                 {">"}
             </button>
             {/* 새 공지 작성하기 관리자만 */}
-            {(user.memberNickName === 'admin') ||
+            {user && (user.memberNickName === 'admin') &&
                 <button onClick={handleCreateBtnClick}>
                     새 글 작성
                 </button>
