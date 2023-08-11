@@ -41,7 +41,7 @@ public class StudyService {
             throw new RuntimeException("해당 회원이 존재하지 않습니다.");
         }
         if(studyDeposit > member.get().getTotalPoint()){
-            new PointException("스터디를 만드는데 포인트가 부족합니다.");
+           throw new PointException("스터디를 만드는데 포인트가 부족합니다.");
         }
     }
 
@@ -103,7 +103,8 @@ public class StudyService {
         if(categoryId == 0){
             searchStudyList = studyRepository.findByStudyNameContaining(keyword, pageable);
         }else {
-            searchStudyList = studyRepository.findByCategoryAndStudyNameContaining(categoryId, keyword, pageable);
+            Optional<Category> category = categoryRepository.findById(categoryId);
+            searchStudyList = studyRepository.findByCategoryAndStudyNameContaining(category.get(), keyword, pageable);
         }
         return searchStudyList;
     }

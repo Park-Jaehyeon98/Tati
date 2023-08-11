@@ -67,7 +67,7 @@ public interface StudyMapper {
         return studySchedule;
     }
 
-    StudyDetailResDto studyToStudyDetailResDto(Study study, Category category, boolean studyMemberYn,
+    StudyDetailResDto studyToStudyDetailResDto(Study study,  Category category, boolean studyMemberYn,
                                                List<StudyScheduleResDto> studySchedule,
                                                List<StudyApplicantMemberResDto> applicantList,
                                                List<StudyMemberResDto> studyMemberResDtoList,

@@ -14,7 +14,7 @@ public interface StudyRepository extends JpaRepository<Study, Integer> {
 //    @Query("SELECT s FROM Study s JOIN FETCH s.category c WHERE c.categoryId = :categoryId AND s.studyName LIKE %:keyword%")
 //    Page<Study> findByCategoryAndStudyNameContaining(@Param("categoryId") Integer categoryId, @Param("keyword") String keyword, Pageable pageable);
 //    @Query("SELECT s FROM Study s JOIN FETCH s.category c WHERE c.categoryId = :categoryId AND s.studyName LIKE %:keyword%")
-    Page<Study> findByCategoryAndStudyNameContaining(Integer categoryId, String keyword, Pageable pageable);
+    Page<Study> findByCategoryAndStudyNameContaining(Category category, String keyword, Pageable pageable);
 
     @Query("SELECT s FROM Study s WHERE s.studyName LIKE %:keyword%")
     Page<Study> findByStudyNameContaining(@Param("keyword") String keyword, Pageable pageable);
