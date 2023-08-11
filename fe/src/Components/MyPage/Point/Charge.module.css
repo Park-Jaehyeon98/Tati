@@ -9,6 +9,7 @@
 
 .point{
   margin-bottom: 50px;
+  margin-top: 50px;
 }
 
 .currentPoint{
@@ -29,7 +30,7 @@
   border-radius: 50px;
   font-size: 30px;
   border: 1px;
-  background-color: #71b2f7;
+  background-color: #3396f4;
   color: white;
 }
 
@@ -53,7 +54,6 @@
 
 .amounts_box{
   margin-right: 30px;
-  margin-bottom: 30px;
   width: 150px;
   height: 100px;
   font-size: 30px;

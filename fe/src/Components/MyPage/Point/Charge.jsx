@@ -87,6 +87,8 @@ export default function Change() {
 
   return (
     <div className={style.Change}>
+
+
         {/* 충전 박스 */}
         {amounts.map((amountBox) => (
           <button

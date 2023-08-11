@@ -153,7 +153,7 @@ export default function Router() {
             {showModal && (
               <div className={style.modal}>
                 <div className={style.modal_content}>
-                  <NavLink to="/MyPage/ApplyStudy">스터디 목록</NavLink>
+                  <NavLink to="/MyPage/JoinStudy">스터디 목록</NavLink>
                   <NavLink to="/MyPage/MyPagePoint">마일리지</NavLink>
                   <NavLink onClick={()=>handleButtonClick()}>회원정보수정</NavLink>
                   <NavLink to="/MyPage/MyPageRewardPoint">상벌점내역</NavLink>

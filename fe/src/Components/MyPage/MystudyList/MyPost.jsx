@@ -78,51 +78,56 @@ export default function MyPost(){
   
   
 
-  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
+  const totalPages = Math.ceil(myPost.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNotices = dummyData.slice(startIndex, endIndex);
+  const currentNotices = myPost.slice(startIndex, endIndex);
 
   return(
     <div className={style.point}>
-      <nav className={style.point_nav_btn}>
-        <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/JoinStudy")}>가입된스터디</button>
-        <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/ApplyStudy")}>신청한스터디</button>
-        <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/MyPagePost")}>내 작성글</button>
-      </nav>
 
-      <div className={style.content}>
+      <div className={style.JoinStudy_box}>
+        <nav className={style.point_nav_btn}>
+          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/JoinStudy")}>가입된스터디</button>
+          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/ApplyStudy")}>신청한스터디</button>
+          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/MyPagePost")}>내 작성글</button>
+        </nav>
 
-        <div className={style.point_History_box}>
-        
-        <div>
-          <div className={style.box}>
-              {currentNotices.map((notice, index) => (
-                <NoticeItem
-                  key={index}
-                  boardId={notice.boardId}
-                  boardTitle={notice.boardTitle}
-                  boardHit={notice.boardHit}
-                  boardCommentCount={notice.boardCommentCount}
-                  boardDate={notice.createdDate}
-                />
-              ))}
-            </div>
-            
-            <div className={style.pagination}>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                <button
-                  key={pageNum}
-                  onClick={() => setCurrentPage(pageNum)}
-                  disabled={currentPage === pageNum}
-                >
-                  {pageNum}
-                </button>
-              ))}
-            </div>
+        <div className={style.content}>
+
+          <div className={style.point_History_box}>
+          
+          <div>
+            <div className={style.box}>
+                {currentNotices.map((notice, index) => (
+                  <NoticeItem
+                    key={index}
+                    boardId={notice.boardId}
+                    boardTitle={notice.boardTitle}
+                    boardHit={notice.boardHit}
+                    boardCommentCount={notice.boardCommentCount}
+                    boardDate={notice.createdDate}
+                  />
+                ))}
+              </div>
+              
+              <div className={style.pagination}>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                  <button
+                    key={pageNum}
+                    onClick={() => setCurrentPage(pageNum)}
+                    disabled={currentPage === pageNum}
+                    className={style.btn}
+                  >
+                    {pageNum}
+                  </button>
+                ))}
+              </div>
+          </div>
         </div>
-      </div>
+
+        </div>
 
       </div>
     </div>

@@ -42,11 +42,11 @@ export default function JoinStudy(){
   // 가입한 스터디 ======================================================================================
   
   
-  const NoticeItem = ({ studyName, studyStartDate, studyEndDate, totalMember,studyMembercount }) => {
+  const NoticeItem = ({ studyName, studyStartDate, studyEndDate, totalMember,studyMemberCount }) => {
     return (
       <div>
         <div className={style.NoticeItem_text}>
-          <p className={style.JoinStudy_text}>{studyName} - {studyMembercount}/{totalMember} 인원
+          <p className={style.JoinStudy_text}>{studyName} - {studyMemberCount}/{totalMember} 인원
             <h6 className={style.JoinStudy_text_day}>{studyStartDate} ~ {studyEndDate} 기간</h6></p>
           <hr className={style.Study_hr}/>
         </div>
@@ -67,14 +67,16 @@ export default function JoinStudy(){
   ];
   
 
-  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
+  const totalPages = Math.ceil(joinStudy.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNotices = dummyData.slice(startIndex, endIndex);
+  const currentNotices = joinStudy.slice(startIndex, endIndex);
 
   return(
     <div className={style.point}>
+
+      <div className={style.JoinStudy_box}>
 
       <nav className={style.point_nav_btn}>
         <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/JoinStudy")}>가입된스터디</button>
@@ -95,7 +97,7 @@ export default function JoinStudy(){
                   studyStartDate={notice.studyStartDate}
                   studyEndDate={notice.studyEndDate}
                   totalMember={notice.totalMember}
-                  studyMembercount={notice.studyMemberCount}
+                  studyMemberCount={notice.studyMemberCount}
                 />
               ))}
             </div>
@@ -105,6 +107,7 @@ export default function JoinStudy(){
                   key={pageNum}
                   onClick={() => setCurrentPage(pageNum)}
                   disabled={currentPage === pageNum}
+                  className={style.btn}
                 >
                   {pageNum}
                 </button>
@@ -113,6 +116,7 @@ export default function JoinStudy(){
         </div>
       </div>
 
+      </div>
       </div>
     </div>
   )

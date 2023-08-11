@@ -1,6 +1,6 @@
 .point{
   padding: 50px;
-  padding-left: 180px;
+  padding-left: 120px;
 }
 
 .point_nav_btn{
@@ -8,6 +8,12 @@
   margin-left: 100px;
 }
 
+.point_box{
+  width: 700px;
+  height: 600px;
+  background-color: white;
+  padding: 30px;
+}
 .nav_btn{
   margin-right: 50px;
   margin-bottom: 30px;

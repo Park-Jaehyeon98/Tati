@@ -1,11 +1,13 @@
 .point{
-  padding: 70px;
-  padding-left: 200px;
+  padding: 50px;
+  padding-left: 100px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
 }
 
 .point_nav_btn{
   display: flex;
-  margin-left: 10px;
+  margin-left: 50px;
   margin-bottom: 30px;
 }
 
@@ -81,4 +83,33 @@
   margin: 0px;
   margin-left: 5px;
   font-size: 13px;
+}
+
+.JoinStudy_box{
+  width: 700px;
+  height: 500px;
+  background-color: white;
+  padding: 50px;
+  padding-left: 80px;
+}
+
+.NoticeItem_text{
+  margin-left: 30px;
+}
+
+.ApplyStudy_box{
+  margin-left: 30px;
+}
+
+.btn{ 
+  width: 30px;
+  height: 30px;
+  margin: 0.2rem;
+  padding: 0.3rem 0.5rem;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 50px;
 }
