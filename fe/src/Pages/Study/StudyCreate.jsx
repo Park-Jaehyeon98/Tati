@@ -6,14 +6,15 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import style from './StudyCreate.module.css';
 import { apiClient } from "../../api/apiClient";
+import { useSelector } from 'react-redux';
 
 
 const StudyCreate = () => {
     // date -> stirng 함수
     const dateToString = (date) => {
         return date.getFullYear() + "-"
-            + (date.getMonth().length >= 2 ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1)) + "-")
-            + (date.getDate().length >= 2 ? date.getDate() : ('0' + date.getDate()));
+            + (date.getMonth() >= 9 ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + "-"
+            + (date.getDate() >= 9 ? date.getDate() : ('0' + date.getDate()));
     }
 
     // 오늘 날짜 Date 객체 받아오고 State를 초기화
@@ -32,18 +33,18 @@ const StudyCreate = () => {
     });
     // 일정 list
     const [studySchedule, setStudySchedule] = useState([]);
-
+    const user = useSelector(state => state.user.user);
 
     const [studyData, setStudyData] = useState({
-        categoryId: 1, //스터디 카테고리
+        categoryId: 0, //스터디 카테고리
         studyName: "", //스터디 이름
         studyDescription: "", //스터디 설명
-        totalMember: 2, //스터디 멤버 수
+        totalMember: 0, //스터디 멤버 수
         disclosure: true, // 공개 여부
         studyPassword: null, // 패스워드
         studyDeposit: 1,  //보증금 최대 50000
         // studyHost: localStorage.getItem("memberNickName"), // memberNickName으로 들어갈것 
-        studyHost: "123456", // memberNickName으로 들어갈것 
+        studyHost: user.memberNickName, // memberNickName으로 들어갈것 
         studyStartDate: todayString, //스터디 시작일
         studyEndDate: todayString, //스터디 종료일
     });

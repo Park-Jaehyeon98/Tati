@@ -26,7 +26,7 @@ const StudyList = () => {
     // 처음 조회 (전체 조회
     useEffect(() => {
         console.log("전체")
-        apiClient.get('study')
+        apiClient.get('study/list')
             .then((res) => {
                 console.log(res)
                 setStudyList(res.data)
@@ -73,9 +73,12 @@ const StudyList = () => {
 
 
     // 하드코딩용
-    // useEffect(() => {
-    //     setStudyList([{ studyId: 0, studyName: "하하", totalMember: 8, disclosure: true, currentMember: 5, imageUrl: "" }, { studyId: 1, studyName: "하하", totalMember: 8, disclosure: true, currentMember: 5, imageUrl: "" }])
-    // }, [])
+    useEffect(() => {
+        //setStudyList([{ studyId: 0, studyName: "하하", totalMember: 8, disclosure: true, currentMember: 5, imageUrl: "" }, { studyId: 1, studyName: "하하", totalMember: 8, disclosure: true, currentMember: 5, imageUrl: "" }])
+        studyList.map((studyDetail) => (
+            <StudyCardItem key={studyDetail.studyId} studyDetail={studyDetail} />
+        ))
+    }, [])
 
     return (
         <div>

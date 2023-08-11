@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
 import { apiClient } from '../../api/apiClient';
+import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 const NoticeCreate = () => {
+    const navigate = useNavigate();
+    const user = useSelector(state => state.user.user);
+
     const [boardData, setBoardData] = useState({
         boardTitle: '',
         boardContent: '',
-        memberId: 1,
+        memberId: user.memberId,
         // 0 : 공지 1: 스터디 공지 2: 스터디 게시판 9: FAQ
     });
 
@@ -31,11 +36,16 @@ const NoticeCreate = () => {
         console.log(subURL)
         apiClient.post(subURL, boardData)
             .then((res) => {
-                console.log(res)
+                console.log(res);
+                handleCreateBtnClick();
             })
             .catch((err) => {
                 console.log(err)
             });
+    }
+
+    const handleCreateBtnClick = () => {
+        navigate('/Notice')
     }
 
     return (
