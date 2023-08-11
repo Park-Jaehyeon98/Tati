@@ -3,13 +3,13 @@ package com.ssafy.tati.dto.res;
 import com.ssafy.tati.dto.res.board.StudyNoticeDetailResDto;
 import com.ssafy.tati.entity.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
 @Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Schema(description = "스터디 상세 ResDto")
 public class StudyDetailResDto {
@@ -71,4 +71,26 @@ public class StudyDetailResDto {
     @Schema(description = "스터디 대표 공지")
     private StudyNoticeDetailResDto studyNoticeDetailResDto;
 
+    public StudyDetailResDto(Study study, String studyHost, Category category, boolean studyMemberYn, List<StudyScheduleResDto> studySchedule, List<StudyApplicantMemberResDto> applicantList, List<StudyMemberResDto> studyMemberResDtoList, StudyNoticeDetailResDto studyNoticeDetailResDto) {
+        this.studyId = study.getStudyId();
+        this.img = study.getImg();
+        this.studyName = study.getStudyName();
+        this.studyDescription = study.getStudyDescription();
+        this.totalMember = study.getTotalMember();
+        this.disclosure = study.getDisclosure();
+        this.studyHost = studyHost;
+        this.studyDeposit = study.getStudyDeposit();
+        this.studyPassword = study.getStudyPassword();
+        this.studyStartDate = study.getStudyStartDate().toString();
+        this.studyEndDate = study.getStudyEndDate().toString();
+        this.categoryId = category.getCategoryId();
+
+        this.studyMemberYn = studyMemberYn;
+        this.totalPenalty = study.getTotalPenalty();
+        this.totalDeposit = study.getTotalDeposit();
+        this.studySchedule = studySchedule;
+        this.applicantList = applicantList;
+        this.studyMemberResDtoList = studyMemberResDtoList;
+        this.studyNoticeDetailResDto = studyNoticeDetailResDto;
+    }
 }

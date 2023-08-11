@@ -154,48 +154,20 @@ public class StudyController {
                     member.getTotalScore(), member.getCreatedDate().toString(), member.getTotalStudyTime()));
         }
 
-
-
-//        스터디 공지
-//        studyNotice - Notice객체
-//        noticeId - int
-//        noticeTitle - String
-//
-
-
-//        List<studySchedule> studySchedules
-//        day - String
-//        startTime - time
-//        endTime - time
-//
-//        스터디 게시판
-//        List<studyBoard> - Board 객체
-//        boardId - int
-//        boardTitle - String
-//        boardCreatedTime - date
-
-//
-//        totalMemberCount - int
-//        List<joinMember>
-//        memberId - int
-//        memberNickName - String
-//        passionScore - int
-//
-//        List<applyMember>
-//        memberId - int
-//        memberNickName - String
-//        passionScore - int
-
-
         Study study = studyService.getStudyDetail(studyId);
+        Member member = memberService.findById(study.getStudyHost());
+        String studyHost = member.getMemberNickName();
 
         System.out.println("여기까지!----------------------------");
-        StudyDetailResDto studyDetailResDto = studyMapper.studyToStudyDetailResDto(study, study.getCategory(),
+//        StudyDetailResDto studyDetailResDto = studyMapper.studyToStudyDetailResDto(study ,study.getCategory(),
+//                studyMemberYn, studySchedule, applicantList, studyMemberResDtoList, studyNoticeDetailResDto);
+        StudyDetailResDto studyDetailResDto = new StudyDetailResDto(study, studyHost, study.getCategory(),
                 studyMemberYn, studySchedule, applicantList, studyMemberResDtoList, studyNoticeDetailResDto);
         System.out.println("여기까지22222222222222222!----------------------------");
         System.out.println(
                 studyDetailResDto
         );
+
         return new ResponseEntity<>(studyDetailResDto, HttpStatus.OK);
     }
 
