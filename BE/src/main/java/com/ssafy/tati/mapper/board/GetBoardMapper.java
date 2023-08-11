@@ -48,11 +48,13 @@ public interface GetBoardMapper {
         studyBoardDetailResDto.setModifiedDate(modify);
         studyBoardDetailResDto.setCommentCount(board.getCommentList().size());
 
-        studyBoardDetailResDto.setBoardFile(board.getBoardFile());
-        String fileName = board.getBoardFile();
-        int lastIndexOfSlash = fileName.lastIndexOf("_") + 1;
-        String originalFileName = fileName.substring(lastIndexOfSlash);
-        studyBoardDetailResDto.setBoardFileName(originalFileName);
+        if (board.getBoardFile() != null) {
+            studyBoardDetailResDto.setBoardFile(board.getBoardFile());
+            String fileName = board.getBoardFile();
+            int lastIndexOfSlash = fileName.lastIndexOf("_") + 1;
+            String originalFileName = fileName.substring(lastIndexOfSlash);
+            studyBoardDetailResDto.setBoardFileName(originalFileName);
+        }
 
         return studyBoardDetailResDto;
     }
