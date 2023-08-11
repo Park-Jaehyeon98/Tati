@@ -14,7 +14,7 @@ const StudyBoardCreate = () => {
         // 내용 String
         studyId,
         // 스터디id int
-        memberId: 1
+        memberId: 4
         // 멤버id  int
         // 공지사항 생성 시는 제목,내용,스터디id,멤버id  request body에 담아줄것
 
@@ -23,8 +23,8 @@ const StudyBoardCreate = () => {
     // 역구조화로 key값을 변수로 사용
     const { boardTitle, boardContent } = boardBody;
 
-    const { boardFile, setBoardFile } = useState(null);
-    const { boardImgView, setBoardImgView } = useState(null);
+    const [ boardFile, setBoardFile ] = useState(null);
+    const [ boardImgView, setBoardImgView ] = useState(null);
 
 
     const config = {
@@ -46,33 +46,45 @@ const StudyBoardCreate = () => {
 
     // 생성버튼 클릭
     const handleCompleteBtnClick = () => {
-        const formData = new FormData();
-        // 게시판 파일 첨부 -> 있을때만 첨부
-        if (boardType === 2) {
-            formData.append('', boardFile)
-        }
-
-        formData.append('studyCreateDto', new Blob([JSON.stringify(boardBody)], {
-            type: "application/json"
-        }))
-
-
         const subUrl = boardType === 1 ? 'study/notice' : 'study/board';
 
+        // 게시판 파일 첨부 -> 있을때만 첨부
+        if (boardType === 2) {
+            const formData = new FormData();
 
-        apiClient.post(subUrl, formData, config)
+            formData.append('file', boardFile)
+            formData.append('studyBoardCreateDto', new Blob([JSON.stringify(boardBody)], {
+                type: "application/json"
+            }))
+
+            console.log(boardFile);
+
+            apiClient.post(subUrl, formData, config)
             .then((res) => {
                 console.log(res)
             })
             .catch((err) => {
                 console.log(err)
             })
+
+        }else{
+            console.log("스터디 공지 작성")
+            apiClient.post(subUrl, boardBody)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
+        
     }
 
     // 이미지 업로드
-    const handleUpload = (e) => {
+    const handleBoardFileUpload = (e) => {
         const file = e.target.files[0];
-        setBoardFile(() => { return file })
+        // setBoardFile(() => { return file })
+        setBoardFile(file)
 
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -108,7 +120,7 @@ const StudyBoardCreate = () => {
                     <>
                         <div>
                             <div>파일첨부 </div>
-                            <input type="file" name="studyBoardFile" onChange={handleUpload} />
+                            <input type="file" name="studyBoardFile" onChange={handleBoardFileUpload} />
                         </div>
 
                         {/* <div style={{ width: 100, height: 100 }}>

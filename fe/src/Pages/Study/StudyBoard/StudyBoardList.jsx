@@ -25,10 +25,10 @@ const StudyBoardList = () => {
         apiClient.get(subURL,)
             .then((res) => {
                 console.log(res)
-                setBoardList(res.data)
+                setBoardList(res.data.content);
             })
             .catch((err) => { console.log(err) })
-        setBoardList([{ boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 },])
+        // setBoardList([{ boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 },])
     }, []);
 
 

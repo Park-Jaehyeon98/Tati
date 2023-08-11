@@ -103,7 +103,7 @@ display: flex;
 }
 
 /* 파일 입력 필드 숨김 */
-input[type="file"] {
+.input[type="file"] {
   display: none;
 }
 
