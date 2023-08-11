@@ -41,8 +41,8 @@ export default function Calendar(){
 
 
   // 리덕스의 유저정보 와 일정 가져오기
-  const userSchedule = useSelector(state => state.payload.userSchedule);
-  const user = useSelector(state => state.payload.user);
+  const userSchedule = useSelector(state => state.user.userSchedule);
+  const user = useSelector(state => state.user.user);
 
 
   // 사용자의 시간대 출력
@@ -125,14 +125,17 @@ export default function Calendar(){
   // 회원일정등록 =======================================================
   const handleModalSubmit = () => {
 
+    
+    
     if (!eventTitle || !eventTime) {
       alert("이벤트 제목과 일시를 입력해주세요.");
       return;
     }
-
-    console.log(eventTime)
+    
     
     const selectedDateTime = new Date(`${selectedDate}T${eventTime}`);
+    
+    console.log(selectedDateTime,'-----------------')
 
     const postScheduleReqDto = {
       email:user.email,
@@ -285,7 +288,7 @@ export default function Calendar(){
         <div className={style.Calendar_box_box}>
       <div className={style.calendar}>
         <FullCalendar
-          timeZone = 'userTimeZone'
+          timeZone = {userTimeZone}
           defaultView="dayGridMonth" 
           editable = {true} // 수정 가능
           resourceAreaHeaderContent="Rooms"

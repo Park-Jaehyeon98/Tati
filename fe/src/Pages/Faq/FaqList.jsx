@@ -28,7 +28,6 @@ const FaqList = () => {
     const config = { params: { pageNum: currentPage } }
 
 
-
     useEffect(() => {
         call()
     }, [])
@@ -46,11 +45,13 @@ const FaqList = () => {
         });
     }
 
+
     // 생성버튼 클릭
     const handleCreateBtnClick = () => {
         navigate('Create')
     }
 
+    
     // 더미데이터용
     useEffect(() => {
         setBoardList([

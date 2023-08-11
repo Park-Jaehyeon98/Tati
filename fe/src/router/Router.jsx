@@ -93,7 +93,7 @@ export default function Router() {
 
 
   // 유저 정보 리덕스에서 가져오기
-  const user = useSelector((state) => state.payload.user);
+  const user = useSelector((state) => state.user.user);
 
 
   // 로그아웃

@@ -19,7 +19,7 @@ export default function InfoModify() {
 
   
   // 리덕스 펄시스트 유저정보를 불러옴
-  const user = useSelector(state => state.payload.user);
+  const user = useSelector(state => state.user.user);
   
   const [imageDataURL, setImageDataURL] = useState(user.img);
 
