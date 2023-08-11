@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { apiClient } from '../../api/apiClient';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const FaqCreate = () => {
     const naviate = useNavigate();
     // 멤버아이디 리덕스로 받아와야함.
+    const user = useSelector((state) => { return state.user.user });
     const [boardData, setBoardData] = useState({
         boardTitle: '',
         boardContent: '',
+        memberId : user.memberId
     });
 
     const boardType = 9;
@@ -17,6 +20,7 @@ const FaqCreate = () => {
     const {
         boardTitle,
         boardContent,
+        memberId
     } = boardData;
 
     const handleChange = (e) => {
