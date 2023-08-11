@@ -1,5 +1,6 @@
 package com.ssafy.tati.dto.res;
 
+import com.ssafy.tati.entity.Study;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,4 +33,13 @@ public class StudyAllListResDto {
     private String imageUrl;
 
 
+    public StudyAllListResDto(Study study) {
+        this.studyId = study.getStudyId();
+        this.studyName = study.getStudyName();
+        this.totalMember = study.getTotalMember();
+        this.currentMember = study.getStudyMemberList().size();
+        this.disclosure = study.getDisclosure();
+        this.imageUrl = study.getImg();
+    }
+    
 }

@@ -22,11 +22,9 @@ public class StudyMember {
     private LocalDate studyJoinDate;
 
     @Column(name="study_member_penalty")
-    @ColumnDefault("0")
     private Integer studyMemberPenalty;
 
     @Column(name="absence_count")
-    @ColumnDefault("0")
     private Integer absenceCount;
 
     @ManyToOne(fetch = FetchType.LAZY)

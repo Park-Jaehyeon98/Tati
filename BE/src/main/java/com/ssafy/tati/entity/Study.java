@@ -34,8 +34,8 @@ public class Study {
     @Column(name = "disclosure", columnDefinition = "boolean", nullable = false)
     private Boolean disclosure;
 
-    @Column(name = "study_host", length = 20, nullable = false)
-    private String studyHost;
+    @Column(name = "study_host", nullable = false)
+    private Integer studyHost;
 
     @Column(name = "study_deposit", columnDefinition = "int", nullable = false)
     private Integer studyDeposit;
