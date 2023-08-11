@@ -47,7 +47,9 @@ const NoticeList = () => {
 
     return (
         <div>
+            
             <h3>공지사항</h3>
+
             {/* 공지사항 리스트 */}
             <div>
                 {!(boardList.length === 0) &&

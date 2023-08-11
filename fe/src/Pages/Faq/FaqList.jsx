@@ -22,7 +22,6 @@ const FaqList = () => {
     useEffect(() => {
         apiClient.get(subURL, config)
             .then((res) => {
-                // console.log(res)
                 setBoardList(res.data.content)
                 setTotalPages(res.data.sort.totaPages)
             })
