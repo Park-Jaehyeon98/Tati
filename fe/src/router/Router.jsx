@@ -5,7 +5,6 @@ import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import style from "./Router.module.css"
 
 import Notice from "../Pages/Notice/Notice";
-import NoticePage from "../Pages/Notice/NoticePage";
 import NoticeList from "../Pages/Notice/NoticeList";
 import NoticeCreate from "../Pages/Notice/NoticeCreate";
 import NoticeModify from "../Pages/Notice/NoticeModify";
@@ -17,8 +16,6 @@ import FaqList from "../Pages/Faq/FaqList";
 import MyPage from "../Pages/MyPage/Schedule/MyPage";
 import SignUp from "../Pages/Auth/SignUp";
 import Login from "../Pages/Auth/Login";
-import LandingPage from './../Pages/LandingPage/LandingPage';
-
 
 import Study from "../Pages/Study/Study";
 import StudyCreate from "../Pages/Study/StudyCreate";
@@ -33,7 +30,6 @@ import StudyBoard from "../Pages/Study/StudyBoard/StudyBoard";
 import StudyBoardDetail from "../Pages/Study/StudyBoard/StudyBoardDetail";
 import StudyBoardCreate from "../Pages/Study/StudyBoard/StudyBoardCreate";
 import StudyBoardList from "../Pages/Study/StudyBoard/StudyBoardList";
-
 
 import Main from "../Pages/Main/Main";
 import KakaoPay from "../Components/MyPage//Point/KakaoPay";
@@ -227,6 +223,7 @@ export default function Router() {
         <Route path="/MyPage/MyPagePost" element={<MyPagePost />} />
         <Route path="/MyPage/MyPageRewardPoint" element={<MyPageRewardPoint />} />
 
+        {/* 스터디 */}
         <Route path="/Study" element={<Study />}>
           <Route path="" element={<StudyList />} />
           <Route path="Create" element={<StudyCreate />} />
@@ -251,7 +248,6 @@ export default function Router() {
 
         {/* 스터디 웹rtc 입실 */}
         {/* <Route path="/Study/:studyId/Board/Create" element={}/> */}
-
 
       </Routes>
     </BrowserRouter>

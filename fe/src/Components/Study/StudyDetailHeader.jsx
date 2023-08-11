@@ -1,38 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import style from './StudyDetailHeader.module.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { setStudyViewType } from '../../redux/reducers/studyViewTypeSlice';
 
-const StudyDetailHeader = ({ viewType, studyData, isMember, isCandidate, studyId }) => {
-    //viewType : 0 메인, 1: 공지, 2: 게시판
+const StudyDetailHeader = ({ studyViewType, studyData, isMember, isCandidate, studyId, img }) => {
+    // studyViewType : 0 메인, 1: 공지, 2: 게시판
+    // studyViewType 0, 1, 2 : 메인, 공지, 스터디게시판
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const viewTypeURL = ['', 'Notice', 'Board']
+    const viewTypeText = ['스터디 메인', '스터디 공지사항', '스터디 게시판']
+    const handleNavBtnClick = (e) => {
+
+        dispatch(setStudyViewType(e.tartget.value))
+        console.log(studyViewType)
+    }
+
 
     return (
         <>
             <div className={style.container}>
                 {/* 스터디 대표이미지 들어감 */}
                 <div className={style.content}>
-                    스터디 이미지 들어갈 자리
+                    <img src={img} alt={`${studyData.studyName}의 대표이미지`} width={100} height={100} />
                 </div>
 
-                {viewType === 0 ?
-                    // const [studyData, setStudyData] = useState({
-                    //     category: 1,
-                    //     studyName: "스터디이름",
-                    //     studyDescription: "스터디설명",
-                    //     studyStartDate: "23/07/27",
-                    //     studyEndDate: "23/08/01",
-                    //     studySchedule: [{ studyDay: '월', studyStartTime: '', studyEndTime: '' },
-                    //     { studyDay: '화', studyStartTime: '', studyEndTime: '' },
-                    //     { studyDay: '수', studyStartTime: '', studyEndTime: '' }],
-                    //     // studyImg,
-                    //     totalMember: 5,
-                    //     // studyDay,
-                    //     // studyStartTime,
-                    //     // studyEndTime,
-                    //     studyDeposit: 1000,
-                    //     disclosure: true,
-                    //     studyPassword: "1234"
-                    // });
-
+                {studyViewType === 0 ?
                     // 스터디 메인의 경우
                     <div className={style.mainView}>
                         <h3>{studyData.studyName}</h3>
@@ -48,14 +42,16 @@ const StudyDetailHeader = ({ viewType, studyData, isMember, isCandidate, studyId
                         </div>
 
 
-                        <div>여기는 버튼</div>
+                        <button>가입 신청</button>
+                        <button>가입 신청</button>
+                        <button>가입 신청</button>
                     </div> :
                     // 공지사항, 게시판의 경우
                     <div className={style.content}>
                         <h3>
-                            스터디 이름
+                            {studyData.studyName}
                         </h3>
-                        {viewType === 1 ?
+                        {studyViewType === '1' ?
                             <div>
                                 <div>
                                     공지사항
@@ -80,6 +76,15 @@ const StudyDetailHeader = ({ viewType, studyData, isMember, isCandidate, studyId
                     화상 스터디 참여하기
                 </div>
 
+            </div>
+            <div className={style.btnBox}>
+                {/* 메인, 공지사항, 게시판 이동 */}
+                {[0, 1, 2].map((index, value) => {
+                    return <button onClick={handleNavBtnClick} value={value} className={style.btn} key={index}>{viewTypeText[index]} </button>
+                    // <Link key={index} to={viewTypeURL[index]}>
+
+                    // </Link>
+                })}
             </div>
         </>
     )

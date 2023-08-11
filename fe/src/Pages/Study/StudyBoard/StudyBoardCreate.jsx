@@ -22,7 +22,18 @@ const StudyBoardCreate = () => {
 
     // 역구조화로 key값을 변수로 사용
     const { boardTitle, boardContent } = boardBody;
-    const config = {};
+
+    const { boardFile, setBoardFile } = useState(null);
+    const { boardImgView, setBoardImgView } = useState(null);
+
+
+    const config = {
+        headers: {
+            header: {
+                'Content-Type': 'multipart/form-data',
+            }
+        }
+    };
 
 
     const handleChange = (e) => {
@@ -33,18 +44,45 @@ const StudyBoardCreate = () => {
         });
     };
 
+    // 생성버튼 클릭
     const handleCompleteBtnClick = () => {
-        console.log(boardBody);
+        const formData = new FormData();
+        // 게시판 파일 첨부 -> 있을때만 첨부
+        if (boardType === 2) {
+            formData.append('', boardFile)
+        }
+
+        formData.append('studyCreateDto', new Blob([JSON.stringify(boardBody)], {
+            type: "application/json"
+        }))
+
 
         const subUrl = boardType === 1 ? 'study/notice' : 'study/board';
 
-        apiClient.post(subUrl, boardBody, config)
+
+        apiClient.post(subUrl, formData, config)
             .then((res) => {
                 console.log(res)
             })
             .catch((err) => {
                 console.log(err)
             })
+    }
+
+    // 이미지 업로드
+    const handleUpload = (e) => {
+        const file = e.target.files[0];
+        setBoardFile(() => { return file })
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        // return new Promise((resolve) => {
+        //     reader.onload = () => {
+        //         setStudyImgView(() => { return reader.result || null }); // 파일의 컨텐츠
+        //         resolve();
+        //     };
+        // });
     }
 
     // 스터디 게시판/공지사항 리스트로 돌아가기
@@ -66,6 +104,19 @@ const StudyBoardCreate = () => {
                 <div>내용
                     <input type="text" name="boardContent" value={boardContent} onChange={handleChange} />
                 </div>
+                {boardType === 2 &&
+                    <>
+                        <div>
+                            <div>파일첨부 </div>
+                            <input type="file" name="studyBoardFile" onChange={handleUpload} />
+                        </div>
+
+                        {/* <div style={{ width: 100, height: 100 }}>
+                            {studyImgView && <img src={studyImgView} alt="" width={100} height={100} />}
+                        </div> */}
+                    </>
+
+                }
                 <button onClick={handleCompleteBtnClick}>작성 완료</button>
                 <button onClick={handleCancleBtnClick}>취소</button>
             </div>

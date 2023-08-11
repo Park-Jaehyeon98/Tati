@@ -4,20 +4,18 @@ import { useOutletContext } from 'react-router-dom'
 
 const StudyDetailInfo = () => {
     const {
-        category,
+        categoryId,
         studyName,
         studyDescription,
         studyStartDate,
         studyEndDate,
         studySchedule,
-        // studyImg,
         totalMember,
-        // studyDay,
-        // studyStartTime,
-        // studyEndTime,
         studyDeposit,
         disclosure,
     } = useOutletContext();
+    const dayList = ["월", "화", "수", "목", "금", "토", "일",]
+
     return (
         <div>
             <div>
@@ -26,7 +24,7 @@ const StudyDetailInfo = () => {
                 <div className={style.box}>
                     {studyDescription}
                 </div>
-                공지사항
+                공지사항x
                 <div className={style.box}>
                     여기는 대표글
                 </div>
@@ -38,9 +36,8 @@ const StudyDetailInfo = () => {
                 스터디 일정
                 <div className={style.box}>
                     {
-                        // 일정 표시
                         studySchedule.map(({ studyDay, studyStartTime, studyEndTime }) => {
-                            return <div></div>
+                            return <div>{dayList[studyDay]} 요일   {studyStartTime} ~  {studyEndTime}</div>
                         })
                     }
                 </div>

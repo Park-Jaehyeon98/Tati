@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import style from './StudyModify.module.css';
-import StudyDeleteButton from '../../Components/Study/StudyDeleteButton';
 import { apiClient } from '../../api/apiClient';
 
 const StudyModify = () => {
@@ -11,50 +10,54 @@ const StudyModify = () => {
     const params = useParams();
     const studyId = params.studyId;
 
-    const [studyData, setStudyData] = useState({
+    const [studyModifyData, setStudyModifyData] = useState({
         categoryId: 1, //스터디 카테고리
         studyName: "스터디", //스터디 이름
         studyDescription: "스터디설명", //스터디 설명
-        studyDay: "", //스터디 요일, 시간
-        totalMember: "", //스터디 멤버 수x`
+        // totalMember: "", //스터디 멤버 수x`
         disclosure: true, // 공개 여부
         studyPassword: null // 패스워드
     });
-    const [studyImg, setStudyImg] = useState(null); //스터디이미지
-    const [studyImgView, setStudyImgView] = useState(null); // 스터디이미지 보기
+
+    // 스터디 이미지
+    const [studyImg, setStudyImg] = useState(null);
+    // 스터디 이미지 미리보기
+    const [studyImgView, setStudyImgView] = useState(null);
 
 
-    useEffect(() => {
-        apiClient.get(`study/${studyId}`)
-            .then((res) => {
-                console.log(res.data);
-                setStudyData(res.data);
-            })
-    }, []);
+    // 처음 데이터 받아옴
+    // useEffect(() => {
+    //     apiClient.get(`study/${studyId}`)
+    //         .then((res) => {
+    //             console.log(res.data);
+    //             setStudyModifyData(res.data);
+    //         })
+    // }, []);
 
     const { categoryId,
         studyName,
         studyDescription,
-        totalMember,
+        // totalMember,
         disclosure,
         studyPassword,
-        // studyImg, 
-    } = studyData
+    } = studyModifyData
 
+    // Modify Form input 변경시
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setStudyData((studyData) => {
+        setStudyModifyData((studyModifyData) => {
             return {
-                ...studyData,
+                ...studyModifyData,
                 [name]: value,
             }
         });
     };
+
     // 카테고리 선택
     const handleCategoryIdClick = (value) => {
-        setStudyData((studyData) => {
+        setStudyModifyData((studyModifyData) => {
             return {
-                ...studyData,
+                ...studyModifyData,
                 categoryId: value + 1
             }
         })
@@ -64,26 +67,25 @@ const StudyModify = () => {
 
     // 공개여부 선택
     const handleIsDisclosureClick = (value) => {
-        value ? setStudyData((studyData) => {
+        value ? setStudyModifyData((studyModifyData) => {
             return {
-                ...studyData,
+                ...studyModifyData,
                 disclosure: value,
                 studyPassword: null
             }
-        }) : setStudyData((studyData) => {
+        }) : setStudyModifyData((studyModifyData) => {
             return {
-                ...studyData,
+                ...studyModifyData,
                 disclosure: value,
             }
         })
     }
-    // 이미지 업로드
+
+    // 이미지 업로드 -> 파일, 미리보기 변경
     const handleStudyImgUpload = (e) => {
-        const formData = new FormData();
         const file = e.target.files[0];
 
-        formData.append('file', file)
-        setStudyImg(() => { return formData })
+        setStudyImg(() => { return file })
         const reader = new FileReader();
         reader.readAsDataURL(file);
 
@@ -97,47 +99,14 @@ const StudyModify = () => {
 
 
 
-    // // 생성 요청 제출
-    // const handleStudyCreateSubmit = () => {
-    //     const studyReqDto = {
-    //         ...studyData,
-    //         studySchedule: studySchedule,
-    //         studyStartDate: dateToString(startDate),
-    //         studyEndDate: dateToString(endDate),
-    //     }
-    //     let formData = new FormData();
-    //     formData.append('studyImg', studyImg)
-
-    //     // 키값 수정 필요
-    //     formData.append('studyReqDto', new Blob([JSON.stringify(studyReqDto)], {
-    //         type: "application/json"
-    //     }))
-
-    //     apiClient.post('study/create',
-    //         formData,
-    //         {
-    //             header: {
-    //                 'Content-Type': 'multipart/form-data',
-    //             }
-    //         })
-    //         .then((res) => {
-    //             console.log(studyReqDto, studyImg);
-    //             console.log(res);
-    //         }).catch((err) => {
-    //             // console.log(JSON.stringify(studyData))
-    //             console.log(err);
-    //             console.log(studyReqDto, studyImg);
-    //         })
-    // }
-
-    // axios 고쳐야함
+    // Modify Put axios
     const handleStudyModifySubmit = () => {
-        const studyReqDto = {
-            ...studyData,
+        const studyModifyReqDto = {
+            ...studyModifyData,
         }
         let formData = new FormData();
         formData.append('studyImg', studyImg)
-        formData.append('studyReqDto', new Blob([JSON.stringify(studyReqDto)], {
+        formData.append('studyModifyReqDto', new Blob([JSON.stringify(studyModifyData)], {
             type: "application/json"
         }))
 
@@ -149,23 +118,35 @@ const StudyModify = () => {
             })
             .then((res) => {
                 console.log(res);
-                setStudyData(res.data);
+                setStudyModifyData(res.data);
             })
             .catch((err) => {
                 console.log(err);
-                setStudyData(err.data);
+                setStudyModifyData(err.data);
             })
     }
 
+    // 뒤로가기 버튼 -> detail Main으로 돌아감
     const handleBackButtonClick = () => {
         navigate(`/Study/${studyId}`);
+    }
+
+    // 삭제 버튼
+    const handleDeleteBtnClick = () => {
+        const memberId = localStorage.getItem("memberId")
+        apiClient.delete(`study/${studyId}/delete/${memberId}`)
+            .then((res) => {
+                console.log(res.data)
+                navigate('/Study')
+            })
+            .catch((err) => { console.log(err.data) })
     }
 
 
     return (
         <div className='box'>
             <h3>스터디 정보 수정하기</h3>
-            <StudyDeleteButton studyId={studyId} />
+            <button onClick={handleDeleteBtnClick}>스터디삭제버튼</button>
             <div>
 
                 <div>
@@ -204,11 +185,11 @@ const StudyModify = () => {
                     <input style={{ width: 500, height: 100 }} type="text" name="studyDescription" value={studyDescription} onChange={handleChange} />
                 </div>
 
-                <div>
+                {/* <div>
                     <span>스터디 멤버수</span>
                     <input type="number" name="totalMember" value={totalMember} max={8} onChange={handleChange} />
                     <span>2명 ~ 8명</span>
-                </div>
+                </div> */}
 
                 <div>
                     <button onClick={handleStudyModifySubmit}>스터디 수정</button>

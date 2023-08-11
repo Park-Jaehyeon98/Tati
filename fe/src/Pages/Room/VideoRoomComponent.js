@@ -9,7 +9,7 @@ import './VideoRoomComponent.css';
 import OpenViduLayout from './openvidu-layout';
 import UserModel from './user-model';
 import ToolbarComponent from './ToolbarComponent';
-// import { apiClient } from '../../api/apiClient';
+import { apiClient } from '../../api/apiClient';
 
 var localUser = new UserModel();
 const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? 'https://i9b305.p.ssafy.io:8443/' : 'https://i9b305.p.ssafy.io:8443/';
@@ -34,9 +34,9 @@ class VideoRoomComponent extends Component {
             subscribers: [],
             chatDisplay: 'none',
             currentVideoDevice: undefined,
-            // memberId: "저장된 회원 식별번호",
-            // studyId: "저장된스터디 식별번호",
-            // attendanceId: undefined
+            // memberId: 1,
+            // studyId: 1,
+            attendanceId: undefined
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -90,18 +90,20 @@ class VideoRoomComponent extends Component {
 
     joinSession() {
         //서버에 입실기록 전송
-        // apiClient.post("/study/attendance/in", {
-        //     memberId: this.memberId,
-        //     studyId: this.studyId,
-        //     inTime: new Date()
-        // }).then((res) => {
-        //     console.log(res)
-        //     //출석 식별자 저장
-        //     this.attendanceId = res;
-        // })
-        // .catch((err) => {
-        //     console.log(err)
-        // })//입실 전송
+        apiClient.post("/study/attendance/in", {
+            memberId: 1, //임시값
+            studyId: 1, //임시값
+            inTime: new Date()
+        }).then((res) => {
+            console.log(res.data)
+            //출석 식별자 저장
+            this.attendanceId = res.data.attendanceId;
+            console.log(this.attendanceId);
+        })
+        .catch((err) => {
+            console.log("에러")
+            console.log(err)
+        })//입실 전송
 
         this.OV = new OpenVidu();
 
@@ -235,18 +237,18 @@ class VideoRoomComponent extends Component {
         }
 
         //서버에 퇴실기록 전송
-        // apiClient.post("/study/attendance/out", {
-        //     memberId: this.memberId,
-        //     attendanceId : this.attendanceId,
-        //     outTime : new Date()
-        // }).then((res) => {
-        //     console.log(res)
-        // })
-        // .catch((err) => {
-        //     console.log(err)
-        // })
+        apiClient.put("/study/attendance/out", {
+            memberId: 1, //임시값
+            attendanceId : this.attendanceId,
+            outTime : new Date()
+        }).then((res) => {
+            console.log(res)
+            window.location.href = "/Room"; //퇴실성공시 버튼위치로 돌아감
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 
-        window.location.href = "/Room";
     }
     camStatusChanged() {
         localUser.setVideoActive(!localUser.isVideoActive());
