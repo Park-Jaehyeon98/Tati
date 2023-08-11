@@ -1,11 +1,13 @@
 .point{
-  margin-left: 150px;
-  margin-top: 10px;
+  padding: 50px;
+  padding-left: 100px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
 }
 
 .point_nav_btn{
   display: flex;
-  margin-left: 10px;
+  margin-left: 50px;
   margin-bottom: 30px;
 }
 
@@ -25,6 +27,7 @@
   height: 700px;
   /* border: 1px solid black; */
 }
+
 .box{
   font-size: 11px;
   font-weight: bold;
@@ -38,10 +41,11 @@
   justify-content: center;
   gap: 10px; /* 버튼 사이에 간격을 주기 위해 gap 설정 */
   position: absolute;
-  top: 800px;
-  left: 650px;
+  top: 1000px;
+  left: 40%;
   padding: 10px;
 }
+
 .cancel_btn{
   height: 17px;
   font-size: 10px;
@@ -55,6 +59,7 @@
 
 .JoinStudy_text{
   margin: 0px;
+  font-size: 13px;
 }
 
 .MyPost_text_time{
@@ -71,9 +76,40 @@
   margin: 0px;
   margin-bottom: 18px;
   margin-left: 5px;
+  font-size: 13px;
 }
 
 .MyPost_text{
   margin: 0px;
   margin-left: 5px;
+  font-size: 13px;
+}
+
+.JoinStudy_box{
+  width: 700px;
+  height: 500px;
+  background-color: white;
+  padding: 50px;
+  padding-left: 80px;
+}
+
+.NoticeItem_text{
+  margin-left: 30px;
+}
+
+.ApplyStudy_box{
+  margin-left: 30px;
+}
+
+.btn{ 
+  width: 30px;
+  height: 30px;
+  margin: 0.2rem;
+  padding: 0.3rem 0.5rem;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 50px;
 }

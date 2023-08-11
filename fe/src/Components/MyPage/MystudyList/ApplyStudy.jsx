@@ -10,7 +10,7 @@ export default function ApplyStudy(){
   const navigate = useNavigate();
 
   // 신청한 스터디 목록
-  const [applyStudy, setApplyStudy] = useState(null)
+  const [applyStudy, setApplyStudy] = useState([])
   const handleButtonClick = (tab) => {
     navigate(tab);
   };
@@ -97,51 +97,55 @@ export default function ApplyStudy(){
   ];
   
 
-  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
+  const totalPages = Math.ceil(applyStudy.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNotices = dummyData.slice(startIndex, endIndex);
+  const currentNotices = applyStudy.slice(startIndex, endIndex);
 
   return(
     <div className={style.point}>
-      <h1>신청한스터디</h1>
-      <nav className={style.point_nav_btn}>
-        <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/JoinStudy")}>가입된스터디</button>
-        <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/ApplyStudy")}>신청한스터디</button>
-        <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/MyPagePost")}>내 작성글</button>
-      </nav>
 
-      <div className={style.content}>
+      <div className={style.JoinStudy_box}>
 
-        <div className={style.point_History_box}>
-        
-        <div>
-          <div className={style.box}>
-              {currentNotices.map((notice, index) => (
-                <NoticeItem
-                  key={index}
-                  studyApplicantId={notice.studyApplicantId}
-                  studyName={notice.studyName}
-                  totalMember={notice.totalMember}
-                  currentMemberCount={notice.currentMemberCount}
-                />
-              ))}
-            </div>
-            <div className={style.pagination}>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                <button
-                  key={pageNum}
-                  onClick={() => setCurrentPage(pageNum)}
-                  disabled={currentPage === pageNum}
-                >
-                  {pageNum}
-                </button>
-              ))}
-            </div>
+        <nav className={style.point_nav_btn}>
+          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/JoinStudy")}>가입된스터디</button>
+          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/ApplyStudy")}>신청한스터디</button>
+          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/MyPagePost")}>내 작성글</button>
+        </nav>
+
+        <div className={style.content}>
+
+          <div className={style.point_History_box}>
+          
+          <div>
+            <div className={style.box}>
+                {currentNotices.map((notice, index) => (
+                  <NoticeItem
+                    key={index}
+                    studyApplicantId={notice.studyApplicantId}
+                    studyName={notice.studyName}
+                    totalMember={notice.totalMember}
+                    currentMemberCount={notice.currentMemberCount}
+                  />
+                ))}
+              </div>
+              <div className={style.pagination}>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                  <button
+                    key={pageNum}
+                    onClick={() => setCurrentPage(pageNum)}
+                    disabled={currentPage === pageNum}
+                    className={style.btn}
+                  >
+                    {pageNum}
+                  </button>
+                ))}
+              </div>
+          </div>
         </div>
-      </div>
 
+        </div>
       </div>
     </div>
   )

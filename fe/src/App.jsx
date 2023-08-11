@@ -3,7 +3,7 @@ import Router from './router/Router';
 
 function App() {
   return (
-    <div>
+    <div className={style.centeredContainer}>
       <Router />
       {/* <hr className={style.App_hr}/> */}
       <div className={style.Footer}>
