@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,7 +38,7 @@ public class MyPageController {
     private final MemberMapper memberMapper;
     private final GetMemberMapper getMemberMapper;
     private final PutMemberMapper putMemberMapper;
-    private final AttendanceMapper attendanceMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Operation(summary = "마이페이지 접속", description = "마이페이지 접속 시 일정, 할 일, 공부 시간, 열정 지수 확인")
     @GetMapping("mypage/{memberId}")
@@ -189,7 +190,7 @@ public class MyPageController {
     @PutMapping(value="/mypage/modifyPassword")
     public ResponseEntity<?> modifyPassword(@RequestBody PutMemberReqDto putMemberReqDto){
         Member member = putMemberMapper.PutMemberReqDtoToMember(putMemberReqDto);
-        memberService.modifyPassword(member.getMemberId(), member.getPassword());
+        memberService.modifyPassword(member.getMemberId(), passwordEncoder.encode(putMemberReqDto.getPassword()));
 
         Member findMember = memberService.findById(putMemberReqDto.getMemberId());
         MemberResDto memberResDto = memberMapper.memberToMemberResDto(findMember);
