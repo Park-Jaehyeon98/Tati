@@ -1,15 +1,12 @@
-body{
-    margin: 0px;
-}
 
 .img01{
-    width: 1519px;
+    width: 100%;
     height: 780px;
 }
 
 .Main_title{
     position: absolute;
-    top: 300px;
+    top: 250px;
     left: 200px;
     /* font-size: 60px; */
     /* font-weight: bold; */
@@ -30,7 +27,7 @@ body{
     height: 70px;
     border-radius: 20px;
     border: 1px;
-    background-color: #67c3f8;
+    background-color: #007BFF;
     margin-top: 40px;
     margin-left: 1000px;
     font-size: 15px;
@@ -44,17 +41,20 @@ body{
     word-spacing: 10px;
     letter-spacing: 1.5px;
 }
+
 .img02{
-    width: 1519px;
+    width: 100%;
     height: 680px;
     top:1000px
 }
+
 .img03{
-    width: 1519px;
+    width: 100%;
     height: 700px;
 }
+
 .Main_start_btn:hover{
-    transform: scale(1.03);
+    background-color: #0056B3;
 }
 
 .scroll_to_top_btn {
@@ -72,3 +72,6 @@ body{
   .scroll_to_top_btn:hover {
     background-color: #0056b3;
   }
+
+
+ 

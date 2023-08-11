@@ -1,7 +1,5 @@
 .point_History_box{
-    width: 550px;
-    height: 700px;
-    /* border: 1px solid black; */
+  padding-right: 120px;
 }
 .box{
     font-size: 11px;
@@ -16,10 +14,28 @@
     justify-content: center;
     gap: 10px; /* 버튼 사이에 간격을 주기 위해 gap 설정 */
     position: absolute;
-    top: 900px;
+    top: 1020px;
     left: 650px;
     padding: 10px;
 }
+
+.pagination_button {
+    width: 30px;
+    height: 30px;
+    margin: 0.2rem;
+    padding: 0.3rem 0.5rem;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 50px;
+  }
+  
+  .pagination_button:hover {
+    background-color: #0056b3;
+  }
+
 .cancel_btn{
     height: 25px;
     font-size: 10px;

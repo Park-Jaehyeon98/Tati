@@ -1,48 +1,54 @@
 .box1 {
-  background-color: #f9f6f2;
+  background-color: #fafbfc;
   padding: 30px;
-  width: 200px;
-  height: 600px;
+  width: 150px;
+  height: 540px;
+  border-radius: 10px;
+
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
   border-radius: 10px;
 }
 
 .box4{
-  border: rgb(216, 213, 213) solid 2px;
-  width: 200px;
-  height: 200px;
+  width: 140px;
+  height: 140px;
   margin-left: auto;
   margin-right: auto;
   background-color: rgb(238, 235, 235);
   margin-top: auto;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   border-radius: 100px;
 }
 
 .bt {
   margin-top: 20px;
-  margin-left: 23px;
   display: flex;
   justify-content: center; 
   align-items: center; 
   width: 150px;
   height: 35px;
-  border-radius: 20px;
-  background-color: #c2e7fb;
+  border-radius: 8px;
+  background-color: #fafbfc;
+  color: black;
   border: 1px; 
   font-weight: bold;
-  font-size: 15px;
+  font-size: 20px;
 }
 
 .name_point{
   font-size: 15px;
   font-weight: bold;
-  margin-bottom: 50px;
-  margin-left: 25px;
+  margin-bottom: 35px;
+  margin-left: 17px;
 }
 
 .bt:hover{
   transform: scale(1.03);
+  background-color: #3396f4;
+  color: white;
 }
+
+
 
 .modal_backdrop {
   position: fixed;

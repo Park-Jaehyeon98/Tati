@@ -3,8 +3,8 @@
 }
 .login {
   position: absolute;
-  top: 380px;
-  left: 1280px;
+  top: 400px;
+  left: 83%;
   width: 450px;
   height: 600px;
   transform: translate(-50%, -50%);
@@ -25,17 +25,16 @@
   font-size: 13px;
   padding-left: 200px;
   padding-right: 15px;
-  margin-top: 0px;
+  margin-top: 15px;
 }
 
 .signup{
   font-size: 13px;
-  margin-top: 0px;
+  margin-top: 15px;
 }
 
 .login_img{
-  width: 1519px;
-  height: 700px;
+  width: 100%;
 }
 
 .loginInput{
@@ -45,17 +44,6 @@
   font-size: 14px;
   border: 1px solid black;
   /* margin-bottom: 20px; */
-}
-
-.loginBtn{
-  width: 260px;
-  height: 33px;
-  margin-bottom: 8px;
-  background-color: #a0d3f1;
-  border: 1px solid #a0d3f1;
-  border-radius: 10px;
-  font-weight: bolder;
-  font-size: large;
 }
 
 .line1 {
@@ -105,5 +93,17 @@
 
 .loginNaverLogo:hover{
   transform: scale(1.1);
+}
+
+.loginBtn{
+  width: 260px;
+  height: 33px;
+  margin-bottom: 8px;
+  margin-top: 20px;
+  background-color: #3396f4;
+  color: white;
+  border: 1px solid #a0d3f1;
+  border-radius: 5px;
+  font-size: large;
 }
 
