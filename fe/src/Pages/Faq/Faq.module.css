@@ -1,5 +1,12 @@
 .container {
   display: grid;
   grid-template-columns: 1fr 6fr 1fr;
-  margin-top: 100px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 800px;
+  height: 700px;
+  background-color:#fafbfc ;
+  padding-top: 30px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
 }

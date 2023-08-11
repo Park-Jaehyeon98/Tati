@@ -41,8 +41,8 @@ export default function Calendar(){
 
 
   // 리덕스의 유저정보 와 일정 가져오기
-  const userSchedule = useSelector(state => state.user.userSchedule);
-  const user = useSelector(state => state.user.user);
+  const userSchedule = useSelector(state => state.payload.userSchedule);
+  const user = useSelector(state => state.payload.user);
 
 
   // 사용자의 시간대 출력
@@ -58,13 +58,16 @@ export default function Calendar(){
     loadData()
     },[]);
 
+
   const [selectedDate, setSelectedDate] = useState(null);
   const [eventTitle, setEventTitle] = useState('');
   const [eventContent, setEventContent] = useState('');
   const [eventTime, setEventTime] = useState('');
 
+
   const [showConfirmation, setShowConfirmation] = useState(false);
 
+  
   const handleDateClick = (info) => {
     setSelectedDate(info.dateStr);
   };
@@ -127,6 +130,8 @@ export default function Calendar(){
       return;
     }
 
+    console.log(eventTime)
+    
     const selectedDateTime = new Date(`${selectedDate}T${eventTime}`);
 
     const postScheduleReqDto = {

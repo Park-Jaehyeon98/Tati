@@ -8,24 +8,18 @@ export default function MyPageHeader(){
 
 
     // 리덕스 펄시스트 유저정보를 불러옴
-    const user = useSelector(state => state.user.user);
+    const user = useSelector(state => state.payload.user);
 
     const [graphWidth, setGraphWidth] = useState(0);
 
     useEffect(() => {
 
         // 열정지수 bar
-        setGraphWidth(60 * 4.5);
-        // setGraphWidth(user.totalScore * 5.82);
+        // setGraphWidth(60 * 4.5);
+        setGraphWidth(user.totalScore * 4.5);
     }, []);
 
-    // const result = Number(user.totalPoint).reduce((acc, value, index) => {
-    //     if (index % 3 === 0 && index !== 0) {
-    //         return acc + ', ' + value;
-    //     } else {
-    //         return acc + ', ' + value;
-    //     }
-    // }, '').slice(2); // 처음 두 문자(", ")를 제거합니다.
+    const formattedTotalPoint = user.totalPoint.toLocaleString();
 
     return(
         <div className={style.user_score}>
@@ -48,7 +42,7 @@ export default function MyPageHeader(){
                     <div className={style.Mileage_img_box}>
                         {/* <img src="./Assets/Mileage.png" className={style.Mileage_img}/> */}
                         <img src="https://cdn-icons-png.flaticon.com/128/2953/2953423.png" className={style.Mileage_img}/>
-                        <p className={style.totalPoint_p}>{user.totalPoint}</p>
+                        <p className={style.totalPoint_p}>{formattedTotalPoint}</p>
                         <div className={style.M}>M</div>
                     </div>
                 </div>

@@ -1,0 +1,17 @@
+.FaqList_btn{
+ margin-left: 200px;
+}
+
+.FAQ_header{
+  display: flex;
+}
+
+.post_create_btn{
+  margin-left: 360px;
+  background-color: gray;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.FAQ_content {
+}

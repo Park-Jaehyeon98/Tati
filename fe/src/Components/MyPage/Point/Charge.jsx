@@ -12,7 +12,7 @@ export default function Change() {
   const dispatch = useDispatch();
   
    // 리덕스 펄시스트 유저정보를 불러옴
-   const user = useSelector(state => state.user.user);
+   const user = useSelector(state => state.payload.user);
   
 
   const [currentPoint, setCurrentPoint] = useState(user.totalPoint);

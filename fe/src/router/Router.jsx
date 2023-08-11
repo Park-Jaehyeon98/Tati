@@ -4,19 +4,24 @@ import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 
 import style from "./Router.module.css"
 
+// 공지사항
 import Notice from "../Pages/Notice/Notice";
 import NoticeList from "../Pages/Notice/NoticeList";
 import NoticeCreate from "../Pages/Notice/NoticeCreate";
 import NoticeModify from "../Pages/Notice/NoticeModify";
 
+// FAQ
 import Faq from "../Pages/Faq/Faq";
 import FaqCreate from "../Pages/Faq/FaqCreate";
 import FaqList from "../Pages/Faq/FaqList";
+import FaqModify from "../Pages/Faq/FaqModify";
 
+// 회원
 import MyPage from "../Pages/MyPage/Schedule/MyPage";
 import SignUp from "../Pages/Auth/SignUp";
 import Login from "../Pages/Auth/Login";
 
+// 스터디
 import Study from "../Pages/Study/Study";
 import StudyCreate from "../Pages/Study/StudyCreate";
 import StudyList from "../Pages/Study/StudyList";
@@ -88,7 +93,7 @@ export default function Router() {
 
 
   // 유저 정보 리덕스에서 가져오기
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.payload.user);
 
 
   // 로그아웃
@@ -202,6 +207,7 @@ export default function Router() {
         <Route path="/Faq" element={<Faq />}>
           <Route path="" element={<FaqList />} />
           <Route path="Create" element={<FaqCreate />} />
+          <Route path="FaqModify" element={<FaqModify />} />
         </Route>
 
         {/* Auth (회원가입 로그인 로그아웃) */}
