@@ -15,7 +15,7 @@ export default function JoinStudy(){
   const itemsPerPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
   // 가입된 스터디 리스트
-  const [joinStudy, setJoinStudy] = useState(null)
+  const [joinStudy, setJoinStudy] = useState([])
   const tokenInfo = localStorage.getItem('decodedToken');
   console.log(JSON.parse(tokenInfo));
   const parseJwt = JSON.parse(tokenInfo);
@@ -42,11 +42,11 @@ export default function JoinStudy(){
   // 가입한 스터디 ======================================================================================
   
   
-  const NoticeItem = ({ studyName, studyStartDate, studyEndDate, totalMember,studyMembercount }) => {
+  const NoticeItem = ({ studyName, studyStartDate, studyEndDate, totalMember,studyMemberCount }) => {
     return (
       <div>
         <div className={style.NoticeItem_text}>
-          <p className={style.JoinStudy_text}>{studyName} - {studyMembercount}/{totalMember} 인원
+          <p className={style.JoinStudy_text}>{studyName} - {studyMemberCount}/{totalMember} 인원
             <h6 className={style.JoinStudy_text_day}>{studyStartDate} ~ {studyEndDate} 기간</h6></p>
           <hr className={style.Study_hr}/>
         </div>
@@ -64,74 +64,20 @@ export default function JoinStudy(){
       totalMember: 10,
       studyMembercount: 8,
     },
-    {
-      studyId: 2,
-      studyName: "스터디 그룹 2",
-      studyStartDate: "2023-07-25",
-      studyEndDate: "2023-10-15",
-      totalMember: 5,
-      studyMembercount: 4,
-    },
-    {
-      studyId: 3,
-      studyName: "스터디 그룹 3",
-      studyStartDate: "2023-08-10",
-      studyEndDate: "2023-09-30",
-      totalMember: 20,
-      studyMembercount: 15,
-    },
-    {
-      studyId: 4,
-      studyName: "스터디 그룹 4",
-      studyStartDate: "2023-08-05",
-      studyEndDate: "2023-10-20",
-      totalMember: 12,
-      studyMembercount: 9,
-    },
-    {
-      studyId: 5,
-      studyName: "스터디 그룹 5",
-      studyStartDate: "2023-08-15",
-      studyEndDate: "2023-10-31",
-      totalMember: 8,
-      studyMembercount: 7,
-    },
-    {
-      studyId: 6,
-      studyName: "스터디 그룹 6",
-      studyStartDate: "2023-08-20",
-      studyEndDate: "2023-11-30",
-      totalMember: 6,
-      studyMembercount: 3,
-    },
-    {
-      studyId: 7,
-      studyName: "스터디 그룹 7",
-      studyStartDate: "2023-08-08",
-      studyEndDate: "2023-09-25",
-      totalMember: 15,
-      studyMembercount: 12,
-    },
-    {
-      studyId: 8,
-      studyName: "스터디 그룹 8",
-      studyStartDate: "2023-08-30",
-      studyEndDate: "2023-11-15",
-      totalMember: 7,
-      studyMembercount: 5,
-    },
   ];
   
 
-  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
+  const totalPages = Math.ceil(joinStudy.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNotices = dummyData.slice(startIndex, endIndex);
+  const currentNotices = joinStudy.slice(startIndex, endIndex);
 
   return(
     <div className={style.point}>
-      <h1>가입스터디</h1>
+
+      <div className={style.JoinStudy_box}>
+
       <nav className={style.point_nav_btn}>
         <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/JoinStudy")}>가입된스터디</button>
         <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/ApplyStudy")}>신청한스터디</button>
@@ -151,7 +97,7 @@ export default function JoinStudy(){
                   studyStartDate={notice.studyStartDate}
                   studyEndDate={notice.studyEndDate}
                   totalMember={notice.totalMember}
-                  studyMembercount={notice.studyMembercount}
+                  studyMemberCount={notice.studyMemberCount}
                 />
               ))}
             </div>
@@ -161,6 +107,7 @@ export default function JoinStudy(){
                   key={pageNum}
                   onClick={() => setCurrentPage(pageNum)}
                   disabled={currentPage === pageNum}
+                  className={style.btn}
                 >
                   {pageNum}
                 </button>
@@ -169,6 +116,7 @@ export default function JoinStudy(){
         </div>
       </div>
 
+      </div>
       </div>
     </div>
   )

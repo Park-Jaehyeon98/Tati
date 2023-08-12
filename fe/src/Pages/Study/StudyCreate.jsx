@@ -227,10 +227,9 @@ const StudyCreate = () => {
 
 
     return (
-        <div>
+        <div className={style.container}>
             <div >
                 <h3>스터디 생성</h3>
-                <div></div>
                 <div>
                     <div>카테고리</div>
                     {categoryIdArray.map((categoryIdItem, index) =>
@@ -243,15 +242,21 @@ const StudyCreate = () => {
                     <button name="disclosure" className={disclosure ? style.selected : style.noSelected} value={disclosure} onClick={() => handleIsDisclosureClick(true)}> 공개</button>
                     <button name="disclosure" className={!disclosure ? style.selected : style.noSelected} value={disclosure} onClick={() => handleIsDisclosureClick(false)}> 비공개</button>
                 </div>
-                {!disclosure &&
-                    <div>
-                        <div>패스워드</div>
-                        <input type="studyPassword" name="studyPassword" value={studyPassword} onChange={handleChange} />
-                    </div>}
+
+                <div>
+                    {!disclosure &&
+                        <div>
+                            <div>패스워드</div>
+                            <input type="studyPassword" name="studyPassword" value={studyPassword} onChange={handleChange} />
+                        </div>
+                    }
+                </div>
+
                 <div>
                     <div>스터디 이름</div>
                     <input style={{ width: 500 }} type="text" name="studyName" value={studyName} onChange={handleChange} />
                 </div>
+
                 <div>
                     <div>스터디 설명</div>
                     <input style={{ width: 500, height: 100 }} type="text" name="studyDescription" value={studyDescription} onChange={handleChange} />
@@ -338,24 +343,31 @@ const StudyCreate = () => {
                 </div>
                 {/* 스터디 이미지 */}
 
+
                 <div>
                     <div>스터디 대표이미지</div>
                     <input type="file" name="studyImg" onChange={handleStudyImgUpload} />
                 </div>
+
                 스터디 이미지
+                
                 <div style={{ width: 100, height: 100 }}>
                     {studyImgView && <img src={studyImgView} alt="" width={100} height={100} />}
                 </div>
+
                 <div>
                     <div>스터디 보증금</div>
                     <input type="number" name="studyDeposit" value={studyDeposit} onChange={handleChange} />
                 </div>
-                <div>
+                
+                <div className={style.buttonContainer}>
                     <button onClick={handleStudyCreateSubmit}>스터디 생성</button>
                     <Link to='/Study'>
-                        <button>취소하기</button>
+                        <button className={style.cancelButton}>취소하기</button>
                     </Link>
                 </div>
+
+
             </div>
         </div >
     );

@@ -4,3 +4,160 @@
 .noSelected {
   color: gray;
 }
+
+
+
+/* 컨테이너 스타일 */
+.container {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+}
+
+/* 제목 스타일 */
+h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+
+/* 버튼 스타일 */
+.button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.linkButton button {
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.linkButton button:hover {
+  background-color: #ddd;
+}
+
+
+
+
+/* 입력 필드 스타일 */
+.inputField input[type="text"],
+.inputField input[type="number"],
+.inputField textarea,
+.inputField select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+.inputField input[type="text"]:focus,
+.inputField input[type="number"]:focus,
+.inputField textarea:focus,
+.inputField select:focus {
+  border-color: #007bff;
+}
+
+.inputField select {
+  appearance: none; /* Remove default dropdown arrow on some browsers */
+  background-size: 16px;
+  padding-right: 30px;
+}
+
+/* 이미지 뷰 스타일 */
+.imageView {
+  width: 100px;
+  height: 100px;
+  margin-top: 10px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageView img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* 일정 스타일 */
+.schedule {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+}
+
+.schedule h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.schedule button {
+  margin-top: 10px;
+}
+
+/* 버튼 그룹 스타일 */
+.buttonContainer {
+  display: flex;
+  gap: 10px;                  /* 원하는 간격으로 조절 */
+  justify-content: flex-end;  /* 버튼들을 오른쪽 정렬 */
+  margin-top: 20px;           /* 버튼들과 상단 간격 */
+}
+
+.buttonGroup {
+  display: flex;
+  margin-top: 20px;
+}
+
+.buttonGroup button {
+  flex: 1;
+}
+
+.cancelButton {
+  background-color: beige; /* 원하는 색상으로 변경 */
+  color: #000; /* 버튼 텍스트 색상 */
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* 하단 버튼 스타일 */
+.bottomButtons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 링크 버튼 스타일 */
+.linkButton {
+  text-decoration: none;
+  color: #333;
+}
+
+.linkButton button {
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  border: none;
+  cursor: pointer;
+}
+
+/* 컨테이너 내부 컴포넌트 간격 */
+.container > div {
+  margin-bottom: 20px;
+}

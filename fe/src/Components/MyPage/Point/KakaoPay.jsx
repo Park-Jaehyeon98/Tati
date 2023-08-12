@@ -3,21 +3,36 @@ import style from './KakaoPay.module.css';
 import axios from "axios";
 import { useLocation } from 'react-router-dom';
 import { param } from "jquery";
+import { useSelector } from "react-redux";
+
+// 리덕스 저장
+import { useDispatch } from 'react-redux';
+import { updateUser } from '../../../redux/reducers/userSlice';
 
 
 export default function KakaoPay() {
+
+  const dispatch = useDispatch();
+
+  // 리덕스 펄시스트 유저정보를 불러옴
+  const user = useSelector(state => state.user.user);
+
 
   // 건들지 않기 ======================================================================================
   const location = useLocation();
   const [tid, setTid] = useState(null);
   const [pg_token, setPg_token] = useState(null)
 
+
   // 로컬의 decodedToken가져오기
   const tokenInfo = localStorage.getItem('decodedToken');
   const parseJwt = JSON.parse(tokenInfo);
 
+
+  // 포인트 내역
   const [point, setPoint] = useState([])
   
+
 
   useEffect(() => {
 
@@ -53,6 +68,7 @@ export default function KakaoPay() {
           // 요청이 성공하면 tid와 pgToken을 로컬 스토리지에서 삭제
           localStorage.removeItem('pgToken');
           localStorage.removeItem('tid');
+          pointHistory()
         })
         .catch((err)=>{
           console.log(err)
@@ -61,30 +77,41 @@ export default function KakaoPay() {
     // kakaokakaokakaokakaokakaokakaokakaokakao
 
 
-    // 회원포인트 내역 pointpointpointpointpointpointpointpointvpoint
-    if (parseJwt.memberId) {
-      console.log("memberId:", parseJwt.memberId);
-      // setMemberId(parseJwt.memberId)
-    }
-    console.log(process.env.REACT_APP_URL)
-    axios.get(`${process.env.REACT_APP_URL}/member/mypage/point/${parseJwt.memberId}`,{
-      })
-        .then((res)=>{
-          console.log('---------------------------------------------')
-          console.log(res.data)
-          setPoint(res.data)
-          console.log('회원포인트내역')
-          console.log('---------------------------------------------')
-        })
-        .catch((err)=>{
-          console.log(err)
-        })
-
-    //pointpointpointpointpointpointpointpointpointpointpointpointpoint
+    pointHistory()
 
   }, []);
 //===============================================================================================
 
+
+
+// 회원포인트 내역 pointpointpointpointpointpointpointpointvpoint
+const pointHistory = () =>{
+  if (parseJwt.memberId) {
+    console.log("memberId:", parseJwt.memberId);
+    // setMemberId(parseJwt.memberId)
+  }
+  console.log(process.env.REACT_APP_URL)
+  axios.get(`${process.env.REACT_APP_URL}/member/mypage/point/${parseJwt.memberId}`,{
+    })
+      .then((res)=>{
+        console.log('---------------------------------------------')
+        console.log(res.data)
+        const sortedPoint = res.data.sort((a, b) => {
+          // Sort by pointDate in descending order
+          const dateA = new Date(a.pointDate);
+          const dateB = new Date(b.pointDate);
+          return dateB - dateA;
+        });
+        setPoint(sortedPoint);
+        console.log('회원포인트내역')
+        console.log('---------------------------------------------')
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+
+  }
+  //pointpointpointpointpointpointpointpointpointpointpointpointpoint
 
 
 const itemsPerPage = 7;
@@ -93,22 +120,30 @@ const [currentPage, setCurrentPage] = useState(1);
 
 const PointItem = ({ point, date, day, tid }) => {
 
-  // 결제 취소
+  // 결제 취소 
+  // 포인트가 부족하면 경고창 아닐 시 실행
   const handleCancel =()=>{
     console.log('결제취소----------------------------------------')
     console.log(`amount - ${point} tid - ${tid} email - ${parseJwt.sub}`)
-    axios.post(`${process.env.REACT_APP_URL}/payment/cancel`,{
-      amount :point,
-      tid,
-      email:parseJwt.sub
-    })
-      .then((res)=>{
-        console.log(res)
-        window.location.reload();
+    if(point>user.totalPoint){
+      alert('포인트가 부족합니다')
+    } else{
+      axios.post(`${process.env.REACT_APP_URL}/payment/cancel`,{
+        amount :point,
+        tid,
+        email:parseJwt.sub
       })
-      .catch((err)=>{
-        console.log(err)
-      })
+        .then((res)=>{
+          console.log(res)
+  
+          const updatedUser = {totalPoint:user.totalPoint - point};
+          dispatch(updateUser(updatedUser)); // Dispatch the action
+          pointHistory()
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
+    }
   };
 
   return (
@@ -138,7 +173,6 @@ const PointItem = ({ point, date, day, tid }) => {
 
   return (
     <div className={style.point_History_box}>
-     <h2>포인트 내역</h2>
      <br />
       
       <div>
@@ -156,6 +190,7 @@ const PointItem = ({ point, date, day, tid }) => {
           <div className={style.pagination}>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
               <button
+              className={style.pagination_button}
                 key={pageNum}
                 onClick={() => setCurrentPage(pageNum)}
                 disabled={currentPage === pageNum}
