@@ -12,6 +12,7 @@ import NoticeModify from "../Pages/Notice/NoticeModify";
 import Faq from "../Pages/Faq/Faq";
 import FaqCreate from "../Pages/Faq/FaqCreate";
 import FaqList from "../Pages/Faq/FaqList";
+import FaqModify from "../Pages/Faq/FaqModify";
 
 import MyPage from "../Pages/MyPage/Schedule/MyPage";
 import SignUp from "../Pages/Auth/SignUp";
@@ -202,6 +203,7 @@ export default function Router() {
         <Route path="/Faq" element={<Faq />}>
           <Route path="" element={<FaqList />} />
           <Route path="Create" element={<FaqCreate />} />
+          <Route path=":boardId/Modify" element={<FaqModify />} />
         </Route>
 
         {/* Auth (회원가입 로그인 로그아웃) */}
