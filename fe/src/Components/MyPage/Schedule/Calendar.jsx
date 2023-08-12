@@ -32,6 +32,8 @@ export default function Calendar(){
   const month = currentDate.getMonth() + 1;
 
 
+  const [studyData , setStudyData ] = useState([]);
+  // const studyData = []
   const [selectedColor, setSelectedColor] = useState('');
   const [col, setCol] = useState()
   const [eventColor, seteventColor] = useState({})
@@ -52,6 +54,7 @@ export default function Calendar(){
   useEffect(() => {
 
     console.log(userTimeZone); 
+    console.log(studyData); 
     console.log('캘린더 memberId',user.memberId)
     console.log(`year---${year}///month---${month}`)
 
@@ -87,8 +90,26 @@ export default function Calendar(){
       .then((res) => {
         console.log("일정 요청 성공=================================");
         console.log(res);
+        console.log(res.data.studyScheduleList);
+
+        //스터디 일정
+        res.data.studyScheduleList.forEach(schedule =>{
+          const studyEvent = {
+            title:schedule.studyName,
+            start:schedule.studyStartDate,
+            end:schedule.studyEndDate,
+            allDay:false
+          }
+          console.log(studyEvent)
+
+          studyData.push(studyEvent)
+
+          // setStudyData(studyEvent)
+        })
+
 
         dispatch(updateUser({img:res.data.img}));
+
 
         const eventsToAdd = res.data.scheduleList.map((scheduleItem) => ({
           title: scheduleItem.memberScheduleTitle,
@@ -100,11 +121,13 @@ export default function Calendar(){
           color:'null'
         }));
 
+        // 할 일
         dispatch(clearUserSchedule());
         eventsToAdd.forEach((event) => {
           dispatch(addSchedule(event));
         });
 
+        // 내 열정지수, 공부 시간
         dispatch(updateUser({
           totalScore:res.data.totalScore,
           todayStudyTime:res.data.todayStudyTime,
@@ -276,7 +299,9 @@ export default function Calendar(){
 
   // 일정
   const events=[
-    ...userSchedule
+    
+    // ...userSchedule,
+    ...studyData
   ];
 
 
