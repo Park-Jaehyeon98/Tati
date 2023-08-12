@@ -88,7 +88,7 @@ export default function FaqList(){
         // 수정버튼 클릭
         const handleModifyBtnClick = () => {
             console.log(boardId)
-            navigate(`FaqModify`, { state:{ boardId} });
+            navigate(`FaqModify`, { state:{ boardId, boardTitle, boardContent} });
         }
 
 

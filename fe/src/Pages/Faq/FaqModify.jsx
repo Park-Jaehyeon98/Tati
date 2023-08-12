@@ -12,6 +12,8 @@ const FaqModify = ( )  => {
     const user = useSelector((state) => { return state.user.user });
     
     const boardId = location.state.boardId;
+    // const boardTitle = location.state.boardTitle;
+    // const boardContent = location.state.boardContent;
 
     
     const [boardData, setBoardData] = useState({

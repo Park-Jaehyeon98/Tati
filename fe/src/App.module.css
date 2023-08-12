@@ -3,7 +3,7 @@
   width: 100%;
   height: 250px;
   background-color: rgb(238, 235, 235);
-  z-index: 1;
+  /* z-index: 1; */
 }
 .App_hr {
   margin: 0px;

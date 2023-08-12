@@ -22,8 +22,7 @@ nav {
   font-size: 14px;
   font-weight: bold;
   width: 100%;
-  z-index: 3;
-  /* position: relative; */
+  /* z-index: 3; */
   top: 0;
   left: 0;
   right: 0;
@@ -124,9 +123,4 @@ nav {
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   border-radius: 4px;
   padding: 8px;
-}
-
-/* 드롭다운 메뉴 보이기 */
-.navBoxIn:hover .dropdown-menu {
-  display: fl;
 }

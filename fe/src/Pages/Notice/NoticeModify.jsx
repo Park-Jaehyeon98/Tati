@@ -62,7 +62,7 @@ const NoticeModify = () => {
                 <input 
                 type="text" 
                 name="boardTitle" 
-                // value={boardTitle} 
+                value={boardTitle} 
                 onChange={handleChange}
                 placeholder="제목을 입력해주세요"
                  />
@@ -73,7 +73,7 @@ const NoticeModify = () => {
                 className={style.FaqModify_content_input}
                 placeholder="내용을 입력해주세요"
                 name="boardContent"
-                // value={boardContent} 
+                value={boardContent} 
                 onChange={handleChange}
             />
             </div>

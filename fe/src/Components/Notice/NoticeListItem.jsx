@@ -8,7 +8,7 @@ const NoticeListItem = ({ boardItemInfo }) => {
             <div className={style.NoticeListItem_box}>{boardTitle}
              <p className={style.NoticeListItem_day}
               style={{ justifyContent: 'flex-end' }}
-             >작성일{createdDate}</p>
+             >작성일 - {createdDate}</p>
              </div>
         </>
 

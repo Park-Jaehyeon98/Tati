@@ -149,10 +149,12 @@ const PointItem = ({ point, date, day, tid }) => {
     }
   };
 
+    const formattedTotalPoint = point.toLocaleString();
+
   return (
     <div>
       <div className={style.PointItem_text}>
-        <p className={style.p_text}>{date} {point} 
+        <p className={style.p_text}>{date} {formattedTotalPoint} 
         <h6 className={style.text}>{day} 
         </h6>{date == '포인트 적립' && ( // date가 '포인트 인출일'이 아닐 때에만 버튼 렌더링
               <button className={style.cancel_btn} onClick={handleCancel}>
