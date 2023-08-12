@@ -43,32 +43,43 @@ const NoticeModify = () => {
             .then((res) => {
                 console.log(res)
                 setBoardData(res.data)
+                navigate(`../${boardId}`);
             })
             .catch((err) => { console.log(err) })
-        navigate(`../${boardId}`);
     }
-    const handleCancleBtnClick = () => {
+
+    const handleCancelBtnClick = () => {
         navigate(`../${boardId}`);
     }
 
+
     return (
-        <div>
+        <div className={style.FaqModify_box}>
             <h3>공지사항 수정</h3>
-            <div>
-                제목
-                <input type="text" name="boardTitle" value={boardTitle} onChange={handleChange} />
+
+            <div className={style.FaqModify_title}>
+                <span className={style.FaqModify_title_name}>제목</span> 
+                <input 
+                type="text" 
+                name="boardTitle" 
+                // value={boardTitle} 
+                onChange={handleChange}
+                placeholder="제목을 입력해주세요"
+                 />
             </div>
-            <div>
-                내용
-                <input type="text" name="boardContent" value={boardContent} onChange={handleChange} />
+            <div className={style.FaqModify_title}>
+            <span className={style.FaqModify_content_name}>내용</span>
+            <textarea
+                className={style.FaqModify_content_input}
+                placeholder="내용을 입력해주세요"
+                name="boardContent"
+                // value={boardContent} 
+                onChange={handleChange}
+            />
             </div>
-            <div>
-                <div className={style.btn} onClick={handleSubmitBtnClick}>
-                    수정하기
-                </div>
-                <div className={style.btn} onClick={handleCancleBtnClick}>
-                    취소
-                </div>
+            <div className={style.FaqModify_btns}>
+                <button className={style.FaqModify_btn} onClick={handleSubmitBtnClick} >제출</button>
+                <button className={style.FaqModify_btn} onClick={handleCancelBtnClick}>취소</button>
             </div>
         </div>
     )

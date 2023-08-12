@@ -1,7 +1,6 @@
 .container {
   height: 400px;
-  /* display: grid;
-  grid-template-rows: 2fr 6fr; */
+  margin-top: 30px;
 }
 
 .titleBox {
@@ -20,8 +19,22 @@
 }
 
 .btn {
+  margin-top: 200px;
+  margin-right: 20px;
   width: 80px;
-  height: 40px;
-  background-color: gray;
-  margin: 10px;
+  /* height: 30px; */
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  text-align: center;
+  font-size: 12px;
+  padding: 10px;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+  color: #f8f9fa;
 }

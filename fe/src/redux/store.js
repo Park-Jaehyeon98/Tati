@@ -20,9 +20,9 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({
   reducer: {
     user: persistedReducer,
-    userSchedule: persistedReducer,
-    userStudySchedule: persistedReducer,
-    faq:persistedReducer,
+    // userSchedule: persistedReducer,
+    // userStudySchedule: persistedReducer,
+    // faq:persistedReducer,
   },
 });
 

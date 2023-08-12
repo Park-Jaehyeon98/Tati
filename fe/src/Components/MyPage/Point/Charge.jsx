@@ -64,8 +64,8 @@ export default function Change() {
         console.log('=================================')
         console.log(res.data);
 
-        const updatedUser = {totalPoint:amount};
-        dispatch(updateUser(updatedUser)); // Dispatch the action
+        // const updatedUser = {totalPoint:amount};
+        // dispatch(updateUser(updatedUser)); // Dispatch the action
 
         console.log('==============================')
         const { next_redirect_pc_url, tid } = res.data;

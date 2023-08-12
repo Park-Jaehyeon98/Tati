@@ -15,3 +15,19 @@ a:hover,
 a:active {
   text-decoration: none;
 }
+
+.Notice_header{
+  display: flex;
+}
+
+.post_create_btn{
+  margin-left: 420px;
+  margin-top: 10px;
+  background-color: gray;
+  height: 30px;
+  border-radius: 5px;
+}
+
+.Pagination{
+  margin-left: 230px;
+}

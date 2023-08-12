@@ -120,13 +120,6 @@ export default function Router() {
   };
 
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setIsLoggedIn(true);
-  //   }
-  // }, [isLoggedIn]);
-
-
 
   return (
     <BrowserRouter>
@@ -196,7 +189,6 @@ export default function Router() {
 
         {/* 공지사항 */}
         <Route path="/Notice" element={<Notice />}>
-          {/* <Route path="" element={<NoticePage />} /> */}
           <Route path="" element={<NoticeList />} />
           <Route path="Create" element={<NoticeCreate />} />
           <Route path=":boardId" element={<NoticeDetail />} />

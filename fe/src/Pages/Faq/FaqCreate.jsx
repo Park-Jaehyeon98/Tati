@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { apiClient } from '../../api/apiClient';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import style from './FaqCreate.module.css'
 
@@ -9,7 +10,10 @@ const FaqCreate = () => {
 
     const naviate = useNavigate();
 
-    // 멤버아이디 리덕스로 받아와야함.
+    // 리덕스 펄시스트 유저정보를 불러옴
+    const user = useSelector(state => state.user.user);
+
+    // 제목, 내용
     const [boardData, setBoardData] = useState({
         boardTitle: '',
         boardContent: '',
@@ -29,9 +33,18 @@ const FaqCreate = () => {
         }));
     };
 
+
+    // FAQ 글 작성
     const handleSubmitBtnClick = () => {
+
+        const data = {
+            boardTitle:boardTitle,
+            boardContent:boardContent,
+            memberId:1
+        }
+
         const subURL = boardType === 0 ? 'notice' : 'faq'
-        apiClient.post(subURL, boardData)
+        apiClient.post(subURL, data)
             .then((res) => {
                 console.log(res)
                 if (res.request.status === 200) naviate('../')

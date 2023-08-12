@@ -64,7 +64,10 @@ export default function KakaoPay() {
         email:parseJwt.sub
       })
         .then((res)=>{
-          console.log(res)
+          console.log(res.data.amount.total)
+
+          const updatedUser = {totalPoint:user.totalPoint + res.data.amount.total};
+          dispatch(updateUser(updatedUser));
           // 요청이 성공하면 tid와 pgToken을 로컬 스토리지에서 삭제
           localStorage.removeItem('pgToken');
           localStorage.removeItem('tid');
