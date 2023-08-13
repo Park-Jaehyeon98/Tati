@@ -92,20 +92,36 @@ export default function Calendar(){
         console.log(res);
         console.log(res.data.studyScheduleList);
 
+        
         //스터디 일정
-        res.data.studyScheduleList.forEach(schedule =>{
-          const studyEvent = {
-            title:schedule.studyName,
-            start:schedule.studyStartDate,
-            end:schedule.studyEndDate,
-            allDay:false
+        res.data.studyScheduleList.forEach(schedule => {
+          const targetDays = [0, 2]; // 일요일과 수요일
+          const startDate = new Date(schedule.studyStartDate);
+          const endDate = new Date(schedule.studyEndDate);
+        
+          // 보정된 시간대로 일정 생성
+          const currentDate = new Date(startDate);
+          while (currentDate <= endDate) {
+            if (targetDays.includes(currentDate.getUTCDay())) {
+              const eventStart = new Date(currentDate);
+              eventStart.setUTCHours(19, 0); // 19시 0분
+              const eventEnd = new Date(currentDate);
+              eventEnd.setUTCHours(20, 0); // 20시 0분
+        
+              const studyEvent = {
+                title: schedule.studyName,
+                start: eventStart,
+                end: eventEnd,
+              };
+        
+              studyData.push(studyEvent);
+            }
+        
+            // 다음 날짜로 이동
+            currentDate.setUTCDate(currentDate.getUTCDate() + 1);
           }
-          console.log(studyEvent)
+        });
 
-          studyData.push(studyEvent)
-
-          // setStudyData(studyEvent)
-        })
 
 
         dispatch(updateUser({img:res.data.img}));
@@ -300,7 +316,7 @@ export default function Calendar(){
   // 일정
   const events=[
     
-    // ...userSchedule,
+    ...userSchedule,
     ...studyData
   ];
 
