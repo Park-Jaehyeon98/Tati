@@ -32,6 +32,8 @@ export default function Calendar(){
   const month = currentDate.getMonth() + 1;
 
 
+  const [studyData , setStudyData ] = useState([]);
+  // const studyData = []
   const [selectedColor, setSelectedColor] = useState('');
   const [col, setCol] = useState()
   const [eventColor, seteventColor] = useState({})
@@ -52,19 +54,23 @@ export default function Calendar(){
   useEffect(() => {
 
     console.log(userTimeZone); 
+    console.log(studyData); 
     console.log('캘린더 memberId',user.memberId)
     console.log(`year---${year}///month---${month}`)
 
     loadData()
     },[]);
 
+
   const [selectedDate, setSelectedDate] = useState(null);
   const [eventTitle, setEventTitle] = useState('');
   const [eventContent, setEventContent] = useState('');
   const [eventTime, setEventTime] = useState('');
 
+
   const [showConfirmation, setShowConfirmation] = useState(false);
 
+  
   const handleDateClick = (info) => {
     setSelectedDate(info.dateStr);
   };
@@ -84,8 +90,43 @@ export default function Calendar(){
       .then((res) => {
         console.log("일정 요청 성공=================================");
         console.log(res);
+        console.log(res.data.studyScheduleList);
+
+        
+        //스터디 일정
+        res.data.studyScheduleList.forEach(schedule => {
+          console.log(schedule.studyScheduleList)
+          const targetDays = [0, 2]; // 일요일과 수요일
+          const startDate = new Date(schedule.studyStartDate);
+          const endDate = new Date(schedule.studyEndDate);
+        
+          // 보정된 시간대로 일정 생성
+          const currentDate = new Date(startDate);
+          while (currentDate <= endDate) {
+            if (targetDays.includes(currentDate.getUTCDay())) {
+              const eventStart = new Date(currentDate);
+              eventStart.setUTCHours(19, 0); // 19시 0분
+              const eventEnd = new Date(currentDate);
+              eventEnd.setUTCHours(20, 0); // 20시 0분
+        
+              const studyEvent = {
+                title: schedule.studyName,
+                start: eventStart,
+                end: eventEnd,
+              };
+        
+              studyData.push(studyEvent);
+            }
+        
+            // 다음 날짜로 이동
+            currentDate.setUTCDate(currentDate.getUTCDate() + 1);
+          }
+        });
+
+
 
         dispatch(updateUser({img:res.data.img}));
+
 
         const eventsToAdd = res.data.scheduleList.map((scheduleItem) => ({
           title: scheduleItem.memberScheduleTitle,
@@ -97,11 +138,13 @@ export default function Calendar(){
           color:'null'
         }));
 
+        // 할 일
         dispatch(clearUserSchedule());
         eventsToAdd.forEach((event) => {
           dispatch(addSchedule(event));
         });
 
+        // 내 열정지수, 공부 시간
         dispatch(updateUser({
           totalScore:res.data.totalScore,
           todayStudyTime:res.data.todayStudyTime,
@@ -122,12 +165,17 @@ export default function Calendar(){
   // 회원일정등록 =======================================================
   const handleModalSubmit = () => {
 
+    
+    
     if (!eventTitle || !eventTime) {
       alert("이벤트 제목과 일시를 입력해주세요.");
       return;
     }
-
+    
+    
     const selectedDateTime = new Date(`${selectedDate}T${eventTime}`);
+    
+    console.log(selectedDateTime,'-----------------')
 
     const postScheduleReqDto = {
       email:user.email,
@@ -268,7 +316,9 @@ export default function Calendar(){
 
   // 일정
   const events=[
-    ...userSchedule
+    
+    ...userSchedule,
+    ...studyData
   ];
 
 
@@ -280,7 +330,7 @@ export default function Calendar(){
         <div className={style.Calendar_box_box}>
       <div className={style.calendar}>
         <FullCalendar
-          timeZone = 'userTimeZone'
+          timeZone = {userTimeZone}
           defaultView="dayGridMonth" 
           editable = {true} // 수정 가능
           resourceAreaHeaderContent="Rooms"

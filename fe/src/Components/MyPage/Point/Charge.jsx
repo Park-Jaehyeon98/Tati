@@ -64,8 +64,8 @@ export default function Change() {
         console.log('=================================')
         console.log(res.data);
 
-        const updatedUser = {totalPoint:amount};
-        dispatch(updateUser(updatedUser)); // Dispatch the action
+        // const updatedUser = {totalPoint:amount};
+        // dispatch(updateUser(updatedUser)); // Dispatch the action
 
         console.log('==============================')
         const { next_redirect_pc_url, tid } = res.data;
@@ -85,6 +85,10 @@ export default function Change() {
     setRechargeAmount(0)
   }
 
+  const formattedTotalPoint = currentPoint.toLocaleString();
+  const total = currentPoint + rechargeAmount
+  const TotalPoint = total.toLocaleString();
+
   return (
     <div className={style.Change}>
 
@@ -100,7 +104,7 @@ export default function Change() {
           </button>
         ))}
 
-      <p className={style.point}>현재 포인트 <span className={style.currentPoint}>{currentPoint}</span></p>
+      <p className={style.point}>현재 포인트 <span className={style.currentPoint}>{formattedTotalPoint}</span></p>
 
       <p className={style.point}>
         충전 포인트
@@ -109,7 +113,7 @@ export default function Change() {
         <button className={style.btn} onClick={handleDecrease}>-</button>
       </p>
 
-      <p>총 포인트 <span className={style.total_point}>{currentPoint + rechargeAmount}</span></p>
+      <p>총 포인트 <span className={style.total_point}>{TotalPoint}</span></p>
 
       <button className={`${style.Change_btn} ${style.zero_btn}`} onClick={handleZero}>초기화</button>
       <button className={`${style.Change_btn} ${style.charge_btn}`}onClick={handleTotal}>충전</button>

@@ -4,15 +4,16 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 
+import { useSelector } from 'react-redux';
+
 import Login from "../../Pages/Auth/Login";
 
 export default function AuthModal({ setAuthModal }) {
   
-  const navigate = useNavigate();
-  // 로컬의 유저pk값을 불러오기
-  const memberId = localStorage.getItem('memberId');
+  // 리덕스 펄시스트 유저정보를 불러옴
+  const user = useSelector(state => state.user.user);
 
-  const email = localStorage.getItem('email');
+  const navigate = useNavigate();
 
   const [password, setPassword] = useState("")
 
@@ -34,13 +35,13 @@ export default function AuthModal({ setAuthModal }) {
   const handlecheck = () => {
     // console.log(userInfo)
     console.log('회원가입수정 입장=========================================')
-    console.log(`email: ${email}`)
+    console.log(`email: ${user.email}`)
     console.log(`password: ${password}`)
     console.log('회원가입수정 입장=========================================')
 
     console.log(process.env.REACT_APP_URL)
     axios.post(`${process.env.REACT_APP_URL}/member/mypage/check`,{
-    email:'rlaalsrbs15@naver.com',
+    email:user.email,
     password
     })
     .then((res) => {

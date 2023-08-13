@@ -66,11 +66,13 @@
 }
 
 .RewardPoint_box{
-  width: 1000px;
+  width: 900px;
   height: 700px;
   background-color: #e8e9ea;
   margin: 50px;
   margin-left: 20px;
   border-radius: 10px;
+  padding: 50px;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
 }
 

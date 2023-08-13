@@ -8,7 +8,10 @@ import MyPageHeader from "../../Components/MyPage/header";
 export default function MyPageRewardPoint(){
   return(
     <div className={style.MyPage}>
-    <MyPageHeader />
+      <div className={style.RewardPoint}>
+
+        <MyPageHeader />  
+      </div>
     <div className={style.RewardPoint_box}>
         <RewardPoint />
     </div>

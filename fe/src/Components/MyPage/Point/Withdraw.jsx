@@ -84,16 +84,20 @@ export default function Withdraw() {
   }
   // =========================================================================================
 
+  const formattedTotalPoint = currentPoint.toLocaleString();
+  const total = currentPoint - rechargeAmount
+  const TotalPoint = total.toLocaleString();
+
   return (
     <div className={style.Change}>
-      <p className={style.point}>현재 포인트 <span className={style.currentPoint}>{user.totalPoint}</span></p>
+      <p className={style.point}>현재 포인트 <span className={style.currentPoint}>{formattedTotalPoint}</span></p>
       <p className={style.point}>
         인출 포인트
         <input  className={style.rechargeAmount} type="text" value={rechargeAmount} onChange={handleChange} />
         <button  className={style.btn} onClick={handleRecharge}>+</button>
         <button  className={style.btn} onClick={handleDecrease}>-</button>
       </p>
-      <p>총 포인트 <span className={style.total_point}>{currentPoint - rechargeAmount}</span></p>
+      <p>총 포인트 <span className={style.total_point}>{TotalPoint}</span></p>
       <button  className={style.Change_btn} onClick={handleTotal}>인출</button>
     </div>
   );

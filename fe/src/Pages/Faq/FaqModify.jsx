@@ -2,35 +2,29 @@ import React, { useEffect, useState } from 'react';
 import style from './FaqModify.module.css'
 import { apiClient } from '../../api/apiClient';
 import { useSelector } from 'react-redux';
-import { useNavigate,useParams } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+
 
 const FaqModify = () => {
-    const params = useParams();
+    const location = useLocation();
     const navigate = useNavigate();
     const user = useSelector((state) => { return state.user.user });
+
+    const boardId = location.state.boardId;
+    // const boardTitle = location.state.boardTitle;
+    // const boardContent = location.state.boardContent;
+
+
     const [boardData, setBoardData] = useState({
-        boardId : params.boardId,
+        boardId: boardId, // 추가된 부분
         boardTitle: '',
-        boardContent: '',
-        memberId : user.memberId
+        boardContent: ''
     });
 
-    const {
-        boardId,
-        boardTitle,
-        boardContent,
-    } = boardData;
 
+    const { boardTitle, boardContent } = boardData;
 
-    useEffect(() => {
-        const subURL =`/faq/${boardId}`
-        apiClient.get(subURL)
-            .then((res) => {
-                console.log(res.data)
-                setBoardData(res.data)
-            })
-            .catch((err) => { console.log(err) })
-    }, [])
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -40,39 +34,67 @@ const FaqModify = () => {
         });
     };
 
+
     const handlemodifyBtnClick = () => {
-        apiClient.put('faq', boardData)
+
+        console.log(boardId)
+
+        const data = {
+            boardId: boardId,
+            boardTitle: boardTitle,
+            boardContent: boardContent,
+            memberId: 1
+        }
+
+        console.log(data)
+
+        apiClient.put('faq', data)
             .then((res) => {
                 console.log(res)
-                if (res.request.status === 200) navigate(`../`)
+                navigate('/Faq')
             })
             .catch((err) => {
                 console.log(err)
             });
     }
 
+
     const handleCancelBtnClick = () => {
-        navigate(`../`);
+        navigate(`/Faq`);
     }
 
+
     return (
-        <div>
+        <div className={style.FaqModify_box}>
             <h3>FAQ 수정</h3>
-            <div>
-                <span>제목</span>
-                <input type="text" name="boardTitle" value={boardTitle} onChange={handleChange} />
+
+            <div className={style.FaqModify_title}>
+                <span className={style.FaqModify_title_name}>제목</span>
+                <input className={style.FaqModify_title_input}
+                    type="text"
+                    name="boardTitle"
+                    value={boardTitle}
+                    onChange={handleChange}
+                    placeholder="제목을 입력해주세요"
+                />
             </div>
-            <div>
-                <span>내용</span>
-                <input type="text" name="boardContent" value={boardContent} onChange={handleChange} />
+
+            <div className={style.FaqModify_title}>
+                <span className={style.FaqModify_content_name}>내용</span>
+
+                <textarea
+                    className={style.FaqModify_content_input}
+                    placeholder="내용을 입력해주세요"
+                    name="boardContent"
+                    value={boardContent}
+                    onChange={handleChange}
+                />
+                {/* <input className={style.FaqCreate_content_input} type="text" name="boardContent" value={boardContent} onChange={handleChange} /> */}
             </div>
-            <div>
-                <div className={style.btn} onClick={handlemodifyBtnClick}>
-                    수정하기
-                </div>
-                <div className={style.btn} onClick={handleCancelBtnClick}>
-                    취소
-                </div>
+
+            <div className={style.FaqModify_btns}>
+                <button className={style.FaqModify_btn} onClick={handlemodifyBtnClick} >제출</button>
+                <button className={style.FaqModify_btn} onClick={handleCancelBtnClick}>취소</button>
             </div>
         </div>
     )

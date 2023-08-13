@@ -4,20 +4,24 @@ import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 
 import style from "./Router.module.css"
 
+// 공지사항
 import Notice from "../Pages/Notice/Notice";
 import NoticeList from "../Pages/Notice/NoticeList";
 import NoticeCreate from "../Pages/Notice/NoticeCreate";
 import NoticeModify from "../Pages/Notice/NoticeModify";
 
+// FAQ
 import Faq from "../Pages/Faq/Faq";
 import FaqCreate from "../Pages/Faq/FaqCreate";
 import FaqList from "../Pages/Faq/FaqList";
 import FaqModify from "../Pages/Faq/FaqModify";
 
+// 회원
 import MyPage from "../Pages/MyPage/Schedule/MyPage";
 import SignUp from "../Pages/Auth/SignUp";
 import Login from "../Pages/Auth/Login";
 
+// 스터디
 import Study from "../Pages/Study/Study";
 import StudyCreate from "../Pages/Study/StudyCreate";
 import StudyList from "../Pages/Study/StudyList";
@@ -59,8 +63,8 @@ import VideoRoomComponent from "../Pages/Room/VideoRoomComponent";
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { persistor } from '../redux/store';
-import { setUser,clearUser } from '../redux/reducers/userSlice';
-import {clearUserSchedule} from '../redux/reducers/userScheduleSlice'
+import { setUser, clearUser } from '../redux/reducers/userSlice';
+import { clearUserSchedule } from '../redux/reducers/userScheduleSlice'
 
 
 import AuthModal from "../Components/MyPage/AuthModal";
@@ -80,7 +84,7 @@ export default function Router() {
   };
 
   // 모달을 표시할지 여부를 상태로 관리
-  const [showModal, setShowModal] = useState(false); 
+  const [showModal, setShowModal] = useState(false);
 
   // 모달을 열고 닫는 함수
   const toggleModal = () => {
@@ -103,24 +107,17 @@ export default function Router() {
         "RefreshToken": refreshToken
       }
     })
-    .then((res) => {
-      console.log(res);
-      localStorage.clear();
-      dispatch(clearUserSchedule())
-      dispatch(clearUser());
-      // setIsLoggedIn(false);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((res) => {
+        console.log(res);
+        localStorage.clear();
+        dispatch(clearUserSchedule())
+        dispatch(clearUser());
+        // setIsLoggedIn(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-
-
-  // useEffect(() => {
-  //   if (user) {
-  //     setIsLoggedIn(true);
-  //   }
-  // }, [isLoggedIn]);
 
 
 
@@ -128,57 +125,57 @@ export default function Router() {
     <BrowserRouter>
       <div className={style.navBox}>
         <nav>
-        <div className={style.logo}>타티
-        <img  className={style.logo_img} src="/Assets/logo.png" alt="" />
-        </div>
-        <div className={style.navBoxIn}>
-          {/* openvidu */}
-          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Room">
-            openvidu
-          </NavLink>
-          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Study">
-            스터디
-          </NavLink>
-          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Notice">
-            공지사항
-          </NavLink>
-          <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Faq">
-            FAQ
-          </NavLink>
-          {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage" onMouseEnter={toggleModal} onMouseLeave={toggleModal}>
-            마이페이지
-            {showModal && (
-              <div className={style.modal}>
-                <div className={style.modal_content}>
-                  <NavLink to="/MyPage/JoinStudy">스터디 목록</NavLink>
-                  <NavLink to="/MyPage/MyPagePoint">마일리지</NavLink>
-                  <NavLink onClick={()=>handleButtonClick()}>회원정보수정</NavLink>
-                  <NavLink to="/MyPage/MyPageRewardPoint">상벌점내역</NavLink>
-                  <NavLink to="/Logout" onClick={handleLogout}>
-                     로그아웃
-                  </NavLink>
-                </div>
-              </div>
-            )}
-          </NavLink>)}
-          {!user &&(
-            <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Login">
-              로그인
+          <div className={style.logo}>타티
+            <img className={style.logo_img} src="/Assets/logo.png" alt="" />
+          </div>
+          <div className={style.navBoxIn}>
+            {/* openvidu */}
+            <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Room">
+              openvidu
             </NavLink>
-          )}
-        </div>
+            <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Study">
+              스터디
+            </NavLink>
+            <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Notice">
+              공지사항
+            </NavLink>
+            <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Faq">
+              FAQ
+            </NavLink>
+            {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage" onMouseEnter={toggleModal} onMouseLeave={toggleModal}>
+              마이페이지
+              {showModal && (
+                <div className={style.modal}>
+                  <div className={style.modal_content}>
+                    <NavLink to="/MyPage/JoinStudy">스터디 목록</NavLink>
+                    <NavLink to="/MyPage/MyPagePoint">마일리지</NavLink>
+                    <NavLink onClick={() => handleButtonClick()}>회원정보수정</NavLink>
+                    <NavLink to="/MyPage/MyPageRewardPoint">상벌점내역</NavLink>
+                    <NavLink to="/Logout" onClick={handleLogout}>
+                      로그아웃
+                    </NavLink>
+                  </div>
+                </div>
+              )}
+            </NavLink>)}
+            {!user && (
+              <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Login">
+                로그인
+              </NavLink>
+            )}
+          </div>
         </nav>
         <hr className={style.nav_hr} />
 
 
         {/* 회원정보수정페이지로 가는 모달 */}
         <div>
-        {authModal &&
-          <div className={style.modal_backdrop}>
-            <AuthModal setAuthModal={setAuthModal} onButtonClick={handleButtonClick} closeModal={closeModal} />
-          </div>
-        }
-      </div>
+          {authModal &&
+            <div className={style.modal_backdrop}>
+              <AuthModal setAuthModal={setAuthModal} onButtonClick={handleButtonClick} closeModal={closeModal} />
+            </div>
+          }
+        </div>
 
       </div>
 
@@ -192,7 +189,6 @@ export default function Router() {
 
         {/* 공지사항 */}
         <Route path="/Notice" element={<Notice />}>
-          {/* <Route path="" element={<NoticePage />} /> */}
           <Route path="" element={<NoticeList />} />
           <Route path="Create" element={<NoticeCreate />} />
           <Route path=":boardId" element={<NoticeDetail />} />
@@ -203,7 +199,7 @@ export default function Router() {
         <Route path="/Faq" element={<Faq />}>
           <Route path="" element={<FaqList />} />
           <Route path="Create" element={<FaqCreate />} />
-          <Route path=":boardId/Modify" element={<FaqModify />} />
+          <Route path="FaqModify" element={<FaqModify />} />
         </Route>
 
         {/* Auth (회원가입 로그인 로그아웃) */}

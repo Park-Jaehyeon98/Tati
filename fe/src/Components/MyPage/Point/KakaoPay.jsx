@@ -64,7 +64,10 @@ export default function KakaoPay() {
         email:parseJwt.sub
       })
         .then((res)=>{
-          console.log(res)
+          console.log(res.data.amount.total)
+
+          const updatedUser = {totalPoint:user.totalPoint + res.data.amount.total};
+          dispatch(updateUser(updatedUser));
           // 요청이 성공하면 tid와 pgToken을 로컬 스토리지에서 삭제
           localStorage.removeItem('pgToken');
           localStorage.removeItem('tid');
@@ -146,10 +149,12 @@ const PointItem = ({ point, date, day, tid }) => {
     }
   };
 
+    const formattedTotalPoint = point.toLocaleString();
+
   return (
     <div>
       <div className={style.PointItem_text}>
-        <p className={style.p_text}>{date} {point} 
+        <p className={style.p_text}>{date} {formattedTotalPoint} 
         <h6 className={style.text}>{day} 
         </h6>{date == '포인트 적립' && ( // date가 '포인트 인출일'이 아닐 때에만 버튼 렌더링
               <button className={style.cancel_btn} onClick={handleCancel}>
