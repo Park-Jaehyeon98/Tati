@@ -25,7 +25,12 @@ export default function JoinStudy(){
   useEffect(() => {
 
     console.log(process.env.REACT_APP_URL)
-    axios.get(`${process.env.REACT_APP_URL}/member/mypage/study-list/${parseJwt.memberId }`)
+    axios.get(`${process.env.REACT_APP_URL}/member/mypage/study-list/${parseJwt.memberId}`,{
+      headers:{
+        Authorization: "Bearer " + localStorage.getItem('accessToken'),
+        RefreshToken: localStorage.getItem('refreshtoken')
+      }
+    })
       .then((res) => {
         console.log('가입스터디=================================')
         console.log(res.data);

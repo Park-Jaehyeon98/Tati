@@ -13,7 +13,12 @@ export default function RewardPoint(){
 
   useEffect(()=>{
     console.log(parseJwt.memberId)
-    axios.get(`${process.env.REACT_APP_URL}/member/mypage/attendance-list/${parseJwt.memberId}`)
+    axios.get(`${process.env.REACT_APP_URL}/member/mypage/attendance-list/${parseJwt.memberId}`,{
+      headers:{
+        Authorization: "Bearer " + localStorage.getItem('accessToken'),
+        RefreshToken: localStorage.getItem('refreshtoken')
+      }
+    })
       .then((res)=>{
         console.log('상벌---------------------------------')
         console.log(res.data)

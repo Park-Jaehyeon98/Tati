@@ -5,7 +5,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from '@fullcalendar/react';
 import listPlugin from "@fullcalendar/list";
-import style from "./Calendar.module.css"
+import style from "./Calendar.module.css";
 
 import axios from "axios";
 
@@ -13,7 +13,7 @@ import axios from "axios";
 import { useDispatch } from 'react-redux';
 import {addSchedule, updateSchedule,removeSchedule, clearUserSchedule} from "../../../redux/reducers/userScheduleSlice";
 import {addStudySchedule, removeStudySchedule, clearUserStudySchedule} from "../../../redux/reducers/userStudyScheduleSlice";
-import { updateUser } from "../../../redux/reducers/userSlice"
+import { updateUser } from "../../../redux/reducers/userSlice";
 
 // 리덕스 꺼내기
 import { useSelector } from 'react-redux';
@@ -31,8 +31,10 @@ export default function Calendar(){
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth() + 1;
 
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshtoken = localStorage.getItem('refreshtoken');
 
-  const [studyData , setStudyData ] = useState([]);
+
   // const studyData = []
   const [selectedColor, setSelectedColor] = useState('');
   const [col, setCol] = useState()
@@ -44,6 +46,7 @@ export default function Calendar(){
 
   // 리덕스의 유저정보 와 일정 가져오기
   const userSchedule = useSelector(state => state.user.userSchedule);
+  const userStudySchedule = useSelector(state => state.user.userStudySchedule);
   const user = useSelector(state => state.user.user);
 
 
@@ -54,10 +57,6 @@ export default function Calendar(){
   useEffect(() => {
 
     console.log(userTimeZone); 
-    console.log(studyData); 
-    console.log('캘린더 memberId',user.memberId)
-    console.log(`year---${year}///month---${month}`)
-
     loadData()
     },[]);
 
@@ -79,24 +78,32 @@ export default function Calendar(){
 
   // 일정 불러오기 =========================================================================
   const loadData = () => {
-    // 여기에 데이터를 다시 불러오는 로직을 작성합니다.
+    
+    console.log(accessToken)
+    console.log(refreshtoken)
     axios
       .get(`${process.env.REACT_APP_URL}/member/mypage/${user.memberId}`, {
         params: {
           year,
           month
+        },
+        headers:{
+          Authorization: "Bearer " + accessToken,
+          RefreshToken: refreshtoken
         }
       })
       .then((res) => {
         console.log("일정 요청 성공=================================");
         console.log(res);
-        console.log(res.data.studyScheduleList);
 
-        
+
+        dispatch(clearUserStudySchedule())
         //스터디 일정
         res.data.studyScheduleList.forEach(schedule => {
-          console.log(schedule.studyScheduleList)
-          const targetDays = [0, 2]; // 일요일과 수요일
+          const targetDays = []
+          schedule.studyScheduleList.forEach(startDate=>{
+            targetDays.push(Number(startDate.studyDay))
+          })
           const startDate = new Date(schedule.studyStartDate);
           const endDate = new Date(schedule.studyEndDate);
         
@@ -111,18 +118,17 @@ export default function Calendar(){
         
               const studyEvent = {
                 title: schedule.studyName,
-                start: eventStart,
-                end: eventEnd,
+                start: eventStart.toISOString(),
+                end: eventEnd.toISOString(),
               };
-        
-              studyData.push(studyEvent);
+              
+              dispatch(addStudySchedule(studyEvent))
             }
         
             // 다음 날짜로 이동
             currentDate.setUTCDate(currentDate.getUTCDate() + 1);
           }
         });
-
 
 
         dispatch(updateUser({img:res.data.img}));
@@ -164,14 +170,11 @@ export default function Calendar(){
 
   // 회원일정등록 =======================================================
   const handleModalSubmit = () => {
-
-    
     
     if (!eventTitle || !eventTime) {
       alert("이벤트 제목과 일시를 입력해주세요.");
       return;
     }
-    
     
     const selectedDateTime = new Date(`${selectedDate}T${eventTime}`);
     
@@ -183,9 +186,15 @@ export default function Calendar(){
       memberScheduleContent: eventContent,
       memberScheduleTitle: eventTitle
     }
-    console.log(postScheduleReqDto.memberScheduleDate)
+    console.log(postScheduleReqDto)
 
-    axios.post(`${process.env.REACT_APP_URL}/member/mypage/schedule`,postScheduleReqDto)
+    axios.post(`${process.env.REACT_APP_URL}/member/mypage/schedule`, 
+    postScheduleReqDto,{
+      headers:{
+        Authorization: "Bearer " + accessToken,
+        RefreshToken: refreshtoken
+      }
+    })
       .then((res) => {
         console.log(' 일정 추가 성공 =================================')
 
@@ -222,7 +231,12 @@ export default function Calendar(){
     const scheduleId = selectedEvent.extendedProps.scheduleId;
 
     axios
-      .delete(`${process.env.REACT_APP_URL}/member/mypage/schedule/${scheduleId}`)
+      .delete(`${process.env.REACT_APP_URL}/member/mypage/schedule/${scheduleId}`,{
+        headers:{
+          Authorization: "Bearer " + accessToken,
+          RefreshToken: refreshtoken
+        }
+      })
       .then((res) => {
         console.log("일정 삭제 성공시=================================");
         console.log(res.data);
@@ -244,44 +258,55 @@ export default function Calendar(){
   // 일정 수정 ===========================================================================
   const handleEventDrop = (info) => {
 
-    const scheduleId = Number(info.event._def.extendedProps.scheduleId);
-    const updatedDate = info.event.start.toISOString();
+    // const scheduleId = Number(info.event._def.extendedProps.scheduleId);
+    // const updatedDate = info.event.start.toISOString();
 
-    axios
-      .put(`${process.env.REACT_APP_URL}/member/mypage/schedule/${scheduleId}`, {
-        memberScheduleDate: updatedDate,
-      })
-      .then((res) => {
-        console.log("일정 변경 성공 ==============================");
-        console.log(res.data);
-        console.log("=========================================");
-        loadData();
-      })
-      .catch((err) => {
-        console.log(err, "일정 변경 실패 -----------------------");
-      });
+    // axios
+    //   .put(`${process.env.REACT_APP_URL}/member/mypage/schedule/${scheduleId}`, {
+    //     memberScheduleDate: updatedDate,
+    //   })
+    //   .then((res) => {
+    //     console.log("일정 변경 성공 ==============================");
+    //     console.log(res.data);
+    //     console.log("=========================================");
+    //     loadData();
+    //   })
+    //   .catch((err) => {
+    //     console.log(err, "일정 변경 실패 -----------------------");
+    //   });
   };
   //==========================================================================================
 
 
   
   const handleEventClick = (info) => {
-    console.log('handleEventClick',info.event._def)
-    setSelectedEvent(info.event._def);
+    
+    setSelectedEvent(info.event);
 
     const now = new Date();
     const formattedNow = `${now.getFullYear()}-${(now.getMonth() + 1)}`
     
+    const startTime = info.event.startStr
+    const startTimeDate = new Date(startTime);
+    const formattedStartTime = startTimeDate.toLocaleTimeString("en-US", { timeStyle: "short" });
+    
+    const endTime = info.event.endStr
+    const endTimeDate = new Date(endTime);
+    const formattedEndTime = endTimeDate.toLocaleTimeString("en-US", { timeStyle: "short" });
+
     console.log(formattedNow)
     const event = {
-      title: info.event._def.title,
+      title: info.event.title,
       data:formattedNow,
+      startTime:formattedStartTime,
+      endTime:formattedEndTime,
       scheduleId: info.event._def.sourceId,
       extendedProps: {
         content: info.event._def.extendedProps,
       },
       color:col,
     }
+    console.log(event,'--------------------')
     seteventColor(event)
     setShowConfirmation(true); // Open the confirmation dialog
   };
@@ -318,9 +343,13 @@ export default function Calendar(){
   const events=[
     
     ...userSchedule,
-    ...studyData
+    ...userStudySchedule
   ];
 
+  const headerChangeContent = (e)=>{
+    // console.log(e.target.value,'headerChangeContent')
+    setEventContent(e.target.value)
+  }
 
   //  월:1, 화:2, 수:3, 목:4, 금:5, 토:6, 일:0
   return (
@@ -364,7 +393,7 @@ export default function Calendar(){
             <h2>선택한 날짜: {selectedDate}</h2>
             <input type="text" value={eventTitle} onChange={(e) => setEventTitle(e.target.value)} placeholder="이벤트 제목" />
             <input type="time" value={eventTime} onChange={(e) => setEventTime(e.target.value)} />
-            <textarea value={eventContent} onChange={(e) => setEventContent(e.target.value)} id="" cols="30" rows="10"></textarea>
+            <textarea value={eventContent} onChange={headerChangeContent} id="" cols="30" rows="10"></textarea>
             <button onClick={handleModalSubmit}>추가</button>
             <button onClick={() => setSelectedDate(null)}>닫기</button>
           </div>
@@ -375,6 +404,10 @@ export default function Calendar(){
       {showConfirmation && (
         <div className={style.confirmation_modal}>
           <div className={style.confirmation_modal_content}>
+            <div className={style.detail_title}>
+            일정 - {eventColor.title}
+            </div>
+            시간 - {eventColor.startTime} ~ {eventColor.endTime}
             <p>이 일정를 삭제하시겠습니까?</p>
 
             <div className={style.color_palette}>

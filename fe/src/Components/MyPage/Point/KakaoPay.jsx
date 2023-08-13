@@ -59,6 +59,11 @@ export default function KakaoPay() {
     if(pgToken){
       console.log(process.env.REACT_APP_URL)
       axios.post(`${process.env.REACT_APP_URL}/payment/success`,{
+        headers:{
+          Authorization: "Bearer " + localStorage.getItem('accessToken'),
+          RefreshToken: localStorage.getItem('refreshtoken')
+        }
+      },{
         pg_token:pgToken,
         tid:storedTid,
         email:parseJwt.sub
@@ -95,6 +100,11 @@ const pointHistory = () =>{
   }
   console.log(process.env.REACT_APP_URL)
   axios.get(`${process.env.REACT_APP_URL}/member/mypage/point/${parseJwt.memberId}`,{
+    headers:{
+      Authorization: "Bearer " + localStorage.getItem('accessToken'),
+      RefreshToken: localStorage.getItem('refreshtoken')
+    }
+  },{
     })
       .then((res)=>{
         console.log('---------------------------------------------')
@@ -132,6 +142,11 @@ const PointItem = ({ point, date, day, tid }) => {
       alert('포인트가 부족합니다')
     } else{
       axios.post(`${process.env.REACT_APP_URL}/payment/cancel`,{
+        headers:{
+          Authorization: "Bearer " + localStorage.getItem('accessToken'),
+          RefreshToken: localStorage.getItem('refreshtoken')
+        }
+      },{
         amount :point,
         tid,
         email:parseJwt.sub
