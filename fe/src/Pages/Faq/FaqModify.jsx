@@ -1,76 +1,73 @@
-import React, { useEffect, useState } from 'react'
-import style from './NoticeModify.module.css'
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import style from './FaqModify.module.css'
 import { apiClient } from '../../api/apiClient';
+import { useSelector } from 'react-redux';
+import { useNavigate,useParams } from 'react-router-dom';
 
-import NoticeList from './NoticeList';
-
-
-const NoticeModify = () => {
+const FaqModify = () => {
     const params = useParams();
     const navigate = useNavigate();
+    const user = useSelector((state) => { return state.user.user });
     const [boardData, setBoardData] = useState({
-        boardTitle: "",
-        boardContent: ""
+        boardId : params.boardId,
+        boardTitle: '',
+        boardContent: '',
+        memberId : user.memberId
     });
 
-    const boardId = params.boardId;
+    const {
+        boardId,
+        boardTitle,
+        boardContent,
+    } = boardData;
+
 
     useEffect(() => {
-        apiClient.get(`/notice/${boardId}`)
+        const subURL =`/faq/${boardId}`
+        apiClient.get(subURL)
             .then((res) => {
-                console.log(res)
+                console.log(res.data)
                 setBoardData(res.data)
             })
             .catch((err) => { console.log(err) })
     }, [])
 
-
-    const { boardTitle, boardContent } = boardData;
-
-    const subURL = 'notice';
-    const config = {}
-
-
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setBoardData({
             ...boardData,
-            [name]: value
-        })
-    }
+            [name]: value,
+        });
+    };
 
-
-    const handleSubmitBtnClick = () => {
-        apiClient.put(subURL, boardData)
+    const handlemodifyBtnClick = () => {
+        apiClient.put('faq', boardData)
             .then((res) => {
                 console.log(res)
-                // setBoardData(res.data)
                 if (res.request.status === 200) navigate(`../`)
             })
-            .catch((err) => { console.log(err) });
+            .catch((err) => {
+                console.log(err)
+            });
     }
 
-
-
     const handleCancelBtnClick = () => {
-        navigate(`../${boardId}`);
+        navigate(`../`);
     }
 
     return (
         <div>
-            <h3>공지사항 수정</h3>
+            <h3>FAQ 수정</h3>
             <div>
-                제목
+                <span>제목</span>
                 <input type="text" name="boardTitle" value={boardTitle} onChange={handleChange} />
             </div>
             <div>
-                내용
+                <span>내용</span>
                 <input type="text" name="boardContent" value={boardContent} onChange={handleChange} />
             </div>
             <div>
-                <div className={style.btn} onClick={handleSubmitBtnClick}>
+                <div className={style.btn} onClick={handlemodifyBtnClick}>
                     수정하기
                 </div>
                 <div className={style.btn} onClick={handleCancelBtnClick}>
@@ -81,4 +78,4 @@ const NoticeModify = () => {
     )
 }
 
-export default NoticeModify
+export default FaqModify

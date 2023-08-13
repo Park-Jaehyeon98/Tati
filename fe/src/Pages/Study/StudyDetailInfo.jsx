@@ -83,6 +83,8 @@ const StudyDetailInfo = () => {
                 mainNoticeYn: true
               }
     });
+
+
     useEffect(() => {
         apiClient.get(`study/${studyId}/${user.memberId}`)
         // apiClient.get(`study/${studyId}/1`)
@@ -96,6 +98,42 @@ const StudyDetailInfo = () => {
             })
     }, [studyId, user.memberId]);
 
+    const [approvalData, setapprovalData] = useState({
+        studyId : '',
+        memberId : 0
+    });
+
+    
+    
+    const approval = () =>{
+        const subUrl = `/study/applicant/approval`
+    
+        const {
+            studyId,
+            memberId 
+        } = approvalData;
+
+        console.log(studyId + "//////" + memberId)
+        
+        apiClient.post(subUrl,approvalData)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+
+    const disapproval = (memberId) => {
+        apiClient.delete(`/study/${studyId}/applicant/refuse/${memberId}`)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
     return (
         <div>
             <div>
@@ -150,8 +188,9 @@ const StudyDetailInfo = () => {
                 <div className={style.box}>
                     여기는 신청 멤버
                     {
-                        (applicantList!=null) && applicantList.map(({ memberNickName, totalScore, createdDate, totalStudyTime }) => {
-                            return <div> 닉네임 : {memberNickName}   // 열정 지수 : {totalScore}점 //  가입일 : {createdDate} // 총 공부 시간 : {totalStudyTime}</div>
+                        (applicantList!=null) && applicantList.map(({ memberId, memberNickName, totalScore, createdDate, totalStudyTime }) => {
+                            return <div> 닉네임 : {memberNickName}   // 열정 지수 : {totalScore}점 //  가입일 : {createdDate} // 총 공부 시간 : {totalStudyTime} 
+                            // <button onClick={() =>approval(memberId)}>승인</button> <button onClick={() => disapproval(memberId)}>거절</button> </div>
                         })
 
                     }

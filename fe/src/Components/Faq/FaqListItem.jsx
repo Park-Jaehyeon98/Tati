@@ -16,10 +16,12 @@ const FaqListItem = ({ boardItemInfo }) => {
     const handleTitleClick = () => {
         setIsShow((isShow) => { return !isShow })
     }
+
     // 수정버튼 클릭
     const handleModifyBtnClick = () => {
-
+        naviate(`./${boardId}/Modify`)
     }
+
     // 삭제버튼 클릭
     const handleDeleteBtnClick = () => {
 
@@ -29,8 +31,8 @@ const FaqListItem = ({ boardItemInfo }) => {
             .then((res) => {
                 console.log(res);
                 if (res.request.status === 200) {
-                    naviate('../faq')
-                    window.location.reload()
+                    naviate('')
+                    // window.location.reload()
                 }
             })
             .catch((err) => {

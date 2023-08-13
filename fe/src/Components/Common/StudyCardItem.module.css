@@ -1,5 +1,37 @@
-.card {
-  width: 100px;
-  height: 100px;
-  background-color: wheat;
+.card{
+  width:20%;
+  height: 100%;
+  margin-bottom : 2%;
+  margin-right: 2%;
+  border: 1px solid black;
+  border-radius : 10px;
+}
+.study_img_div{
+  text-align: center;
+}
+.study_img{
+  max-width:95%;
+  max-height:100%;
+}
+.study_name{
+  font-size : 1.3rem;
+  font-weight: 600;
+  margin : 4%;
+}
+.study_member{
+  font-size : 1rem;
+  margin : 4%;
+  text-align: right;
+}
+.member_icon {
+  max-width:10%;
+  max-height:100%;
+}
+.lock_icon_div{
+  text-align: right;
+  margin : 4%;
+}
+.lock_icon {
+  max-width:8%;
+  max-height:100%;
 }

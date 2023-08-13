@@ -79,9 +79,6 @@ const StudyDetailTest = () => {
         studySchedule,
         img,
         totalMember,
-        // studyDay,
-        // studyStartTime,
-        // studyEndTime,
         studyDeposit,
         disclosure,
         studyPassword

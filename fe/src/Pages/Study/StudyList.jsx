@@ -16,10 +16,10 @@ const StudyList = () => {
     const [totalPages, setTotalPages] = useState(1);
     const firstPage = currentPage - (currentPage % 5) + 1
     // 카테고리 선택
-    const [categoryId, setCategoryId] = useState(null);
-    const categoryIdArray = ["자격증", "취업", "학교", "공시", "기타"];
+    const [categoryId, setCategoryId] = useState(1);
+    const categoryIdArray = ["전체", "자격증", "취업", "학교", "공시", "기타"];
     // 검색 키워드
-    const [keywordInput, setKeywordInput] = useState('');
+    const [keywordInput, setKeywordInput] = useState(null);
     const [keyword, setKeyword] = useState(null);
 
 
@@ -29,7 +29,7 @@ const StudyList = () => {
         apiClient.get('study/list')
             .then((res) => {
                 console.log(res)
-                setStudyList(res.data)
+                setStudyList(res.data.content)
                 setTotalPages(res.data.sort.totalPages)
             })
             .catch((err) => {
@@ -39,21 +39,46 @@ const StudyList = () => {
 
     // 카테고리변경시
     const handleCategoryIdClick = (value) => {
-        (value === categoryId - 1 ? setCategoryId(null) : setCategoryId(value + 1))
+        if (value === categoryId - 1) {
+            setCategoryId(0);
+        } else {
+            setCategoryId(value + 1);
+        }
+    
+        (keywordInput ? setKeyword(keywordInput) : setKeyword(null));
     }
+
     // 검색창입력 변경, 검색창 입력
     const handleKeywordInputChagne = (e) => {
         console.log()
         setKeywordInput(e.target.value);
     }
+
+    //검색 조회 요청
     const handleSearchBtnClick = () => {
         (keywordInput ? setKeyword(keywordInput) : setKeyword(null))
+
+        const subUrl = `/study/search`
+        
+        apiClient.get(subUrl, { params: {
+                page: currentPage,
+                category: categoryId,
+                keyword: keywordInput
+            }
+        })
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
+
     // 키워드 조회
     useEffect(() => {
         if (keyword || categoryId) {
             console.log("키워드")
-            apiClient.get('study', {
+            apiClient.get('study/search', {
                 params: {
                     page: currentPage,
                     category: categoryId,
@@ -62,8 +87,7 @@ const StudyList = () => {
             })
                 .then((res) => {
                     console.log(res);
-                    // studyList에 res.data 값 할당
-                    setStudyList(res.data);
+                    setStudyList(res.data.content);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -71,14 +95,6 @@ const StudyList = () => {
         }
     }, [currentPage, categoryId, keyword])
 
-
-    // 하드코딩용
-    useEffect(() => {
-        //setStudyList([{ studyId: 0, studyName: "하하", totalMember: 8, disclosure: true, currentMember: 5, imageUrl: "" }, { studyId: 1, studyName: "하하", totalMember: 8, disclosure: true, currentMember: 5, imageUrl: "" }])
-        studyList.map((studyDetail) => (
-            <StudyCardItem key={studyDetail.studyId} studyDetail={studyDetail} />
-        ))
-    }, [])
 
     return (
         <div>
@@ -111,10 +127,11 @@ const StudyList = () => {
             {/* 페이지 1개당 8개 스터디 렌더링할것 */}
             <div>
                 {/* 스터디 카드 리스트 */}
-
-                {studyList.map((studyDetail) => {
-                    return <StudyCardItem studyDetail={studyDetail} />
-                })}
+                <div className={style.study_container}>
+                    {studyList.map((studyDetail) => {
+                        return <StudyCardItem studyDetail={studyDetail} />
+                    })}
+                </div>
 
 
                 {/* 페이지네이션 부분 */}
