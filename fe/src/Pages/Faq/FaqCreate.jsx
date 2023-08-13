@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { apiClient } from '../../api/apiClient';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -17,6 +18,7 @@ const FaqCreate = () => {
     const [boardData, setBoardData] = useState({
         boardTitle: '',
         boardContent: '',
+        memberId: user.memberId
     });
 
     const boardType = 9;
@@ -38,9 +40,9 @@ const FaqCreate = () => {
     const handleSubmitBtnClick = () => {
 
         const data = {
-            boardTitle:boardTitle,
-            boardContent:boardContent,
-            memberId:1
+            boardTitle: boardTitle,
+            boardContent: boardContent,
+            memberId: 1
         }
 
         const subURL = boardType === 0 ? 'notice' : 'faq'
@@ -54,7 +56,7 @@ const FaqCreate = () => {
             });
     }
 
-    const handleCancelButtonClick =()=>{
+    const handleCancelButtonClick = () => {
         naviate('/Faq')
     }
 
@@ -62,23 +64,23 @@ const FaqCreate = () => {
         <div className={style.FaqCreate_box}>
             <h3>FAQ 생성</h3>
             <div className={style.FaqCreate_title}>
-                <span className={style.FaqCreate_title_name}>제목</span> 
+                <span className={style.FaqCreate_title_name}>제목</span>
                 <input className={style.FaqCreate_title_input}
-                 type="text"
-                  name="boardTitle"
-                   value={boardTitle}
+                    type="text"
+                    name="boardTitle"
+                    value={boardTitle}
                     onChange={handleChange}
                     placeholder="제목을 입력해주세요"
-                     />
+                />
             </div>
             <div className={style.FaqCreate_title}>
                 <span className={style.FaqCreate_content_name}>내용</span>
-            
+
                 <textarea
                     className={style.FaqCreate_content_input}
                     placeholder="내용을 입력해주세요"
                     name="boardContent"
-                    value={boardContent} 
+                    value={boardContent}
                     onChange={handleChange}
                 />
                 {/* <input className={style.FaqCreate_content_input} type="text" name="boardContent" value={boardContent} onChange={handleChange} /> */}

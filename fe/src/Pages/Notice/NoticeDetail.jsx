@@ -12,10 +12,11 @@ const NoticeDetail = () => {
     const user = useSelector((state) => { return state.user.user })
 
     const [boardData, setBoardData] = useState({
-        boardTitle: '여기는 제목',
-        boardContent: '여기는내용입니다',
-        memberNickname: 'admin',
-        createdDate: '23/07/03',
+        boardTitle: '',
+        boardContent: '',
+        memberNickname: '',
+        createdDate: '',
+        boardHit: 0,
     });
 
     const subURL = `/notice/${boardId}`;
@@ -31,26 +32,27 @@ const NoticeDetail = () => {
             .catch((err) => { console.log(err.data) })
     }, [])
 
-
     const {
         boardTitle,
         boardContent,
         memberNickname,
-        createdDate
+        createdDate,
+        boardHit
+
     } = boardData
 
 
     // 삭제
-    const handleDeleteBtnClick =()=> {
+    const handleDeleteBtnClick = () => {
 
         axios.delete(`${process.env.REACT_APP_URL}/notice/${boardId}/${1}`)
-        .then((res) => {
-            console.log(res)
-            navigate('../')
-        })
-        .catch((err) => {
-          console.log(err,);
-        });
+            .then((res) => {
+                console.log(res)
+                navigate('../')
+            })
+            .catch((err) => {
+                console.log(err,);
+            });
     }
 
     // 목록
@@ -72,7 +74,8 @@ const NoticeDetail = () => {
             </div>
             <hr />
             <div className={style.revDir}>
-                {memberNickname}
+                {memberNickname} || 조회수 :
+                {boardHit}
             </div>
             <div className={style.contentBox}>
                 {boardContent}

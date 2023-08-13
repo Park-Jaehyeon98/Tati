@@ -10,7 +10,7 @@ const NoticeCreate = () => {
     const [boardData, setBoardData] = useState({
         boardTitle: '',
         boardContent: '',
-        memberId: 1,
+        memberId: user.memberId,
         // 0 : 공지 1: 스터디 공지 2: 스터디 게시판 9: FAQ
     });
 
@@ -45,7 +45,7 @@ const NoticeCreate = () => {
     }
 
 
-    const handleCancelButtonClick=()=>{
+    const handleCancelButtonClick = () => {
         naviate('../')
     }
 
@@ -55,12 +55,12 @@ const NoticeCreate = () => {
             <h3>공지사항 생성</h3>
             <div className={style.NoticeCreate_title}>
                 <span className={style.NoticeCreate_title_name}>제목</span>
-                <input 
-                className={style.NoticeCreate_title_input}
-                type="text" 
-                name="boardTitle" 
-                value={boardTitle} 
-                onChange={handleChange} />
+                <input
+                    className={style.NoticeCreate_title_input}
+                    type="text"
+                    name="boardTitle"
+                    value={boardTitle}
+                    onChange={handleChange} />
             </div>
 
             <div className={style.NoticeCreate_title}>
@@ -69,7 +69,7 @@ const NoticeCreate = () => {
                     className={style.NoticeCreate_content_input}
                     placeholder="내용을 입력해주세요"
                     name="boardContent"
-                    value={boardContent} 
+                    value={boardContent}
                     onChange={handleChange}
                 />
             </div>

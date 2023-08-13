@@ -18,15 +18,15 @@ const NoticeList = () => {
 
 
     const subURL = 'notice'
-    const config = { params: { page: currentPage, size:7 } }
+    const config = { params: { page: currentPage, size: 7 } }
 
 
-    useEffect(() => {   
+    useEffect(() => {
         call()
     }, [currentPage])
 
 
-    const call = ()=>{
+    const call = () => {
         apiClient.get(subURL, config)
             .then((res) => {
                 console.log(res)
@@ -46,10 +46,10 @@ const NoticeList = () => {
         console.log(currentPage)
         setCurrentPage(prevPage => prevPage + 1);
     };
-    
+
     const handlePrevPageClick = () => {
         // if (currentPage > 0) {
-            setCurrentPage(prevPage => prevPage - 1);
+        setCurrentPage(prevPage => prevPage - 1);
         // }
     };
 
@@ -58,20 +58,20 @@ const NoticeList = () => {
 
             <div className={style.Notice_header}>
                 <h3>공지사항</h3>
-                    <div className={style.post_create_btn}>
-                        {/* 새 공지 작성하기 관리자만 */}
-                        {/* {!(user.memberNickName === 'admin') || */}
-                        <Button onClick={handleCreateBtnClick}>
-                                새 글 작성
-                            </Button>
-                        {/* } */}
-                    </div>
+                <div className={style.post_create_btn}>
+                    {/* 새 공지 작성하기 관리자만 */}
+                    {/* {!(user.memberNickName === 'admin') || */}
+                    <Button onClick={handleCreateBtnClick}>
+                        새 글 작성
+                    </Button>
+                    {/* } */}
+                </div>
             </div>
 
 
             {/* 공지사항 리스트 */}
             <div style={{
-                 overflow: 'auto',
+                overflow: 'auto',
                 // maxHeight: 'calc(85vh - 100px)',
                 border: '1px solid black',
                 padding: '20px',
@@ -79,7 +79,7 @@ const NoticeList = () => {
                 height: '500px',
                 marginLeft: '10px',
                 marginBottom: '20px',
-               }}>
+            }}>
                 {!(boardList.length === 0) &&
                     boardList.map((boardItemInfo, index) =>
                         <>
@@ -97,10 +97,10 @@ const NoticeList = () => {
 
 
             {/* 페이지네이션 */}
-          
+
             <div className={style.Pagination}>
-                <Button onClick={()=>handlePrevPageClick(currentPage)} disabled={currentPage === 0}>이전</Button>
-                {currentPage+1}
+                <Button onClick={() => handlePrevPageClick(currentPage)} disabled={currentPage === 0}>이전</Button>
+                {currentPage + 1}
                 <Button onClick={handleNextPageClick} disabled={boardList.length < 7}>다음</Button>
             </div>
 
