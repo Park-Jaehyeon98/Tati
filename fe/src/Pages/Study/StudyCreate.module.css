@@ -1,7 +1,246 @@
-.selected {
-  color: blue;
-}
+
+/* .selected {
+  background-color: blue;  
+} 
+
 .noSelected {
   color: gray;
+}  */
+
+
+/* css 수정 */
+
+/* 컨테이너 스타일 */
+.container {
+  width: 700px;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+}
+
+
+/* 제목 스타일 */
+h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+
+/* 주제 별 간격 만들기 */
+.disclosureContainer {
+  margin-bottom: 30px; 
+}
+
+/* 주제 안에서 간격 만들기*/
+.disclosure {
+  margin-top: 20px; 
+  margin-bottom: 10px;
+}
+
+
+/* 공개여부 버튼 스타일 */
+.buttons {
+  display: flex;
+  gap: 10px;                   
+}
+
+.buttons button {
+  background-color: rgba(0, 0, 0, 0.09) 0px 3px 12px; 
+  color: #000;           
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;    
+}
+
+.buttons .selected {
+  background-color: #3396f4;   
+  color: white;           
+  border: none;            
+  padding: 10px 20px;        
+  border-radius: 5px;
+  cursor: pointer;           
+  font-size: 16px;
+}
+
+
+/* 생성하기, 취소하기 그룹 스타일 */
+.buttonContainer {
+  display: flex;
+  gap: 10px;                  
+  justify-content: flex-end;  
+  margin-top: 20px;           
+}
+
+.cancelButton {
+  background-color: rgba(0, 0, 0, 0.09) 0px 3px 12px; 
+  color: #000;              
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submitButton {
+  background-color: #3396f4;   /* 파란색 배경색 */
+  color: white;               /* 글자색 흰색 */
+  border: none;                 /* 테두리 제거 */
+  padding: 10px 20px;           /* 내부 여백 설정 */
+  border-radius: 5px;
+  cursor: pointer;              /* 포인터 커서 설정 */
+  font-size: 16px;
+}
+
+
+
+/* 입력 필드 스타일 */
+.inputField input[type="text"],
+.inputField textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+.inputField textarea {
+  height: 100px;
+}
+
+.inputField input[type="studyPassword"]
+ {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+.inputFieldDatePicker {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+  margin-left: 10px;
+  margin-bottom: 2px;
+}
+
+/* 멤버수, 보증금 입력 필드 컨테이너 스타일 */
+.memberContainer {
+  width: 1100px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.memberContainer > div {
+  margin-bottom: 10px;
+  width: 100%;      
+}
+
+
+/* 멤버수, 보증금 입력 필드 스타일 */
+.memberContainer input[type="number"] {
+  width: 60%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+.memberContainer input[type="number"]:focus {
+  border-color: #3396f4;
+}
+
+
+/* 스터디 일정 컨테이너 스타일 */
+.scheduleContainer {
+  width: 100%;
+  width: 670px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+
+}
+
+.txt {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 15px;
+  margin-bottom: 8px;
+}
+
+.txtDay{
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 47px;
+  margin-bottom: 8px;
+}
+
+.scheduleContainer hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 10px 0;
+}
+
+.scheduleContainer select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+.scheduleButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px; 
+}
+
+.scheduleContainer button {
+  background-color: #3396f4;   
+  color: white;            
+  border: none;              
+  padding: 10px 20px;         
+  border-radius: 5px;
+  cursor: pointer;           
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+
+/* 이미지 업로드 */
+.imageContainer {
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+
+.imageContainer > input {
+  margin-left: 15px;
+}
+
+.imagePreview {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  display: flex;
+}
+
+
+
+/* 스터디 일정 리스트 스타일 */
+.scheduleList {
+  margin-top: 10px;
+}
+
+.scheduleList div {
+  margin-bottom: 5px;
+}
+
+
+/* 컨테이너 내부 컴포넌트 간격 */
+.container > div {
+  margin-bottom: 20px;
 }
 

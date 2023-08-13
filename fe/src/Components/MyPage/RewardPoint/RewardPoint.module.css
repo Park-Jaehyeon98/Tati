@@ -2,6 +2,43 @@
 .RewardPoint {
   width: 800px;
   height: 700px;
-  border: 1px solid black;
-  margin-left: 100px;
+  background-color: white;
+  margin-left: 50px;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+}
+
+.btn{ 
+  width: 30px;
+  height: 30px;
+  margin: 0.2rem;
+  padding: 0.3rem 0.5rem;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 50px;
+  margin-top: 30px;
+}
+
+.RewardPoint_box{
+  padding: 30px;
+}
+
+.pagination{
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* 버튼 사이에 간격을 주기 위해 gap 설정 */
+  position: absolute;
+  top: 1000px;
+  left: 40%;
+  padding: 10px;
+}
+
+.score{
+  display: flex;
+}
+
+.ApplyStudy_text{
+  font-weight: bold;
 }

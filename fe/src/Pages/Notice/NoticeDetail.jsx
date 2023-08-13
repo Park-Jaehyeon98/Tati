@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { apiClient } from '../../api/apiClient';
 import style from './NoticeDetail.module.css'
 import { useSelector } from 'react-redux';
-
+import axios from 'axios';
 
 const NoticeDetail = () => {
     const params = useParams();
@@ -22,6 +22,7 @@ const NoticeDetail = () => {
     const subURL = `/notice/${boardId}`;
     const config = {};
 
+
     useEffect(() => {
         apiClient.get(subURL, config)
             .then((res) => {
@@ -31,36 +32,39 @@ const NoticeDetail = () => {
             .catch((err) => { console.log(err.data) })
     }, [])
 
-    const boardType = 0;
-    
     const {
         boardTitle,
         boardContent,
         memberNickname,
         createdDate,
         boardHit
-        
+
     } = boardData
 
+
+    // 삭제
+    const handleDeleteBtnClick = () => {
+
+        axios.delete(`${process.env.REACT_APP_URL}/notice/${boardId}/${1}`)
+            .then((res) => {
+                console.log(res)
+                navigate('../')
+            })
+            .catch((err) => {
+                console.log(err,);
+            });
+    }
+
+    // 목록
     const handleListBtnClick = () => {
         navigate('../')
     }
 
+    // 수정
     const handleModifyBtnClick = () => {
-        navigate('Modify')
+        navigate(`../${boardId}/Modify`);
     }
 
-    const handleDeleteBtnClick = () => {
-        console.log(subURL)
-        apiClient.delete(subURL+`/${user.memberId}`)
-            .then((res) => {
-                console.log(res);
-                navigate('../')
-            })
-            .catch((err) => {
-                console.log(err)
-            });
-    }
 
     return (
         <div className={style.container}>
@@ -70,7 +74,7 @@ const NoticeDetail = () => {
             </div>
             <hr />
             <div className={style.revDir}>
-                {memberNickname} || 조회수 : 
+                {memberNickname} || 조회수 :
                 {boardHit}
             </div>
             <div className={style.contentBox}>
@@ -78,8 +82,10 @@ const NoticeDetail = () => {
             </div>
             <div className={style.revDir}>
                 <div className={style.btn} onClick={handleListBtnClick}>목록 보기</div>
-                {(user.memberNickName === 'admin') && <div className={style.btn} onClick={handleModifyBtnClick}>공지사항 수정</div>}
-                {(user.memberNickName === 'admin') && <div className={style.btn} onClick={handleDeleteBtnClick}>공지사항 삭제</div>}
+                <div className={style.btn} onClick={handleDeleteBtnClick}>삭제</div>
+                {/* {!(user.memberNickName === 'admin') ||  */}
+                <div className={style.btn} onClick={handleModifyBtnClick}>공지사항 수정</div>
+                {/* } */}
             </div>
 
         </div>

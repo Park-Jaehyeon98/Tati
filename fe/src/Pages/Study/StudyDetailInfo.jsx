@@ -67,6 +67,11 @@ const StudyDetailInfo = () => {
     const nowDay = now.getDay() === 0 ? now.getDay() + 6 : now.getDay() - 1;
     // 오늘 스터디 있는지 확인
 
+    const [approvalData, setapprovalData] = useState({
+        studyId: '',
+        memberId: 0
+    });
+
     return (
         <div className={style.container}>
             <div className={style.contentBox}>

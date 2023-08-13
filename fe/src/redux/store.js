@@ -10,19 +10,22 @@ import userStudyScheduleSlice from './reducers/userStudyScheduleSlice';
 const persistConfig = {
   key: "root", // 저장될 데이터의 키 (유저 정보만 저장)
   storage, // 스토리지 종류 (로컬 스토리지)
-  whitelist: ['user', 'userSchedule', 'userStudySchedule'],
+  whitelist: ['user', 'userSchedule', 'userStudySchedule', 'faq'],
   debug: true, // 디버그 모드 활성화
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// 새로고침시 삭제됨
+
+
 const store = configureStore({
   reducer: {
     user: persistedReducer,
-    userSchedule: userScheduleSlice,
-    userStudySchedule: userStudyScheduleSlice,
+    // userSchedule: persistedReducer,
+    // userStudySchedule: persistedReducer,
+    // faq:persistedReducer,
   },
 });
+
 
 const persistor = persistStore(store);
 
