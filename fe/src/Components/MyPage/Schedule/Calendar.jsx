@@ -242,11 +242,23 @@ export default function Calendar(){
     setEventContent('');
   };
 
+  
+  const isUserStudyScheduleEvent = (event) => {
+    const userStudyScheduleIds = userStudySchedule.map((schedule) => schedule.scheduleId);
+    return userStudyScheduleIds.includes(event.extendedProps.scheduleId);
+  };
 
 
   // 일정 삭제 =======================================================================
   const handleConfirmDelete = () => {
     const scheduleId = selectedEvent.extendedProps.scheduleId;
+
+    // 선택한 이벤트가 userStudySchedule에 속하는 스터디 일정인 경우 경고창 띄우기
+    if (isUserStudyScheduleEvent(selectedEvent)) {
+      alert("스터디 일정은 삭제할 수 없습니다.");
+      setShowConfirmation(false); // Close the confirmation dialog
+      return;
+    }
 
     axios
       .delete(`${process.env.REACT_APP_URL}/member/mypage/schedule/${scheduleId}`,{
@@ -324,7 +336,7 @@ export default function Calendar(){
       },
       color:col,
     }
-    console.log(event,'--------------------')
+
     seteventColor(event)
     setShowConfirmation(true); // Open the confirmation dialog
   };
