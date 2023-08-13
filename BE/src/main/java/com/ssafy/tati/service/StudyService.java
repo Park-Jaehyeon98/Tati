@@ -51,10 +51,9 @@ public class StudyService {
     public Study createStudy(Study study) {
         Study saveStudy = studyRepository.save(study);
 
-        //꼭 studyHost로 바꿔야 한다!!
-        Member member = memberService.findById(study.getStudyId());
+        Member member = memberService.findById(study.getStudyHost());
         Point point = new Point(0, "", LocalDateTime.now(), study.getStudyDeposit(),
-                "스터디 생성", member);
+                (study.getStudyName() +" 스터디 생성"), member);
 
         pointService.delete(point);
 

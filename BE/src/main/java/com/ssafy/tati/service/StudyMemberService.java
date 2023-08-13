@@ -3,6 +3,7 @@ package com.ssafy.tati.service;
 import com.ssafy.tati.dto.res.StudyMemberResDto;
 import com.ssafy.tati.dto.res.StudyMemberSecessionResDto;
 import com.ssafy.tati.entity.Member;
+import com.ssafy.tati.entity.Point;
 import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.entity.StudyMember;
 import com.ssafy.tati.repository.MemberRepository;
@@ -12,15 +13,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class StudyMemberService {
-    private final StudyRepository studyRepository;
+    private final MemberService memberService;
+    private final PointService pointService;
     private final MemberRepository memberRepository;
     private final StudyMemberRepository studyMemberRepository;
 
@@ -43,17 +46,47 @@ public class StudyMemberService {
         StudyMember studyMember = studyMemberRepository.findByStudyStudyIdAndMemberMemberId(studyId, memberId).orElseThrow(() -> new RuntimeException("해당 스터디의 참가 회원이 아닙니다."));
         int cur_point = studyMember.getStudy().getStudyDeposit() - studyMember.getStudyMemberPenalty();
 
-        studyMember.getStudy().setTotalPenalty( studyMember.getStudy().getTotalPenalty() +
+        Study study = studyMember.getStudy();
+        Member member = memberService.findById(memberId);
+
+        study.setTotalPenalty( studyMember.getStudy().getTotalPenalty() +
                 studyMember.getStudyMemberPenalty());
-        studyMember.getMember().setTotalPoint(studyMember.getMember().getTotalPoint() + cur_point);
+
+        //열정지수 > 가입 날짜
+        List<StudyMember> studyMemberList = study.getStudyMemberList();
+
+        if(study.getStudyHost()== memberId) {
+            Integer maxScore= 0;
+            Integer maxMemberId= 0;
+
+            for(StudyMember searchStudyMember : studyMemberList){
+                if(maxScore < searchStudyMember.getMember().getTotalScore()) {
+                    maxScore = searchStudyMember.getMember().getTotalScore();
+                    maxMemberId = searchStudyMember.getMember().getMemberId();
+                }
+
+                else if(maxScore == searchStudyMember.getMember().getTotalScore()) {
+                    LocalDate date1 = studyMemberRepository.findById(maxMemberId).get().getStudyJoinDate();
+                    LocalDate date2 = searchStudyMember.getStudyJoinDate();
+
+                    if(date1.isAfter(date2)) {
+                        maxScore = searchStudyMember.getMember().getTotalScore();
+                        maxMemberId = searchStudyMember.getMember().getMemberId();
+                    }
+                }
+            }
+            study.setStudyHost(maxMemberId);
+        }
+
+        Point point = new Point(0, "", LocalDateTime.now(), cur_point,
+                (studyMember.getStudy().getStudyName() + " 스터디 탈퇴 보증금 반환"), member);
+        pointService.save(point);
 
         studyMemberRepository.deleteById(studyMember.getStudyMemberId());
         StudyMemberSecessionResDto studyMemberSecessionResDto = new StudyMemberSecessionResDto(studyMember.getMember().getMemberNickName(), studyMember.getStudy().getStudyName());
         return studyMemberSecessionResDto;
     }
 
-
-    ////////////////////////
     // 스터디룸 입실을 위해 스터디 멤버인지 확인
     public Optional<StudyMember> findStudyMember(Integer studyId, Integer memberId) {
         Optional<Member> optionalMember = memberRepository.findById(memberId);

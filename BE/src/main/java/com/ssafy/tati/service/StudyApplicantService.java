@@ -37,7 +37,7 @@ public class StudyApplicantService {
         }
 
         Point point = new Point(0, "", LocalDateTime.now(), study.getStudyDeposit(),
-                "스터디 신청", member);
+                (study.getStudyName()+" 스터디 신청"), member);
         pointService.delete(point);
 
         StudyApplicant studyApplicant = new StudyApplicant(study, member);
@@ -73,7 +73,7 @@ public class StudyApplicantService {
         Study study = studyApplicant.getStudy();
 
         Point point = new Point(0, "", LocalDateTime.now(), study.getStudyDeposit(),
-                "스터디 신청 보증금 반환", member);
+                (study.getStudyName() + " 스터디 신청 보증금 반환"), member);
         pointService.save(point);
 
         studyApplicantRepository.deleteById(studyApplicant.getStudyApplicantId());
