@@ -95,6 +95,7 @@ export default function Calendar(){
         
         //스터디 일정
         res.data.studyScheduleList.forEach(schedule => {
+          console.log(schedule.studyScheduleList)
           const targetDays = [0, 2]; // 일요일과 수요일
           const startDate = new Date(schedule.studyStartDate);
           const endDate = new Date(schedule.studyEndDate);
