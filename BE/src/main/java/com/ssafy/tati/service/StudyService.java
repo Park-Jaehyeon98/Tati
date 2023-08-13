@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,8 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class StudyService {
+    private final MemberService memberService;
+    private final PointService pointService;
     private final StudyRepository studyRepository;
     private final CategoryRepository categoryRepository;
     private final StudyScheduleRepository studyScheduleRepository;
@@ -45,6 +48,14 @@ public class StudyService {
 
     public Study createStudy(Study study) {
         Study saveStudy = studyRepository.save(study);
+
+        //꼭 studyHost로 바꿔야 한다!!
+        Member member = memberService.findById(study.getStudyId());
+        Point point = new Point(0, "", LocalDateTime.now(), study.getStudyDeposit(),
+                "스터디 생성", member);
+
+        pointService.delete(point);
+
         return saveStudy;
     }
 
