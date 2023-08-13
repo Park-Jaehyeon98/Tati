@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 const NoticeList = () => {
     // 여기서 요청 보냄
     const navigate = useNavigate();
-    const user = useSelector((state) => { return state.user })
+    const user = useSelector((state) => { return state.user.user })
     const [boardList, setBoardList] = useState([]);
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -37,6 +37,7 @@ const NoticeList = () => {
     // }, [])
 
     const handleCreateBtnClick = () => {
+        console.log(user)
         navigate('Create')
     }
 
@@ -97,7 +98,7 @@ const NoticeList = () => {
                 {">"}
             </button>
             {/* 새 공지 작성하기 관리자만 */}
-            {(user.memberNickName === 'admin') ||
+            {user && (user.memberNickName === 'admin') &&
                 <button onClick={handleCreateBtnClick}>
                     새 글 작성
                 </button>

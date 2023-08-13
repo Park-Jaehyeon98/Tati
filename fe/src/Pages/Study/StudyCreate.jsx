@@ -44,7 +44,7 @@ const StudyCreate = () => {
         studyPassword: null, // 패스워드
         studyDeposit: 1,  //보증금 최대 50000
         // studyHost: localStorage.getItem("memberNickName"), // memberNickName으로 들어갈것 
-        studyHost: user.memberNickName, // memberNickName으로 들어갈것 
+        studyHost: user.memberId, // memberNickName으로 들어갈것 
         studyStartDate: todayString, //스터디 시작일
         studyEndDate: todayString, //스터디 종료일
     });
@@ -359,7 +359,6 @@ const StudyCreate = () => {
             </div>
         </div >
     );
-
 }
 
 export default StudyCreate;

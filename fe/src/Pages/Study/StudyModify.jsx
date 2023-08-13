@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 
 import style from './StudyModify.module.css';
 import { apiClient } from '../../api/apiClient';
@@ -8,31 +8,22 @@ const StudyModify = () => {
     const navigate = useNavigate();
 
     const params = useParams();
+    const { studyData, refreshDetail } = useOutletContext();
     const studyId = params.studyId;
 
     const [studyModifyData, setStudyModifyData] = useState({
-        categoryId: 1, //스터디 카테고리
-        studyName: "스터디", //스터디 이름
-        studyDescription: "스터디설명", //스터디 설명
+        categoryId: studyData.categoryId, //스터디 카테고리
+        studyName: studyData.studyName, //스터디 이름
+        studyDescription: studyData.studyDescription, //스터디 설명
         // totalMember: "", //스터디 멤버 수x`
-        disclosure: true, // 공개 여부
-        studyPassword: null // 패스워드
+        disclosure: studyData.disclosure, // 공개 여부
+        studyPassword: studyData.studyPassword // 패스워드
     });
 
     // 스터디 이미지
     const [studyImg, setStudyImg] = useState(null);
     // 스터디 이미지 미리보기
     const [studyImgView, setStudyImgView] = useState(null);
-
-
-    // 처음 데이터 받아옴
-    // useEffect(() => {
-    //     apiClient.get(`study/${studyId}`)
-    //         .then((res) => {
-    //             console.log(res.data);
-    //             setStudyModifyData(res.data);
-    //         })
-    // }, []);
 
     const { categoryId,
         studyName,
@@ -118,11 +109,11 @@ const StudyModify = () => {
             })
             .then((res) => {
                 console.log(res);
-                setStudyModifyData(res.data);
+                refreshDetail()
+                navigate(`/Study/${studyId}`)
             })
             .catch((err) => {
                 console.log(err);
-                setStudyModifyData(err.data);
             })
     }
 

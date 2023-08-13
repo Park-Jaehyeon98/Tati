@@ -10,7 +10,7 @@ const FaqList = () => {
     const [boardList, setBoardList] = useState([]);
 
     const navigate = useNavigate();
-    const user = useSelector((state) => { return state.user.user });
+    const user = useSelector((state) => state.user.user);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -91,12 +91,12 @@ const FaqList = () => {
             </Button>
 
             {/* 새 공지 작성하기 관리자만 */}
-            {(user.memberNickName === 'admin') &&
-                <Button onClick={handleCreateBtnClick}>
+            {user && (user.memberNickName === '관리자') &&
+                < Button onClick={handleCreateBtnClick}>
                     새 글 작성
                 </Button>
             }
-        </div>
+        </div >
     )
 }
 

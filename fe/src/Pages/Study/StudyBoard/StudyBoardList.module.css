@@ -1,4 +1,5 @@
 .boardFrame {
+  height: 30px;
   display: grid;
   grid-template-columns: 2fr 7fr 3fr 3fr 3fr;
 }
@@ -8,9 +9,15 @@
   text-align: center;
 }
 .container {
-  margin: auto;
+  margin: 10px;
 }
 
 .boardContent {
-  height: 400px;
+  height: auto;
+}
+
+.pagenataion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

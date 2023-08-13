@@ -10,13 +10,13 @@ const StudyList = () => {
     const navigate = useNavigate();
 
     // 스터디 리스트
-    const [studyList, setStudyList] = useState([]);
+    const [studyList, setStudyList] = useState([1, 2]);
     // 페이지네이션
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const firstPage = currentPage - (currentPage % 5) + 1
     // 카테고리 선택
-    const [categoryId, setCategoryId] = useState(null);
+    const [categoryId, setCategoryId] = useState([null]);
     const categoryIdArray = ["자격증", "취업", "학교", "공시", "기타"];
     // 검색 키워드
     const [keywordInput, setKeywordInput] = useState('');
@@ -29,7 +29,7 @@ const StudyList = () => {
         apiClient.get('study/list')
             .then((res) => {
                 console.log(res)
-                setStudyList(res.data)
+                setStudyList(res.data.content)
                 setTotalPages(res.data.sort.totalPages)
             })
             .catch((err) => {
@@ -63,7 +63,7 @@ const StudyList = () => {
                 .then((res) => {
                     console.log(res);
                     // studyList에 res.data 값 할당
-                    setStudyList(res.data);
+                    setStudyList(res.data.content);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -71,14 +71,6 @@ const StudyList = () => {
         }
     }, [currentPage, categoryId, keyword])
 
-
-    // 하드코딩용
-    useEffect(() => {
-        //setStudyList([{ studyId: 0, studyName: "하하", totalMember: 8, disclosure: true, currentMember: 5, imageUrl: "" }, { studyId: 1, studyName: "하하", totalMember: 8, disclosure: true, currentMember: 5, imageUrl: "" }])
-        studyList.map((studyDetail) => (
-            <StudyCardItem key={studyDetail.studyId} studyDetail={studyDetail} />
-        ))
-    }, [])
 
     return (
         <div>
@@ -112,7 +104,7 @@ const StudyList = () => {
             <div>
                 {/* 스터디 카드 리스트 */}
 
-                {studyList.map((studyDetail) => {
+                {!(studyList === []) && studyList.map((studyDetail) => {
                     return <StudyCardItem studyDetail={studyDetail} />
                 })}
 

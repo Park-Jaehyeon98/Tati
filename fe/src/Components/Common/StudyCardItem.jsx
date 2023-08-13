@@ -10,8 +10,7 @@ const StudyCardItem = ({ studyDetail }) => {
                 {studyName}
                 {currentMember} / {totalMember}
                 {disclosure}
-                {imageUrl}
-                <img src={imageUrl}></img>
+                <img width={100} height={100} src={imageUrl} />
             </div>
         </Link>
     )
