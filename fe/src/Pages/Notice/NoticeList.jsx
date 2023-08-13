@@ -39,6 +39,7 @@ const NoticeList = () => {
 
 
     const handleCreateBtnClick = () => {
+        console.log(user)
         navigate('Create')
     }
 

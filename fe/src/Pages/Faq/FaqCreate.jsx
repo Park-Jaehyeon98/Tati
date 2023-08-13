@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { apiClient } from '../../api/apiClient';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import style from './FaqCreate.module.css'
 

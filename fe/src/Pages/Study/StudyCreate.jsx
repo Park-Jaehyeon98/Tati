@@ -183,7 +183,7 @@ const StudyCreate = () => {
 
     // 생성 요청 제출
     const handleStudyCreateSubmit = () => {
-    
+
         const studyReqDto = {
             ...studyData,
             studySchedule: studySchedule,
@@ -227,17 +227,17 @@ const StudyCreate = () => {
 
         <div className={style.container}>
 
-        <div className={style.disclosureContainer}>
-            <h3>스터디 생성</h3>
-        </div>
-            
+            <div className={style.disclosureContainer}>
+                <h3>스터디 생성</h3>
+            </div>
+
             <div>
                 <div className={style.disclosureContainer}>
                     <div className={style.disclosure}>카테고리</div>
                     <div className={style.buttons}>
                         {categoryIdArray.map((categoryIdItem, index) =>
-                            <button key={categoryIdItem} className={index === categoryId - 1 ? style.selected : style.noSelected} 
-                                    onClick={() => handleCategoryIdClick(index)}>{categoryIdItem}</button>
+                            <button key={categoryIdItem} className={index === categoryId - 1 ? style.selected : style.noSelected}
+                                onClick={() => handleCategoryIdClick(index)}>{categoryIdItem}</button>
                         )}
                     </div>
                 </div>
@@ -248,7 +248,7 @@ const StudyCreate = () => {
                         <button name="disclosure" className={disclosure ? style.selected : style.noSelected} value={disclosure} onClick={() => handleIsDisclosureClick(true)}> 공개</button>
                         <button name="disclosure" className={!disclosure ? style.selected : style.noSelected} value={disclosure} onClick={() => handleIsDisclosureClick(false)}> 비공개</button>
                     </div>
-                    
+
                 </div>
 
                 <div>
@@ -274,7 +274,7 @@ const StudyCreate = () => {
                 <div className={style.disclosureContainer}>
                     <div className={style.disclosure}>스터디 기간</div>
                     <div >
-                    시작일 
+                        시작일
                         <DatePicker className={style.inputFieldDatePicker}
                             selected={startDate}
                             onChange={(date) => { date > today && setStartDate(date) }}
@@ -284,7 +284,7 @@ const StudyCreate = () => {
                         />
                     </div>
                     <div>
-                        종료일 
+                        종료일
                         <DatePicker className={style.inputFieldDatePicker}
                             selected={endDate}
                             onChange={(date) => setEndDate(date)}
@@ -304,7 +304,7 @@ const StudyCreate = () => {
 
 
                 <div className={style.disclosure}>
-                    스터디 요일/시간  
+                    스터디 요일/시간
                 </div>
 
                 <div className={`${style.scheduleContainer} ${style.disclosureContainer}`}>
@@ -341,7 +341,7 @@ const StudyCreate = () => {
                             })}
                         </select>
                         시
-                        
+
                         <select className={style.txt} name="studyEndMin" id="studyEndMin" onChange={handleStudyScheduleItemChange} value={studyEndMin}>
                             {minList.map((value, index) => {
                                 return < option value={value}> {value}</option>
@@ -359,11 +359,11 @@ const StudyCreate = () => {
                     <hr />
                     스터디 일정
                     <div className={style.disclosure}>
-                    {
-                        studySchedule.map(({ studyDay, studyStartTime, studyEndTime }, index) => {
-                            return <div key={index} >{dayList[studyDay]} 요일  {studyStartTime} ~  {studyEndTime}</div>
-                        })
-                    }
+                        {
+                            studySchedule.map(({ studyDay, studyStartTime, studyEndTime }, index) => {
+                                return <div key={index} >{dayList[studyDay]} 요일  {studyStartTime} ~  {studyEndTime}</div>
+                            })
+                        }
                     </div>
 
                     <hr />
@@ -375,7 +375,7 @@ const StudyCreate = () => {
                     스터디 대표 이미지
                     <input type="file" name="studyImg" onChange={handleStudyImgUpload} />
                 </div>
-                
+
                 <div className={`${style.imagePreview} ${style.disclosureContainer}`} style={{ width: 100, height: 100 }}>
                     {studyImgView && <img src={studyImgView} alt="" width={100} height={100} />}
                 </div>
@@ -385,10 +385,10 @@ const StudyCreate = () => {
                     <div>스터디 보증금</div>
                     <input type="number" name="studyDeposit" value={studyDeposit} onChange={handleChange} />
                 </div>
-                
+
 
                 <div className={`${style.buttonContainer} ${style.disclosureContainer} ${style.disclosure}`}>
-                    <button className={style.submitButton}  onClick={handleStudyCreateSubmit}>스터디 생성</button>
+                    <button className={style.submitButton} onClick={handleStudyCreateSubmit}>스터디 생성</button>
                     <Link to='/Study'>
                         <button className={style.cancelButton}>취소하기</button>
                     </Link>
@@ -398,7 +398,6 @@ const StudyCreate = () => {
             </div>
         </div >
     );
-
 }
 
 export default StudyCreate;

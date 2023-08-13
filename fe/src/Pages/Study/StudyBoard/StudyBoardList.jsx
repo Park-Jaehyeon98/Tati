@@ -4,11 +4,13 @@ import StudyBoardListItem from '../../../Components/Study/StudyBoard/StudyBoardL
 
 import { Link, useNavigate, useOutletContext } from 'react-router-dom'
 import { apiClient } from '../../../api/apiClient'
+import { useSelector } from 'react-redux'
+import { Button } from '@material-ui/core';
 
 
 const StudyBoardList = () => {
-    const navigate = useNavigate();
     const { studyId, boardType } = useOutletContext();
+    const user = useSelector((state) => { return state.user.user })
 
 
     const [boardList, setBoardList] = useState([]);
@@ -17,7 +19,7 @@ const StudyBoardList = () => {
     const [totalPages, setTotalPages] = useState(1);
     const firstPage = currentPage - (currentPage % 5) + 1
 
-    const memberId = 1;
+    const memberId = user.memberId;
 
     useEffect(() => {
         const subURL = boardType === 1 ? `study/${studyId}/notice/` : `study/${studyId}/board/`
@@ -27,7 +29,6 @@ const StudyBoardList = () => {
                 setBoardList(res.data.content);
             })
             .catch((err) => { console.log(err) })
-        // setBoardList([{ boardId: 1, boardTitle: "게시물제목", memberNickname: '철수', boardContent: '내용', createdDate: '23/05/11', boardHit: 111 },])
     }, []);
 
 
@@ -42,11 +43,11 @@ const StudyBoardList = () => {
                     <div className={style.cell}>작성일</div>
                     <div className={style.cell}>조회수</div>
                 </div>
+                <hr />
                 <div className={style.boardContent}>
                     {boardList.length === 0 ?
                         <h3>글이 없습니다..</h3 >
                         : boardList.map((boardData) => {
-                            console.log(studyId)
                             return (
                                 <div key={boardData.boardId} >
                                     <StudyBoardListItem boardData={boardData} studyId={studyId} boardType={boardType} />
@@ -55,51 +56,50 @@ const StudyBoardList = () => {
                         })
                     }
                 </div>
+
             </div>
             {/* 페이지네이션 */}
-            <button
-                key={'<'}
-                onClick={() => setCurrentPage(currentPage - 1)}
-                disabled={currentPage === 1}
-            >
-                {"<"}
-            </button>
-            {Array.from({ length: 5 }, (_, i) =>
-                currentPage % 5 === 0 ?
-                    (firstPage - 5 + i) <= totalPages &&
-                    <button
-                        key={firstPage - 5 + i}
-                        onClick={() => setCurrentPage(firstPage - 5 + i)}
-                        disabled={firstPage - 5 + i === currentPage}
-                    >
-                        {firstPage - 5 + i}
-                    </button>
-                    :
-                    (firstPage + i) <= totalPages && <button
-                        key={firstPage + i}
-                        onClick={() => setCurrentPage(firstPage + i)}
-                        disabled={firstPage + i === currentPage}
-                    >
-                        {firstPage + i}
-                    </button>)}
-            <button
-                key={'>'}
-                onClick={() => {
-                    setCurrentPage(currentPage + 1)
-                }}
-                disabled={currentPage === totalPages || !totalPages}
-            >
-                {">"}
-            </button>
+            <div className={style.pagenataion}>
+                <Button
+                    key={'<'}
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                >
+                    {"<"}
+                </Button>
+                {Array.from({ length: 5 }, (_, i) =>
+                    currentPage % 5 === 0 ?
+                        (firstPage - 5 + i) <= totalPages &&
+                        <Button
+                            key={firstPage - 5 + i}
+                            onClick={() => setCurrentPage(firstPage - 5 + i)}
+                            disabled={firstPage - 5 + i === currentPage}
+                        >
+                            {firstPage - 5 + i}
+                        </Button>
+                        :
+                        (firstPage + i) <= totalPages && <Button
+                            key={firstPage + i}
+                            onClick={() => setCurrentPage(firstPage + i)}
+                            disabled={firstPage + i === currentPage}
+                        >
+                            {firstPage + i}
+                        </Button>)}
+                <Button
+                    key={'>'}
+                    onClick={() => {
+                        setCurrentPage(currentPage + 1)
+                    }}
+                    disabled={currentPage === totalPages || !totalPages}
+                >
+                    {">"}
+                </Button>
+            </div>
             {/* 스터디 생성 버튼 */}
             <div>
                 <Link to='./Create'>
-                    <button>새 게시물 만들기</button>
+                    <Button>새 게시물 만들기</Button>
                 </Link>
-            </div>
-            {/* 페이지네이션 */}
-            <div>
-                페이지네이션
             </div>
         </div >
     )

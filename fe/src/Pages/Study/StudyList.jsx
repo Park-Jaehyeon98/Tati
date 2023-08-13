@@ -10,7 +10,7 @@ const StudyList = () => {
     const navigate = useNavigate();
 
     // 스터디 리스트
-    const [studyList, setStudyList] = useState([]);
+    const [studyList, setStudyList] = useState([1, 2]);
     // 페이지네이션
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -44,7 +44,7 @@ const StudyList = () => {
         } else {
             setCategoryId(value + 1);
         }
-    
+
         (keywordInput ? setKeyword(keywordInput) : setKeyword(null));
     }
 
@@ -59,19 +59,20 @@ const StudyList = () => {
         (keywordInput ? setKeyword(keywordInput) : setKeyword(null))
 
         const subUrl = `/study/search`
-        
-        apiClient.get(subUrl, { params: {
+
+        apiClient.get(subUrl, {
+            params: {
                 page: currentPage,
                 category: categoryId,
                 keyword: keywordInput
             }
         })
-        .then((res) => {
-            console.log(res)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
     // 키워드 조회

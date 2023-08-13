@@ -10,7 +10,7 @@ const NoticeCreate = () => {
     const [boardData, setBoardData] = useState({
         boardTitle: '',
         boardContent: '',
-        memberId: user.memberId,
+        memberId: 1,
         // 0 : 공지 1: 스터디 공지 2: 스터디 게시판 9: FAQ
     });
 

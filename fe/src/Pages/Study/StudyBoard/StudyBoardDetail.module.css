@@ -1,32 +1,43 @@
 .container {
-  margin: 50px;
+  margin: 10px;
 }
 
-.titleBox {
-  display: grid;
-  grid-template-columns: 6fr 2fr 2fr;
+/* .titleBox {
+  border: solid 1px black;
+  border-radius: 5px;
+} */
 
-  height: 50px;
+.titleContent {
+  margin: 10px;
+  font-size: 32px;
 }
 
 .subBox {
   display: grid;
-  grid-template-columns: 2fr 2fr 4fr;
+  grid-template-columns: 4fr 4fr 2fr;
+}
+
+.buttonBox {
+  display: flex;
 }
 
 .contentBox {
   height: 600px;
   background-color: white;
+  /* border: solid 1px black; */
 }
 
 .btn {
   width: 120px;
-  height: 50px;
+  height: 40px;
+  margin: 10px;
+  border: 10px;
 }
 
 .gray {
   background-color: gray;
 }
+
 .blue {
-  background-color: rgb(128, 130, 255);
+  background-color: #3396f4;
 }

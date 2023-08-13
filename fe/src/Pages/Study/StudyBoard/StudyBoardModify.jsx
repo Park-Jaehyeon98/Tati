@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { apiClient } from '../../../api/apiClient';
 import { useSelector } from 'react-redux';
 
-const StudyBoardCreate = () => {
+const StudyBoardModify = () => {
     const navigate = useNavigate();
+    const params = useParams();
+    const boardId = params.boardId;
+
     const { studyId, boardType } = useOutletContext();
     const user = useSelector(state => state.user.user);
     // 0 : 공지 1: 스터디 공지 2: 스터디 게시판 9: FAQ
@@ -14,19 +17,35 @@ const StudyBoardCreate = () => {
         // 제목 string
         boardContent: '',
         // 내용 String
-        studyId,
-        // 스터디id int
+        boardId,
+        // 보드id int
         memberId: user.memberId,
         // 멤버id  int
         // 공지사항 생성 시는 제목,내용,스터디id,멤버id  request body에 담아줄것
 
     })
 
+    useEffect(() => {
+        apiClient.get(`study/board/${boardId}`)
+            .then((res) => {
+                setBoardBody({
+                    ...boardBody,
+                    boardTitle: res.data.boardTitle,
+                    // 제목 string
+                    boardContent: res.data.boardContent,
+                    // 내용 String
+                })
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [])
+
+
     // 역구조화로 key값을 변수로 사용
     const { boardTitle, boardContent } = boardBody;
 
     const [boardFile, setBoardFile] = useState(null);
-    const [boardImgView, setBoardImgView] = useState(null);
 
 
     const config = {
@@ -55,13 +74,13 @@ const StudyBoardCreate = () => {
             const formData = new FormData();
 
             formData.append('file', boardFile)
-            formData.append('studyBoardCreateDto', new Blob([JSON.stringify(boardBody)], {
+            formData.append('studyBoardModifyDto', new Blob([JSON.stringify(boardBody)], {
                 type: "application/json"
             }))
 
-            console.log(boardFile);
+            console.log(boardBody);
 
-            apiClient.post(subUrl, formData, config)
+            apiClient.put(subUrl, formData, config)
                 .then((res) => {
                     console.log(res)
                     handleCancleBtnClick()
@@ -71,10 +90,10 @@ const StudyBoardCreate = () => {
                 })
 
         } else {
-            console.log("스터디 공지 작성")
+            console.log("스터디 공지 수정")
             console.log(user.memberId);
-
-            apiClient.post(subUrl, boardBody)
+            console.log(boardBody)
+            apiClient.put(subUrl, boardBody)
                 .then((res) => {
                     console.log(res)
                     handleCancleBtnClick()
@@ -114,7 +133,7 @@ const StudyBoardCreate = () => {
     return (
         <div>
             <div style={{ height: 100 }}></div>
-            {boardType === 2 ? <h3>스터디 게시판 작성</h3> : <h3>공지사항 작성</h3>}
+            {boardType === 2 ? <h3>스터디 게시판 수정</h3> : <h3>공지사항 수정</h3>}
             <div>
                 <div>제목
                     <input type="text" name="boardTitle" value={boardTitle} onChange={handleChange} />
@@ -143,4 +162,4 @@ const StudyBoardCreate = () => {
     )
 }
 
-export default StudyBoardCreate
+export default StudyBoardModify

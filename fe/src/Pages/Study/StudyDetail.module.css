@@ -1,33 +1,130 @@
-.btnBox {
-  display: grid;
-  height: 50px;
-  width: auto;
-  grid-template-columns: 4fr 4fr 4fr;
-}
-.btn {
-  width: 200px;
-  height: 50px;
-  background-color: rgb(75, 75, 215);
-  color: white;
-  text-align: center;
-  margin: auto;
+.container {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.container {
+
+.titleBox {
   display: grid;
-  height: 100px;
-  width: auto;
-  grid-template-columns: 4fr 8fr 4fr;
+  min-height: 11rem;
+  width: 100%;
+  grid-template-columns: 1fr 2fr 1fr;
+  /* border: 1px solid black; */
+  background-color: #e8e9ea;
+  border-radius: 10px;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+.mainView {
+  display: block;
+  margin: 3%;
+}
+
+.titleDescription {
+  font-size: 8px;
+}
+
+.btnBox {
+  display: grid;
+  min-height: 5%;
+  width: 90%;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  min-height: 40px;
+  width: 80%;
+  border-radius: 10px;
+  border: none;
+  background-color: gray;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24);
+}
+
+.btn:hover {
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.25), 0 3px 3px rgba(0, 0, 0, 0.22);
+}
+
+.smallBtn {
+  min-height: 20px;
+  width: 120px;
+  border-radius: 6px;
+  border: none;
+  background-color: white;
+  color: black;
+  font-size: 8px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24);
+}
+.smallBtn:hover {
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.22);
+}
+
+.camBtn {
+  min-height: 60px;
+  width: 100%;
+  border-radius: 6px;
+  border: none;
+  background-color: #3396f4;
+  color: white;
+  font-size: 16px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24);
+}
+.camBtn:hover {
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.25), 0 3px 3px rgba(0, 0, 0, 0.22);
+}
+.dDay {
+  height: 100%;
+  background-color: #3396f4;
+  font-size: 0.6rem;
+  color: white;
+}
+
+.noStudytime {
+  font-size: 12px;
+  color: white;
+  background-color: gray;
+}
+
+.isSelected {
+  background-color: #3396f4;
 }
 
 .content {
+  display: flex;
   margin: auto;
   align-items: center;
   justify-content: center;
 }
 .smallBox {
-  height: 5px;
+  min-height: 5px;
   width: 5px;
+  margin: 2px;
+  font-size: 0.8rem;
+  color: white;
+  border-radius: 3px;
   background-color: gray;
+}
+
+.titleImg {
+  width: 120px;
+  min-height: 120px;
+  border-radius: 100%;
+  background-color: white;
+}
+
+.icon {
+  width: 1rem;
+  height: 1rem;
+  margin: auto;
 }

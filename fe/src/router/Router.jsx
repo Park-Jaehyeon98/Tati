@@ -57,6 +57,7 @@ import Room from "../Pages/Room/Room";
 import axios from "axios";
 import NoticeDetail from "../Pages/Notice/NoticeDetail";
 import VideoRoomComponent from "../Pages/Room/VideoRoomComponent";
+import CustomVideoRoomComponent from './../Pages/Room/CustomVideoRoomComponent';
 
 
 // 리덕스 툴킷
@@ -68,6 +69,7 @@ import { clearUserSchedule } from '../redux/reducers/userScheduleSlice'
 
 
 import AuthModal from "../Components/MyPage/AuthModal";
+import StudyBoardModify from './../Pages/Study/StudyBoard/StudyBoardModify';
 
 export default function Router() {
 
@@ -185,7 +187,10 @@ export default function Router() {
 
         {/* openvidu */}
         <Route path="/Room" element={<Room />} />
+        <Route path="/VideoEnter" element={<VideoRoomComponent />} />
         <Route path="/VideoRoom" element={<VideoRoomComponent />} />
+        <Route path="/CustomVideoRoom" element={<CustomVideoRoomComponent />} />
+
 
         {/* 공지사항 */}
         <Route path="/Notice" element={<Notice />}>
@@ -233,12 +238,15 @@ export default function Router() {
             <Route path="Notice" element={<StudyNotice />}>
               <Route path="" element={<StudyBoardList />} />
               <Route path=":boardId" element={<StudyBoardDetail />} />
+              <Route path=":boardId/Modify" element={<StudyBoardModify />} />
               <Route path="Create" element={<StudyBoardCreate />} />
             </Route>
+
             {/* 스터디 게시판 */}
             <Route path="Board" element={<StudyBoard />}>
               <Route path="" element={<StudyBoardList />} />
               <Route path=":boardId" element={<StudyBoardDetail />} />
+              <Route path=":boardId/Modify" element={<StudyBoardModify />} />
               <Route path="Create" element={<StudyBoardCreate />} />
             </Route>
           </Route>
