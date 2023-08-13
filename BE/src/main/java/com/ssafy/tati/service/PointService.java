@@ -43,4 +43,10 @@ public class PointService {
     public List<Point> selectPoint(Integer memberId){
         return pointRepository.selectPoint(memberId);
     }
+
+    //포인트 내역 넣기
+    public void saveList(Point point){
+        pointRepository.save(point);
+    }
+
 }

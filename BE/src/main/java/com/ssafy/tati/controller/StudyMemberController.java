@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class StudyMemberController {
     private final StudyMemberService studyMemberService;
-//    private final StudyMemberMapper studyMemberMapper;
 
     @Operation(summary = "스터디 참가 회원 조회", description = "스터디 참가 회원 조회 버튼을 누르면 스터디 참가 회원들의 정보 조회", responses = {
             @ApiResponse(responseCode = "200", description = "스터디 참가 회원 조회 성공", content = @Content(schema = @Schema(implementation = StudyMemberListResDto.class)))})

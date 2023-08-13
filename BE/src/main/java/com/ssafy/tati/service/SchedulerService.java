@@ -34,7 +34,6 @@ public class SchedulerService {
 
             List<StudyMember> studyMemberList = study.getStudyMemberList();
 
-
             List<StudyMember> excellentMemberList = studyManageRepository.findExcellentMember();
             int excellentPoint = study.getTotalPenalty() / excellentMemberList.size();
 
