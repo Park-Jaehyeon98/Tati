@@ -127,10 +127,11 @@ const StudyList = () => {
             {/* 페이지 1개당 8개 스터디 렌더링할것 */}
             <div>
                 {/* 스터디 카드 리스트 */}
-
-                {studyList.map((studyDetail) => {
-                    return <StudyCardItem studyDetail={studyDetail} />
-                })}
+                <div className={style.study_container}>
+                    {studyList.map((studyDetail) => {
+                        return <StudyCardItem studyDetail={studyDetail} />
+                    })}
+                </div>
 
 
                 {/* 페이지네이션 부분 */}
