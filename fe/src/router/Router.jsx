@@ -104,7 +104,7 @@ export default function Router() {
   // 로그아웃
   const handleLogout = () => {
     const accessToken = localStorage.getItem("accessToken");
-    const refreshToken = localStorage.getItem("refreshToken");
+    const refreshToken = localStorage.getItem("refreshtoken");
 
     axios.get(`${process.env.REACT_APP_URL}/member/logout`, {
       headers: {

@@ -100,29 +100,47 @@ export default function Calendar(){
         dispatch(clearUserStudySchedule())
         //스터디 일정
         res.data.studyScheduleList.forEach(schedule => {
-          const targetDays = []
-          schedule.studyScheduleList.forEach(startDate=>{
-            targetDays.push(Number(startDate.studyDay))
-          })
-          const startDate = new Date(schedule.studyStartDate);
-          const endDate = new Date(schedule.studyEndDate);
+          const targetDays = [];
+          const studyDays = schedule.studyScheduleList;
+        
+          // targetDays에 해당 요일 추가
+          studyDays.forEach(startDate => {
+            targetDays.push(Number(startDate.studyDay));
+          });
         
           // 보정된 시간대로 일정 생성
+          const startDate = new Date(schedule.studyStartDate);
+          const endDate = new Date(schedule.studyEndDate);
           const currentDate = new Date(startDate);
-          while (currentDate <= endDate) {
-            if (targetDays.includes(currentDate.getUTCDay())) {
-              const eventStart = new Date(currentDate);
-              eventStart.setUTCHours(19, 0); // 19시 0분
-              const eventEnd = new Date(currentDate);
-              eventEnd.setUTCHours(20, 0); // 20시 0분
         
-              const studyEvent = {
-                title: schedule.studyName,
-                start: eventStart.toISOString(),
-                end: eventEnd.toISOString(),
-              };
-              
-              dispatch(addStudySchedule(studyEvent))
+          while (currentDate <= endDate) {
+            const currentDay = currentDate.getUTCDay();
+            
+            if (targetDays.includes(currentDay)) {
+              const eventStart = new Date(currentDate);
+              const eventEnd = new Date(currentDate);
+        
+              const studyDayInfo = studyDays.find(dayInfo => Number(dayInfo.studyDay) === currentDay);
+              if (studyDayInfo) {
+                const startTimeParts = studyDayInfo.studyStartTime.split(':');
+                const endTimeParts = studyDayInfo.studyEndTime.split(':');
+        
+                const startHour = parseInt(startTimeParts[0]);
+                const startMinute = parseInt(startTimeParts[1]);
+                const endHour = parseInt(endTimeParts[0]);
+                const endMinute = parseInt(endTimeParts[1]);
+        
+                eventStart.setUTCHours(startHour - 9, startMinute); // 19시 0분
+                eventEnd.setUTCHours(endHour - 9, endMinute); // 20시 0분
+        
+                const studyEvent = {
+                  title: schedule.studyName,
+                  start: eventStart.toISOString(),
+                  end: eventEnd.toISOString(),
+                };
+        
+                dispatch(addStudySchedule(studyEvent));
+              }
             }
         
             // 다음 날짜로 이동
@@ -359,7 +377,7 @@ export default function Calendar(){
         <div className={style.Calendar_box_box}>
       <div className={style.calendar}>
         <FullCalendar
-          timeZone = {userTimeZone}
+          // timeZone = {userTimeZone}
           defaultView="dayGridMonth" 
           editable = {true} // 수정 가능
           resourceAreaHeaderContent="Rooms"
