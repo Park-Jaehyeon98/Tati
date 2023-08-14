@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -11,8 +11,8 @@ import axios from "axios";
 
 // 리덕스 저장
 import { useDispatch } from 'react-redux';
-import {addSchedule, updateSchedule,removeSchedule, clearUserSchedule} from "../../../redux/reducers/userScheduleSlice";
-import {addStudySchedule, removeStudySchedule, clearUserStudySchedule} from "../../../redux/reducers/userStudyScheduleSlice";
+import { addSchedule, updateSchedule, removeSchedule, clearUserSchedule } from "../../../redux/reducers/userScheduleSlice";
+import { addStudySchedule, removeStudySchedule, clearUserStudySchedule } from "../../../redux/reducers/userStudyScheduleSlice";
 import { updateUser } from "../../../redux/reducers/userSlice";
 
 // 리덕스 꺼내기
@@ -21,10 +21,10 @@ import { useSelector } from 'react-redux';
 import { event } from "jquery";
 
 
-export default function Calendar(){
+export default function Calendar() {
 
   const dispatch = useDispatch();
-  
+
 
   // 현재 년, 월
   const currentDate = new Date();
@@ -56,9 +56,9 @@ export default function Calendar(){
 
   useEffect(() => {
 
-    console.log(userTimeZone); 
+    console.log(userTimeZone);
     loadData()
-    },[]);
+  }, []);
 
 
   const [selectedDate, setSelectedDate] = useState(null);
@@ -69,7 +69,7 @@ export default function Calendar(){
 
   const [showConfirmation, setShowConfirmation] = useState(false);
 
-  
+
   const handleDateClick = (info) => {
     setSelectedDate(info.dateStr);
   };
@@ -86,7 +86,7 @@ export default function Calendar(){
           year,
           month
         },
-        headers:{
+        headers: {
           Authorization: "Bearer " + accessToken,
           RefreshToken: refreshtoken
         }
@@ -101,54 +101,54 @@ export default function Calendar(){
         res.data.studyScheduleList.forEach(schedule => {
           const targetDays = [];
           const studyDays = schedule.studyScheduleList;
-        
+
           // targetDays에 해당 요일 추가
           studyDays.forEach(startDate => {
             targetDays.push(Number(startDate.studyDay));
           });
-        
+
           // 보정된 시간대로 일정 생성
           const startDate = new Date(schedule.studyStartDate);
           const endDate = new Date(schedule.studyEndDate);
           const currentDate = new Date(startDate);
-        
+
           while (currentDate <= endDate) {
             const currentDay = currentDate.getUTCDay();
-            
+
             if (targetDays.includes(currentDay)) {
               const eventStart = new Date(currentDate);
               const eventEnd = new Date(currentDate);
-        
+
               const studyDayInfo = studyDays.find(dayInfo => Number(dayInfo.studyDay) === currentDay);
               if (studyDayInfo) {
                 const startTimeParts = studyDayInfo.studyStartTime.split(':');
                 const endTimeParts = studyDayInfo.studyEndTime.split(':');
-        
+
                 const startHour = parseInt(startTimeParts[0]);
                 const startMinute = parseInt(startTimeParts[1]);
                 const endHour = parseInt(endTimeParts[0]);
                 const endMinute = parseInt(endTimeParts[1]);
-        
+
                 eventStart.setUTCHours(startHour - 9, startMinute); // 19시 0분
                 eventEnd.setUTCHours(endHour - 9, endMinute); // 20시 0분
-        
+
                 const studyEvent = {
                   title: schedule.studyName,
                   start: eventStart.toISOString(),
                   end: eventEnd.toISOString(),
                 };
-        
+
                 dispatch(addStudySchedule(studyEvent));
               }
             }
-        
+
             // 다음 날짜로 이동
             currentDate.setUTCDate(currentDate.getUTCDate() + 1);
           }
         });
 
 
-        dispatch(updateUser({img:res.data.img}));
+        dispatch(updateUser({ img: res.data.img }));
 
         const eventsToAdd = res.data.scheduleList.map((scheduleItem) => ({
           title: scheduleItem.memberScheduleTitle,
@@ -157,7 +157,7 @@ export default function Calendar(){
           extendedProps: {
             content: scheduleItem.memberScheduleContent,
           },
-          color:'null'
+          color: 'null'
         }));
 
         // 할 일
@@ -168,9 +168,9 @@ export default function Calendar(){
 
         // 내 열정지수, 공부 시간
         dispatch(updateUser({
-          totalScore:res.data.totalScore,
-          todayStudyTime:res.data.todayStudyTime,
-          totalStudyTime:res.data.totalStudyTime
+          totalScore: res.data.totalScore,
+          todayStudyTime: res.data.todayStudyTime,
+          totalStudyTime: res.data.totalStudyTime
         }))
 
         console.log("==============================");
@@ -178,7 +178,7 @@ export default function Calendar(){
       .catch((err) => {
         console.log(err, "일정 요청 실패------------------");
       });
-    };
+  };
 
   //=========================================================================
 
@@ -197,16 +197,16 @@ export default function Calendar(){
     console.log(selectedDateTime,'-----------------')
 
     const postScheduleReqDto = {
-      email:user.email,
+      email: user.email,
       memberScheduleDate: selectedDateTime,
       memberScheduleContent: eventContent,
       memberScheduleTitle: eventTitle
     }
     console.log(postScheduleReqDto)
 
-    axios.post(`${process.env.REACT_APP_URL}/member/mypage/schedule`, 
-    postScheduleReqDto,{
-      headers:{
+    axios.post(`${process.env.REACT_APP_URL}/member/mypage/schedule`,
+      postScheduleReqDto, {
+      headers: {
         Authorization: "Bearer " + accessToken,
         RefreshToken: refreshtoken
       }
@@ -218,19 +218,19 @@ export default function Calendar(){
 
         const newEvent = {
           title: res.data.memberScheduleTitle,
-          data:res.data.memberScheduleDate.slice(0,10),
+          data: res.data.memberScheduleDate.slice(0, 10),
           scheduleId: res.data.memberScheduleId,
           extendedProps: {
             content: res.data.memberScheduleContent,
           },
-          color:'null'
+          color: 'null'
         };
 
         dispatch(addSchedule(newEvent))
         loadData()
       })
       .catch((err) => {
-        console.log(err,' 일정 추가 실패 ------------------');
+        console.log(err, ' 일정 추가 실패 ------------------');
       });
 
     // 캘린더 이벤트 배열에 새 이벤트를 추가하고 모달을 닫습니다.
@@ -240,7 +240,7 @@ export default function Calendar(){
     setEventContent('');
   };
 
-  
+
   const isUserStudyScheduleEvent = (event) => {
     const userStudyScheduleIds = userStudySchedule.map((schedule) => schedule.scheduleId);
     return userStudyScheduleIds.includes(event.extendedProps.scheduleId);
@@ -259,8 +259,8 @@ export default function Calendar(){
     }
 
     axios
-      .delete(`${process.env.REACT_APP_URL}/member/mypage/schedule/${scheduleId}`,{
-        headers:{
+      .delete(`${process.env.REACT_APP_URL}/member/mypage/schedule/${scheduleId}`, {
+        headers: {
           Authorization: "Bearer " + accessToken,
           RefreshToken: refreshtoken
         }
@@ -306,18 +306,18 @@ export default function Calendar(){
   //==========================================================================================
 
 
-  
+
   const handleEventClick = (info) => {
-    
+
     setSelectedEvent(info.event);
 
     const now = new Date();
     const formattedNow = `${now.getFullYear()}-${(now.getMonth() + 1)}`
-    
+
     const startTime = info.event.startStr
     const startTimeDate = new Date(startTime);
     const formattedStartTime = startTimeDate.toLocaleTimeString("en-US", { timeStyle: "short" });
-    
+
     const endTime = info.event.endStr
     const endTimeDate = new Date(endTime);
     const formattedEndTime = endTimeDate.toLocaleTimeString("en-US", { timeStyle: "short" });
@@ -325,14 +325,14 @@ export default function Calendar(){
     console.log(formattedNow)
     const event = {
       title: info.event.title,
-      data:formattedNow,
-      startTime:formattedStartTime,
-      endTime:formattedEndTime,
+      data: formattedNow,
+      startTime: formattedStartTime,
+      endTime: formattedEndTime,
       scheduleId: info.event._def.sourceId,
       extendedProps: {
         content: info.event._def.extendedProps,
       },
-      color:col,
+      color: col,
     }
 
     console.log(event)
@@ -342,7 +342,7 @@ export default function Calendar(){
 
 
 
-  const [selectedEvent, setSelectedEvent] = useState(null); 
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
 
   // 일정 클릭시 모달 열기===================================================================
@@ -354,7 +354,7 @@ export default function Calendar(){
 
 
   //
-  const handleColor = ()=>{
+  const handleColor = () => {
     console.log(eventColor)
     updateSchedule(eventColor)
     setShowConfirmation(false);
@@ -362,20 +362,20 @@ export default function Calendar(){
 
 
   // 색상변경
-  const handleColorChange=(color)=>{
+  const handleColorChange = (color) => {
     console.log(color)
     setCol(color)
   };
 
 
   // 일정
-  const events=[
-    
+  const events = [
+
     ...userSchedule,
     ...userStudySchedule
   ];
 
-  const headerChangeContent = (e)=>{
+  const headerChangeContent = (e) => {
     // console.log(e.target.value,'headerChangeContent')
     setEventContent(e.target.value)
   }
@@ -386,36 +386,36 @@ export default function Calendar(){
       {/* 캘린더 */}
       <div className={style.Calendar_box}>
         <div className={style.Calendar_box_box}>
-      <div className={style.calendar}>
-        <FullCalendar
-          // timeZone = {userTimeZone}
-          defaultView="dayGridMonth" 
-          editable = {true} // 수정 가능
-          resourceAreaHeaderContent="Rooms"
-          initialView={'dayGridMonth'}
-          locale={"ko"}
-          views={{ listWeek: { type: "listWeek", buttonText: "주간 목록" } }}
-          headerToolbar={
-              {
+          <div className={style.calendar}>
+            <FullCalendar
+              // timeZone = {userTimeZone}
+              defaultView="dayGridMonth"
+              editable={true} // 수정 가능
+              resourceAreaHeaderContent="Rooms"
+              initialView={'dayGridMonth'}
+              locale={"ko"}
+              views={{ listWeek: { type: "listWeek", buttonText: "주간 목록" } }}
+              headerToolbar={
+                {
                   start: 'today prev,next',
                   center: 'title',
-                  end: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek' 
+                  end: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                }
               }
-          }
-          plugins={[dayGridPlugin,timeGridPlugin,interactionPlugin,listPlugin]}
-          events={events}
-          resources = {events}
-          dateClick={handleDateClick}
-          eventClick={handleEventClick}
-          eventDrop={handleEventDrop}
-          />
-      </div>
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
+              events={events}
+              resources={events}
+              dateClick={handleDateClick}
+              eventClick={handleEventClick}
+              eventDrop={handleEventDrop}
+            />
+          </div>
         </div>
 
       </div>
-      
 
-          
+
+
       {selectedDate && (
         <div className={style.modal}>
           <div className={style.modal_content}>
@@ -433,7 +433,7 @@ export default function Calendar(){
         <div className={style.confirmation_modal}>
           <div className={style.confirmation_modal_content}>
             <div className={style.detail_title}>
-            일정 - {eventColor.title}
+              일정 - {eventColor.title}
             </div>
          
               {eventColor.extendedProps.content.content !== undefined && eventColor.extendedProps.content.content !== null && (
@@ -456,13 +456,13 @@ export default function Calendar(){
                   key={index}
                   className={`${style.color_button} ${selectedColor === color ? style.selected : ''}`}
                   style={{ backgroundColor: color }}
-                  onClick={()=>handleColorChange(color)}
+                  onClick={() => handleColorChange(color)}
                 ></button>
               ))}
             </div> */}
-            
+
             <div className={style.confirmation_buttons}>
-{/* 
+              {/* 
               <button className={style.confirm_button} onClick={handleColor}>
                 색상변경
               </button> */}

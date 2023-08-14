@@ -21,6 +21,20 @@
   margin: 3%;
 }
 
+.mainViewTitle {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-size: 32px;
+  margin-top: 3%;
+  margin-bottom: 4%;
+  align-items: center;
+}
+
+.mainViewBottom {
+  height: 30px;
+}
+
 .titleDescription {
   font-size: 8px;
 }
@@ -53,6 +67,7 @@
 }
 
 .btn:hover {
+  padding-bottom: 1%;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.25), 0 3px 3px rgba(0, 0, 0, 0.22);
 }
 
@@ -64,30 +79,41 @@
   background-color: white;
   color: black;
   font-size: 8px;
+  font-weight: 700;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24);
 }
 .smallBtn:hover {
+  padding-bottom: 1%;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.22);
 }
 
 .camBtn {
   min-height: 60px;
-  width: 100%;
+  width: 140px;
   border-radius: 6px;
   border: none;
   background-color: #3396f4;
   color: white;
   font-size: 16px;
+  font-weight: 700;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24);
 }
 .camBtn:hover {
+  padding-bottom: 1%;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.25), 0 3px 3px rgba(0, 0, 0, 0.22);
 }
 .dDay {
-  height: 100%;
+  height: 15px;
+  width: 40px;
+  margin: 2px;
+  font-size: 0.8rem;
+  color: white;
+  border-radius: 6px;
   background-color: #3396f4;
   font-size: 0.6rem;
-  color: white;
+  font-weight: 700;
+  padding: 0.5%;
+  text-align: center;
 }
 
 .noStudytime {
@@ -98,6 +124,7 @@
 
 .isSelected {
   background-color: #3396f4;
+  color: white;
 }
 
 .content {
@@ -107,18 +134,21 @@
   justify-content: center;
 }
 .smallBox {
-  min-height: 5px;
-  width: 5px;
+  height: 15px;
+  width: 40px;
   margin: 2px;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
+  font-weight: 700;
   color: white;
-  border-radius: 3px;
+  border-radius: 6px;
   background-color: gray;
+  padding: 0.5%;
+  text-align: center;
 }
 
 .titleImg {
   width: 120px;
-  min-height: 120px;
+  height: 120px;
   border-radius: 100%;
   background-color: white;
 }

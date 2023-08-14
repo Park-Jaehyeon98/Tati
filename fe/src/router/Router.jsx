@@ -192,7 +192,6 @@ export default function Router() {
         {/* openvidu */}
         <Route path="/Room" element={<Room />} />
         <Route path="/VideoEnter" element={<VideoRoomComponent />} />
-        <Route path="/VideoRoom" element={<VideoRoomComponent />} />
         <Route path="/CustomVideoRoom" element={<CustomVideoRoomComponent />} />
 
 
