@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -65,8 +66,21 @@ public class MemberScheduleController {
     public ResponseEntity<?> selectSchedule(@PathVariable Integer memberId, Integer year, Integer month){
         List<MemberSchedule> schedules = memberScheduleService.findSchedules(memberId , year, month);
 
-        List<ScheduleResDto> scheduleList =
-                scheduleMapper.memberScheduleListToScheduleResDtoList(schedules);
+//        List<ScheduleResDto> scheduleList =
+//                scheduleMapper.memberScheduleListToScheduleResDtoList(schedules);
+
+        List<ScheduleResDto> scheduleList = new ArrayList<>();
+        for(MemberSchedule memberSchedule : schedules){
+            ScheduleResDto scheduleResDto =new ScheduleResDto(
+                    memberSchedule.getMemberScheduleId(), memberSchedule.getMemberScheduleDate(),
+                    memberSchedule.getMemberScheduleTitle(), memberSchedule.getMemberScheduleContent());
+
+            System.out.println("resDto 제목: " +scheduleResDto.getMemberScheduleTitle());
+            System.out.println("resDto 내용: " +scheduleResDto.getMemberScheduleContent());
+
+            scheduleList.add( scheduleResDto );
+        }
+
 
         return new ResponseEntity<>(scheduleList, HttpStatus.OK);
     }
