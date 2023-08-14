@@ -39,7 +39,7 @@ export default function JoinStudy(){
       .then((res) => {
         console.log('가입스터디=================================')
         console.log(res.data);
-        // setJoinStudy(res.data)
+        setJoinStudy(res.data)
         console.log('==============================')
       })
       .catch((err) => {
@@ -52,11 +52,16 @@ export default function JoinStudy(){
   // 가입한 스터디 ======================================================================================
   
   
-  const NoticeItem = ({ studyName, studyStartDate, studyEndDate, totalMember,studyMemberCount }) => {
+  const NoticeItem = ({ studyId, studyName, studyStartDate, studyEndDate, totalMember,studyMemberCount }) => {
+    const handleItemClick = () => {
+      navigate(`/Study/${studyId}`);
+    };
     return (
       <div>
         <div className={style.NoticeItem_text}>
-          <p className={style.JoinStudy_text}>{studyName} - {studyMemberCount}/{totalMember} 인원
+          <p className={style.JoinStudy_text}>
+            <h4 onClick={handleItemClick} className={style.studyName}>{studyName}</h4>
+             {studyMemberCount}/{totalMember} 인원
             <h6 className={style.JoinStudy_text_day}>{studyStartDate} ~ {studyEndDate} 기간</h6></p>
           <hr className={style.Study_hr}/>
         </div>
@@ -88,12 +93,13 @@ export default function JoinStudy(){
         <div className={style.point_History_box}>
             <div>
               {joinStudy.length === 0 ? (
-                <p className={style.JoinStudy_text}>스터디에 가입해주세요!</p>
+                <p className={style.JoinStudy_text_box}>스터디에 가입해주세요!</p>
               ) : (
                 <div className={style.box}>
                   {currentNotices.map((notice, index) => (
                     <NoticeItem
                       key={index}
+                      studyId={notice.studyId}
                       studyName={notice.studyName}
                       studyStartDate={notice.studyStartDate}
                       studyEndDate={notice.studyEndDate}

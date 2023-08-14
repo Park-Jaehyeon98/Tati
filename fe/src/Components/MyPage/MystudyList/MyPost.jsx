@@ -105,7 +105,7 @@ export default function MyPost(){
           
           <div>
             {myPost.length === 0 ? (
-              <p className={style.ApplyStudy_text}>글을 작성해주세요!</p>
+              <p className={style.ApplyStudy_text_box}>글을 작성해주세요!</p>
               ):(
             <div className={style.box}>
                 {currentNotices.map((notice, index) => (

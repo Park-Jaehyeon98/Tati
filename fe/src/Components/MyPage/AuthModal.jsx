@@ -27,7 +27,6 @@ export default function AuthModal({ setAuthModal }) {
   const closeModal = () => {
     setAuthModal(false);
     // 임시===========================================
-    navigate("/MyPage/MyPageInfoModify");
   };
 
   // 유저의 pk와 password 보내기
