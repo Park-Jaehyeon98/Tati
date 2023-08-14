@@ -55,7 +55,9 @@ public class StudyService {
         Point point = new Point(0, "", LocalDateTime.now(), study.getStudyDeposit(),
                 (study.getStudyName() +" 스터디 생성"), member);
 
+        System.out.println("--------------------");
         pointService.delete(point);
+        System.out.println(point.getPointDate());
 
         return saveStudy;
     }

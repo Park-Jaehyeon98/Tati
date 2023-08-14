@@ -37,7 +37,7 @@ public class KakaoPayService {
         parameterValue.add("total_amount", kaKaoReadyReqDto.getAmount().toString());        //상품 총액
         parameterValue.add("tax_free_amount", "0");                                         //상품 비과세 금액
         parameterValue.add("approval_url", "http://localhost:3000/MyPage/PointHistory");        //결제 성공 시
-        parameterValue.add("cancel_url", "http://localhost:3000/payment/cancel");               //결제 취소 시
+        parameterValue.add("cancel_url", "http://localhost:3000/MyPage/MyPagePoint");               //결제 취소 시
         parameterValue.add("fail_url", "http://localhost:3000/payment/fail");                   //결제 실패 시
 
         //파라미터, 헤더
