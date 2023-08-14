@@ -52,6 +52,7 @@ const StudyDetailInfo = () => {
 
     // 스터디 탈퇴버튼
     const handleStudySecessionBtnClick = () => {
+        console.log(`study/member/${user.memberId}/secession/${studyId}`)
         const subURL = `study/member/${user.memberId}/secession/${studyId}`
         apiClient.delete(subURL)
             .then((res) => {
@@ -139,10 +140,10 @@ const StudyDetailInfo = () => {
                                     {value}
                                     <div className={`${style.scheduleItemBox} ${nowDay === index && style.isToday}`} >
                                         {
-                                            studyData.studySchedule.map((scheduleItem) =>
-                                                Number(scheduleItem.studyDay) === index &&
-                                                <>{scheduleItem.studyStartTime} <br />~ <br />{scheduleItem.studyEndTime} </>
-                                            )
+                                            studyData.studySchedule.map((scheduleItem) => {
+                                                return Number(scheduleItem.studyDay) === index &&
+                                                    <div key={scheduleItem.studyDay}>{scheduleItem.studyStartTime}<br />~<br />{scheduleItem.studyEndTime} </div>
+                                            })
                                         }
                                     </div>
                                 </div>
@@ -166,20 +167,25 @@ const StudyDetailInfo = () => {
                     {
                         (studyData.studyMemberResDtoList !== []) &&
                         studyData.studyMemberResDtoList.map(({ memberNickName, totalScore, createdDate, totalStudyTime }) => {
-                            return <div key={memberNickName} className={style.memberItem}>
-                                <div className={style.memberItemName}>{memberNickName}
-                                    <br />
-                                    {memberNickName === user.memberNickName &&
-                                        <button className={style.smallBtn} onClick={handleStudySecessionBtnClick}>스터디 탈퇴</button>
-                                    }</div>
-                                <div className={style.memberItemContent}>
-                                    <div>
-                                        <b>열정 지수</b>
-                                        <br /> {totalScore}점</div>
-                                    <div><b>총 공부시간</b><br /> {totalStudyTime} 시간</div>
-                                    <div><b>가입일</b><br />  {createdDate}</div>
+                            return <>
+                                <div key={memberNickName} className={style.memberItem}>
+                                    <div className={style.memberItemName}>{memberNickName}
+                                        <br />
+                                        {/* 본인일 경우 탈퇴버튼 */}
+                                        {memberNickName === user.memberNickName &&
+                                            <button className={style.smallBtn}
+                                                onClick={handleStudySecessionBtnClick}>
+                                                스터디 탈퇴</button>
+                                        }</div>
+                                    <div className={style.memberItemContent}>
+                                        <div>
+                                            <b>열정 지수</b>
+                                            <br /> {totalScore}점</div>
+                                        <div><b>총 공부시간</b><br /> {totalStudyTime} 시간</div>
+                                        <div><b>가입일</b><br />  {createdDate}</div>
+                                    </div>
                                 </div>
-                            </div>
+                            </>
                         })
                     }
                 </div>
@@ -195,6 +201,9 @@ const StudyDetailInfo = () => {
                         </div>
                         {
                             (studyData.applicantList === []) ?
+                                <div className={style.box}>
+                                    <h3>신청자가 없습니다.</h3>
+                                </div> :
                                 <div className={`${style.box} ${style.memberBox}`}>
                                     {studyData.applicantList.map(({ memberId, memberNickName, totalScore, createdDate, totalStudyTime }) => {
                                         return <div key={memberNickName} className={`${style.memberItem} ${style.applicantItem}`}>
@@ -211,9 +220,6 @@ const StudyDetailInfo = () => {
                                             </div>
                                         </div>
                                     })}
-                                </div> :
-                                <div className={style.box}>
-                                    <h3>신청자가 없습니다.</h3>
                                 </div>
                         }
                     </>

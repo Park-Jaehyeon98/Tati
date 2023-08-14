@@ -126,6 +126,8 @@ const StudyDetailTest = () => {
 
     // 스터디 입장 버튼 클릭
     const handleEnterBtnClick = () => {
+        localStorage.setItem('studyId', studyId)
+        localStorage.setItem('studyName', studyName)
         navigate("/VideoEnter", {
             state: {
                 memberId: user.memberId,

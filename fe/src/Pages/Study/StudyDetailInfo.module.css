@@ -3,7 +3,7 @@
   width: 100%;
   justify-content: center;
   align-items: center;
-  margin: 0;
+  margin-bottom: 10%;
 }
 
 .box {
@@ -62,6 +62,7 @@
 }
 .isTodayText {
   color: #3396f4;
+  font-weight: 700;
 }
 
 .boxTitle {
@@ -129,6 +130,7 @@
   padding: 3%;
   margin: auto;
   grid-template-columns: 1fr 1fr;
+  margin-bottom: 2%;
 }
 .memberItemName {
   display: flex;

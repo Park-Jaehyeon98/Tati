@@ -24,10 +24,20 @@ const StudyCardItem = ({ studyDetail }) => {
 
         <div className={style.card}>
             <Link to={`/Study/${studyId}`}>
-                {disclosure == false && <div className={style.lock_icon_div}><img src="Assets/lock.png" className={style.lock_icon} /></div>}
-                <div className={style.study_img_div}><img src={studyImg} className={style.study_img} /></div>
+                {disclosure === false &&
+                    <div className={style.lock_icon_div}>
+                        <img src="Assets/disclosureIcon.png" className={style.lock_icon} alt="" />
+                    </div>}
+                <div className={style.study_img_div}>
+                    <img src={studyImg} className={style.study_img} alt="" />
+                </div>
                 <h5 className={style.study_name}> {studyName} </h5>
-                <div className={style.study_member}><img src="Assets/member.png" className={style.member_icon} /> {currentMember} / {totalMember}</div>
+                <div className={style.study_member}>
+
+                    {currentMember} / {totalMember}
+
+                    <img src="Assets/member.png" className={style.member_icon} alt="" />
+                </div>
             </Link>
         </div>
     )

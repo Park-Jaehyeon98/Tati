@@ -72,7 +72,7 @@
 }
 
 .smallBtn {
-  min-height: 20px;
+  height: 20px;
   width: 120px;
   border-radius: 6px;
   border: none;
@@ -83,8 +83,9 @@
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24);
 }
 .smallBtn:hover {
+  height: 22 px;
   padding-bottom: 1%;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.22);
 }
 
 .camBtn {
