@@ -6,6 +6,7 @@ import com.ssafy.tati.auth.MemberDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -37,9 +38,10 @@ public class SecurityConfig {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-//                .antMatchers("/member/login", "/member/sign-up", "/member/nickname-check", "/member/email-check", "/member/email-code-check", "/member/find-password", "/index.html").permitAll()
-//                .anyRequest().authenticated()
-                .anyRequest().permitAll()
+                .antMatchers("/member/sign-up", "/member/nickname-check", "/member/email-check", "/member/email-code-check", "/member/login", "/member/find-password").permitAll()
+                .antMatchers(HttpMethod.GET, "/notice", "/notice/{boardId}", "/faq", "/faq/{boardId}", "/study/list", "/study/search").permitAll()
+                .anyRequest().authenticated()
+//                .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenizer, memberDetailsService), UsernamePasswordAuthenticationFilter.class);
 
