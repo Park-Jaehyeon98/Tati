@@ -91,6 +91,10 @@ export default function Router() {
   // 모달을 표시할지 여부를 상태로 관리
   const [showModal, setShowModal] = useState(false);
 
+  const handleMouseLeave = () => {
+    setShowModal(false); // 마우스가 마이페이지 영역을 벗어나면 모달을 닫음
+  };
+
   // 모달을 열고 닫는 함수
   const handleModalClick = () => {
     setShowModal(!showModal);
@@ -148,7 +152,7 @@ export default function Router() {
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Faq">
               FAQ
             </NavLink>
-            {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage"  onClick={handleModalClick}>
+            {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")}   onMouseLeave={handleMouseLeave} onClick={handleModalClick}>
               마이페이지
               {showModal && (
                 <div className={style.modal}>

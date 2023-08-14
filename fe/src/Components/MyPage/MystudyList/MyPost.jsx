@@ -56,9 +56,9 @@ export default function MyPost(){
   const itemsPerPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const NoticeItem = ({ boardId, boardTitle, boardHit, boardCommentCount, boardDate }) => {
+  const NoticeItem = ({ studyId,boardId, boardTitle, boardHit, boardCommentCount, boardDate }) => {
     const handleItemClick = () => {
-      navigate(`/Board/${boardId}`);
+      navigate(`/Study/${studyId}/Board/${boardId}`);
     };
     return (
       <div>
@@ -110,6 +110,7 @@ export default function MyPost(){
                     boardHit={notice.boardHit}
                     boardCommentCount={notice.boardCommentCount}
                     boardDate={notice.createdDate}
+                    studyId={notice.studyId}
                   />
                 ))}
               </div>
