@@ -70,7 +70,7 @@ export default function RewardPoint(){
     <div className={style.RewardPoint}>
       <div className={style.RewardPoint_box}>
 
-        <h1>상,벌 내역</h1>
+        <h1>입, 퇴실 내역</h1>
 
         <div>
           <div className={style.box}>

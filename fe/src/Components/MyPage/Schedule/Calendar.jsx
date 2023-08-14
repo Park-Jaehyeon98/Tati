@@ -216,7 +216,7 @@ export default function Calendar(){
       .then((res) => {
         console.log(' 일정 추가 성공 =================================')
 
-        console.log(res.data);
+        console.log(res);
 
         const newEvent = {
           title: res.data.memberScheduleTitle,
@@ -440,7 +440,7 @@ export default function Calendar(){
             시간 - {eventColor.startTime} ~ {eventColor.endTime}
             <p>이 일정를 삭제하시겠습니까?</p>
 
-            <div className={style.color_palette}>
+            {/* <div className={style.color_palette}>
               {colors.map((color, index) => (
                 <button
                   key={index}
@@ -449,13 +449,13 @@ export default function Calendar(){
                   onClick={()=>handleColorChange(color)}
                 ></button>
               ))}
-            </div>
+            </div> */}
             
             <div className={style.confirmation_buttons}>
-
+{/* 
               <button className={style.confirm_button} onClick={handleColor}>
                 색상변경
-              </button>
+              </button> */}
               <button className={style.confirm_button} onClick={handleConfirmDelete}>
                 확인
               </button>

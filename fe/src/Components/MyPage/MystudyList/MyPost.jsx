@@ -104,6 +104,9 @@ export default function MyPost(){
           <div className={style.point_History_box}>
           
           <div>
+            {myPost.length === 0 ? (
+              <p className={style.ApplyStudy_text}>글을 작성해주세요!</p>
+              ):(
             <div className={style.box}>
                 {currentNotices.map((notice, index) => (
                   <NoticeItem
@@ -116,6 +119,7 @@ export default function MyPost(){
                   />
                 ))}
               </div>
+              )}
               
               <div className={style.pagination}>
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (

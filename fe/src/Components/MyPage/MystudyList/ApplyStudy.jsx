@@ -81,20 +81,26 @@ export default function ApplyStudy(){
 
         <div className={style.content}>
 
+
           <div className={style.point_History_box}>
           
           <div>
-            <div className={style.box}>
-                {currentNotices.map((notice, index) => (
-                  <NoticeItem
-                    key={index}
-                    studyApplicantId={notice.studyApplicantId}
-                    studyName={notice.studyName}
-                    totalMember={notice.totalMember}
-                    currentMemberCount={notice.currentMemberCount}
-                  />
-                ))}
-              </div>
+          {applyStudy.length === 0 ? (
+                <p className={style.ApplyStudy_text}>스터디를 신청해주세요!</p>
+              ) : (
+                <div className={style.box}>
+                  {currentNotices.map((notice, index) => (
+                    <NoticeItem
+                      key={index}
+                      studyApplicantId={notice.studyApplicantId}
+                      studyName={notice.studyName}
+                      totalMember={notice.totalMember}
+                      currentMemberCount={notice.currentMemberCount}
+                    />
+                  ))}
+                </div>
+              )}
+
               <div className={style.pagination}>
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
                   <button
