@@ -25,7 +25,12 @@ export default function ApplyStudy(){
   useEffect(() => {
 
     console.log(process.env.REACT_APP_URL)
-    axios.get(`${process.env.REACT_APP_URL}/member/mypage/application-list/${parseJwt.memberId}`)
+    axios.get(`${process.env.REACT_APP_URL}/member/mypage/application-list/${parseJwt.memberId}`,{
+      headers:{
+        Authorization: "Bearer " + localStorage.getItem('accessToken'),
+        RefreshToken: localStorage.getItem('refreshtoken')
+      }
+    })
       .then((res) => {
         console.log('신청한스터디=================================')
         console.log(res.data);
@@ -55,46 +60,6 @@ export default function ApplyStudy(){
       </div>
     );
   };
-
-
-  const dummyData = [
-    {
-      studyApplicantId: 1,
-      studyName: "스터디 그룹 1",
-      totalMember: 10,
-      currentMemberCount: 8,
-    },
-    {
-      studyApplicantId: 2,
-      studyName: "스터디 그룹 2",
-      totalMember: 5,
-      currentMemberCount: 4,
-    },
-    {
-      studyApplicantId: 3,
-      studyName: "스터디 그룹 3",
-      totalMember: 20,
-      currentMemberCount: 15,
-    },
-    {
-      studyApplicantId: 4,
-      studyName: "스터디 그룹 4",
-      totalMember: 12,
-      currentMemberCount: 9,
-    },
-    {
-      studyApplicantId: 5,
-      studyName: "스터디 그룹 5",
-      totalMember: 8,
-      currentMemberCount: 7,
-    },
-    {
-      studyApplicantId: 6,
-      studyName: "스터디 그룹 6",
-      totalMember: 6,
-      currentMemberCount: 3,
-    },
-  ];
   
 
   const totalPages = Math.ceil(applyStudy.length / itemsPerPage);
@@ -116,20 +81,26 @@ export default function ApplyStudy(){
 
         <div className={style.content}>
 
+
           <div className={style.point_History_box}>
           
           <div>
-            <div className={style.box}>
-                {currentNotices.map((notice, index) => (
-                  <NoticeItem
-                    key={index}
-                    studyApplicantId={notice.studyApplicantId}
-                    studyName={notice.studyName}
-                    totalMember={notice.totalMember}
-                    currentMemberCount={notice.currentMemberCount}
-                  />
-                ))}
-              </div>
+          {applyStudy.length === 0 ? (
+                <p className={style.ApplyStudy_text}>스터디를 신청해주세요!</p>
+              ) : (
+                <div className={style.box}>
+                  {currentNotices.map((notice, index) => (
+                    <NoticeItem
+                      key={index}
+                      studyApplicantId={notice.studyApplicantId}
+                      studyName={notice.studyName}
+                      totalMember={notice.totalMember}
+                      currentMemberCount={notice.currentMemberCount}
+                    />
+                  ))}
+                </div>
+              )}
+
               <div className={style.pagination}>
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
                   <button

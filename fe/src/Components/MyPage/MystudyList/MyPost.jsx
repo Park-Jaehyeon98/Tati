@@ -25,7 +25,12 @@ export default function MyPost(){
   useEffect(() => {
 
     console.log(process.env.REACT_APP_URL)
-    axios.get(`${process.env.REACT_APP_URL}/member/mypage/board-list/${parseJwt.memberId}`)
+    axios.get(`${process.env.REACT_APP_URL}/member/mypage/board-list/${parseJwt.memberId}`,{
+      headers:{
+        Authorization: "Bearer " + localStorage.getItem('accessToken'),
+        RefreshToken: localStorage.getItem('refreshtoken')
+      }
+    })
       .then((res) => {
         console.log('내 작성글=================================')
         console.log(res.data);
@@ -99,6 +104,9 @@ export default function MyPost(){
           <div className={style.point_History_box}>
           
           <div>
+            {myPost.length === 0 ? (
+              <p className={style.ApplyStudy_text}>글을 작성해주세요!</p>
+              ):(
             <div className={style.box}>
                 {currentNotices.map((notice, index) => (
                   <NoticeItem
@@ -111,6 +119,7 @@ export default function MyPost(){
                   />
                 ))}
               </div>
+              )}
               
               <div className={style.pagination}>
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (

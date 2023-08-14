@@ -1,12 +1,12 @@
 .Login_box{
-  height: 700px;
+  /* height: 820px; */
 }
 .login {
   position: absolute;
-  top: 400px;
-  left: 83%;
+  top: 380px;
+  left: 1250px;
   width: 450px;
-  height: 600px;
+  height: 500px;
   transform: translate(-50%, -50%);
   text-align: center;
   color: black;
@@ -34,7 +34,8 @@
 }
 
 .login_img{
-  width: 100%;
+  width: 1523px;
+  height: 600px;
 }
 
 .loginInput{

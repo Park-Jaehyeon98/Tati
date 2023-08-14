@@ -13,7 +13,12 @@ export default function RewardPoint(){
 
   useEffect(()=>{
     console.log(parseJwt.memberId)
-    axios.get(`${process.env.REACT_APP_URL}/member/mypage/attendance-list/${parseJwt.memberId}`)
+    axios.get(`${process.env.REACT_APP_URL}/member/mypage/attendance-list/${parseJwt.memberId}`,{
+      headers:{
+        Authorization: "Bearer " + localStorage.getItem('accessToken'),
+        RefreshToken: localStorage.getItem('refreshtoken')
+      }
+    })
       .then((res)=>{
         console.log('상벌---------------------------------')
         console.log(res.data)
@@ -65,7 +70,7 @@ export default function RewardPoint(){
     <div className={style.RewardPoint}>
       <div className={style.RewardPoint_box}>
 
-        <h1>상,벌 내역</h1>
+        <h1>입, 퇴실 내역</h1>
 
         <div>
           <div className={style.box}>

@@ -113,3 +113,14 @@
   transition: background-color 0.3s ease;
   border-radius: 50px;
 }
+
+/* 가입된스터디가 없을 경우 문구 */
+.JoinStudy_text{
+  font-size: 30px;
+  color: #dfdfe0;
+}
+
+.ApplyStudy_text{
+  font-size: 30px;
+  color: #dfdfe0;
+}

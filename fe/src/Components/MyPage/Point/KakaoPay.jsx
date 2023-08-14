@@ -59,6 +59,11 @@ export default function KakaoPay() {
     if(pgToken){
       console.log(process.env.REACT_APP_URL)
       axios.post(`${process.env.REACT_APP_URL}/payment/success`,{
+        headers:{
+          Authorization: "Bearer " + localStorage.getItem('accessToken'),
+          RefreshToken: localStorage.getItem('refreshtoken')
+        }
+      },{
         pg_token:pgToken,
         tid:storedTid,
         email:parseJwt.sub
@@ -95,6 +100,11 @@ const pointHistory = () =>{
   }
   console.log(process.env.REACT_APP_URL)
   axios.get(`${process.env.REACT_APP_URL}/member/mypage/point/${parseJwt.memberId}`,{
+    headers:{
+      Authorization: "Bearer " + localStorage.getItem('accessToken'),
+      RefreshToken: localStorage.getItem('refreshtoken')
+    }
+  },{
     })
       .then((res)=>{
         console.log('---------------------------------------------')
@@ -132,6 +142,11 @@ const PointItem = ({ point, date, day, tid }) => {
       alert('포인트가 부족합니다')
     } else{
       axios.post(`${process.env.REACT_APP_URL}/payment/cancel`,{
+        headers:{
+          Authorization: "Bearer " + localStorage.getItem('accessToken'),
+          RefreshToken: localStorage.getItem('refreshtoken')
+        }
+      },{
         amount :point,
         tid,
         email:parseJwt.sub
@@ -155,7 +170,7 @@ const PointItem = ({ point, date, day, tid }) => {
     <div>
       <div className={style.PointItem_text}>
         <p className={style.p_text}>{date} {formattedTotalPoint} 
-        <h6 className={style.text}>{day} 
+        <h6 className={style.text}>{day.slice(0,10)} {day.slice(11,16)}
         </h6>{date == '포인트 적립' && ( // date가 '포인트 인출일'이 아닐 때에만 버튼 렌더링
               <button className={style.cancel_btn} onClick={handleCancel}>
                 결제취소
@@ -181,6 +196,9 @@ const PointItem = ({ point, date, day, tid }) => {
      <br />
       
       <div>
+      {point.length === 0 ? (
+                <p className={style.point_text}>마일리지 내역이 없습니다!</p>
+              ) : (
         <div className={style.box}>
             {currentNotices.map((point, index) => (
               <PointItem
@@ -192,6 +210,8 @@ const PointItem = ({ point, date, day, tid }) => {
               />
             ))}
           </div>
+          )}
+
           <div className={style.pagination}>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
               <button
