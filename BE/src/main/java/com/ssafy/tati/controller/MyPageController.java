@@ -242,7 +242,7 @@ public class MyPageController {
         for(Board board : boardList){
             String create = board.getCreatedDate().toLocalDate().toString();
 
-            boardListResDtoList.add(new MemberBoardListResDto(board.getBoardId(), board.getBoardTitle(),
+            boardListResDtoList.add(new MemberBoardListResDto(board.getBoardId(), board.getStudy().getStudyId(), board.getBoardTitle(),
                     board.getBoardHit(), board.getCommentList().size(), create));
         }
         return new ResponseEntity<>(boardListResDtoList, HttpStatus.OK);
