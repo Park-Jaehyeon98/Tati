@@ -19,6 +19,9 @@ public class MemberBoardListResDto {
     @Schema(description = "게시글 식별번호")
     private Integer boardId;
 
+    @Schema(description = "스터디 식별번호")
+    private Integer studyId;
+
     @Schema(description = "게시글 제목")
     private String boardTitle;
 
