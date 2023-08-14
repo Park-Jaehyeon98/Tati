@@ -22,7 +22,7 @@
 }
 
 .contentBox {
-  height: 600px;
+  height: 300px;
   background-color: white;
   /* border: solid 1px black; */
 }
@@ -40,4 +40,16 @@
 
 .blue {
   background-color: #3396f4;
+}
+
+.commentContainer {
+  width: 100%;
+}
+
+.commentInputField input[type="text"] {
+  width: 95%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
 }

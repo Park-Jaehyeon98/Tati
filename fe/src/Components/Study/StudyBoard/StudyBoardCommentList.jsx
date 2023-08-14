@@ -3,7 +3,9 @@ import StudyBoardComment from './StudyBoardComment'
 
 const StudyBoardCommentList = () => {
     return (
-        <div>StudyBoardCommentList</div>
+        <div>
+            StudyBoardCommentList
+        </div>
     )
 }
 

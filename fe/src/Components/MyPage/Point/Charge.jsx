@@ -10,10 +10,10 @@ import { updateUser } from '../../../redux/reducers/userSlice';
 export default function Change() {
 
   const dispatch = useDispatch();
-  
-   // 리덕스 펄시스트 유저정보를 불러옴
-   const user = useSelector(state => state.user.user);
-  
+
+  // 리덕스 펄시스트 유저정보를 불러옴
+  const user = useSelector(state => state.user.user);
+
 
   const [currentPoint, setCurrentPoint] = useState(user.totalPoint);
   const [rechargeAmount, setRechargeAmount] = useState(0);
@@ -27,12 +27,12 @@ export default function Change() {
 
   const handleRechargeBox = (amountBox) => {
     const roundedAmount = Math.ceil(rechargeAmount / amountBox) * amountBox;
-      setRechargeAmount((prevAmount) => prevAmount + amountBox); 
+    setRechargeAmount((prevAmount) => prevAmount + amountBox);
   }
-  
+
   const handleRecharge = () => {
-      const roundedAmount = Math.ceil(rechargeAmount / 1000) * 1000;
-      setRechargeAmount((prevAmount) => prevAmount + 1000); //1000 단위로 올림
+    const roundedAmount = Math.ceil(rechargeAmount / 1000) * 1000;
+    setRechargeAmount((prevAmount) => prevAmount + 1000); //1000 단위로 올림
   };
 
 
@@ -58,9 +58,9 @@ export default function Change() {
 
     axios.post(`${process.env.REACT_APP_URL}/payment/ready`, {
       email: user.email,
-      amount:rechargeAmount
-    },{
-      headers:{
+      amount: rechargeAmount
+    }, {
+      headers: {
         Authorization: "Bearer " + localStorage.getItem('accessToken'),
         RefreshToken: localStorage.getItem('refreshtoken')
       }
@@ -84,9 +84,9 @@ export default function Change() {
       });
   }
 
-  const amounts = [5000, 10000,15000];
-  
-  const handleZero = ()=>{
+  const amounts = [5000, 10000, 15000];
+
+  const handleZero = () => {
     setRechargeAmount(0)
   }
 
@@ -98,16 +98,16 @@ export default function Change() {
     <div className={style.Change}>
 
 
-        {/* 충전 박스 */}
-        {amounts.map((amountBox) => (
-          <button
-            key={amountBox}
-            className={style.amounts_box}
-            onClick={() => handleRechargeBox(amountBox)}
-          >
-            +{amountBox}
-          </button>
-        ))}
+      {/* 충전 박스 */}
+      {amounts.map((amountBox) => (
+        <button
+          key={amountBox}
+          className={style.amounts_box}
+          onClick={() => handleRechargeBox(amountBox)}
+        >
+          +{amountBox}
+        </button>
+      ))}
 
       <p className={style.point}>현재 포인트 <span className={style.currentPoint}>{formattedTotalPoint}</span></p>
 
@@ -121,7 +121,7 @@ export default function Change() {
       <p>총 포인트 <span className={style.total_point}>{TotalPoint}</span></p>
 
       <button className={`${style.Change_btn} ${style.zero_btn}`} onClick={handleZero}>초기화</button>
-      <button className={`${style.Change_btn} ${style.charge_btn}`}onClick={handleTotal}>충전</button>
+      <button className={`${style.Change_btn} ${style.charge_btn}`} onClick={handleTotal}>충전</button>
 
     </div>
   );

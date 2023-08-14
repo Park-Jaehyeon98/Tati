@@ -4,9 +4,51 @@
 .noSelected {
   background-color: white;
 }
-.study_container{
-  display:flex;
+.study_container {
+  display: flex;
   flex-direction: row;
-  flex-wrap : wrap;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   width: 100%;
+}
+
+.pagenation {
+  display: flex;
+  justify-content: center;
+  align-items: ceter;
+}
+
+.buttons button {
+  background-color: rgba(0, 0, 0, 0.09);
+  color: #000;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 5px;
+}
+
+.buttons .selected {
+  background-color: #3396f4;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.inputField input[type="text"],
+.inputField textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+.inputField {
+  height: 50px;
+  padding: 1%;
 }
