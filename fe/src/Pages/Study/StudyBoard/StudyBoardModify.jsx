@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { apiClient } from '../../../api/apiClient';
 import { useSelector } from 'react-redux';
+import style from './StudyBoardModify.module.css'
 
 const StudyBoardModify = () => {
     const navigate = useNavigate();
@@ -26,14 +27,17 @@ const StudyBoardModify = () => {
     })
 
     useEffect(() => {
-        apiClient.get(`study/board/${boardId}`)
+        const subURL = boardType === 1 ? `study/notice/${boardId}` : `study/board/${boardId}`
+        apiClient.get(subURL)
             .then((res) => {
-                setBoardBody({
-                    ...boardBody,
-                    boardTitle: res.data.boardTitle,
-                    // 제목 string
-                    boardContent: res.data.boardContent,
-                    // 내용 String
+                setBoardBody(() => {
+                    return {
+                        ...boardBody,
+                        boardTitle: res.data.boardTitle,
+                        // 제목 string
+                        boardContent: res.data.boardContent,
+                        // 내용 String
+                    }
                 })
             })
             .catch((err) => {
@@ -46,7 +50,6 @@ const StudyBoardModify = () => {
     const { boardTitle, boardContent } = boardBody;
 
     const [boardFile, setBoardFile] = useState(null);
-
 
     const config = {
         headers: {
@@ -65,7 +68,7 @@ const StudyBoardModify = () => {
         });
     };
 
-    // 생성버튼 클릭
+    // 수정버튼 클릭
     const handleCompleteBtnClick = () => {
         const subUrl = boardType === 1 ? 'study/notice' : 'study/board';
 
@@ -131,31 +134,28 @@ const StudyBoardModify = () => {
 
 
     return (
-        <div>
-            <div style={{ height: 100 }}></div>
-            {boardType === 2 ? <h3>스터디 게시판 수정</h3> : <h3>공지사항 수정</h3>}
-            <div>
-                <div>제목
-                    <input type="text" name="boardTitle" value={boardTitle} onChange={handleChange} />
-                </div>
-                <div>내용
-                    <input type="text" name="boardContent" value={boardContent} onChange={handleChange} />
-                </div>
+        <div className={style.container}>
+            {boardType === 2 ? <h2>스터디 게시판 수정</h2> : <h2>공지사항 수정</h2>}
+            <div className={style.inputField}>
+                <div className={style.inputFieldTitle}>제목</div>
+                <input type="text" name="boardTitle" value={boardTitle} onChange={handleChange} />
+
+                <div className={style.inputFieldTitle}>내용</div>
+                <input className={style.textarea} type="text" name="boardContent" value={boardContent} onChange={handleChange} />
+
                 {boardType === 2 &&
                     <>
                         <div>
-                            <div>파일첨부 </div>
+                            <div className={style.inputFieldTitle}>파일첨부 </div>
                             <input type="file" name="studyBoardFile" onChange={handleBoardFileUpload} />
                         </div>
-
-                        {/* <div style={{ width: 100, height: 100 }}>
-                            {studyImgView && <img src={studyImgView} alt="" width={100} height={100} />}
-                        </div> */}
                     </>
 
                 }
-                <button onClick={handleCompleteBtnClick}>작성 완료</button>
-                <button onClick={handleCancleBtnClick}>취소</button>
+                <div className={`${style.buttons} ${style.inputFieldTitle}`}>
+                    <button onClick={handleCompleteBtnClick}>작성 완료</button>
+                    <button onClick={handleCancleBtnClick}>취소</button>
+                </div>
             </div>
         </div >
 

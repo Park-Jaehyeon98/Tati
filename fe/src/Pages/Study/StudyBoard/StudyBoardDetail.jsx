@@ -11,6 +11,7 @@ const StudyBoardDetail = () => {
     const params = useParams();
     const boardId = params.boardId;
     const navigate = useNavigate();
+
     const { memberId, memberNickName } = useSelector((state) => { return state.user.user })
     // Outlet context 로 props 가져오기
     const { studyId, boardType, studyHost, refreshDetail } = useOutletContext();
@@ -29,6 +30,8 @@ const StudyBoardDetail = () => {
     });
 
     const [commentContent, setCommentContent] = useState('');
+    const [commentList, setCommentList] = useState([]);
+    const [refreshBoardDetail, setRefreshBoardDetail] = useState(false);
 
 
 
@@ -47,20 +50,23 @@ const StudyBoardDetail = () => {
             })
     }, [])
 
-    // // 테스트용
-    // useEffect(() => {
-    //     setBoardData({
-    //         boardTitle: '여기는 제목',
-    //         boardContent: '여기는 내용',
+    // 댓글리스트 받아옴
+    useEffect(() => {
+        apiClient.get(`study/board/${boardId}/comment`,
+            {
+                params: {
+                    page: 0
+                }
+            })
+            .then((res) => {
+                console.log(res)
+                setCommentList(() => { return res.data.content })
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    }, [refreshBoardDetail, boardId])
 
-    //         boardType,
-    //         studyId,
-    //         createdDate: '23/07/24',
-    //         boardHit: 1,
-    //         memberNickname: '철수',
-    //         memberId: 1
-    //     })
-    // }, [])
 
     // 대표글 설정 버튼
     const handleRepBtnClick = () => {
@@ -106,14 +112,41 @@ const StudyBoardDetail = () => {
         navigate('Modify')
         // navigate(`Study/${studyId}/Notice/${boardId}/Modify`)
     }
+
+    // 댓글창 입력이벤트
     const handleCommentContentChange = (e) => {
-        setCommentContent(e.target.Value)
+        setCommentContent((prev) => { return e.target.value })
     }
-    // 엔터키 눌러도되게 할까..
+
+
+    // 댓글 작성 버튼 클릭
     const handleCommentCreate = () => {
-        apiClient.post('study/board/comment', { memberId, commentContent })
+        const data = {
+            commentContent,
+            memberId,
+            boardId
+        }
+        apiClient.post('study/board/comment', data)
+            .then((res) => {
+                setRefreshBoardDetail((prev) => { return !prev });
+                setCommentContent(() => { return '' });
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    }
+    const handleCommentCreateEnter = (e) => {
+        if (e.key === 'Enter') {
+            handleCommentCreate();
+        }
+    }
+
+    // 댓글 삭제버튼
+    const handleCommentDeleteClick = (e) => {
+        apiClient.delete(`study/board/comment/${e.target.value}/${memberId}`)
             .then((res) => {
                 console.log(res)
+                setRefreshBoardDetail((prev) => { return !prev });
             })
             .catch((err) => {
                 console.log(err)
@@ -124,7 +157,6 @@ const StudyBoardDetail = () => {
     return (
         <div className={style.container}>
             {/* 게시글 윗부분 6:2:2*/}
-            <hr />
             <div className={style.titleBox}>
                 <div>
                     {/* 제목 */}
@@ -157,7 +189,7 @@ const StudyBoardDetail = () => {
                         <>
                             {/* 삭제 */}
 
-                            <Button onClick={handleDeleteBtnClick} className={`${style.btn} ${style.blue}`}>
+                            <Button onClick={handleDeleteBtnClick} className={`${style.blue} ${style.btn}`}>
                                 삭제
                             </Button>
                             {/* 삭제 */}
@@ -174,13 +206,35 @@ const StudyBoardDetail = () => {
             <div className={style.contentBox}>
                 {boardData.boardContent}
             </div>
+            <hr />
+            {/* 댓글창 */}
             {
                 boardType === 2 &&
-                <div>
-                    댓글창
-                    <StudyBoardCommentList />
-                    새 댓글
-                    <input type="text" value={commentContent} onChange={handleCommentContentChange} />
+                <div className={style.commentContainer}>
+                    <div>댓글 목록</div>
+                    <div className={style.commentList}>
+                        {commentList.length === 0 ?
+                            <></>
+                            : commentList.map((commentItem, index) => {
+                                return <div className={style.commentItem} key={index}>
+                                    {commentItem.memberNickName} : {commentItem.commentContent}
+                                    {commentItem.createdDate}
+                                    {/* <button>수정</button> */}
+                                    <button value={commentItem.commentId}
+                                        onClick={handleCommentDeleteClick}>
+                                        X
+                                    </button>
+                                </div>
+                            })
+                        }
+                    </div>
+                    {/* <StudyBoardCommentList /> */}
+
+                    <div className={style.commentInputField}>
+                        <div>새 댓글</div>
+                        <input onKeyDown={handleCommentCreateEnter} type="text" value={commentContent} onChange={handleCommentContentChange} />
+                        <button onClick={handleCommentCreate}>댓글 달기</button>
+                    </div>
                 </div>
             }
         </div >
