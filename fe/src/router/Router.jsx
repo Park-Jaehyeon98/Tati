@@ -152,7 +152,10 @@ export default function Router() {
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Faq">
               FAQ
             </NavLink>
-            {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")}   onMouseLeave={handleMouseLeave} onClick={handleModalClick}>
+            {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage"  
+            onMouseLeave={handleMouseLeave} 
+            onClick={handleModalClick}
+            >
               마이페이지
               {showModal && (
                 <div className={style.modal}>
