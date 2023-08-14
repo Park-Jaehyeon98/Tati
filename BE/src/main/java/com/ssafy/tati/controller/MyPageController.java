@@ -57,7 +57,6 @@ public class MyPageController {
 
         LocalDateTime now = LocalDateTime.now();
         for(Attendance attendance : attendances){
-//            if(attendance.getIsAttended()==0) continue;
 
             LocalDate studyDay = attendance.getInTime().toLocalDate();
 
@@ -79,7 +78,6 @@ public class MyPageController {
                 + sec + "초";
 
         //총 공부 시간
-
         Integer totalTime = member.getTotalStudyTime();
 
         long thour = totalTime / 3600;
@@ -115,7 +113,7 @@ public class MyPageController {
         List<ScheduleResDto> scheduleResDtoList = new ArrayList<>();
         for(MemberSchedule schedule : schedules){
             scheduleResDtoList.add( new ScheduleResDto( schedule.getMemberScheduleId(), schedule.getMemberScheduleDate(),
-                            schedule.getMemberScheduleTitle(), schedule.getMemberScheduleTitle()));
+                            schedule.getMemberScheduleTitle(), schedule.getMemberScheduleContent()));
         }
 
         // 입퇴실 내역

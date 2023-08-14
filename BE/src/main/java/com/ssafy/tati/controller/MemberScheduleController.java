@@ -68,7 +68,7 @@ public class MemberScheduleController {
 
         List<ScheduleResDto> scheduleList =
                 scheduleMapper.memberScheduleListToScheduleResDtoList(schedules);
-        
+
         return new ResponseEntity<>(scheduleList, HttpStatus.OK);
     }
 
