@@ -4,11 +4,14 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import style from "./SignUp.module.css"
-
+//로딩중
+import Loading from "../../Loading/Loading";
 
 export default function SignUp() {
 
   const navigate = useNavigate();
+
+
   const [formData, setFormData] = useState(
     {
       email: "",
@@ -20,6 +23,8 @@ export default function SignUp() {
     }
   );
 
+  // 로딩중 스피너
+  const [loadingError, setLoadingError] = useState(false);
 
   const handleCancel = () => {
     window.history.back();
@@ -36,18 +41,26 @@ export default function SignUp() {
   //=============================================================================
   // 이메일 인증
   const handleSendEmail = () => {
-    console.log(formData.email)
-    console.log(process.env.REACT_APP_URL)
+    console.log(formData.email);
+    console.log(process.env.REACT_APP_URL);
+    setLoadingError(true);
+
     axios
       .post(`${process.env.REACT_APP_URL}/member/email-check`, {
-        email: formData.email, // formData의 email 값을 사용
+        email: formData.email,
       })
       .then((res) => {
         console.log(res);
+        alert('인증 메일이 발송되었습니다.')
       })
       .catch((err) => {
         console.log(err);
+        alert('이메일을 다시 입력해주세요.')
+      })
+      .finally(() => {
+        setLoadingError(false);
       });
+
   };
 
 
@@ -62,9 +75,11 @@ export default function SignUp() {
       })
       .then((res) => {
         console.log(res);
+        alert("이메일 인증확인");
       })
       .catch((err) => {
         console.log(err);
+        alert("인증번호가 잘못되었습니다.");
       });
   };
 
@@ -72,8 +87,11 @@ export default function SignUp() {
   // 닉네임 중복 확인
   const handleSendNickName = () => {
     console.log(formData.memberNickName)
-    console.log(process.env.REACT_APP_URL)
-    axios
+    if (formData.memberNickName.length < 2 || formData.memberNickName.length > 10) {
+      alert("2~10자 이내로 지어주세요.");
+    } else{
+
+      axios
       .post(`${process.env.REACT_APP_URL}/member/nickname-check`, {
         memberNickName: formData.memberNickName,
       })
@@ -83,7 +101,9 @@ export default function SignUp() {
       })
       .catch((err) => {
         console.log(err);
-      });
+        alert("중복체크실패");
+      })
+    }
   };
 
 
@@ -127,6 +147,8 @@ export default function SignUp() {
       });
   };
 
+  const [showPasswordHint, setShowPasswordHint] = useState(false);
+  const [showNickNameHint, setShowNickNameHint] = useState(false);
 
   //================================================================================
   return (
@@ -135,6 +157,7 @@ export default function SignUp() {
       
       <div className={`${style.signup}`}>
         <h1 className={style.signup_title}>회원가입</h1>
+
         <p className={style.signup_text}>
           이메일
           <input
@@ -159,6 +182,33 @@ export default function SignUp() {
           />
           <input className={style.btn_check} type="button" value="인증" onClick={handleSendNumber} />
         </p>
+
+        <p className={style.signup_text}>
+          닉네임
+          <div className={style.tooltip}>
+            <input
+              className={style.input_nickname}
+              type="text"
+              name="memberNickName"
+              value={formData.memberNickName}
+              onChange={handleChange}
+              onMouseEnter={() => setShowNickNameHint(true)}
+              onMouseLeave={() => setShowNickNameHint(false)}
+            />
+            <input
+              className={style.btn_check}
+              type="button"
+              value="중복확인"
+              onClick={handleSendNickName}
+            />
+            {showNickNameHint && (
+              <div className={style.tooltip_content}>
+                <p>2~10자 이내</p>
+              </div>
+            )}
+          </div>
+        </p>
+
         <p className={style.signup_text}>
           이름
           <input
@@ -169,29 +219,27 @@ export default function SignUp() {
             onChange={handleChange}
           />
         </p>
-        <p className={style.signup_text}>
-          닉네임
-          <input
-            className={style.input_nickname}
-            type="text"
-            name="memberNickName"
-            value={formData.memberNickName}
-            onChange={handleChange}
-          />
-          <input className={style.btn_check} type="button" value="중복확인" onClick={handleSendNickName} />
-          <h6 className={style.caution}>2~10자 이내</h6>
-        </p>
+        
         <p className={style.signup_text}>
           비밀번호
-          <input
-            className={style.input_password}
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          <h6 className={style.caution}>8~16자 이내, 특수문자X</h6>
+          <div className={style.tooltip}>
+            <input
+              className={style.input_password}
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              onMouseEnter={() => setShowPasswordHint(true)}
+              onMouseLeave={() => setShowPasswordHint(false)}
+            />
+            {showPasswordHint && (
+              <div className={style.tooltip_content}>
+                <p>8~16자 이내, 특수문자X</p>
+              </div>
+            )}
+          </div>
         </p>
+
         <p className={style.signup_text}>
           비밀번호확인
           <input
@@ -214,6 +262,14 @@ export default function SignUp() {
           취소
         </button>
       </div >
+
+
+      {/* 로딩 모달 */}
+      {loadingError && (
+          <div className={`${style.modal}`}>
+            <Loading />
+          </div>
+        )}
     </div >
   );
 }

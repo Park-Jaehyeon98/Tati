@@ -43,13 +43,13 @@ export default function InfoModify() {
   const handleSendNickName = () => {
     console.log(`닉네임 ${nickName}`)
     console.log(process.env.REACT_APP_URL)
-    axios.post(`${process.env.REACT_APP_URL}/member/nickname-check`,{
-      headers:{
-        Authorization: "Bearer " + localStorage.getItem('accessToken'),
-        RefreshToken: localStorage.getItem('refreshtoken')
-      }
-    }, {
+    axios.post(`${process.env.REACT_APP_URL}/member/nickname-check`, {
         memberNickName: nickName,
+      },{
+        headers:{
+          Authorization: "Bearer " + localStorage.getItem('accessToken'),
+          RefreshToken: localStorage.getItem('refreshtoken')
+        }
       })
       .then((res) => {
         alert("중복체크성공");
@@ -157,14 +157,14 @@ export default function InfoModify() {
       alert('비밀번호가 일치하자 않습니다.')
     }
     console.log(`비밀번호 변경: ${password} memberId: ${user.memberId}`)
-    axios.put(`${process.env.REACT_APP_URL}/member/mypage/modifyPassword`,{
+    axios.put(`${process.env.REACT_APP_URL}/member/mypage/modifyPassword`, {
+      memberId:user.memberId,
+      password
+    },{
       headers:{
         Authorization: "Bearer " + localStorage.getItem('accessToken'),
         RefreshToken: localStorage.getItem('refreshtoken')
       }
-    }, {
-      memberId:user.memberId,
-      password
     })
       .then((res) => {
         console.log(res)

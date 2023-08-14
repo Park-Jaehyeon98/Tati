@@ -57,7 +57,7 @@ export default function ApplyStudy(){
     return (
       <div>
         <div className={style.ApplyStudy_box}>
-          <p className={style.ApplyStudy_text}><h2 onClick={handleItemClick}>{studyName}</h2> - {currentMemberCount}/{totalMember} 인원</p>
+          <p className={style.ApplyStudy_text}><h2 onClick={handleItemClick}>{studyName}</h2>{currentMemberCount}/{totalMember} 인원</p>
           <hr className={style.Study_hr}/>
         </div>
       </div>
