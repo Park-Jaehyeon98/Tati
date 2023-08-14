@@ -25,6 +25,7 @@ public class StudyMemberService {
     private final MemberService memberService;
     private final PointService pointService;
     private final MemberRepository memberRepository;
+    private final StudyRepository studyRepository;
     private final StudyMemberRepository studyMemberRepository;
 
     public List<StudyMemberResDto> getStudyMember(Integer studyId) {
@@ -82,7 +83,8 @@ public class StudyMemberService {
                 (studyMember.getStudy().getStudyName() + " 스터디 탈퇴 보증금 반환"), member);
         pointService.save(point);
 
-        studyMemberRepository.deleteById(studyMember.getStudyMemberId());
+        if(study.getStudyMemberList().size()==1) studyRepository.deleteById(studyId);
+        else studyMemberRepository.deleteById(studyMember.getStudyMemberId());
         StudyMemberSecessionResDto studyMemberSecessionResDto = new StudyMemberSecessionResDto(studyMember.getMember().getMemberNickName(), studyMember.getStudy().getStudyName());
         return studyMemberSecessionResDto;
     }
