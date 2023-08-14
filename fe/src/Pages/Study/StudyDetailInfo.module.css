@@ -12,7 +12,6 @@
   background: white;
   padding: 2%;
   /* border: 0.1px solid gray; */
-  border-radius: 10px;
   border-radius: 20px;
   background: #fff;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
@@ -34,12 +33,12 @@
 }
 .scheduleItemBox {
   width: 100%;
-  min-height: 50px;
+  min-height: 70px;
   background-color: #e8e9ea;
-  border-radius: 8px;
+  border-radius: 4px;
   text-align: center;
+  font-size: 1rem;
   margin-top: 5%;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24);
 }
 
 .penaltyBox {
@@ -89,9 +88,6 @@
   width: 100%;
 }
 
-.noticeTitle {
-}
-
 .smallBtn {
   height: auto;
   width: 70px;
@@ -104,5 +100,64 @@
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24);
 }
 .smallBtn:hover {
+  padding-bottom: 1%;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.22);
+}
+
+.memberCount {
+  background-color: #e8e9ea;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  height: auto;
+  padding: 1%;
+  margin-left: 3%;
+  /* box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24); */
+}
+
+.memberBox {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.memberItem {
+  display: grid;
+  width: 90%;
+  height: 100px;
+  background-color: #3396f4;
+  color: white;
+  border-radius: 10px;
+  padding: 3%;
+  margin: auto;
+  grid-template-columns: 1fr 1fr;
+}
+.memberItemName {
+  display: flex;
+  flex-direction: column;
+  font-size: 24px;
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+.memberItemContent {
+  font-size: 0.8rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.applicantItem {
+  display: grid;
+  width: 90%;
+  height: 100px;
+  background-color: #e8e9ea;
+  color: black;
+  border-radius: 10px;
+  padding: 3%;
+  margin: auto;
+  grid-template-columns: 1fr 1fr;
+}
+.blue {
+  background-color: #3396f4;
+  color: white;
+}
+.white {
+  background-color: white;
 }

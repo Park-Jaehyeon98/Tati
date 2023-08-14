@@ -3,10 +3,12 @@ import VideoRoomComponent from './VideoRoomComponent';
 import { useLocation } from 'react-router-dom';
 
 const VideoEnter = () => {
-    const { studyId, memberId } = useLocation()
+    const location = useLocation()
+    console.log(location.state)
+    const { studyId, memberId, studyName } = location.state
     return (
-        <div>
-            <VideoRoomComponent />
+        <div className='classname'>
+            <VideoRoomComponent studyId={studyId} user={memberId} sessionName={studyName} />
         </div>
     )
 }

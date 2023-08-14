@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux';
 import style from './StudyDetailInfo.module.css'
 import { useOutletContext, useParams } from 'react-router-dom'
@@ -67,10 +67,6 @@ const StudyDetailInfo = () => {
     const nowDay = now.getDay() === 0 ? now.getDay() + 6 : now.getDay() - 1;
     // 오늘 스터디 있는지 확인
 
-    const [approvalData, setapprovalData] = useState({
-        studyId: '',
-        memberId: 0
-    });
 
     return (
         <div className={style.container}>
@@ -97,12 +93,13 @@ const StudyDetailInfo = () => {
                 <div className={style.box}>
                     {
                         (studyData.studyNoticeDetailResDto != null) ?
-                            <>
+                            <div>
                                 <div>{studyData.studyNoticeDetailResDto.boardTitle}</div>
+                                <hr />
                                 <div>작성자 : {studyData.studyNoticeDetailResDto.memberNickname}</div>
                                 <div>작성일 : {studyData.studyNoticeDetailResDto.createdDate}</div>
                                 <div>내용 : {studyData.studyNoticeDetailResDto.boardContent}</div>
-                            </>
+                            </div>
                             : <h3>공지사항이 등록되지 않았습니다.</h3>
                     }
                 </div>
@@ -136,15 +133,15 @@ const StudyDetailInfo = () => {
                 <div className={`${style.box}`}>
                     <div className={style.scheduleBox}>
                         {
-                            (studyData.studySchedule != null) &&
+                            (studyData.studySchedule !== []) &&
                             dayList.map((value, index) => {
-                                return <div className={`${style.scheduleItem} ${nowDay === index && style.isTodayText}`}>
+                                return <div key={index} className={`${style.scheduleItem} ${nowDay === index && style.isTodayText}`}>
                                     {value}
                                     <div className={`${style.scheduleItemBox} ${nowDay === index && style.isToday}`} >
                                         {
                                             studyData.studySchedule.map((scheduleItem) =>
                                                 Number(scheduleItem.studyDay) === index &&
-                                                <>{scheduleItem.studyStartTime} ~ {scheduleItem.studyEndTime} </>
+                                                <>{scheduleItem.studyStartTime} <br />~ <br />{scheduleItem.studyEndTime} </>
                                             )
                                         }
                                     </div>
@@ -159,23 +156,31 @@ const StudyDetailInfo = () => {
                     <span className={style.highlight}>
                         <img className={style.icons} src="../Assets/memberIcon.png" alt="" />
                         스터디 멤버
+
+                    </span>
+                    <span className={style.memberCount}>
+                        {studyData.studyMemberResDtoList.length} / {studyData.totalMember}
                     </span>
                 </div>
-                <div className={style.box}>
-                    여기는 스터디 멤버
+                <div className={`${style.box} ${style.memberBox}`}>
                     {
-                        (studyData.studyMemberResDtoList != null) && studyData.studyMemberResDtoList.map(({ memberNickName, totalScore, createdDate, totalStudyTime }) => {
-                            return <div>
-                                닉네임 : {memberNickName}   /
-                                열정 지수 : {totalScore}점 /
-                                가입일 : {createdDate} /
-                                총 공부시간 : {totalStudyTime}
-                                {memberNickName === user.memberNickName &&
-                                    <button className={style.smallBtn} onClick={handleStudySecessionBtnClick}>스터디 탈퇴</button>
-                                }
+                        (studyData.studyMemberResDtoList !== []) &&
+                        studyData.studyMemberResDtoList.map(({ memberNickName, totalScore, createdDate, totalStudyTime }) => {
+                            return <div key={memberNickName} className={style.memberItem}>
+                                <div className={style.memberItemName}>{memberNickName}
+                                    <br />
+                                    {memberNickName === user.memberNickName &&
+                                        <button className={style.smallBtn} onClick={handleStudySecessionBtnClick}>스터디 탈퇴</button>
+                                    }</div>
+                                <div className={style.memberItemContent}>
+                                    <div>
+                                        <b>열정 지수</b>
+                                        <br /> {totalScore}점</div>
+                                    <div><b>총 공부시간</b><br /> {totalStudyTime} 시간</div>
+                                    <div><b>가입일</b><br />  {createdDate}</div>
+                                </div>
                             </div>
                         })
-
                     }
                 </div>
                 {
@@ -188,27 +193,33 @@ const StudyDetailInfo = () => {
                                 가입 신청 현황
                             </span>
                         </div>
-                        <div className={style.box}>
-                            여기는 신청 멤버
-                            {
-                                (studyData.applicantList != null) && studyData.applicantList.map(({ memberId, memberNickName, totalScore, createdDate, totalStudyTime }) => {
-                                    return <div key={memberId}> 닉네임 : {memberNickName}
-                                        / 열정 지수 : {totalScore}점
-                                        /  가입일 : {createdDate}
-                                        / 총 공부 시간 : {totalStudyTime}
-                                        / <button className={style.smallBtn} onClick={() => approval(memberId)}>승인</button>
-                                        <button className={style.smallBtn} onClick={() => disapproval(memberId)}>거절</button>
-                                    </div>
-                                })
-
-                            }
-                        </div>
+                        {
+                            (studyData.applicantList === []) ?
+                                <div className={`${style.box} ${style.memberBox}`}>
+                                    {studyData.applicantList.map(({ memberId, memberNickName, totalScore, createdDate, totalStudyTime }) => {
+                                        return <div key={memberNickName} className={`${style.memberItem} ${style.applicantItem}`}>
+                                            <div className={style.memberItemName}>{memberNickName}
+                                                <button className={`${style.smallBtn} ${style.blue}`} onClick={() => approval(memberId)}>승인</button>
+                                                <button className={`${style.smallBtn} ${style.white}`} onClick={() => disapproval(memberId)}>거절</button>
+                                            </div>
+                                            <div className={style.memberItemContent}>
+                                                <div>
+                                                    <b>열정 지수</b>
+                                                    <br /> {totalScore}점</div>
+                                                <div><b>총 공부시간</b><br /> {totalStudyTime} 시간</div>
+                                                <div><b>가입일</b><br />  {createdDate}</div>
+                                            </div>
+                                        </div>
+                                    })}
+                                </div> :
+                                <div className={style.box}>
+                                    <h3>신청자가 없습니다.</h3>
+                                </div>
+                        }
                     </>
                 }
-
-
-            </div>
-        </div >
+            </div >
+        </div>
     )
 }
 export default StudyDetailInfo

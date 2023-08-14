@@ -11,7 +11,7 @@ export default function RefreshToken() {
 
   const exp = parseJwt.exp;
   const iat = parseJwt.iat;
-
+  // console.log(now.getTime())
   if (iat < exp) {
     // iat가 exp보다 작은 경우에만 재발급 로직 수행
     console.log(refreshToken)

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import { apiClient } from '../../api/apiClient';
+import { apiClient, tokenRefresh } from '../../api/apiClient';
 import style from './StudyDetail.module.css'
 import { useSelector } from 'react-redux';
 
@@ -28,27 +28,27 @@ const StudyDetailTest = () => {
         totalPenalty: 0,
         totalDeposit: 0,
         studySchedule: [
-            {
-                studyDay: 0,
-                studyStartTime: '',
-                studyEndTime: ''
-            }
+            // {
+            //     studyDay: 0,
+            //     studyStartTime: '',
+            //     studyEndTime: ''
+            // }
         ],
         applicantList: [
-            {
-                memberId: 0,
-                memberNickName: '',
-                totalScore: 0,
-                totalStudyTime: 0
-            }
+            // {
+            //     memberId: 0,
+            //     memberNickName: '',
+            //     totalScore: 0,
+            //     totalStudyTime: 0
+            // }
         ],
         studyMemberResDtoList: [
-            {
-                memberNickName: '',
-                totalScore: 0,
-                createdDate: '',
-                totalStudyTime: 0
-            }
+            // {
+            //     memberNickName: '',
+            //     totalScore: 0,
+            //     createdDate: '',
+            //     totalStudyTime: 0
+            // }
         ],
         studyNoticeDetailResDto: {
             boardId: 0,
@@ -60,12 +60,12 @@ const StudyDetailTest = () => {
         }
     });
 
-
     const studyId = params.studyId;
 
     // viewType
     const viewTypeURL = ['', 'Notice', 'Board']
     const viewTypeText = ['스터디 메인', '스터디 공지사항', '스터디 게시판']
+    const categoryList = ["", "자격증", "취업", "학교", "공시", "기타"]
     const dayList = ["월", "화", "수", "목", "금", "토", "일",]
 
     // viewType 변경시 그에 따른 viewType으로 이동
@@ -80,7 +80,7 @@ const StudyDetailTest = () => {
             .then(res => {
                 // console.log(res.data);
                 console.log(res.data)
-                setStudyData(res.data);
+                setStudyData(() => { return res.data });
             })
             .catch((err) => {
                 console.log(err.data);
@@ -126,25 +126,39 @@ const StudyDetailTest = () => {
 
     // 스터디 입장 버튼 클릭
     const handleEnterBtnClick = () => {
-        navigate("/VideoRoom", { state: { memberId: user.memberId, studyId: studyId } });
+        navigate("/VideoEnter", {
+            state: {
+                memberId: user.memberId,
+                studyId: studyId,
+                studyName: studyName
+            }
+        });
     }
     // 현재 시간과 스터디 시간을 비교해 입장 가능 시간일 경우 true 반환
     const now = new Date()
     const isStudyTime = () => {
-        const now = new Date()
         const nowDay = now.getDay() === 0 ? now.getDay() + 6 : now.getDay() - 1;
         // 오늘 스터디 있는지 확인
-        const todayStudy = studySchedule.filter((scheduleItem) => scheduleItem.studyDay == nowDay)
+        const todayStudy = studySchedule.filter((scheduleItem) => Number(scheduleItem.studyDay) === nowDay)
 
-        if (todayStudy) {
-            // if(todayStudy[0][studyStartTime] )
-            return true
+        if (todayStudy.length !== 0) {
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const date = now.getDate();
+
+            const todayStartTime = todayStudy[0].studyStartTime
+            const todayEndTime = todayStudy[0].studyEndTime
+
+            const startTime = new Date(year, month, date, todayStartTime.substring(0, 2), todayStartTime.substring(3, 5)) - 1000 * 60 * 10
+            const endTime = new Date(year, month, date, todayEndTime.substring(0, 2), todayEndTime.substring(3, 5))
+
+            if (startTime <= now && now <= endTime) return true
         }
         // 요일이 같은지 확인 
         // 요일이 같다면 -> date객체를 2개 만들어서 now와 비교
         return false
     }
-
+    // tokenRefresh()
     return (
         <div className={style.container}>
             {/* 헤더에 필요한 내용  : 가입여부, 신청여부,< 방장여부, 스터디 이미지, 스터디 요일, 비밀글여부; 스터디데이터>  */}
@@ -159,17 +173,20 @@ const StudyDetailTest = () => {
 
                 {/* 스터디 이름이 들어가는 2번째 섹션 */}
                 <div className={style.mainView}>
-                    <h2>
+                    <div className={style.mainViewTitle}>
                         {studyData.studyName}
                         {/* 비밀글 일 경우 옆에 자물쇠 이미지 */}
                         {
                             studyData.disclosure ||
                             <img className={style.icon} src="../Assets/disclosureIcon.png" alt="비공개" />
                         }
-                    </h2>
+                        {/* 카테고리 */}
+                        <div className={style.smallBox}>{categoryList[studyData.categoryId]}</div>
+                        <div className={`${style.dDay}`}>D - {(Number(studyData.studyEndDate.substring(5, 7)) - now.getMonth() - 1) * 30 + Number(studyData.studyEndDate.substring(8, 10)) - now.getDate()}</div>
+                    </div>
+
                     {viewType === "2" ?
                         // 스터디 게시판일 때
-
                         <div>
                             <div>
                                 자유게시판
@@ -193,21 +210,19 @@ const StudyDetailTest = () => {
                             </div> :
 
                             // viewType 0 ; 메인페이지일 때
-
                             <div>
+                                <div className={style.mainViewBottom}>
+                                    {/* 스터디 요일 */}
+                                    {studyData.studySchedule &&
+                                        studyData.studySchedule.map(({ studyDay }) => {
+                                            return <span key={studyDay} className={style.smallBox}>{dayList[studyDay]}</span>
+                                        })}
+                                    {/* 스터디 기간 */}
+                                    <span>{studyData.studyStartDate} - {studyData.studyEndDate}</span>
 
-                                {/* 스터디 요일 */}
-                                {studyData.studySchedule &&
-                                    studyData.studySchedule.map(({ studyDay }) => {
-                                        return <span key={studyDay} className={style.smallBox}>{dayList[studyDay]}</span>
-                                    })}
 
-                                {/* 스터디 기간 */}
-                                <span>{studyData.studyStartDate} - {studyData.studyEndDate}</span>
-                                <span className={style.dDay}>D - {Number(studyData.studyEndDate.substring(8, 10)) - now.getDate()}</span>
 
-                                {/* 카테고리 */}
-                                <span>{studyData.categoryId}</span>
+                                </div>
 
 
 
@@ -225,19 +240,18 @@ const StudyDetailTest = () => {
                 </div>
                 <div className={style.content}>
                     {
-                        !isStudyTime ?
+                        isStudyTime() ?
                             <button className={style.camBtn} onClick={handleEnterBtnClick}>스터디룸 입장</button> :
                             <button className={`${style.camBtn} ${style.noStudytime}`}>스터디 시간이 아닙니다</button>
                     }
-
                 </div>
 
             </div>
             <div className={style.btnBox}>
                 {/* 메인, 공지사항, 게시판 이동 */}
                 {[0, 1, 2].map((index, value) => {
-                    return <div className={style.btns}>
-                        <button onClick={handleViewTypeBtnClick} value={index} key={index} className={`${style.btn} ${index == viewType && style.isSelected}`}>{viewTypeText[index]} </button>
+                    return <div key={index} className={style.btns}>
+                        <button onClick={handleViewTypeBtnClick} value={index} className={`${style.btn} ${index == viewType && style.isSelected}`}>{viewTypeText[index]} </button>
                     </div>
                 })}
             </div>
