@@ -67,6 +67,8 @@ import { persistor } from '../redux/store';
 import { setUser, clearUser } from '../redux/reducers/userSlice';
 import { clearUserSchedule } from '../redux/reducers/userScheduleSlice'
 
+import {clearUserStudySchedule} from "../redux/reducers/userStudyScheduleSlice";
+
 
 import AuthModal from "../Components/MyPage/AuthModal";
 import StudyBoardModify from './../Pages/Study/StudyBoard/StudyBoardModify';
@@ -74,6 +76,7 @@ import StudyBoardModify from './../Pages/Study/StudyBoard/StudyBoardModify';
 export default function Router() {
 
   const dispatch = useDispatch();
+
 
   const [authModal, setAuthModal] = useState(false);
 
@@ -101,7 +104,7 @@ export default function Router() {
   // 로그아웃
   const handleLogout = () => {
     const accessToken = localStorage.getItem("accessToken");
-    const refreshToken = localStorage.getItem("refreshToken");
+    const refreshToken = localStorage.getItem("refreshtoken");
 
     axios.get(`${process.env.REACT_APP_URL}/member/logout`, {
       headers: {
@@ -112,6 +115,7 @@ export default function Router() {
       .then((res) => {
         console.log(res);
         localStorage.clear();
+        dispatch(clearUserStudySchedule())
         dispatch(clearUserSchedule())
         dispatch(clearUser());
         // setIsLoggedIn(false);
@@ -153,7 +157,7 @@ export default function Router() {
                     <NavLink to="/MyPage/MyPagePoint">마일리지</NavLink>
                     <NavLink onClick={() => handleButtonClick()}>회원정보수정</NavLink>
                     <NavLink to="/MyPage/MyPageRewardPoint">상벌점내역</NavLink>
-                    <NavLink to="/Logout" onClick={handleLogout}>
+                    <NavLink to="/Login" onClick={handleLogout}>
                       로그아웃
                     </NavLink>
                   </div>

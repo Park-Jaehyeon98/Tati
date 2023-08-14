@@ -121,7 +121,7 @@ export default function Login() {
       <button className={style.loginBtn} onClick={handleLogin}>
         로그인
       </button>
-
+{/* 
       <div className={style.line1}></div>
       <p>간편로그인</p>
       <div className={style.line2}></div>
@@ -142,7 +142,7 @@ export default function Login() {
           src="/Assets/네이버.png"
           alt="Naver 로그인"
         />
-      </div>
+      </div> */}
     </div>
   </div>
 );

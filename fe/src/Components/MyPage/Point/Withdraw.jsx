@@ -62,7 +62,12 @@ export default function Withdraw() {
 
     console.log(process.env.REACT_APP_URL)
 
-    axios.post(`${process.env.REACT_APP_URL}/member/point/withdrawal`, {
+    axios.post(`${process.env.REACT_APP_URL}/member/point/withdrawal`,{
+      headers:{
+        Authorization: "Bearer " + localStorage.getItem('accessToken'),
+        RefreshToken: localStorage.getItem('refreshtoken')
+      }
+    }, {
       email:user.email,
       amount:rechargeAmount,
       pointDate:currentDate,

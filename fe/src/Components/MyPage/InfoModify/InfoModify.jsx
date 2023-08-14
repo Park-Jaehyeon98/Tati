@@ -43,7 +43,12 @@ export default function InfoModify() {
   const handleSendNickName = () => {
     console.log(`닉네임 ${nickName}`)
     console.log(process.env.REACT_APP_URL)
-    axios.post(`${process.env.REACT_APP_URL}/member/nickname-check`, {
+    axios.post(`${process.env.REACT_APP_URL}/member/nickname-check`,{
+      headers:{
+        Authorization: "Bearer " + localStorage.getItem('accessToken'),
+        RefreshToken: localStorage.getItem('refreshtoken')
+      }
+    }, {
         memberNickName: nickName,
       })
       .then((res) => {
@@ -105,12 +110,13 @@ export default function InfoModify() {
 
     console.log('-------------------------------------------------')
 
-
     console.log(imageDataURL)
     // console.log(process.env.REACT_APP_URL)
     axios.put(`${process.env.REACT_APP_URL}/member/mypage/modifyNickName`, formData, {
       headers: {
         "Content-Type": "multipart/form-data", // 파일 업로드를 위해 Content-Type을 multipart/form-data로 설정
+        Authorization: "Bearer " + localStorage.getItem('accessToken'),
+        RefreshToken: localStorage.getItem('refreshtoken')
       },
     })
       .then((res) => {
@@ -151,7 +157,12 @@ export default function InfoModify() {
       alert('비밀번호가 일치하자 않습니다.')
     }
     console.log(`비밀번호 변경: ${password} memberId: ${user.memberId}`)
-    axios.put(`${process.env.REACT_APP_URL}/member/mypage/modifyPassword`, {
+    axios.put(`${process.env.REACT_APP_URL}/member/mypage/modifyPassword`,{
+      headers:{
+        Authorization: "Bearer " + localStorage.getItem('accessToken'),
+        RefreshToken: localStorage.getItem('refreshtoken')
+      }
+    }, {
       memberId:user.memberId,
       password
     })
@@ -177,7 +188,12 @@ export default function InfoModify() {
 
     const confirmWithdrawal = () => {
       axios
-        .delete(`${process.env.REACT_APP_URL}/member/mypage/remove/${parseJwt.sub}`, {})
+        .delete(`${process.env.REACT_APP_URL}/member/mypage/remove/${parseJwt.sub}`,{
+          headers:{
+            Authorization: "Bearer " + localStorage.getItem('accessToken'),
+            RefreshToken: localStorage.getItem('refreshtoken')
+          }
+        }, {})
         .then((res) => {
           console.log(res);
           alert("회원탈퇴성공");
