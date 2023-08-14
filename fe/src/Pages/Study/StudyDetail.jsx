@@ -180,6 +180,7 @@ const StudyDetailTest = () => {
                             studyData.disclosure ||
                             <img className={style.icon} src="../Assets/disclosureIcon.png" alt="비공개" />
                         }
+                        {/* 카테고리 */}
                         <div className={style.smallBox}>{categoryList[studyData.categoryId]}</div>
                         <div className={`${style.dDay}`}>D - {(Number(studyData.studyEndDate.substring(5, 7)) - now.getMonth() - 1) * 30 + Number(studyData.studyEndDate.substring(8, 10)) - now.getDate()}</div>
                     </div>
@@ -210,7 +211,7 @@ const StudyDetailTest = () => {
 
                             // viewType 0 ; 메인페이지일 때
                             <div>
-                                <div>
+                                <div className={style.mainViewBottom}>
                                     {/* 스터디 요일 */}
                                     {studyData.studySchedule &&
                                         studyData.studySchedule.map(({ studyDay }) => {
@@ -220,7 +221,6 @@ const StudyDetailTest = () => {
                                     <span>{studyData.studyStartDate} - {studyData.studyEndDate}</span>
 
 
-                                    {/* 카테고리 */}
 
                                 </div>
 

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -11,8 +11,8 @@ import axios from "axios";
 
 // 리덕스 저장
 import { useDispatch } from 'react-redux';
-import {addSchedule, updateSchedule,removeSchedule, clearUserSchedule} from "../../../redux/reducers/userScheduleSlice";
-import {addStudySchedule, removeStudySchedule, clearUserStudySchedule} from "../../../redux/reducers/userStudyScheduleSlice";
+import { addSchedule, updateSchedule, removeSchedule, clearUserSchedule } from "../../../redux/reducers/userScheduleSlice";
+import { addStudySchedule, removeStudySchedule, clearUserStudySchedule } from "../../../redux/reducers/userStudyScheduleSlice";
 import { updateUser } from "../../../redux/reducers/userSlice"
 
 // 리덕스 꺼내기
@@ -21,10 +21,10 @@ import { useSelector } from 'react-redux';
 import { event } from "jquery";
 
 
-export default function Calendar(){
+export default function Calendar() {
 
   const dispatch = useDispatch();
-  
+
 
   // 현재 년, 월
   const currentDate = new Date();
@@ -32,7 +32,7 @@ export default function Calendar(){
   const month = currentDate.getMonth() + 1;
 
 
-  const [studyData , setStudyData ] = useState([]);
+  const [studyData, setStudyData] = useState([]);
   // const studyData = []
   const [selectedColor, setSelectedColor] = useState('');
   const [col, setCol] = useState()
@@ -53,13 +53,13 @@ export default function Calendar(){
 
   useEffect(() => {
 
-    console.log(userTimeZone); 
-    console.log(studyData); 
-    console.log('캘린더 memberId',user.memberId)
+    console.log(userTimeZone);
+    console.log(studyData);
+    console.log('캘린더 memberId', user.memberId)
     console.log(`year---${year}///month---${month}`)
 
     loadData()
-    },[]);
+  }, []);
 
 
   const [selectedDate, setSelectedDate] = useState(null);
@@ -70,7 +70,7 @@ export default function Calendar(){
 
   const [showConfirmation, setShowConfirmation] = useState(false);
 
-  
+
   const handleDateClick = (info) => {
     setSelectedDate(info.dateStr);
   };
@@ -85,21 +85,21 @@ export default function Calendar(){
         params: {
           year,
           month
-        }
+        },
       })
       .then((res) => {
         console.log("일정 요청 성공=================================");
         console.log(res);
         console.log(res.data.studyScheduleList);
 
-        
+
         //스터디 일정
         res.data.studyScheduleList.forEach(schedule => {
           console.log(schedule.studyScheduleList)
           const targetDays = [0, 2]; // 일요일과 수요일
           const startDate = new Date(schedule.studyStartDate);
           const endDate = new Date(schedule.studyEndDate);
-        
+
           // 보정된 시간대로 일정 생성
           const currentDate = new Date(startDate);
           while (currentDate <= endDate) {
@@ -108,16 +108,16 @@ export default function Calendar(){
               eventStart.setUTCHours(19, 0); // 19시 0분
               const eventEnd = new Date(currentDate);
               eventEnd.setUTCHours(20, 0); // 20시 0분
-        
+
               const studyEvent = {
                 title: schedule.studyName,
                 start: eventStart,
                 end: eventEnd,
               };
-        
+
               studyData.push(studyEvent);
             }
-        
+
             // 다음 날짜로 이동
             currentDate.setUTCDate(currentDate.getUTCDate() + 1);
           }
@@ -125,7 +125,7 @@ export default function Calendar(){
 
 
 
-        dispatch(updateUser({img:res.data.img}));
+        dispatch(updateUser({ img: res.data.img }));
 
 
         const eventsToAdd = res.data.scheduleList.map((scheduleItem) => ({
@@ -135,7 +135,7 @@ export default function Calendar(){
           extendedProps: {
             content: scheduleItem.memberScheduleContent,
           },
-          color:'null'
+          color: 'null'
         }));
 
         // 할 일
@@ -146,9 +146,9 @@ export default function Calendar(){
 
         // 내 열정지수, 공부 시간
         dispatch(updateUser({
-          totalScore:res.data.totalScore,
-          todayStudyTime:res.data.todayStudyTime,
-          totalStudyTime:res.data.totalStudyTime
+          totalScore: res.data.totalScore,
+          todayStudyTime: res.data.todayStudyTime,
+          totalStudyTime: res.data.totalStudyTime
         }))
 
         console.log("==============================");
@@ -156,7 +156,7 @@ export default function Calendar(){
       .catch((err) => {
         console.log(err, "일정 요청 실패------------------");
       });
-    };
+  };
 
   //=========================================================================
 
@@ -165,27 +165,27 @@ export default function Calendar(){
   // 회원일정등록 =======================================================
   const handleModalSubmit = () => {
 
-    
-    
+
+
     if (!eventTitle || !eventTime) {
       alert("이벤트 제목과 일시를 입력해주세요.");
       return;
     }
-    
-    
+
+
     const selectedDateTime = new Date(`${selectedDate}T${eventTime}`);
-    
-    console.log(selectedDateTime,'-----------------')
+
+    console.log(selectedDateTime, '-----------------')
 
     const postScheduleReqDto = {
-      email:user.email,
+      email: user.email,
       memberScheduleDate: selectedDateTime,
       memberScheduleContent: eventContent,
       memberScheduleTitle: eventTitle
     }
     console.log(postScheduleReqDto.memberScheduleDate)
 
-    axios.post(`${process.env.REACT_APP_URL}/member/mypage/schedule`,postScheduleReqDto)
+    axios.post(`${process.env.REACT_APP_URL}/member/mypage/schedule`, postScheduleReqDto)
       .then((res) => {
         console.log(' 일정 추가 성공 =================================')
 
@@ -193,19 +193,19 @@ export default function Calendar(){
 
         const newEvent = {
           title: res.data.memberScheduleTitle,
-          data:res.data.memberScheduleDate.slice(0,10),
+          data: res.data.memberScheduleDate.slice(0, 10),
           scheduleId: res.data.memberScheduleId,
           extendedProps: {
             content: res.data.memberScheduleContent,
           },
-          color:'null'
+          color: 'null'
         };
 
         dispatch(addSchedule(newEvent))
         loadData()
       })
       .catch((err) => {
-        console.log(err,' 일정 추가 실패 ------------------');
+        console.log(err, ' 일정 추가 실패 ------------------');
       });
 
     // 캘린더 이벤트 배열에 새 이벤트를 추가하고 모달을 닫습니다.
@@ -264,23 +264,23 @@ export default function Calendar(){
   //==========================================================================================
 
 
-  
+
   const handleEventClick = (info) => {
-    console.log('handleEventClick',info.event._def)
+    console.log('handleEventClick', info.event._def)
     setSelectedEvent(info.event._def);
 
     const now = new Date();
     const formattedNow = `${now.getFullYear()}-${(now.getMonth() + 1)}`
-    
+
     console.log(formattedNow)
     const event = {
       title: info.event._def.title,
-      data:formattedNow,
+      data: formattedNow,
       scheduleId: info.event._def.sourceId,
       extendedProps: {
         content: info.event._def.extendedProps,
       },
-      color:col,
+      color: col,
     }
     seteventColor(event)
     setShowConfirmation(true); // Open the confirmation dialog
@@ -288,7 +288,7 @@ export default function Calendar(){
 
 
 
-  const [selectedEvent, setSelectedEvent] = useState(null); 
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
 
   // 일정 클릭시 모달 열기===================================================================
@@ -300,7 +300,7 @@ export default function Calendar(){
 
 
   //
-  const handleColor = ()=>{
+  const handleColor = () => {
     console.log(eventColor)
     updateSchedule(eventColor)
     setShowConfirmation(false);
@@ -308,15 +308,15 @@ export default function Calendar(){
 
 
   // 색상변경
-  const handleColorChange=(color)=>{
+  const handleColorChange = (color) => {
     console.log(color)
     setCol(color)
   };
 
 
   // 일정
-  const events=[
-    
+  const events = [
+
     ...userSchedule,
     ...studyData
   ];
@@ -328,36 +328,36 @@ export default function Calendar(){
       {/* 캘린더 */}
       <div className={style.Calendar_box}>
         <div className={style.Calendar_box_box}>
-      <div className={style.calendar}>
-        <FullCalendar
-          timeZone = {userTimeZone}
-          defaultView="dayGridMonth" 
-          editable = {true} // 수정 가능
-          resourceAreaHeaderContent="Rooms"
-          initialView={'dayGridMonth'}
-          locale={"ko"}
-          views={{ listWeek: { type: "listWeek", buttonText: "주간 목록" } }}
-          headerToolbar={
-              {
+          <div className={style.calendar}>
+            <FullCalendar
+              timeZone={userTimeZone}
+              defaultView="dayGridMonth"
+              editable={true} // 수정 가능
+              resourceAreaHeaderContent="Rooms"
+              initialView={'dayGridMonth'}
+              locale={"ko"}
+              views={{ listWeek: { type: "listWeek", buttonText: "주간 목록" } }}
+              headerToolbar={
+                {
                   start: 'today prev,next',
                   center: 'title',
-                  end: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek' 
+                  end: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                }
               }
-          }
-          plugins={[dayGridPlugin,timeGridPlugin,interactionPlugin,listPlugin]}
-          events={events}
-          resources = {events}
-          dateClick={handleDateClick}
-          eventClick={handleEventClick}
-          eventDrop={handleEventDrop}
-          />
-      </div>
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
+              events={events}
+              resources={events}
+              dateClick={handleDateClick}
+              eventClick={handleEventClick}
+              eventDrop={handleEventDrop}
+            />
+          </div>
         </div>
 
       </div>
-      
 
-          
+
+
       {selectedDate && (
         <div className={style.modal}>
           <div className={style.modal_content}>
@@ -383,11 +383,11 @@ export default function Calendar(){
                   key={index}
                   className={`${style.color_button} ${selectedColor === color ? style.selected : ''}`}
                   style={{ backgroundColor: color }}
-                  onClick={()=>handleColorChange(color)}
+                  onClick={() => handleColorChange(color)}
                 ></button>
               ))}
             </div>
-            
+
             <div className={style.confirmation_buttons}>
 
               <button className={style.confirm_button} onClick={handleColor}>
