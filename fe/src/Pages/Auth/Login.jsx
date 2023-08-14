@@ -12,16 +12,31 @@ import setIsLoggedIn from "../../router/Router";
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/reducers/userSlice';
 
+import PasswordResetModal from './PasswordResetModal';
+// 로딩중 스피너
+import Loading from '../../Loading/Loading';
 
 export default function Login() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [showPasswordResetModal, setShowPasswordResetModal] = useState(false);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+
+  const handleOpenPasswordResetModal = () => {
+    setShowPasswordResetModal(true);
+  };
+
+  const handleClosePasswordResetModal = () => {
+    setShowPasswordResetModal(false);
+  };
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -110,9 +125,9 @@ export default function Login() {
         />
       </div>
       <div className={style.Login_box_find}>
-        <NavLink to="/PasswordReset" className={style.password_find}>
+        <div className={style.password_find} onClick={handleOpenPasswordResetModal}>
           비밀번호 찾기
-        </NavLink>
+        </div>
         <NavLink to="/SignUp" className={style.signup}>
           회원가입
         </NavLink>
@@ -144,6 +159,11 @@ export default function Login() {
         />
       </div> */}
     </div>
+
+    {showPasswordResetModal && (
+        <PasswordResetModal onClose={handleClosePasswordResetModal} />
+      )}
+    
   </div>
 );
 }

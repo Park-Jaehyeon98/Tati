@@ -27,7 +27,6 @@ export default function AuthModal({ setAuthModal }) {
   const closeModal = () => {
     setAuthModal(false);
     // 임시===========================================
-    navigate("/MyPage/MyPageInfoModify");
   };
 
   // 유저의 pk와 password 보내기
@@ -41,13 +40,13 @@ export default function AuthModal({ setAuthModal }) {
 
     console.log(process.env.REACT_APP_URL)
     axios.post(`${process.env.REACT_APP_URL}/member/mypage/check`,{
+    email:user.email,
+    password
+    },{
       headers:{
         Authorization: "Bearer " + localStorage.getItem('accessToken'),
         RefreshToken: localStorage.getItem('refreshtoken')
       }
-    },{
-    email:user.email,
-    password
     })
     .then((res) => {
       console.log(res)

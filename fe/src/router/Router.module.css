@@ -30,7 +30,14 @@ nav {
 
 .nav_hr {
   width: 100%;
-  margin-bottom: 0px;
+  margin: 0;
+  padding: 0;
+  border: none; /* border 제거 */
+  height: 1px; /* 선 높이 조정 */
+  background-color: #ccc; /* 기본적인 선 색상 유지 */
+  position: absolute; /* 위치 조정 */
+  top: 80px; /* 모달이 나타날 때 겹치지 않도록 조정 */
+  z-index: 2; /* 모달 위에 배치 */
 }
 
 .logo{
@@ -44,6 +51,7 @@ nav {
   margin-top: 15px;
   margin-left: 10%;
 }
+
 /* 화면이 줄어들었을 때 로고가 안 보이게 */
 @media (max-width: 1250px) {
   .logo {
@@ -60,16 +68,16 @@ nav {
 
 /* 모달 스타일 */
 .modal {
-  position: sticky;
-  top: calc(100% + 10px);
-  left: auto;
-  right: 20%;
-  transform: translateX(0); /* transform 값 조정 */
+  position: fixed; /* 모달을 고정 위치에 배치 */
+  top: 175px; /* 모달이 화면의 중앙에 위치하도록 조정 */
+  left: 62%;
+  transform: translate(-50%, -50%);
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   display: none;
   padding: 10px;
+  z-index: 4; /* 모달 위에 배치 */
 }
 
 .nav-link:hover .modal {
@@ -80,6 +88,11 @@ nav {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  position: relative; /* 위치 조정 */
+  z-index: 5; /* 모달 콘텐츠 위에 배치 */
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  padding: 8px;
 }
 
 .modal_content a {

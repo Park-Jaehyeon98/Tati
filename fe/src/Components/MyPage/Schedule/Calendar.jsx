@@ -78,9 +78,8 @@ export default function Calendar() {
 
   // 일정 불러오기 =========================================================================
   const loadData = () => {
+    
 
-    console.log(accessToken)
-    console.log(refreshtoken)
     axios
       .get(`${process.env.REACT_APP_URL}/member/mypage/${user.memberId}`, {
         params: {
@@ -151,7 +150,6 @@ export default function Calendar() {
 
         dispatch(updateUser({ img: res.data.img }));
 
-
         const eventsToAdd = res.data.scheduleList.map((scheduleItem) => ({
           title: scheduleItem.memberScheduleTitle,
           date: scheduleItem.memberScheduleDate.slice(0, 10),
@@ -188,15 +186,15 @@ export default function Calendar() {
 
   // 회원일정등록 =======================================================
   const handleModalSubmit = () => {
-
-    if (!eventTitle || !eventTime) {
+    
+    if (!eventTitle) {
       alert("이벤트 제목과 일시를 입력해주세요.");
       return;
     }
 
-    const selectedDateTime = new Date(`${selectedDate}T${eventTime}`);
-
-    console.log(selectedDateTime, '-----------------')
+    const selectedDateTime = new Date(`${selectedDate}T${'11:04'}`);
+    
+    console.log(selectedDateTime,'-----------------')
 
     const postScheduleReqDto = {
       email: user.email,
@@ -337,6 +335,7 @@ export default function Calendar() {
       color: col,
     }
 
+    console.log(event)
     seteventColor(event)
     setShowConfirmation(true); // Open the confirmation dialog
   };
@@ -422,7 +421,6 @@ export default function Calendar() {
           <div className={style.modal_content}>
             <h2>선택한 날짜: {selectedDate}</h2>
             <input type="text" value={eventTitle} onChange={(e) => setEventTitle(e.target.value)} placeholder="이벤트 제목" />
-            <input type="time" value={eventTime} onChange={(e) => setEventTime(e.target.value)} />
             <textarea value={eventContent} onChange={headerChangeContent} id="" cols="30" rows="10"></textarea>
             <button onClick={handleModalSubmit}>추가</button>
             <button onClick={() => setSelectedDate(null)}>닫기</button>
@@ -437,7 +435,19 @@ export default function Calendar() {
             <div className={style.detail_title}>
               일정 - {eventColor.title}
             </div>
-            시간 - {eventColor.startTime} ~ {eventColor.endTime}
+         
+              {eventColor.extendedProps.content.content !== undefined && eventColor.extendedProps.content.content !== null && (
+                <div>
+                  내용 - {eventColor.extendedProps.content.content}
+                </div>
+              )}
+      
+            {eventColor.endTime === "Invalid Date" ? null : (
+              <div>
+                시간 - {eventColor.startTime} ~ {eventColor.endTime}
+              </div>
+            )}
+     
             <p>이 일정를 삭제하시겠습니까?</p>
 
             {/* <div className={style.color_palette}>

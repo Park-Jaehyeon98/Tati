@@ -5,7 +5,7 @@
 
 .titleBox {
   margin-top: 300;
-  display: grid;
+  display: flex;
   grid-template-columns: 10fr 1fr;
 }
 
@@ -37,4 +37,9 @@
 .btn:hover {
   background-color: #0056b3;
   color: #f8f9fa;
+}
+
+.day{
+  margin-left: 340px;
+  font-size: 14px;
 }
