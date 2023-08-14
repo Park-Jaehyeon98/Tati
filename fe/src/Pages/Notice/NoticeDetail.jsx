@@ -70,7 +70,7 @@ const NoticeDetail = () => {
         <div className={style.container}>
             <div className={style.titleBox}>
                 <div>{boardTitle}</div>
-                <div>{createdDate}</div>
+                <div className={style.day}>{createdDate}</div>
             </div>
             <hr />
             <div className={style.revDir}>

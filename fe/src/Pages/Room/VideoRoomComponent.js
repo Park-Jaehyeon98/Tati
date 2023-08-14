@@ -61,6 +61,9 @@ class VideoRoomComponent extends Component {
   }
 
   componentDidMount() {
+    this.sessionName = `study${localStorage.getItem("studyId")}`;
+    this.userName = localStorage.getItem("decodedToken").memberName;
+
     const openViduLayoutOptions = {
       maxRatio: 3 / 2, // The narrowest ratio that will be used (default 2x3)
       minRatio: 9 / 16, // The widest ratio that will be used (default 16x9)
@@ -85,6 +88,8 @@ class VideoRoomComponent extends Component {
   }
 
   componentWillUnmount() {
+    localStorage.removeItem("studyName");
+    localStorage.removeItem("studyId");
     window.removeEventListener("beforeunload", this.onbeforeunload);
     window.removeEventListener("resize", this.updateLayout);
     window.removeEventListener("resize", this.checkSize);
@@ -92,6 +97,8 @@ class VideoRoomComponent extends Component {
   }
 
   onbeforeunload(event) {
+    localStorage.removeItem("studyName");
+    localStorage.removeItem("studyId");
     this.leaveSession();
   }
 

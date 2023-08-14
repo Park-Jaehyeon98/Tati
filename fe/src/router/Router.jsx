@@ -92,7 +92,7 @@ export default function Router() {
   const [showModal, setShowModal] = useState(false);
 
   // 모달을 열고 닫는 함수
-  const toggleModal = () => {
+  const handleModalClick = () => {
     setShowModal(!showModal);
   };
 
@@ -148,11 +148,12 @@ export default function Router() {
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Faq">
               FAQ
             </NavLink>
-            {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage" onMouseEnter={toggleModal} onMouseLeave={toggleModal}>
+            {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage"  onClick={handleModalClick}>
               마이페이지
               {showModal && (
                 <div className={style.modal}>
                   <div className={style.modal_content}>
+                    <NavLink to="/MyPage">일정</NavLink>
                     <NavLink to="/MyPage/JoinStudy">스터디 목록</NavLink>
                     <NavLink to="/MyPage/MyPagePoint">마일리지</NavLink>
                     <NavLink onClick={() => handleButtonClick()}>회원정보수정</NavLink>

@@ -115,12 +115,16 @@
 }
 
 /* 가입된스터디가 없을 경우 문구 */
-.JoinStudy_text{
+.JoinStudy_text_box{
   font-size: 30px;
   color: #dfdfe0;
 }
 
-.ApplyStudy_text{
+.ApplyStudy_text_box{
   font-size: 30px;
   color: #dfdfe0;
+}
+
+.studyName{
+  font-size: 15px;
 }

@@ -57,29 +57,23 @@ export default function MyPost(){
   const [currentPage, setCurrentPage] = useState(1);
 
   const NoticeItem = ({ boardId, boardTitle, boardHit, boardCommentCount, boardDate }) => {
+    const handleItemClick = () => {
+      navigate(`/Board/${boardId}`);
+    };
     return (
       <div>
         <div className={style.NoticeItem_text}>
-          <p className={style.MyPost_text}> {boardTitle} - 조회수 {boardHit} 댓글수 {boardCommentCount}
+          <p className={style.MyPost_text}>
+             <h2 onClick={handleItemClick}>{boardTitle}</h2>
+              조회수 {boardHit} 댓글수 {boardCommentCount}
             <h6 className={style.MyPost_text_time}>
-              {/* {boardDate.slice(0, 10)} */}
+              {boardDate.slice(0, 10)}
               </h6></p>
           <hr className={style.Study_hr}/>
         </div>
       </div>
     );
   };
-
-
-  const dummyData = [
-    {
-      boardId: 1,
-      boardTitle: "첫 번째 게시물",
-      boardHit: 120,
-      boardCommentCount: 5,
-      boardDate: "2023-08-04T10:30:00.000Z",
-    }
-  ];
   
   
 
@@ -105,7 +99,7 @@ export default function MyPost(){
           
           <div>
             {myPost.length === 0 ? (
-              <p className={style.ApplyStudy_text}>글을 작성해주세요!</p>
+              <p className={style.ApplyStudy_text_box}>글을 작성해주세요!</p>
               ):(
             <div className={style.box}>
                 {currentNotices.map((notice, index) => (

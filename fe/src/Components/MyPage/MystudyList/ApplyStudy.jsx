@@ -50,11 +50,14 @@ export default function ApplyStudy(){
   const itemsPerPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const NoticeItem = ({ studyName, totalMember, currentMemberCount }) => {
+  const NoticeItem = ({ studyApplicantId, studyName, totalMember, currentMemberCount }) => {
+    const handleItemClick = () => {
+      navigate(`/Study/${studyApplicantId}`);
+    };
     return (
       <div>
         <div className={style.ApplyStudy_box}>
-          <p className={style.ApplyStudy_text}>{studyName} - {currentMemberCount}/{totalMember} 인원</p>
+          <p className={style.ApplyStudy_text}><h2 onClick={handleItemClick}>{studyName}</h2>{currentMemberCount}/{totalMember} 인원</p>
           <hr className={style.Study_hr}/>
         </div>
       </div>
@@ -86,7 +89,7 @@ export default function ApplyStudy(){
           
           <div>
           {applyStudy.length === 0 ? (
-                <p className={style.ApplyStudy_text}>스터디를 신청해주세요!</p>
+                <p className={style.ApplyStudy_text_box}>스터디를 신청해주세요!</p>
               ) : (
                 <div className={style.box}>
                   {currentNotices.map((notice, index) => (

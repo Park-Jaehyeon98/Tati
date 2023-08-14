@@ -56,17 +56,15 @@ export default function Change() {
     setRechargeAmount(0);
     console.log(process.env.REACT_APP_URL)
 
-    axios.post(`${process.env.REACT_APP_URL}/payment/ready`,
-      {
-        email: user.email,
-        amount: rechargeAmount
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("accessToken"),
-          RefreshToken: localStorage.getItem("refreshtoken"),
-        },
-      })
+    axios.post(`${process.env.REACT_APP_URL}/payment/ready`, {
+      email: user.email,
+      amount: rechargeAmount
+    }, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem('accessToken'),
+        RefreshToken: localStorage.getItem('refreshtoken')
+      }
+    })
       .then((res) => {
         console.log('=================================')
         console.log(res.data);

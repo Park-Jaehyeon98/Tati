@@ -73,6 +73,9 @@ export default function RewardPoint(){
         <h1>입, 퇴실 내역</h1>
 
         <div>
+           {usePoint.length === 0 ? (
+                <p className={style.usePoint_text}>출결이 없습니다!</p>
+              ) : (
           <div className={style.box}>
               {currentNotices.map((notice, index) => (
                 <NoticeItem
@@ -86,6 +89,8 @@ export default function RewardPoint(){
                 />
               ))}
             </div>
+            )}
+
             <div className={style.pagination}>
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
                 <button
