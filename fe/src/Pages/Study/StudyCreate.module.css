@@ -19,6 +19,12 @@
   margin-bottom: 5%;
 }
 
+.container input[type="number"]::-webkit-outer-spin-button,
+.container input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* 제목 스타일 */
 h3 {
   font-size: 24px;
@@ -93,6 +99,7 @@ h3 {
 
 /* 입력 필드 스타일 */
 .inputField input[type="text"],
+.inputField input[type="number"],
 .inputField textarea {
   padding: 12px;
   border: 1px solid #ccc;

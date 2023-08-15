@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import style from './StudyCreate.module.css';
-import { apiClient } from "../../api/apiClient";
+import { apiClient, tokenRefresh } from "../../api/apiClient";
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -37,28 +37,27 @@ const StudyCreate = () => {
     const user = useSelector(state => state.user.user);
 
     const [studyData, setStudyData] = useState({
-        categoryId: 0, //스터디 카테고리
+        categoryId: 1, //스터디 카테고리
         studyName: "", //스터디 이름
         studyDescription: "", //스터디 설명
-        totalMember: 0, //스터디 멤버 수
+        totalMember: 2, //스터디 멤버 수
         disclosure: true, // 공개 여부
         studyPassword: null, // 패스워드
-        studyDeposit: 1,  //보증금 최대 50000
         studyHost: user.memberId, // memberNickName으로 들어갈것 
         studyStartDate: todayString, //스터디 시작일
         studyEndDate: todayString, //스터디 종료일
+        studyDeposit: 1500,
     });
     const [studyImg, setStudyImg] = useState(null); //스터디이미지
     const [studyImgView, setStudyImgView] = useState(null); // 스터디이미지 보기
-
 
     const { categoryId,
         studyName,
         studyDescription,
         totalMember,
-        studyDeposit,
         disclosure,
-        studyPassword } = studyData
+        studyPassword,
+        studyDeposit } = studyData
 
     // 기본 input text 필드 처리 함수
     const handleChange = (e) => {
@@ -70,7 +69,6 @@ const StudyCreate = () => {
             }
         });
     };
-
     // 카테고리 선택
     const handleCategoryIdClick = (value) => {
         setStudyData((studyData) => {
@@ -95,6 +93,7 @@ const StudyCreate = () => {
             return {
                 ...studyData,
                 disclosure: value,
+                studyPassword: ''
             }
         })
     }
@@ -116,7 +115,7 @@ const StudyCreate = () => {
             }
         })
     }
-
+    // 일정 아이템을 형식에 맞게 변환
     const scheduletoData = ({
         studyDay,
         studyStartHour,
@@ -131,23 +130,33 @@ const StudyCreate = () => {
         }
     }
 
+
     // 일정 등록
     const handleAddScheduleBtnClick = () => {
+        // 시작시간과 종료시간이 유효하지 않을때
+        if (studyStartHour > studyEndHour ||
+            (studyStartHour === studyEndHour && studyStartMin >= studyEndMin)) {
+            alert('스터디 일정을 확인해주세요. 시작시간과 종료시간이 유효하지 않습니다.')
+        }
+        else {
+            setStudySchedule((studySchedule) => {
+                const newStudySchedule = studySchedule.filter((item) => { return item.studyDay !== studyScheduleItem.studyDay })
+                return [...newStudySchedule, scheduletoData(studyScheduleItem)].sort(
+                    (a, b) => {
+                        return Number(a.studyDay) - Number(b.studyDay)
+                    })
+            })
 
-        setStudySchedule((studySchedule) => {
-            const newStudySchedule = studySchedule.filter((item) => { return item.studyDay !== studyScheduleItem.studyDay })
-            return [...newStudySchedule, scheduletoData(studyScheduleItem)].sort((a, b) => { return Number(a.studyDay) - Number(b.studyDay) })
-        })
-
-        setStudyScheduleItem(() => {
-            return {
-                studyDay: '0',
-                studyStartHour: 0,
-                studyStartMin: 0,
-                studyEndHour: 0,
-                studyEndMin: 0,
-            }
-        })
+            setStudyScheduleItem(() => {
+                return {
+                    studyDay: '0',
+                    studyStartHour: 0,
+                    studyStartMin: 0,
+                    studyEndHour: 0,
+                    studyEndMin: 0,
+                }
+            })
+        }
     }
     // 일정 초기화
     const handleScheduleResetClick = () => {
@@ -181,45 +190,82 @@ const StudyCreate = () => {
 
     const navigate = useNavigate();
 
+    const isValidSubmit = () => {
+        const wordTrim = /(\s*)/g;
+        const nameLength = studyName.replace(wordTrim, "").length
+        // 스터디이름 설정
+        if (nameLength < 3 || nameLength > 20) {
+            alert('스터디 이름은 공백을 제외한 3 ~ 20자로 설정해주세요')
+            return false
+        }
+        // 스터디 정원 설정
+        else if (totalMember < 2 || totalMember > 8) {
+            alert('스터디 정원은 2 ~ 8명으로 설정해주세요')
+            return false
+        }
+        // 스터디 비밀번호 설정 
+        else if (!disclosure && (studyPassword.length === 0)) {
+            alert('비공개 스터디의 비밀번호를 설정해주세요')
+            return false
+        }
+        else if (Number(studyPassword) < 0) {
+            alert('비밀번호는 -를 제외한 숫자로 입력해주세요')
+            return false
+        }
+        // 스터디 일정 확인
+        else if (studySchedule.length === 0) {
+            alert('스터디 일정을 추가해주세요')
+            return false
+        }
+        else if (Number(studyDeposit) < 1500 || Number(studyDeposit) > 60000 || studyDeposit % 3 !== 0) {
+            alert('보증금은 1500원 ~ 60000원 범위로 3의 배수로 입력해주세요')
+            return false
+        }
+        return true
+    }
+
     // 생성 요청 제출
     const handleStudyCreateSubmit = () => {
+        if (isValidSubmit()) {
+            tokenRefresh();
+            const studyReqDto = {
+                ...studyData,
+                studySchedule: studySchedule,
+                studyStartDate: dateToString(startDate),
+                studyEndDate: dateToString(endDate),
+            }
 
-        const studyReqDto = {
-            ...studyData,
-            studySchedule: studySchedule,
-            studyStartDate: dateToString(startDate),
-            studyEndDate: dateToString(endDate),
-        }
+            let formData = new FormData();
+            formData.append('studyImg', studyImg)
 
-        let formData = new FormData();
-        formData.append('studyImg', studyImg)
-
-        // 키값 수정 필요
-        formData.append('studyReqDto', new Blob([JSON.stringify(studyReqDto)], {
-            type: "application/json"
-        }))
-        for (const [key, value] of formData.entries()) {
-            console.log(key, typeof value);
-        }
-        console.log(studyReqDto)
+            // 키값 수정 필요
+            formData.append('studyReqDto', new Blob([JSON.stringify(studyReqDto)], {
+                type: "application/json"
+            }))
+            for (const [key, value] of formData.entries()) {
+                console.log(key, typeof value);
+            }
+            console.log(studyReqDto)
 
 
-        apiClient.post('study/create',
-            formData,
-            {
-                header: {
-                    'Content-Type': 'multipart/form-data',
+            apiClient.post('study/create',
+                formData,
+                {
+                    header: {
+                        'Content-Type': 'multipart/form-data',
+                    }
                 }
-            })
-            .then((res) => {
-                console.log(res);
-                console.log(studyReqDto, studyImg);
-                navigate(`../${res.data.studyId}`)
+            )
+                .then((res) => {
+                    console.log(res);
+                    console.log(studyReqDto, studyImg);
+                    navigate(`../${res.data.studyId}`)
 
-            }).catch((err) => {
-                console.log(err);
-                console.log(studyReqDto, studyImg);
-            })
+                }).catch((err) => {
+                    console.log(err);
+                    console.log(studyReqDto, studyImg);
+                })
+        }
     }
 
 
@@ -255,7 +301,7 @@ const StudyCreate = () => {
                     {!disclosure &&
                         <div className={`${style.inputField} ${style.disclosureContainer}`}>
                             <div className={style.disclosure}>패스워드</div>
-                            <input style={{ width: 660 }} type="studyPassword" name="studyPassword" value={studyPassword} onChange={handleChange} />
+                            <input style={{ width: 660 }} type="number" name="studyPassword" value={studyPassword} onChange={handleChange} />
                         </div>
                     }
                 </div>
@@ -268,7 +314,7 @@ const StudyCreate = () => {
 
                 <div className={`${style.inputField} ${style.disclosureContainer}`}>
                     <div className={style.disclosure}>스터디 설명</div>
-                    <input style={{ width: 660, height: 100 }} type="text" name="studyDescription" value={studyDescription} onChange={handleChange} />
+                    <textarea style={{ width: 660, height: 100 }} type="text" name="studyDescription" value={studyDescription} onChange={handleChange} />
                 </div>
 
                 <div className={style.disclosureContainer}>
