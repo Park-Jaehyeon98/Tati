@@ -11,6 +11,7 @@ import UserModel from "./user-model";
 import ToolbarComponent from "./ToolbarComponent";
 import { apiClient } from "../../api/apiClient";
 
+
 var localUser = new UserModel();
 const APPLICATION_SERVER_URL =
   process.env.NODE_ENV === "production"
@@ -18,16 +19,17 @@ const APPLICATION_SERVER_URL =
     : "https://i9b305.p.ssafy.io:8443/";
 
 class VideoRoomComponent extends Component {
+  
+  
   constructor(props) {
     super(props);
+    console.log('VideoRoomComponent Constructor - Member ID:', this.props.memberId);
     this.hasBeenUpdated = false;
     this.layout = new OpenViduLayout();
     // let sessionName = this.props.sessionName ? this.props.sessionName : 'study1';
-    let sessionName = `study${localStorage.getItem("studyId")}`;
-    // let sessionName = "study" + "저장된 studyId";
+    let sessionName = this.props.studyId;
     // let userName = this.props.user ? this.props.user : '참석자' + Math.floor(Math.random() * 100);
-    let userName = localStorage.getItem("decodedToken").memberName;
-    // let userName = "저장된 회원 닉네임";
+    let userName = this.props.memberId;
     this.remotes = [];
     this.localUserAccessAllowed = false;
     this.state = {
@@ -103,6 +105,12 @@ class VideoRoomComponent extends Component {
   }
 
   joinSession() {
+
+    this.setState({
+      memberId: localStorage.getItem("decodedToken").memberId,
+      studyId: localStorage.getItem("studyId"),
+    });
+
     //서버에 입실기록 전송
     apiClient
       .post("/study/attendance/in", {
