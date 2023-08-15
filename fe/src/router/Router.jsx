@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 
@@ -152,7 +151,8 @@ export default function Router() {
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Faq">
               FAQ
             </NavLink>
-            {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage"  
+            {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} 
+            // to="/MyPage"  
             onMouseLeave={handleMouseLeave} 
             onClick={handleModalClick}
             >

@@ -53,6 +53,7 @@ nav {
 }
 
 .navBoxIn {
+  display: flex;
   margin-top: 15px;
   margin-left: 10%;
 }
