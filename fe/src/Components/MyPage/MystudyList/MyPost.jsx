@@ -67,7 +67,7 @@ export default function MyPost(){
       <div>
         <div className={style.NoticeItem_text}>
           <p className={style.MyPost_text}>
-             <h2 onClick={handleItemClick}>{boardTitle}</h2>
+             <h2 className={style.studyName} onClick={handleItemClick}>{boardTitle}</h2>
              👁️‍🗨️ {boardHit} 💬 {boardCommentCount}
             <h6 className={style.MyPost_text_time}>
               {/* {boardDate.slice(0, 10)} */}

@@ -142,5 +142,13 @@
 
 .studyName{
   margin-top: 0px;
-  /* font-size: 15px; */
+}
+
+.studyName:hover{
+  cursor: pointer;
+  color: #007BFF;
+}
+
+.studyName:hover + .custom-cursor {
+  display: block;
 }

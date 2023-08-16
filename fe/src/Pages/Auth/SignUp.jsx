@@ -66,8 +66,8 @@ export default function SignUp() {
 
   // 이메일 인증번호
   const handleSendNumber = () => {
-    console.log(formData.email);
-    console.log(formData.code);
+
+    setLoadingError(true);
     axios
       .post(`${process.env.REACT_APP_URL}/member/email-code-check`, {
         email: formData.email,
@@ -80,6 +80,9 @@ export default function SignUp() {
       .catch((err) => {
         console.log(err);
         alert("인증번호가 잘못되었습니다.");
+      })
+      .finally(() => {
+        setLoadingError(false);
       });
   };
 
@@ -87,6 +90,7 @@ export default function SignUp() {
   // 닉네임 중복 확인
   const handleSendNickName = () => {
     console.log(formData.memberNickName)
+    setLoadingError(true);
     if (formData.memberNickName.length < 2 || formData.memberNickName.length > 10) {
       alert("2~10자 이내로 지어주세요.");
     } else{
@@ -103,6 +107,9 @@ export default function SignUp() {
         console.log(err);
         alert("중복체크실패");
       })
+      .finally(() => {
+        setLoadingError(false);
+      });
     }
   };
 
@@ -118,6 +125,8 @@ export default function SignUp() {
     console.log(password);
     console.log(password2);
 
+    setLoadingError(true);
+
     if (
       email === "" ||
       code === "" ||
@@ -127,26 +136,33 @@ export default function SignUp() {
       password2 === ""
     ) {
       alert("입력 해주세요.");
+      setLoadingError(false);
     } else if (password !== password2) {
       alert("비밀번호가 서로 다릅니다.");
+      setLoadingError(false);
+    }else{
+      axios
+        .post(`${process.env.REACT_APP_URL}/member/sign-up`, {
+          email,
+          memberName,
+          memberNickName,
+          password,
+        })
+        .then((res) => {
+          console.log(res);
+          navigate('/Login')
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setLoadingError(false);
+        });
     }
 
-    axios
-      .post(`${process.env.REACT_APP_URL}/member/sign-up`, {
-        email,
-        memberName,
-        memberNickName,
-        password,
-      })
-      .then((res) => {
-        console.log(res);
-        navigate('/Login')
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   };
 
+  const [showPassword, setShowPassword] = useState(false);
   const [showPasswordHint, setShowPasswordHint] = useState(false);
   const [showNickNameHint, setShowNickNameHint] = useState(false);
 
@@ -190,6 +206,7 @@ export default function SignUp() {
               className={style.input_nickname}
               type="text"
               name="memberNickName"
+              placeholder="닉네임은 2~10글자 이내"
               value={formData.memberNickName}
               onChange={handleChange}
               onMouseEnter={() => setShowNickNameHint(true)}
@@ -214,6 +231,7 @@ export default function SignUp() {
           <input
             className={style.input_name}
             type="text"
+            placeholder="본인 이름을 입력해주세요."
             name="memberName"
             value={formData.memberName}
             onChange={handleChange}
@@ -227,10 +245,9 @@ export default function SignUp() {
               className={style.input_password}
               type="password"
               name="password"
+              placeholder="8~16글자 이내 특수문자X"
               value={formData.password}
               onChange={handleChange}
-              onMouseEnter={() => setShowPasswordHint(true)}
-              onMouseLeave={() => setShowPasswordHint(false)}
             />
             {showPasswordHint && (
               <div className={style.tooltip_content}>
@@ -240,12 +257,13 @@ export default function SignUp() {
           </div>
         </p>
 
-        <p className={style.signup_text}>
+        <p className={`${style.signup_text} ${style.password}`}>
           비밀번호확인
           <input
             className={style.input_password_check}
-            type="password"
+            type="text"
             name="password2"
+            placeholder="패스워드를 확인합니다."
             value={formData.password2}
             onChange={handleChange}
           />
