@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 
@@ -73,6 +72,7 @@ import {clearUserStudySchedule} from "../redux/reducers/userStudyScheduleSlice";
 import AuthModal from "../Components/MyPage/AuthModal";
 import StudyBoardModify from './../Pages/Study/StudyBoard/StudyBoardModify';
 
+
 export default function Router() {
 
   const dispatch = useDispatch();
@@ -90,6 +90,10 @@ export default function Router() {
 
   // 모달을 표시할지 여부를 상태로 관리
   const [showModal, setShowModal] = useState(false);
+
+  const handleMouseLeave = () => {
+    setShowModal(false); // 마우스가 마이페이지 영역을 벗어나면 모달을 닫음
+  };
 
   // 모달을 열고 닫는 함수
   const handleModalClick = () => {
@@ -148,23 +152,11 @@ export default function Router() {
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Faq">
               FAQ
             </NavLink>
-            {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage"  onClick={handleModalClick}>
+            {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/MyPage" >
               마이페이지
-              {showModal && (
-                <div className={style.modal}>
-                  <div className={style.modal_content}>
-                    <NavLink to="/MyPage">일정</NavLink>
-                    <NavLink to="/MyPage/JoinStudy">스터디 목록</NavLink>
-                    <NavLink to="/MyPage/MyPagePoint">마일리지</NavLink>
-                    <NavLink onClick={() => handleButtonClick()}>회원정보수정</NavLink>
-                    <NavLink to="/MyPage/MyPageRewardPoint">상벌점내역</NavLink>
-                    <NavLink to="/Login" onClick={handleLogout}>
-                      로그아웃
-                    </NavLink>
-                  </div>
-                </div>
-              )}
             </NavLink>)}
+            {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")}
+             to="/Login" onClick={handleLogout}>로그아웃</NavLink>)}
             {!user && (
               <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Login">
                 로그인

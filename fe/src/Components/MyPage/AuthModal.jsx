@@ -55,6 +55,7 @@ export default function AuthModal({ setAuthModal }) {
     })
     .catch((err) => {
       console.log(err)
+      alert(err.response.data)
     });
   }
 
