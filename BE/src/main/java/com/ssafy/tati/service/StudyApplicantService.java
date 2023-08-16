@@ -36,7 +36,7 @@ public class StudyApplicantService {
             throw new RuntimeException("이미 신청한 스터디입니다.");
         }
 
-        Point point = new Point(0, "", LocalDateTime.now(), study.getStudyDeposit(),
+        Point point = new Point(0, "", LocalDateTime.now(), -study.getStudyDeposit(),
                 (study.getStudyName()+" 스터디 신청"), member);
         pointService.delete(point);
 
