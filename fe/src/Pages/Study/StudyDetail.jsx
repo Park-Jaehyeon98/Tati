@@ -336,7 +336,7 @@ const StudyDetailTest = () => {
                         <h3 >스터디 비밀번호를 입력해주세요</h3>
                         <div className={style.inputField}>
                             <input type="number" value={passwordInput} onChange={handlePasswordInputChange} />
-                            <div className={style.inputBox}>
+                            <div className={style.buttons}>
                                 <button onClick={handleEnterStudyBtnClick}>
                                     입장
                                 </button>

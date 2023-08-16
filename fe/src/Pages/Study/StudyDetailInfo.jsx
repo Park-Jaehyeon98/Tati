@@ -95,6 +95,7 @@ const StudyDetailInfo = () => {
                     {
                         (studyData.studyNoticeDetailResDto != null) ?
                             <div>
+                                {/* 공지사항 제목 */}
                                 <div>{studyData.studyNoticeDetailResDto.boardTitle}</div>
                                 <hr />
                                 <div>작성자 : {studyData.studyNoticeDetailResDto.memberNickname}</div>
