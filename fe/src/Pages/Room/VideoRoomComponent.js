@@ -607,6 +607,7 @@ class VideoRoomComponent extends Component {
       <div className="container" id="container">
         <ToolbarComponent
           sessionId={mySessionId}
+          studyName={this.props.studyName}
           user={localUser}
           showNotification={this.state.messageReceived}
           camStatusChanged={this.camStatusChanged}
