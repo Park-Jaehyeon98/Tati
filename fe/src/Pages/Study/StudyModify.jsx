@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 
 import style from './StudyModify.module.css';
 import { apiClient } from '../../api/apiClient';
-import { useSelector } from 'react-redux';
 
 const StudyModify = () => {
     const navigate = useNavigate();
@@ -207,7 +206,7 @@ const StudyModify = () => {
 
                 <div className={`${style.inputField} ${style.disclosureContainer}`}>
                     <div className={style.disclosure}>스터디 설명</div>
-                    <input style={{ width: 660, height: 100 }} type="text" name="studyDescription" value={studyDescription} onChange={handleChange} />
+                    <textarea style={{ width: 660, height: 100 }} type="text" name="studyDescription" value={studyDescription} onChange={handleChange} />
                 </div>
 
 

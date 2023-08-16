@@ -170,6 +170,20 @@ h3 {
   border-radius: 4px;
 }
 
+.scheduleBox {
+  padding: 10px;
+  border: 1px solid #3396f4;
+  min-height: 100px;
+  background-color: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+  border-radius: 5px;
+}
+
+.scheduleItem {
+  padding: 5px;
+  color: #3396f4;
+  font-size: 18px;
+}
+
 .txt {
   border: 1px solid #ccc;
   border-radius: 4px;

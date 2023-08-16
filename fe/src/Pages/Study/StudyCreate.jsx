@@ -423,10 +423,10 @@ const StudyCreate = () => {
 
                     <hr />
                     스터디 일정
-                    <div className={style.disclosure}>
+                    <div className={`${style.disclosure} ${style.scheduleBox}`}>
                         {
                             studySchedule.map(({ studyDay, studyStartTime, studyEndTime }, index) => {
-                                return <div key={index} >{dayList[studyDay]} 요일  {studyStartTime} ~  {studyEndTime}</div>
+                                return <div className={style.scheduleItem} key={index} >{dayList[studyDay]} 요일  {studyStartTime} ~  {studyEndTime}</div>
                             })
                         }
                     </div>

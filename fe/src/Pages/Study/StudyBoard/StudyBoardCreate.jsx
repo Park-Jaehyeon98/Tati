@@ -90,11 +90,10 @@ const StudyBoardCreate = () => {
     // 이미지 업로드
     const handleBoardFileUpload = (e) => {
         const file = e.target.files[0];
-        // setBoardFile(() => { return file })
-        setBoardFile(file)
+        setBoardFile(() => { return file })
 
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
+        // const reader = new FileReader();
+        // reader.readAsDataURL(file);
 
         // return new Promise((resolve) => {
         //     reader.onload = () => {
@@ -120,7 +119,7 @@ const StudyBoardCreate = () => {
                 <input type="text" name="boardTitle" value={boardTitle} onChange={handleChange} />
 
                 <div className={style.inputFieldTitle}>내용</div>
-                <input className={style.textarea} type="text" name="boardContent" value={boardContent} onChange={handleChange} />
+                <textarea className={style.textarea} type="text" name="boardContent" value={boardContent} onChange={handleChange} />
 
                 {boardType === 2 &&
                     <>

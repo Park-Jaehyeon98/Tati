@@ -31,7 +31,8 @@
   height: 350px;
 }
 
-.inputField input[type="file"] {
+.inputField input[type="file"],
+.inputField textarea {
   padding: 12px;
   width: 600px;
   border: 1px solid #ccc;

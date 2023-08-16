@@ -25,7 +25,10 @@ const StudyBoardDetail = () => {
         boardHit: 0,
 
         memberNickname: '',
-        memberId: 0
+        memberId: 0,
+
+        boardFile: null,
+        boardFileName: null
     });
 
     const [commentContent, setCommentContent] = useState('');
@@ -42,7 +45,7 @@ const StudyBoardDetail = () => {
                 console.log("멤버아이디", memberId)
                 console.log("호스트", studyHost)
                 console.log(res.data)
-                setBoardData(res.data)
+                setBoardData(() => { return res.data })
             })
             .catch((err) => {
                 console.log(err)
@@ -112,6 +115,49 @@ const StudyBoardDetail = () => {
         // navigate(`Study/${studyId}/Notice/${boardId}/Modify`)
     }
 
+    const handleFileDownlad = () => {
+
+        if (boardData.boardFile) {
+            const subURL = '/study/board/file/download'
+            const config = {
+                params: {
+                    boardFile: decodeURI(boardData.boardFile)
+                },
+                charset: 'UTF-8',
+                responseType: 'blob',
+            }
+            //
+            apiClient.get(subURL, config)
+                .then((res) => {
+                    console.log(res)
+                    const blob = new Blob([res.data], { type: res.headers['content-type'] })
+                    const link = document.createElement('a')
+                    link.href = window.URL.createObjectURL(blob)
+                    link.target = '_self'
+                    link.setAttribute("download", decodeURI(boardData.boardFileName));
+                    link.click()
+                    // const url = window.URL.createObjectURL(res);
+                    // const a = document.createElement('a');
+                    // a.href = url;
+                    // a.download = "파일명";
+                    // document.body.appendChild(a);
+                    // a.click();
+                    // setTimeout((_) => {
+                    //     window.URL.revokeObjectURL(url);
+                    // }, 60000);
+                    // a.remove();
+                    // setOpen(false);
+                })
+                .catch((err) => {
+                    console.error('err: ', err);
+                });
+        }
+    }
+
+
+
+
+
     // 댓글창 입력이벤트
     const handleCommentContentChange = (e) => {
         setCommentContent((prev) => { return e.target.value })
@@ -174,13 +220,13 @@ const StudyBoardDetail = () => {
 
                 {/* 게시글 목록으로 가기 버튼 렌더링 */}
                 <div className={style.buttonBox}>
-                    <Button onClick={handleBackBtnClick} className={`${style.btn} ${style.blue}`}>
+                    <Button onClick={handleBackBtnClick} className={`${style.btn}`}>
                         목록으로 가기
                     </Button>
                     {/* 대표글 설정 조건부 렌더링 */}
                     {
                         boardType === 1 && studyHost === memberNickName &&
-                        <Button onClick={handleRepBtnClick} className={`${style.btn} ${style.gray}`}>
+                        <Button onClick={handleRepBtnClick} className={`${style.btn}`}>
                             대표글로 설정
                         </Button>
                     }
@@ -189,12 +235,12 @@ const StudyBoardDetail = () => {
                         <>
                             {/* 삭제 */}
 
-                            <Button onClick={handleDeleteBtnClick} className={`${style.blue} ${style.btn}`}>
+                            <Button onClick={handleDeleteBtnClick} className={`${style.btn}`}>
                                 삭제
                             </Button>
                             {/* 삭제 */}
 
-                            <Button onClick={handleModifyBtnClick} className={`${style.btn} ${style.blue}`}>
+                            <Button onClick={handleModifyBtnClick} className={`${style.btn}`}>
                                 수정
                             </Button>
                         </>
@@ -204,7 +250,18 @@ const StudyBoardDetail = () => {
 
             {/* 게시글 내용 */}
             <div className={style.contentBox}>
-                {boardData.boardContent}
+                {boardData.boardFile &&
+                    <div className={style.boardFileArea}>
+                        {/* 이미지일 경우 이미지 렌더링 */}
+                        <img className={style.boardImg} src={boardData.boardFile} alt=''></img>
+                        {/* 파일 다운로드 기능 */}
+                        <div className={style.fileBox}>
+                            {decodeURI(boardData.boardFileName)} <button onClick={handleFileDownlad}> 첨부파일 다운로드 </button>
+                        </div>
+
+                    </div>
+                }
+                <div>{boardData.boardContent}</div>
             </div>
             <hr />
             {/* 댓글창 */}
@@ -217,15 +274,17 @@ const StudyBoardDetail = () => {
                             <></>
                             : commentList.map((commentItem, index) => {
                                 return <div className={style.commentItem} key={index}>
-                                    {commentItem.memberNickName} : {commentItem.commentContent}
-                                    {commentItem.createdDate}
-                                    {/* <button>수정</button> */}
-                                    {/* 삭제버튼 댓글 작성자일경우만 보이게 */}
-                                    {commentItem.memberNickName === memberNickName &&
-                                        <button value={commentItem.commentId}
-                                            onClick={handleCommentDeleteClick}>
-                                            X
-                                        </button>}
+                                    <div>{commentItem.memberNickName} :</div>
+                                    <div style={{ fontSize: '0.8rem' }}>{commentItem.commentContent}</div>
+                                    <div>{commentItem.createdDate}</div>
+
+                                    <div>
+                                        {/* 삭제버튼 댓글 작성자일경우만 보이게 */}
+                                        {commentItem.memberNickName === memberNickName &&
+                                            <button value={commentItem.commentId}
+                                                onClick={handleCommentDeleteClick}>
+                                                X
+                                            </button>}</div>
                                 </div>
                             })
                         }
@@ -235,7 +294,7 @@ const StudyBoardDetail = () => {
                     <div className={style.commentInputField}>
                         <div>새 댓글</div>
                         <input onKeyDown={handleCommentCreateEnter} type="text" value={commentContent} onChange={handleCommentContentChange} />
-                        <button onClick={handleCommentCreate}>댓글 달기</button>
+                        <div style={{ textAlign: 'right' }}><Button onClick={handleCommentCreate}>댓글 달기</Button></div>
                     </div>
                 </div>
             }
