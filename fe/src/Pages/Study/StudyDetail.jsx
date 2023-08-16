@@ -296,13 +296,15 @@ const StudyDetailTest = () => {
                             }
                         </div>
                         <div className={style.content}>
+
                             {
-                                isStudyTime() ?
+                                studyData.studyMemberYn && (isStudyTime() ?
                                     <button className={style.camBtn} onClick={handleEnterBtnClick}>스터디룸 입장</button> :
                                     <button className={`${style.camBtn} ${style.noStudytime}`}>스터디 시간이 아닙니다</button>
-                                // isStudyTime() ?
-                                //     <button className={style.camBtn} onClick={() => setOnVideo(true)}>스터디룸 입장</button> :
-                                //     <button className={`${style.camBtn} ${style.noStudytime}`}>스터디 시간이 아닙니다</button>
+                                    // isStudyTime() ?
+                                    //     <button className={style.camBtn} onClick={() => setOnVideo(true)}>스터디룸 입장</button> :
+                                    //     <button className={`${style.camBtn} ${style.noStudytime}`}>스터디 시간이 아닙니다</button>
+                                )
                             }
 
                         </div>
