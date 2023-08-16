@@ -4,6 +4,8 @@ import com.ssafy.tati.entity.Board;
 import com.ssafy.tati.entity.Member;
 import com.ssafy.tati.entity.Study;
 import com.ssafy.tati.entity.StudyMember;
+import com.ssafy.tati.exception.DataNotFoundException;
+import com.ssafy.tati.exception.MismatchDataException;
 import com.ssafy.tati.repository.BoardRepository;
 import com.ssafy.tati.repository.MemberRepository;
 import com.ssafy.tati.repository.StudyMemberRepository;
@@ -30,12 +32,12 @@ public class BoardService {
     public void addBoard(Integer memberId, Board board){
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         if (optionalMember.isEmpty()){
-            throw new RuntimeException();
+            throw new DataNotFoundException("존재하지 않는 회원입니다.");
         }
         Member member = optionalMember.get();
 
         if (!member.getMemberNickName().equals("admin")) {
-            throw new RuntimeException();
+            throw new MismatchDataException("관리자만 접근 가능합니다.");
         }
 
         board.setMember(member);
