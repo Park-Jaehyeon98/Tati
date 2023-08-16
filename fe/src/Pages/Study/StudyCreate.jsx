@@ -286,6 +286,12 @@ const StudyCreate = () => {
                 })
         }
     }
+    // 보증금 인풋에서 엔터 시 생성요청
+    const handleStudyCreateEnter = (e) => {
+        if (e.key === 'Enter') {
+            handleStudyCreateSubmit();
+        }
+    }
 
 
     return (
@@ -451,7 +457,13 @@ const StudyCreate = () => {
 
                 <div className={`${style.memberContainer} ${style.disclosureContainer} ${style.disclosure}`}>
                     <div>스터디 보증금</div>
-                    <input type="number" name="studyDeposit" value={studyDeposit} onChange={handleChange} />
+                    <input
+                        type="number"
+                        name="studyDeposit"
+                        value={studyDeposit}
+                        onChange={handleChange}
+                        onKeyDown={handleStudyCreateEnter}
+                    />
                 </div>
 
 
