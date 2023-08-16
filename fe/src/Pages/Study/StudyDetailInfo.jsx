@@ -15,7 +15,7 @@ const StudyDetailInfo = () => {
 
     const { studyData, refreshDetail } = useOutletContext();
 
-    const dayList = ["월", "화", "수", "목", "금", "토", "일",]
+    const dayList = ["일", "월", "화", "수", "목", "금", "토",]
 
     // 스터디장 - 신청 승인
     const approval = (memberId) => {
@@ -65,7 +65,7 @@ const StudyDetailInfo = () => {
     }
 
     const now = new Date()
-    const nowDay = now.getDay() === 0 ? now.getDay() + 6 : now.getDay() - 1;
+    const nowDay = now.getDay()
     // 오늘 스터디 있는지 확인
 
 
@@ -187,7 +187,7 @@ const StudyDetailInfo = () => {
                                                 <div>
                                                     <b>열정 지수</b>
                                                     <br /> {totalScore}점</div>
-                                                <div><b>총 공부시간</b><br /> {totalStudyTime} 시간</div>
+                                                <div><b>총 공부시간</b><br /> {totalStudyTime}</div>
                                                 <div><b>가입일</b><br />  {createdDate}</div>
                                             </div>
                                         </div>
@@ -222,7 +222,7 @@ const StudyDetailInfo = () => {
                                                 <div>
                                                     <b>열정 지수</b>
                                                     <br /> {totalScore}점</div>
-                                                <div><b>총 공부시간</b><br /> {totalStudyTime} 시간</div>
+                                                <div><b>총 공부시간</b><br /> {totalStudyTime}</div>
                                                 <div><b>가입일</b><br />  {createdDate}</div>
                                             </div>
                                         </div>

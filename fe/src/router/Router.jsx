@@ -66,11 +66,12 @@ import { persistor } from '../redux/store';
 import { setUser, clearUser } from '../redux/reducers/userSlice';
 import { clearUserSchedule } from '../redux/reducers/userScheduleSlice'
 
-import {clearUserStudySchedule} from "../redux/reducers/userStudyScheduleSlice";
+import { clearUserStudySchedule } from "../redux/reducers/userStudyScheduleSlice";
 
 
 import AuthModal from "../Components/MyPage/AuthModal";
 import StudyBoardModify from './../Pages/Study/StudyBoard/StudyBoardModify';
+import VideoEnter from "../Pages/Room/VideoEnter";
 
 
 export default function Router() {
@@ -156,7 +157,7 @@ export default function Router() {
               마이페이지
             </NavLink>)}
             {user && (<NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")}
-             to="/Login" onClick={handleLogout}>로그아웃</NavLink>)}
+              to="/Login" onClick={handleLogout}>로그아웃</NavLink>)}
             {!user && (
               <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Login">
                 로그인
@@ -184,8 +185,7 @@ export default function Router() {
 
         {/* openvidu */}
         <Route path="/Room" element={<Room />} />
-        <Route path="/VideoEnter" element={<VideoRoomComponent />} />
-        {/* <Route path="/CustomVideoRoom" element={<CustomVideoRoomComponent />} /> */}
+        <Route path="/VideoEnter" element={<VideoEnter />} />
 
 
         {/* 공지사항 */}

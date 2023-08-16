@@ -5,6 +5,7 @@ import style from './StudyDetail.module.css'
 import { useSelector } from 'react-redux';
 
 import Loading from '../../Loading/Loading';
+import VideoRoomComponent from './../Room/VideoRoomComponent';
 //로딩중
 
 
@@ -17,6 +18,8 @@ const StudyDetailTest = () => {
     // 비밀 스터디 일때
     const [refresh, setRefresh] = useState(true);
     const [viewType, setViewType] = useState(0);
+
+    const [onVideo, setOnVideo] = useState(false);
 
     const [studyData, setStudyData] = useState({
         studyId: 0,
@@ -74,12 +77,16 @@ const StudyDetailTest = () => {
     const viewTypeURL = ['', 'Notice', 'Board']
     const viewTypeText = ['스터디 메인', '스터디 공지사항', '스터디 게시판']
     const categoryList = ["", "자격증", "취업", "학교", "공시", "기타"]
-    const dayList = ["월", "화", "수", "목", "금", "토", "일",]
+    const dayList = ["일", "월", "화", "수", "목", "금", "토"]
 
     // viewType 변경시 그에 따른 viewType으로 이동
     const handleViewTypeBtnClick = (e) => {
         setViewType((prev) => { return e.target.value })
         navigate(viewTypeURL[e.target.value])
+    }
+
+    const handleOnVideoBtnClick = () => {
+        setOnVideo(() => { return true })
     }
 
     // 처음 렌더링시 스터디 상세정보를 받아옴
@@ -151,14 +158,15 @@ const StudyDetailTest = () => {
             state: {
                 memberId: user.memberId,
                 studyId: studyId,
-                studyName: studyName
+                studyName: studyName,
+                memberNickName: user.memberNickName
             }
         });
     }
     // 현재 시간과 스터디 시간을 비교해 입장 가능 시간일 경우 true 반환
     const now = new Date()
     const isStudyTime = () => {
-        const nowDay = now.getDay() === 0 ? now.getDay() + 6 : now.getDay() - 1;
+        const nowDay = now.getDay();
         // 오늘 스터디 있는지 확인
         const todayStudy = studySchedule.filter((scheduleItem) => Number(scheduleItem.studyDay) === nowDay)
 
@@ -195,7 +203,12 @@ const StudyDetailTest = () => {
         }
     }
 
+
+
+
+
     return (
+
         <div className={style.container}>
             {/* 로딩 모달 */}
             {loadingError && (
@@ -287,7 +300,11 @@ const StudyDetailTest = () => {
                                 isStudyTime() ?
                                     <button className={style.camBtn} onClick={handleEnterBtnClick}>스터디룸 입장</button> :
                                     <button className={`${style.camBtn} ${style.noStudytime}`}>스터디 시간이 아닙니다</button>
+                                // isStudyTime() ?
+                                //     <button className={style.camBtn} onClick={() => setOnVideo(true)}>스터디룸 입장</button> :
+                                //     <button className={`${style.camBtn} ${style.noStudytime}`}>스터디 시간이 아닙니다</button>
                             }
+
                         </div>
 
                     </div>

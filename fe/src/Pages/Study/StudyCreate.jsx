@@ -101,7 +101,7 @@ const StudyCreate = () => {
 
     // 시퀀스 생성
     const range = (start, stop, step) => Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + (i * step))
-    const dayList = ["월", "화", "수", "목", "금", "토", "일",]
+    const dayList = ["일", "월", "화", "수", "목", "금", "토"]
     const hourList = range(0, 24, 1)
     const minList = range(0, 45, 15)
 
@@ -173,7 +173,26 @@ const StudyCreate = () => {
 
     // 이미지 업로드
     const handleStudyImgUpload = (e) => {
+        const fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+        const maxSize = 5 * 1024 * 1024;
+        let fileSize;
+
+        const imgFile = e.target.value;
+
+        // 이미지 업로드 유효성검사 
+        if (imgFile !== "" && imgFile != null) {
+            fileSize = e.target.files[0].size;
+
+            if (!imgFile.match(fileForm)) {
+                alert("이미지 파일만 업로드 가능");
+                return;
+            } else if (fileSize === maxSize) {
+                alert("파일 사이즈는 5MB까지 가능");
+                return;
+            }
+        }
         const file = e.target.files[0];
+
         setStudyImg(() => { return file })
 
         const reader = new FileReader();
@@ -404,10 +423,10 @@ const StudyCreate = () => {
 
                     <hr />
                     스터디 일정
-                    <div className={style.disclosure}>
+                    <div className={`${style.disclosure} ${style.scheduleBox}`}>
                         {
                             studySchedule.map(({ studyDay, studyStartTime, studyEndTime }, index) => {
-                                return <div key={index} >{dayList[studyDay]} 요일  {studyStartTime} ~  {studyEndTime}</div>
+                                return <div className={style.scheduleItem} key={index} >{dayList[studyDay]} 요일  {studyStartTime} ~  {studyEndTime}</div>
                             })
                         }
                     </div>
@@ -419,11 +438,14 @@ const StudyCreate = () => {
 
                 <div className={`${style.imageContainer} ${style.disclosureContainer} ${style.disclosure}`}>
                     스터디 대표 이미지
-                    <input type="file" name="studyImg" onChange={handleStudyImgUpload} />
+                    <label style={{ display: "inline" }} htmlFor="studyImg" className={`${style.customFileInput} ${style.centeredText}`}>
+                        이미지 업로드
+                        <input type="file" name="studyImg" id="studyImg" onChange={handleStudyImgUpload} style={{ display: 'none' }} />
+                    </label>
                 </div>
 
-                <div className={`${style.imagePreview} ${style.disclosureContainer}`} style={{ width: 100, height: 100 }}>
-                    {studyImgView && <img src={studyImgView} alt="" width={100} height={100} />}
+                <div className={`${style.imagePreview} ${style.disclosureContainer}`} style={{ width: 200, height: 200 }}>
+                    {studyImgView && <img src={studyImgView} alt="" width={200} height={200} />}
                 </div>
 
 
