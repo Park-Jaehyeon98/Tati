@@ -60,7 +60,7 @@ export default function JoinStudy(){
       <div>
         <div className={style.NoticeItem_text}>
           <p className={style.JoinStudy_text}>
-            <h4 onClick={handleItemClick} className={style.studyName}>{studyName}</h4>
+            <h2 onClick={handleItemClick} className={style.studyName}>{studyName}</h2>
              {studyMemberCount}/{totalMember} 인원
             <h6 className={style.JoinStudy_text_day}>{studyStartDate} ~ {studyEndDate} 기간</h6></p>
           <hr className={style.Study_hr}/>
@@ -104,11 +104,11 @@ const dummyData = generateDummyData(numberOfEntries);
 console.log(dummyData);
   //=======================================================================
 
-  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
+  const totalPages = Math.ceil(joinStudy.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNotices = dummyData.slice(startIndex, endIndex);
+  const currentNotices = joinStudy.slice(startIndex, endIndex);
 
 
   return(

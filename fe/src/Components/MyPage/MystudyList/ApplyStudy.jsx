@@ -92,11 +92,11 @@ export default function ApplyStudy(){
   const dummyData = generateDummyData(numberOfEntries);
   //==========================================================================
 
-  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
+  const totalPages = Math.ceil(applyStudy.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNotices = dummyData.slice(startIndex, endIndex);
+  const currentNotices = applyStudy.slice(startIndex, endIndex);
 
   return(
     <div className={style.point}>
