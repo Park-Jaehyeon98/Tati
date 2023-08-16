@@ -52,8 +52,8 @@ public class StudyService {
         Study saveStudy = studyRepository.save(study);
 
         Member member = memberService.findById(study.getStudyHost());
-        Point point = new Point(0, "", LocalDateTime.now(), study.getStudyDeposit(),
-                (study.getStudyName() +" 스터디 생성"), member);
+        Point point = new Point(0, "", LocalDateTime.now(), -study.getStudyDeposit(),
+                ("[스터디 생성] " +study.getStudyName())+ "' 생성", member);
 
         System.out.println("--------------------");
         pointService.delete(point);

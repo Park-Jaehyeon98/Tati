@@ -36,8 +36,8 @@ public class StudyApplicantService {
             throw new RuntimeException("이미 신청한 스터디입니다.");
         }
 
-        Point point = new Point(0, "", LocalDateTime.now(), study.getStudyDeposit(),
-                (study.getStudyName()+" 스터디 신청"), member);
+        Point point = new Point(0, "", LocalDateTime.now(), -study.getStudyDeposit(),
+                ("[스터디 신청] '" +study.getStudyName())+ "' 신청", member);
         pointService.delete(point);
 
         StudyApplicant studyApplicant = new StudyApplicant(study, member);
@@ -73,7 +73,7 @@ public class StudyApplicantService {
         Study study = studyApplicant.getStudy();
 
         Point point = new Point(0, "", LocalDateTime.now(), study.getStudyDeposit(),
-                (study.getStudyName() + " 스터디 신청 보증금 반환"), member);
+                ("[보증금 반환] '" +study.getStudyName())+ "' 신청 취소" , member);
         pointService.save(point);
 
         studyApplicantRepository.deleteById(studyApplicant.getStudyApplicantId());

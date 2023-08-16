@@ -88,7 +88,7 @@ public class StudyMemberService {
         }
 
         Point point = new Point(0, "", LocalDateTime.now(), cur_point,
-                (studyMember.getStudy().getStudyName() + " 스터디 탈퇴 보증금 반환"), member);
+                ("[보증금 반환] '" +studyMember.getStudy().getStudyName() + "' 탈퇴 보증금"), member);
         pointService.save(point);
 
         if(study.getStudyMemberList().size()==1) studyRepository.deleteById(studyId);

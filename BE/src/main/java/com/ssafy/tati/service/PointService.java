@@ -34,7 +34,7 @@ public class PointService {
         pointRepository.save(point);
 
         Member member = point.getMember();
-        int totalPoint = member.getTotalPoint() - point.getAmount();
+        int totalPoint = member.getTotalPoint() + point.getAmount();
 
         member.updateTotalPoint(totalPoint);
     }
