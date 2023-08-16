@@ -22,6 +22,6 @@ public class StudyMemberResDto {
     @Schema(description = "회원 가입일")
     private String createdDate;
     @Schema(description = "회원 총 공부시간")
-    private Integer totalStudyTime;
+    private String totalStudyTime;
 
 }
