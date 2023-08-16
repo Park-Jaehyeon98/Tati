@@ -222,7 +222,7 @@ const StudyDetailInfo = () => {
                                                 <div>
                                                     <b>열정 지수</b>
                                                     <br /> {totalScore}점</div>
-                                                <div><b>총 공부시간</b><br /> {totalStudyTime} 시간</div>
+                                                <div><b>총 공부시간</b><br /> {totalStudyTime}</div>
                                                 <div><b>가입일</b><br />  {createdDate}</div>
                                             </div>
                                         </div>
