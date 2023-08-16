@@ -6,6 +6,7 @@ import com.ssafy.tati.repository.MemberRepository;
 import com.ssafy.tati.repository.StudyMemberRepository;
 import com.ssafy.tati.repository.StudyScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.DuplicateFormatFlagsException;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,6 +56,10 @@ public class AttendanceService {
 
         } else { // 스터디 멤버 테이블의 입/퇴실 시간 갱신
             Attendance modifiedAttendance = optionalAttendance.get();
+
+            if (modifiedAttendance.getIsAttended() != 0) {
+                throw new DuplicateKeyException("이미 입실한 스터디입니다.");
+            }
             modifiedAttendance.setInTime(attendance.getInTime());
             modifiedAttendance.setOutTime(attendance.getInTime());
 
