@@ -142,14 +142,14 @@ export default function KakaoPay() {
         alert('포인트가 부족합니다')
       } else {
         axios.post(`${process.env.REACT_APP_URL}/payment/cancel`, {
+          amount: point,
+          tid,
+          email: parseJwt.sub
+        },{
           headers: {
             Authorization: "Bearer " + localStorage.getItem('accessToken'),
             RefreshToken: localStorage.getItem('refreshtoken')
           }
-        }, {
-          amount: point,
-          tid,
-          email: parseJwt.sub
         })
           .then((res) => {
             console.log(res)

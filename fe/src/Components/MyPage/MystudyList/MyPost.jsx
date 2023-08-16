@@ -68,7 +68,7 @@ export default function MyPost(){
         <div className={style.NoticeItem_text}>
           <p className={style.MyPost_text}>
              <h2 onClick={handleItemClick}>{boardTitle}</h2>
-              조회수 {boardHit} 댓글수 {boardCommentCount}
+             👁️‍🗨️ {boardHit} 💬 {boardCommentCount}
             <h6 className={style.MyPost_text_time}>
               {/* {boardDate.slice(0, 10)} */}
               </h6></p>
@@ -124,9 +124,9 @@ export default function MyPost(){
 
       <div className={style.JoinStudy_box}>
         <nav className={style.point_nav_btn}>
-          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/JoinStudy")}>가입된스터디</button>
-          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/ApplyStudy")}>신청한스터디</button>
-          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/MyPagePost")}>내 작성글</button>
+          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/JoinStudy")}>가입된 스터디</button>
+          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/ApplyStudy")}>신청한 스터디</button>
+          <button className={`${style.nav_blue} ${style.nav_btn}`} onClick={() => handleButtonClick("/MyPage/MyPagePost")}>내 작성글</button>
         </nav>
 
         <div className={style.content}>
