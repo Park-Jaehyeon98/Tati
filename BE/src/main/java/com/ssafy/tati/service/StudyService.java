@@ -53,7 +53,7 @@ public class StudyService {
 
         Member member = memberService.findById(study.getStudyHost());
         Point point = new Point(0, "", LocalDateTime.now(), -study.getStudyDeposit(),
-                (study.getStudyName() +" 스터디 생성"), member);
+                ("[스터디 생성] " +study.getStudyName())+ "' 생성", member);
 
         System.out.println("--------------------");
         pointService.delete(point);
