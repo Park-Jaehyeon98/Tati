@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -157,7 +158,7 @@ public class MemberController {
 
     @GetMapping("/download")
     public ResponseEntity<ByteArrayResource> downloadFile(String fileName) throws IOException {
-        System.out.println("controller fileName: " + fileName);
+
         byte[] data = s3Service.downloadFile(fileName);
         ByteArrayResource resource = new ByteArrayResource(data);
 
