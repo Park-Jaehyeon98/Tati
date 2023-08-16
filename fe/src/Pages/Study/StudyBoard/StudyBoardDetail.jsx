@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import style from './StudyBoardDetail.module.css'
-import StudyBoardCommentList from '../../../Components/Study/StudyBoard/StudyBoardCommentList';
+import React, { useEffect, useState } from 'react';
+import style from './StudyBoardDetail.module.css';
 
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { apiClient } from '../../../api/apiClient';
@@ -135,6 +134,7 @@ const StudyBoardDetail = () => {
                 console.log(err)
             });
     }
+    // 댓글 작성 엔터
     const handleCommentCreateEnter = (e) => {
         if (e.key === 'Enter') {
             handleCommentCreate();
@@ -220,10 +220,12 @@ const StudyBoardDetail = () => {
                                     {commentItem.memberNickName} : {commentItem.commentContent}
                                     {commentItem.createdDate}
                                     {/* <button>수정</button> */}
-                                    <button value={commentItem.commentId}
-                                        onClick={handleCommentDeleteClick}>
-                                        X
-                                    </button>
+                                    {/* 삭제버튼 댓글 작성자일경우만 보이게 */}
+                                    {commentItem.memberNickName === memberNickName &&
+                                        <button value={commentItem.commentId}
+                                            onClick={handleCommentDeleteClick}>
+                                            X
+                                        </button>}
                                 </div>
                             })
                         }

@@ -60,27 +60,26 @@ export default function Login() {
       .then((res) => {
         console.log(res)
         console.log(res.headers)
-        
+
         // decodedToken, accessToken 로컬에 저장 - 유저 정보(memberId,memberName,sub,exp,iat)
         const authorizationHeader = res.headers.authorization;
         const accessToken = authorizationHeader.substring(7);
         localStorage.setItem('accessToken', accessToken);
         const decodedToken = jwt_decode(authorizationHeader);
         localStorage.setItem('decodedToken', JSON.stringify(decodedToken));
-        localStorage.setItem('refreshtoken',res.headers.refreshtoken);
-        
+        localStorage.setItem('refreshtoken', res.headers.refreshtoken);
+
         const user = {
-          createdDate:res.data.createdDate,
-          email:res.data.email,
-          memberId:res.data.memberId,
-          memberName:res.data.memberName,
-          memberNickName:res.data.memberNickName,
-          totalPoint:res.data.totalPoint,
-          totalScore:res.data.totalScore,
-          totalStudyTime:res.data.totalStudyTime,
-          img:null
+          createdDate: res.data.createdDate,
+          email: res.data.email,
+          memberId: res.data.memberId,
+          memberName: res.data.memberName,
+          memberNickName: res.data.memberNickName,
+          totalPoint: res.data.totalPoint,
+          totalScore: res.data.totalScore,
+          totalStudyTime: res.data.totalStudyTime,
+          img: null
         }
-        
         RefreshToken()
 
         dispatch(setUser(user));
@@ -96,47 +95,47 @@ export default function Login() {
 
   return (
     <div className={style.Login_box}>
-    <img
-      className={style.login_img}
-      src="./Assets/Login_img01.jpg"
-      alt="Login background"
-    />
+      <img
+        className={style.login_img}
+        src="./Assets/Login_img01.jpg"
+        alt="Login background"
+      />
 
-    <div className={style.login}>
-      <h1 className={style.login_title}>로그인</h1>
-      <div>
-        <input
-          className={style.loginInput}
-          type="text"
-          placeholder="이메일"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <input
-          className={style.loginInput}
-          type="password"
-          placeholder="비밀번호"
-          name="password"
-          value={formData.passWord}
-          onChange={handleChange}
-        />
-      </div>
-      <div className={style.Login_box_find}>
-        <div className={style.password_find} onClick={handleOpenPasswordResetModal}>
-          비밀번호 찾기
+      <div className={style.login}>
+        <h1 className={style.login_title}>로그인</h1>
+        <div>
+          <input
+            className={style.loginInput}
+            type="text"
+            placeholder="이메일"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
         </div>
-        <NavLink to="/SignUp" className={style.signup}>
-          회원가입
-        </NavLink>
-      </div>
-      
-      <button className={style.loginBtn} onClick={handleLogin}>
-        로그인
-      </button>
-{/* 
+        <div>
+          <input
+            className={style.loginInput}
+            type="password"
+            placeholder="비밀번호"
+            name="password"
+            value={formData.passWord}
+            onChange={handleChange}
+          />
+        </div>
+        <div className={style.Login_box_find}>
+          <div className={style.password_find} onClick={handleOpenPasswordResetModal}>
+            비밀번호 찾기
+          </div>
+          <NavLink to="/SignUp" className={style.signup}>
+            회원가입
+          </NavLink>
+        </div>
+
+        <button className={style.loginBtn} onClick={handleLogin}>
+          로그인
+        </button>
+        {/* 
       <div className={style.line1}></div>
       <p>간편로그인</p>
       <div className={style.line2}></div>
@@ -158,12 +157,12 @@ export default function Login() {
           alt="Naver 로그인"
         />
       </div> */}
-    </div>
+      </div>
 
-    {showPasswordResetModal && (
+      {showPasswordResetModal && (
         <PasswordResetModal onClose={handleClosePasswordResetModal} />
       )}
-    
-  </div>
-);
+
+    </div>
+  );
 }

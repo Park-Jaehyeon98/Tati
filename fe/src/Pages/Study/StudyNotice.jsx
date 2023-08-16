@@ -11,7 +11,10 @@ const StudyNotice = () => {
 
     return (
         <div className={style.container}>
-            <Outlet context={{ studyId, boardType, studyHost, refreshDetail }} />
+            {studyData.studyMemberYn ?
+                <Outlet context={{ studyId, boardType, studyHost, refreshDetail }} /> :
+                <h3>스터디 멤버만 볼 수 있습니다</h3>
+            }
         </div>
     )
 }

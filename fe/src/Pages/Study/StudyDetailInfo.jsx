@@ -105,24 +105,28 @@ const StudyDetailInfo = () => {
                     }
                 </div>
 
-                {/* 보증금 현황 */}
-                <div className={style.boxTitle}>
-                    <span className={style.highlight}>
-                        <img className={style.icons} src="../Assets/coinIcon.png" alt="" />
-                        스터디 보증금
-                    </span>
-                </div>
-                <div className={`${style.box} ${style.penaltyBox}`}>
-                    {/* 보증금 현황은 멤버만 */}
-                    <div className={style.penaltyBoxItem}>
-                        <div className={style.penaltyBoxItemTitle}>전체 보증금</div>
-                        {studyData.totalDeposit} 원
-                    </div>
-                    <div className={style.penaltyBoxItem}>
-                        <div className={style.penaltyBoxItemTitle}>모인 벌금</div>
-                        {studyData.totalPenalty} 원
-                    </div>
-                </div>
+                {studyData.studyMemberYn &&
+                    <>
+                        {/* 보증금 현황 */}
+                        <div className={style.boxTitle}>
+                            <span className={style.highlight}>
+                                <img className={style.icons} src="../Assets/coinIcon.png" alt="" />
+                                스터디 보증금
+                            </span>
+                        </div>
+
+                        <div className={`${style.box} ${style.penaltyBox}`}>
+                            {/* 보증금 현황은 멤버만 */}
+                            <div className={style.penaltyBoxItem}>
+                                <div className={style.penaltyBoxItemTitle}>전체 보증금</div>
+                                {studyData.totalDeposit} 원
+                            </div>
+                            <div className={style.penaltyBoxItem}>
+                                <div className={style.penaltyBoxItemTitle}>모인 벌금</div>
+                                {studyData.totalPenalty} 원
+                            </div>
+                        </div>
+                    </>}
 
                 {/* 스터디 일정 */}
                 <div className={style.boxTitle}>
@@ -152,43 +156,46 @@ const StudyDetailInfo = () => {
                     </div>
                 </div>
 
-                {/* 스터디 맴버 현황 */}
-                <div className={style.boxTitle}>
-                    <span className={style.highlight}>
-                        <img className={style.icons} src="../Assets/memberIcon.png" alt="" />
-                        스터디 멤버
+                {studyData.studyMemberYn &&
+                    <>
+                        {/* 스터디 맴버 현황 */}
+                        <div className={style.boxTitle}>
+                            <span className={style.highlight}>
+                                <img className={style.icons} src="../Assets/memberIcon.png" alt="" />
+                                스터디 멤버
 
-                    </span>
-                    <span className={style.memberCount}>
-                        {studyData.studyMemberResDtoList.length} / {studyData.totalMember}
-                    </span>
-                </div>
-                <div className={`${style.box} ${style.memberBox}`}>
-                    {
-                        (studyData.studyMemberResDtoList !== []) &&
-                        studyData.studyMemberResDtoList.map(({ memberNickName, totalScore, createdDate, totalStudyTime }) => {
-                            return <>
-                                <div key={memberNickName} className={style.memberItem}>
-                                    <div className={style.memberItemName}>{memberNickName}
-                                        <br />
-                                        {/* 본인일 경우 탈퇴버튼 */}
-                                        {memberNickName === user.memberNickName &&
-                                            <button className={style.smallBtn}
-                                                onClick={handleStudySecessionBtnClick}>
-                                                스터디 탈퇴</button>
-                                        }</div>
-                                    <div className={style.memberItemContent}>
-                                        <div>
-                                            <b>열정 지수</b>
-                                            <br /> {totalScore}점</div>
-                                        <div><b>총 공부시간</b><br /> {totalStudyTime} 시간</div>
-                                        <div><b>가입일</b><br />  {createdDate}</div>
-                                    </div>
-                                </div>
-                            </>
-                        })
-                    }
-                </div>
+                            </span>
+                            <span className={style.memberCount}>
+                                {studyData.studyMemberResDtoList.length} / {studyData.totalMember}
+                            </span>
+                        </div>
+                        <div className={`${style.box} ${style.memberBox}`}>
+                            {
+                                (studyData.studyMemberResDtoList !== []) &&
+                                studyData.studyMemberResDtoList.map(({ memberNickName, totalScore, createdDate, totalStudyTime }) => {
+                                    return <>
+                                        <div key={memberNickName} className={style.memberItem}>
+                                            <div className={style.memberItemName}>{memberNickName}
+                                                <br />
+                                                {/* 본인일 경우 탈퇴버튼 */}
+                                                {memberNickName === user.memberNickName &&
+                                                    <button className={style.smallBtn}
+                                                        onClick={handleStudySecessionBtnClick}>
+                                                        스터디 탈퇴</button>
+                                                }</div>
+                                            <div className={style.memberItemContent}>
+                                                <div>
+                                                    <b>열정 지수</b>
+                                                    <br /> {totalScore}점</div>
+                                                <div><b>총 공부시간</b><br /> {totalStudyTime} 시간</div>
+                                                <div><b>가입일</b><br />  {createdDate}</div>
+                                            </div>
+                                        </div>
+                                    </>
+                                })
+                            }
+                        </div>
+                    </>}
                 {
                     user.memberNickName === studyData.studyHost &&
                     <>

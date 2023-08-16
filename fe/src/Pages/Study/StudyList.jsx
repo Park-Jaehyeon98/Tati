@@ -5,11 +5,12 @@ import style from './StudyList.module.css';
 
 import StudyCardItem from "../../Components/Common/StudyCardItem";
 import { Button } from '@material-ui/core';
+import { useSelector } from "react-redux";
 
 
 const StudyList = () => {
     const navigate = useNavigate();
-
+    const user = useSelector((state) => state.user.user)
     // 스터디 리스트
     const [studyList, setStudyList] = useState([]);
     // 페이지네이션
@@ -84,7 +85,11 @@ const StudyList = () => {
     return (
         <div>
             {/* 위에 바 */}
-            <h2>스터디 목록 <Button onClick={() => { navigate('Create') }}>스터디 만들기</Button></h2>
+            <h2>스터디 목록 <Button onClick={() => {
+                user ?
+                    navigate('Create') :
+                    alert('로그인이 필요합니다') || navigate('/Login');
+            }}>내 스터디 만들기</Button></h2>
             <hr />
             <div className={style.buttons}>
                 {categoryIdArray.map((categoryIdItem, index) =>
@@ -97,7 +102,7 @@ const StudyList = () => {
             </div>
             <div className={style.inputField}>
                 <input type="text" name="keywordInput" value={keywordInput} onChange={handleKeywordInputChagne} placeholder="스터디이름으로 검색" />
-                <Button onClick={handleSearchBtnClick}>검색</Button>
+                <Button style={{ marginLeft: 10 }} onClick={handleSearchBtnClick}>검색</Button>
             </div>
 
             {/* <Button onClick={() => {
@@ -114,7 +119,7 @@ const StudyList = () => {
                 {/* 스터디 카드 리스트 */}
                 <div className={style.study_container}>
                     {studyList.map((studyDetail) => {
-                        return <StudyCardItem studyDetail={studyDetail} />
+                        return <StudyCardItem studyDetail={studyDetail} user={user} />
                     })}
                 </div>
 

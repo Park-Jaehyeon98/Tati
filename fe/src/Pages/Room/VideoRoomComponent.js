@@ -11,7 +11,6 @@ import UserModel from "./user-model";
 import ToolbarComponent from "./ToolbarComponent";
 import { apiClient } from "../../api/apiClient";
 
-
 var localUser = new UserModel();
 const APPLICATION_SERVER_URL =
   process.env.NODE_ENV === "production"
@@ -19,8 +18,6 @@ const APPLICATION_SERVER_URL =
     : "https://i9b305.p.ssafy.io:8443/";
 
 class VideoRoomComponent extends Component {
-  
-  
   constructor(props) {
     super(props);
     // console.log('VideoRoomComponent Constructor - Member ID:', this.props.memberId);
@@ -33,14 +30,14 @@ class VideoRoomComponent extends Component {
     this.remotes = [];
     this.localUserAccessAllowed = false;
     this.state = {
-      mySessionId: sessionName,
-      myUserName: userName,
+      mySessionId: this.sessionName,
+      myUserName: this.userName,
       session: undefined,
       localUser: undefined,
       subscribers: [],
       chatDisplay: "none",
       currentVideoDevice: undefined,
-      memberId:this.props.memberId,
+      memberId: this.props.memberId,
       studyId: this.props.studyId,
       attendanceId: undefined,
     };
@@ -105,13 +102,14 @@ class VideoRoomComponent extends Component {
   }
 
   joinSession() {
-
     // this.setState({
     //   memberId: localStorage.getItem("decodedToken").memberId,
     //   studyId: localStorage.getItem("studyId"),
     // });
-    console.log('VideoRoomComponent Constructor - Member ID:', this.props.memberId);
-
+    console.log(
+      "VideoRoomComponent Constructor - Member ID:",
+      this.props.memberId
+    );
 
     //서버에 입실기록 전송
     apiClient
