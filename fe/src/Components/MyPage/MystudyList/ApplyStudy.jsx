@@ -47,7 +47,7 @@ export default function ApplyStudy(){
   //studyApplicantId- int,studyName - StringtotalMember - int,currentMemberCount - int
   // 가입한 스터디 ======================================================================================
 
-  const itemsPerPage = 8;
+  const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
 
   const NoticeItem = ({ studyApplicantId, studyName, totalMember, currentMemberCount }) => {
@@ -64,12 +64,39 @@ export default function ApplyStudy(){
     );
   };
   
+  //==========================================================================
+  
+  // 더미 데이터 생성 함수
+  function generateDummyData(count) {
+    const dummyData = [];
 
-  const totalPages = Math.ceil(applyStudy.length / itemsPerPage);
+    for (let i = 1; i <= count; i++) {
+      const studyApplicantId = i;
+      const studyName = `Study ${i}`;
+      const totalMember = Math.floor(Math.random() * 10) + 5; // 5에서 14 사이의 랜덤값
+      const currentMemberCount = Math.floor(Math.random() * totalMember) + 1; // 1에서 totalMember 사이의 랜덤값
+
+      dummyData.push({
+        studyApplicantId,
+        studyName,
+        totalMember,
+        currentMemberCount,
+      });
+    }
+
+    return dummyData;
+  }
+
+  // 더미 데이터 생성
+  const numberOfEntries = 10; // 생성할 더미 데이터 개수
+  const dummyData = generateDummyData(numberOfEntries);
+  //==========================================================================
+
+  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNotices = applyStudy.slice(startIndex, endIndex);
+  const currentNotices = dummyData.slice(startIndex, endIndex);
 
   return(
     <div className={style.point}>

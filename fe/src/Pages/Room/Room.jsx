@@ -7,7 +7,7 @@ const Room = () => {
     
     const navigate = useNavigate();
 
-    const studyId = 22
+    const studyId = 31
     const memberId = useSelector(state => state.user.user.memberId);
     const memberName = useSelector(state => state.user.user.memberName);
 
@@ -24,7 +24,7 @@ const Room = () => {
             <p className="text-center">
                 <input className="btn btn-lg btn-success" type="submit" value="입실하기"  />
             </p>
-            <VideoRoomComponent memberId={memberId} studyId={studyId} memberName={memberName}/>
+            {/* <VideoRoomComponent memberId={memberId} studyId={studyId} memberName={memberName}/> */}
         </form>
     )
 }

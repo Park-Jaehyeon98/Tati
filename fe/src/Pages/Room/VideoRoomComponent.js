@@ -23,13 +23,13 @@ class VideoRoomComponent extends Component {
   
   constructor(props) {
     super(props);
-    console.log('VideoRoomComponent Constructor - Member ID:', this.props.memberId);
+    // console.log('VideoRoomComponent Constructor - Member ID:', this.props.memberId);
     this.hasBeenUpdated = false;
     this.layout = new OpenViduLayout();
     // let sessionName = this.props.sessionName ? this.props.sessionName : 'study1';
     let sessionName = this.props.studyId;
     // let userName = this.props.user ? this.props.user : '참석자' + Math.floor(Math.random() * 100);
-    let userName = this.props.memberId;
+    let userName = this.props.memberName;
     this.remotes = [];
     this.localUserAccessAllowed = false;
     this.state = {
@@ -40,8 +40,8 @@ class VideoRoomComponent extends Component {
       subscribers: [],
       chatDisplay: "none",
       currentVideoDevice: undefined,
-      // memberId: 1,
-      // studyId: 1,
+      memberId:this.props.memberId,
+      studyId: this.props.studyId,
       attendanceId: undefined,
     };
 
@@ -63,8 +63,8 @@ class VideoRoomComponent extends Component {
   }
 
   componentDidMount() {
-    this.sessionName = `study${localStorage.getItem("studyId")}`;
-    this.userName = localStorage.getItem("decodedToken").memberName;
+    this.sessionName = `study${this.props.studyId}`;
+    this.userName = this.props.memberName;
 
     const openViduLayoutOptions = {
       maxRatio: 3 / 2, // The narrowest ratio that will be used (default 2x3)
@@ -90,8 +90,8 @@ class VideoRoomComponent extends Component {
   }
 
   componentWillUnmount() {
-    localStorage.removeItem("studyName");
-    localStorage.removeItem("studyId");
+    // localStorage.removeItem("studyName");
+    // localStorage.removeItem("studyId");
     window.removeEventListener("beforeunload", this.onbeforeunload);
     window.removeEventListener("resize", this.updateLayout);
     window.removeEventListener("resize", this.checkSize);
@@ -99,23 +99,25 @@ class VideoRoomComponent extends Component {
   }
 
   onbeforeunload(event) {
-    localStorage.removeItem("studyName");
-    localStorage.removeItem("studyId");
+    // localStorage.removeItem("studyName");
+    // localStorage.removeItem("studyId");
     this.leaveSession();
   }
 
   joinSession() {
 
-    this.setState({
-      memberId: localStorage.getItem("decodedToken").memberId,
-      studyId: localStorage.getItem("studyId"),
-    });
+    // this.setState({
+    //   memberId: localStorage.getItem("decodedToken").memberId,
+    //   studyId: localStorage.getItem("studyId"),
+    // });
+    console.log('VideoRoomComponent Constructor - Member ID:', this.props.memberId);
+
 
     //서버에 입실기록 전송
     apiClient
       .post("/study/attendance/in", {
-        memberId: localStorage.getItem("decodedToken").memberId, //임시값
-        studyId: localStorage.getItem("studyId"), //임시값
+        memberId: this.props.memberId, //임시값
+        studyId: this.props.studyId, //임시값
         inTime: new Date(),
       })
       .then((res) => {
@@ -287,18 +289,19 @@ class VideoRoomComponent extends Component {
     //서버에 퇴실기록 전송
     apiClient
       .put("/study/attendance/out", {
-        memberId: localStorage.getItem("decodedToken").memberId, //임시값
+        memberId: this.props.memberId, //임시값
         attendanceId: this.attendanceId,
         outTime: new Date(),
       })
       .then((res) => {
         console.log(res);
-        window.location.href = "/Room"; //퇴실성공시 버튼위치로 돌아감
+        window.location.href = "/Study"; //퇴실성공시 버튼위치로 돌아감
       })
       .catch((err) => {
         console.log(err);
       });
   }
+
   camStatusChanged() {
     localUser.setVideoActive(!localUser.isVideoActive());
     localUser.getStreamManager().publishVideo(localUser.isVideoActive());
