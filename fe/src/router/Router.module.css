@@ -1,3 +1,6 @@
+body{
+  margin: 0px;
+}
 nav {
   margin-bottom: 10px;
   display: flex;
@@ -16,6 +19,7 @@ nav {
   font-size: 15px;
   color: #3396f4;
 }
+
 
 .navBox {
   background-color: white;
@@ -37,7 +41,7 @@ nav {
   height: 1px; /* 선 높이 조정 */
   background-color: #ccc; /* 기본적인 선 색상 유지 */
   position: absolute; /* 위치 조정 */
-  top: 80px; /* 모달이 나타날 때 겹치지 않도록 조정 */
+  top: 100%; /* 모달이 나타날 때 겹치지 않도록 조정 */
   z-index: 2; /* 모달 위에 배치 */
 }
 
@@ -49,6 +53,7 @@ nav {
 }
 
 .navBoxIn {
+  display: flex;
   margin-top: 15px;
   margin-left: 10%;
 }

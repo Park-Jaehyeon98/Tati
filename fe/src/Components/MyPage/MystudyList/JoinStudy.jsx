@@ -13,7 +13,7 @@ export default function JoinStudy(){
     navigate(tab);
   };
 
-  const itemsPerPage = 8;
+  const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
 
 
@@ -69,12 +69,46 @@ export default function JoinStudy(){
     );
   };
   
+  //=======================================================================
+  // 더미 데이터 생성 함수
+function generateDummyData(count) {
+  const dummyData = [];
+  const currentDate = new Date();
 
-  const totalPages = Math.ceil(joinStudy.length / itemsPerPage);
+  for (let i = 1; i <= count; i++) {
+    const studyId = i;
+    const studyName = `Study ${i}`;
+    // const studyStartDate = new Date(currentDate.getTime() + Math.random() * 30 * 24 * 60 * 60 * 1000); // 현재 날짜를 기준으로 30일 내에서 무작위로 생성
+    // const studyEndDate = new Date(studyStartDate.getTime() + Math.random() * 30 * 24 * 60 * 60 * 1000); // 시작 날짜를 기준으로 30일 내에서 무작위로 생성
+    const totalMember = Math.floor(Math.random() * 10) + 5; // 5에서 14 사이의 랜덤값
+    const studyMemberCount = Math.floor(Math.random() * totalMember) + 1; // 1에서 totalMember 사이의 랜덤값
+
+    dummyData.push({
+      studyId,
+      studyName,
+      // studyStartDate,
+      // studyEndDate,
+      totalMember,
+      studyMemberCount,
+    });
+  }
+
+  return dummyData;
+}
+
+// 더미 데이터 생성
+const numberOfEntries = 10; // 생성할 더미 데이터 개수
+const dummyData = generateDummyData(numberOfEntries);
+
+// 생성된 더미 데이터 출력
+console.log(dummyData);
+  //=======================================================================
+
+  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNotices = joinStudy.slice(startIndex, endIndex);
+  const currentNotices = dummyData.slice(startIndex, endIndex);
 
 
   return(
