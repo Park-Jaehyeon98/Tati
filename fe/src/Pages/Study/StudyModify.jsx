@@ -75,9 +75,28 @@ const StudyModify = () => {
 
     // 이미지 업로드 -> 파일, 미리보기 변경
     const handleStudyImgUpload = (e) => {
+        const fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+        const maxSize = 5 * 1024 * 1024;
+        let fileSize;
+
+        const imgFile = e.target.value;
+
+        // 이미지 업로드 유효성검사 
+        if (imgFile !== "" && imgFile != null) {
+            fileSize = e.target.files[0].size;
+
+            if (!imgFile.match(fileForm)) {
+                alert("이미지 파일만 업로드 가능");
+                return;
+            } else if (fileSize === maxSize) {
+                alert("파일 사이즈는 5MB까지 가능");
+                return;
+            }
+        }
         const file = e.target.files[0];
 
         setStudyImg(() => { return file })
+
         const reader = new FileReader();
         reader.readAsDataURL(file);
 
@@ -141,18 +160,6 @@ const StudyModify = () => {
     const handleBackButtonClick = () => {
         navigate(`/Study/${studyId}`);
     }
-
-    // 삭제 버튼
-    // const handleDeleteBtnClick = () => {
-    //     const memberId = localStorage.getItem("")
-    //     apiClient.delete(`study/${studyId}/delete/${memberId}`)
-    //         .then((res) => {
-    //             console.log(res.data)
-    //             navigate('/Study')
-    //         })
-    //         .catch((err) => { console.log(err.data) })
-    // }
-
 
     return (
         <>
