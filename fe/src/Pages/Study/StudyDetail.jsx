@@ -74,7 +74,7 @@ const StudyDetailTest = () => {
     const viewTypeURL = ['', 'Notice', 'Board']
     const viewTypeText = ['스터디 메인', '스터디 공지사항', '스터디 게시판']
     const categoryList = ["", "자격증", "취업", "학교", "공시", "기타"]
-    const dayList = ["월", "화", "수", "목", "금", "토", "일",]
+    const dayList = ["일", "월", "화", "수", "목", "금", "토"]
 
     // viewType 변경시 그에 따른 viewType으로 이동
     const handleViewTypeBtnClick = (e) => {
@@ -158,7 +158,7 @@ const StudyDetailTest = () => {
     // 현재 시간과 스터디 시간을 비교해 입장 가능 시간일 경우 true 반환
     const now = new Date()
     const isStudyTime = () => {
-        const nowDay = now.getDay() === 0 ? now.getDay() + 6 : now.getDay() - 1;
+        const nowDay = now.getDay();
         // 오늘 스터디 있는지 확인
         const todayStudy = studySchedule.filter((scheduleItem) => Number(scheduleItem.studyDay) === nowDay)
 

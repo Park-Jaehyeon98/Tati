@@ -101,7 +101,7 @@ const StudyCreate = () => {
 
     // 시퀀스 생성
     const range = (start, stop, step) => Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + (i * step))
-    const dayList = ["월", "화", "수", "목", "금", "토", "일",]
+    const dayList = ["일", "월", "화", "수", "목", "금", "토"]
     const hourList = range(0, 24, 1)
     const minList = range(0, 45, 15)
 
