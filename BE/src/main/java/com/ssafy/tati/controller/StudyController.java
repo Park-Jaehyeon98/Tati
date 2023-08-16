@@ -122,9 +122,19 @@ public class StudyController {
             memberList.add(studyApplicant.getMember());
         }
 
-        List<StudyApplicantMemberResDto> applicantList
-                = studyApplicantMapper.memberListToStudyApplicantMemberResDtoList(memberList);
+        List<StudyApplicantMemberResDto> applicantList = new ArrayList<>();
+        for(Member member : memberList){
 
+            Integer studyTime =  member.getTotalStudyTime();
+            long hour = studyTime/3600;
+            studyTime%=3600;
+            long min = studyTime/60;
+            studyTime%=60;
+            long sec = studyTime;
+
+            applicantList.add(new StudyApplicantMemberResDto(member.getMemberId(), member.getMemberNickName(),
+                    member.getTotalScore(), (hour +"시간 " +min+ "분 " +sec+ "초"), member.getCreatedDate().toString()));
+        }
 
         List<StudyMember> studyMemberList = studyService.selectStudyMember(studyId);
         Optional<Board> optionalStudyMainNotice = boardService.findMainNoticeByStudyId(studyId);

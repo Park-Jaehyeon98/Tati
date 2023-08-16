@@ -22,7 +22,7 @@ public class StudyApplicantMemberResDto {
     private Integer totalScore;
 
     @Schema(description = "회원 총 공부시간")
-    private Integer totalStudyTime;
+    private String totalStudyTime;
 
     @Schema(description = "회원 가입일")
     private String createdDate;
