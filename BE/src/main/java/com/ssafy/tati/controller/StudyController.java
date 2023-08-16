@@ -151,8 +151,15 @@ public class StudyController {
         for(StudyMember findStudyMember : studyMemberList){
             Integer studyMemberId = findStudyMember.getMember().getMemberId();
             Member member = memberService.findById(studyMemberId);
+
+            Integer studyTime =  member.getTotalStudyTime();
+            long hour = studyTime/3600;
+            studyTime%=3600;
+            long min = studyTime/60;
+            studyTime%=60;
+            long sec = studyTime;
             studyMemberResDtoList.add(new StudyMemberResDto(member.getMemberNickName(),
-                    member.getTotalScore(), member.getCreatedDate().toString(), member.getTotalStudyTime()));
+                    member.getTotalScore(), member.getCreatedDate().toString(), (hour +"시간 " +min+ "분 " +sec+ "초")));
         }
 
         Study study = studyService.getStudyDetail(studyId);
