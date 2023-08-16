@@ -60,9 +60,6 @@ class VideoRoomComponent extends Component {
   }
 
   componentDidMount() {
-    this.sessionName = `study${this.props.studyId}`;
-    this.userName = this.props.memberName;
-
     const openViduLayoutOptions = {
       maxRatio: 3 / 2, // The narrowest ratio that will be used (default 2x3)
       minRatio: 9 / 16, // The widest ratio that will be used (default 16x9)
@@ -87,8 +84,6 @@ class VideoRoomComponent extends Component {
   }
 
   componentWillUnmount() {
-    // localStorage.removeItem("studyName");
-    // localStorage.removeItem("studyId");
     window.removeEventListener("beforeunload", this.onbeforeunload);
     window.removeEventListener("resize", this.updateLayout);
     window.removeEventListener("resize", this.checkSize);
@@ -96,21 +91,10 @@ class VideoRoomComponent extends Component {
   }
 
   onbeforeunload(event) {
-    // localStorage.removeItem("studyName");
-    // localStorage.removeItem("studyId");
     this.leaveSession();
   }
 
   joinSession() {
-    // this.setState({
-    //   memberId: localStorage.getItem("decodedToken").memberId,
-    //   studyId: localStorage.getItem("studyId"),
-    // });
-    console.log(
-      "VideoRoomComponent Constructor - Member ID:",
-      this.state.mySessionId
-    );
-
     //서버에 입실기록 전송
     apiClient
       .post("/study/attendance/in", {
@@ -293,14 +277,12 @@ class VideoRoomComponent extends Component {
       })
       .then((res) => {
         console.log(res);
-        window.location.href = `/Study/${this.props.studyId}`; //퇴실 성공시 버튼위치로 돌아감
+        window.location.href = "/Room"; //퇴실성공시 버튼위치로 돌아감
       })
       .catch((err) => {
         console.log(err);
-        window.location.href = `/Study/${this.props.studyId}`; //퇴실 실패시 스터디로
       });
   }
-
   camStatusChanged() {
     localUser.setVideoActive(!localUser.isVideoActive());
     localUser.getStreamManager().publishVideo(localUser.isVideoActive());
@@ -607,7 +589,6 @@ class VideoRoomComponent extends Component {
       <div className="container" id="container">
         <ToolbarComponent
           sessionId={mySessionId}
-          studyName={this.props.studyName}
           user={localUser}
           showNotification={this.state.messageReceived}
           camStatusChanged={this.camStatusChanged}

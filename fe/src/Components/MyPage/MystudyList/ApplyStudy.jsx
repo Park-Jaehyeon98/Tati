@@ -4,6 +4,7 @@ import axios from "axios";
 import style from './ApplyStudy.module.css'
 import { useDispatch } from 'react-redux';
 
+import { Button } from '@material-ui/core';
 
 export default function ApplyStudy(){
 
@@ -47,7 +48,7 @@ export default function ApplyStudy(){
   //studyApplicantId- int,studyName - StringtotalMember - int,currentMemberCount - int
   // 가입한 스터디 ======================================================================================
 
-  const itemsPerPage = 3;
+  const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
 
   const NoticeItem = ({ studyApplicantId, studyName, totalMember, currentMemberCount }) => {
@@ -57,7 +58,9 @@ export default function ApplyStudy(){
     return (
       <div>
         <div className={style.ApplyStudy_box}>
-          <p className={style.ApplyStudy_text}><h2 onClick={handleItemClick}>{studyName}</h2>{currentMemberCount}/{totalMember} 인원</p>
+          <p className={style.ApplyStudy_text}><h2  className={style.studyName} onClick={handleItemClick}>{studyName}</h2>
+          <span role="img" aria-label="writing hand">👥 {currentMemberCount}/{totalMember} </span>
+          </p>
           <hr className={style.Study_hr}/>
         </div>
       </div>
@@ -92,11 +95,11 @@ export default function ApplyStudy(){
   const dummyData = generateDummyData(numberOfEntries);
   //==========================================================================
 
-  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
+  const totalPages = Math.ceil(applyStudy.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNotices = dummyData.slice(startIndex, endIndex);
+  const currentNotices = applyStudy.slice(startIndex, endIndex);
 
   return(
     <div className={style.point}>
@@ -104,8 +107,8 @@ export default function ApplyStudy(){
       <div className={style.JoinStudy_box}>
 
         <nav className={style.point_nav_btn}>
-          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/JoinStudy")}>가입된스터디</button>
-          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/ApplyStudy")}>신청한스터디</button>
+          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/JoinStudy")}>가입된 스터디</button>
+          <button className={`${style.nav_blue} ${style.nav_btn}`} onClick={() => handleButtonClick("/MyPage/ApplyStudy")}>신청한 스터디</button>
           <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/MyPagePost")}>내 작성글</button>
         </nav>
 
@@ -133,14 +136,14 @@ export default function ApplyStudy(){
 
               <div className={style.pagination}>
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                  <button
+                  <Button
                     key={pageNum}
                     onClick={() => setCurrentPage(pageNum)}
                     disabled={currentPage === pageNum}
                     className={style.btn}
                   >
                     {pageNum}
-                  </button>
+                  </Button>
                 ))}
               </div>
           </div>

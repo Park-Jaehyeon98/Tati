@@ -41,6 +41,8 @@ export default function RewardPoint(){
     // const userContent = content.slice(-2)
     // const textColor = (userContent === "결석" || userContent === "지각") ? "red" : "#007BFF";
     
+    
+
     return (
       <div>
         <div className={style.ApplyStudy_box}>
@@ -50,7 +52,7 @@ export default function RewardPoint(){
             {userContent}
             </div> */}
 
-           <br /> 출석시간 - {inTime} / 퇴실시간 - {outTime}  / {score} 점수 / {attendanceDate}</p>
+           <br /> 출석시간 - {inTime} / 퇴실시간 - {outTime}  / {score && '0점'} / {attendanceDate}</p>
           <hr className={style.Study_hr}/>
         </div>
       </div>

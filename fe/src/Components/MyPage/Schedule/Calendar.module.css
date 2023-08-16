@@ -1,12 +1,13 @@
 .Calendar_box{
   margin-left: 5px;
   width: 1000px;
-  height: 730px;
+  height: 830px;
   background-color: #e8e9ea;
    margin-top: 80px;
    margin-bottom: 100px;
    border-radius: 10px;
    padding: 20px;
+   padding-top: 50px;
    box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
 }
 .Calendar_box_box{
@@ -17,7 +18,7 @@
   margin-left: auto;
   margin-right: auto;
   border-radius: 10px;
-  border: 1px solid gray;
+  border: 1px solid gray; 
 }
 .calendar{
   width: 750px;
@@ -191,4 +192,9 @@
 
 .detail_title{
   margin-bottom: 10px;
+}
+
+.Calendar_nation{
+  margin-left: 120px;
+  margin-top: 10px;
 }

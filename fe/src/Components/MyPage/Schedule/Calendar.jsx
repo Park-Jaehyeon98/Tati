@@ -385,6 +385,16 @@ export default function Calendar() {
     <div>
       {/* 캘린더 */}
       <div className={style.Calendar_box}>
+
+          <div className={style.Calendar_nation}>
+          <span role="img" aria-label="writing hand">&#10004; 날짜을 클릭 후 일정을 생성해 주세요! </span>
+          </div>
+
+          <div className={style.Calendar_nation}>
+          <span role="img" aria-label="writing hand">&#10004; 생성한 일정은 삭제 할 수 있습니다. (스터디 일정은 삭제 X) </span>
+          </div>
+          
+
         <div className={style.Calendar_box_box}>
           <div className={style.calendar}>
             <FullCalendar

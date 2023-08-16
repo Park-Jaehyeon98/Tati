@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 // 리덕스 저장
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../../redux/reducers/userSlice';
-
+import { Button } from '@material-ui/core';
 
 export default function KakaoPay() {
 
@@ -142,14 +142,14 @@ export default function KakaoPay() {
         alert('포인트가 부족합니다')
       } else {
         axios.post(`${process.env.REACT_APP_URL}/payment/cancel`, {
+          amount: point,
+          tid,
+          email: parseJwt.sub
+        },{
           headers: {
             Authorization: "Bearer " + localStorage.getItem('accessToken'),
             RefreshToken: localStorage.getItem('refreshtoken')
           }
-        }, {
-          amount: point,
-          tid,
-          email: parseJwt.sub
         })
           .then((res) => {
             console.log(res)
@@ -169,13 +169,14 @@ export default function KakaoPay() {
     return (
       <div>
         <div className={style.PointItem_text}>
-          <p className={style.p_text}>{date} {formattedTotalPoint}
-            <h6 className={style.text}>{day.slice(0, 10)} {day.slice(11, 16)}
-            </h6>{date == '포인트 적립' && ( // date가 '포인트 인출일'이 아닐 때에만 버튼 렌더링
+          <p className={style.p_text}>{date} - {formattedTotalPoint} 
+          {date == '포인트 적립' && ( // date가 '포인트 인출일'이 아닐 때에만 버튼 렌더링
               <button className={style.cancel_btn} onClick={handleCancel}>
                 결제취소
               </button>
-            )}</p>
+            )}
+            <h6 className={style.text}>{day.slice(0, 10)} {day.slice(11, 16)}
+            </h6></p>
           <hr />
         </div>
       </div>
@@ -202,6 +203,7 @@ export default function KakaoPay() {
           <div className={style.box}>
             {currentNotices.map((point, index) => (
               <PointItem
+              className={style.PointItem_box}
                 key={index}
                 point={point.amount}
                 date={point.pcontent}
@@ -214,14 +216,14 @@ export default function KakaoPay() {
 
         <div className={style.pagination}>
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-            <button
+            <Button
               className={style.pagination_button}
               key={pageNum}
               onClick={() => setCurrentPage(pageNum)}
               disabled={currentPage === pageNum}
             >
               {pageNum}
-            </button>
+            </Button>
           ))}
         </div>
       </div>

@@ -1,5 +1,6 @@
 .point{
   padding: 50px;
+  height: 900px;
   padding-left: 100px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
@@ -10,17 +11,30 @@
   margin-left: 50px;
   margin-bottom: 30px;
 }
+/* 선택된 버튼 */
 
-.nav_btn{
+
+.nav_btn {
   margin-right: 50px;
   margin-bottom: 30px;
   width: 150px;
   height: 40px;
   font-size: 20px;
   font-weight: bold;
-  border-radius: 10px;
-  border: 1px;
+  border-radius: 5px;
+  background-color: #f0f0f0; 
+  transition: background-color 0.3s, color 0.3s;
 }
+.nav_blue{
+  background-color: #007BFF;
+  color: white;
+}
+
+.nav_btn:hover {
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
+}
+
 
 .point_History_box{
   width: 550px;
@@ -41,7 +55,7 @@
   justify-content: center;
   gap: 10px; /* 버튼 사이에 간격을 주기 위해 gap 설정 */
   position: absolute;
-  top: 1090px;
+  top: 1390px;
   left: 40%;
   padding: 10px;
 }
@@ -69,6 +83,7 @@
 
 .JoinStudy_text_day{
   margin: 0px;
+  font-size: 12px;
   margin-left: 450px;
 }
 
@@ -87,7 +102,7 @@
 
 .JoinStudy_box{
   width: 700px;
-  height: 500px;
+  height: 800px;
   background-color: white;
   padding: 50px;
   padding-left: 80px;
@@ -126,5 +141,6 @@
 }
 
 .studyName{
-  font-size: 15px;
+  margin-top: 0px;
+  /* font-size: 15px; */
 }

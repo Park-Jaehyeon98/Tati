@@ -4,6 +4,9 @@ import axios from "axios";
 import style from './ApplyStudy.module.css'
 import { useNavigate } from "react-router-dom";
 
+import { Button } from '@material-ui/core';
+
+
 export default function MyPost(){
 
   const navigate = useNavigate();
@@ -53,7 +56,7 @@ export default function MyPost(){
   // 가입한 스터디 ======================================================================================
 
 
-  const itemsPerPage = 8;
+  const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
 
   const NoticeItem = ({ studyId,boardId, boardTitle, boardHit, boardCommentCount, boardDate }) => {
@@ -65,9 +68,9 @@ export default function MyPost(){
         <div className={style.NoticeItem_text}>
           <p className={style.MyPost_text}>
              <h2 onClick={handleItemClick}>{boardTitle}</h2>
-              조회수 {boardHit} 댓글수 {boardCommentCount}
+             👁️‍🗨️ {boardHit} 💬 {boardCommentCount}
             <h6 className={style.MyPost_text_time}>
-              {boardDate.slice(0, 10)}
+              {/* {boardDate.slice(0, 10)} */}
               </h6></p>
           <hr className={style.Study_hr}/>
         </div>
@@ -75,7 +78,40 @@ export default function MyPost(){
     );
   };
   
-  
+  //=============================================================================
+  // 더미 데이터 생성 함수
+  function generateDummyData(count) {
+    const dummyData = [];
+    const currentDate = new Date();
+
+    for (let i = 1; i <= count; i++) {
+      const studyId = Math.floor(Math.random() * 5) + 1; // 1에서 5 사이의 랜덤값
+      const boardId = i;
+      const boardTitle = `Board ${i}`;
+      const boardHit = Math.floor(Math.random() * 1000) + 50; // 50에서 1049 사이의 랜덤값
+      const boardCommentCount = Math.floor(Math.random() * 20); // 0에서 19 사이의 랜덤값
+      // const boardDate = new Date(currentDate.getTime() - Math.random() * 30 * 24 * 60 * 60 * 1000); // 현재 날짜를 기준으로 30일 이내에서 무작위로 생성
+
+      dummyData.push({
+        studyId,
+        boardId,
+        boardTitle,
+        boardHit,
+        boardCommentCount,
+        // boardDate,
+      });
+    }
+
+    return dummyData;
+  }
+
+  // 더미 데이터 생성
+  const numberOfEntries = 10; // 생성할 더미 데이터 개수
+  const dummyData = generateDummyData(numberOfEntries);
+
+  // 생성된 더미 데이터 출력
+  console.log(dummyData);
+  //=============================================================================
 
   const totalPages = Math.ceil(myPost.length / itemsPerPage);
 
@@ -88,9 +124,9 @@ export default function MyPost(){
 
       <div className={style.JoinStudy_box}>
         <nav className={style.point_nav_btn}>
-          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/JoinStudy")}>가입된스터디</button>
-          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/ApplyStudy")}>신청한스터디</button>
-          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/MyPagePost")}>내 작성글</button>
+          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/JoinStudy")}>가입된 스터디</button>
+          <button className={style.nav_btn} onClick={() => handleButtonClick("/MyPage/ApplyStudy")}>신청한 스터디</button>
+          <button className={`${style.nav_blue} ${style.nav_btn}`} onClick={() => handleButtonClick("/MyPage/MyPagePost")}>내 작성글</button>
         </nav>
 
         <div className={style.content}>
@@ -118,14 +154,14 @@ export default function MyPost(){
               
               <div className={style.pagination}>
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                  <button
+                  <Button
                     key={pageNum}
                     onClick={() => setCurrentPage(pageNum)}
                     disabled={currentPage === pageNum}
                     className={style.btn}
                   >
                     {pageNum}
-                  </button>
+                  </Button>
                 ))}
               </div>
           </div>
