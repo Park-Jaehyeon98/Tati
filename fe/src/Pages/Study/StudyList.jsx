@@ -59,6 +59,13 @@ const StudyList = () => {
         (keywordInput ? setKeyword(keywordInput) : setKeyword(null))
     }
 
+    // 검색 엔터
+    const handleSearchEnter = (e) => {
+        if (e.key === 'Enter') {
+            handleSearchBtnClick();
+        }
+    }
+
     // 키워드 조회
     useEffect(() => {
         console.log("키워드")
@@ -82,6 +89,8 @@ const StudyList = () => {
     }, [currentPage, categoryId, keyword])
 
 
+
+
     return (
         <div>
             {/* 위에 바 */}
@@ -101,7 +110,14 @@ const StudyList = () => {
                 )}
             </div>
             <div className={style.inputField}>
-                <input type="text" name="keywordInput" value={keywordInput} onChange={handleKeywordInputChagne} placeholder="스터디이름으로 검색" />
+                <input
+                    type="text"
+                    name="keywordInput"
+                    value={keywordInput}
+                    onChange={handleKeywordInputChagne}
+                    onKeyDown={handleSearchEnter}
+                    placeholder="스터디이름으로 검색"
+                />
                 <Button style={{ marginLeft: 10 }} onClick={handleSearchBtnClick}>검색</Button>
             </div>
 
