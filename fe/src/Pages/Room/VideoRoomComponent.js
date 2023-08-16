@@ -20,19 +20,24 @@ const APPLICATION_SERVER_URL =
 class VideoRoomComponent extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props);
     this.hasBeenUpdated = false;
     this.layout = new OpenViduLayout();
-    // let sessionName = this.props.sessionName ? this.props.sessionName : 'study1';
-    let sessionName = `study${localStorage.getItem("studyId")}`;
+    this.sessionName = this.props.sessionName
+      ? this.props.sessionName
+      : "study1";
+    // let sessionName = `study${localStorage.getItem("studyId")}`;
     // let sessionName = "study" + "저장된 studyId";
-    // let userName = this.props.user ? this.props.user : '참석자' + Math.floor(Math.random() * 100);
-    let userName = localStorage.getItem("decodedToken").memberName;
+    this.userName = this.props.user
+      ? this.props.user
+      : "참석자" + Math.floor(Math.random() * 100);
+    // let userName = localStorage.getItem("decodedToken").memberName;
     // let userName = "저장된 회원 닉네임";
     this.remotes = [];
     this.localUserAccessAllowed = false;
     this.state = {
-      mySessionId: sessionName,
-      myUserName: userName,
+      mySessionId: this.sessionName,
+      myUserName: this.userName,
       session: undefined,
       localUser: undefined,
       subscribers: [],
@@ -61,8 +66,8 @@ class VideoRoomComponent extends Component {
   }
 
   componentDidMount() {
-    this.sessionName = `study${localStorage.getItem("studyId")}`;
-    this.userName = localStorage.getItem("decodedToken").memberName;
+    // this.sessionName = `study${localStorage.getItem("studyId")}`;
+    // this.userName = localStorage.getItem("decodedToken").memberName;
 
     const openViduLayoutOptions = {
       maxRatio: 3 / 2, // The narrowest ratio that will be used (default 2x3)

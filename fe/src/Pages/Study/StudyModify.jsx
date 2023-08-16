@@ -90,32 +90,51 @@ const StudyModify = () => {
     }
 
 
-
-    // Modify Put axios
-    const handleStudyModifySubmit = () => {
-        const studyModifyReqDto = {
-            ...studyModifyData,
+    const isValidSubmit = () => {
+        const wordTrim = /(\s*)/g;
+        const nameLength = studyName.replace(wordTrim, "").length
+        // 스터디이름 설정
+        if (nameLength < 3 || nameLength > 20) {
+            alert('스터디 이름은 공백을 제외한 3 ~ 20자로 설정해주세요')
+            return false
         }
-        let formData = new FormData();
-        formData.append('studyImg', studyImg)
-        formData.append('studyModifyReqDto', new Blob([JSON.stringify(studyModifyData)], {
-            type: "application/json"
-        }))
+        // 스터디 비밀번호 설정 
+        else if (!disclosure && (studyPassword.length === 0)) {
+            alert('비공개 스터디의 비밀번호를 설정해주세요')
+            return false
+        }
+        else if (Number(studyPassword) < 0) {
+            alert('비밀번호는 -를 제외한 숫자로 입력해주세요')
+            return false
+        }
+        return true
+    }
 
-        apiClient.put(`study/${studyId}/modify`, formData,
-            {
-                header: {
-                    'Content-Type': 'multipart/form-data',
-                }
-            })
-            .then((res) => {
-                console.log(res);
-                refreshDetail()
-                navigate(`/Study/${studyId}`)
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+
+    // 수정완료버튼
+    const handleStudyModifySubmit = () => {
+        if (isValidSubmit()) {
+            let formData = new FormData();
+            formData.append('studyImg', studyImg)
+            formData.append('studyModifyReqDto', new Blob([JSON.stringify(studyModifyData)], {
+                type: "application/json"
+            }))
+
+            apiClient.put(`study/${studyId}/modify`, formData,
+                {
+                    header: {
+                        'Content-Type': 'multipart/form-data',
+                    }
+                })
+                .then((res) => {
+                    console.log(res);
+                    refreshDetail()
+                    navigate(`/Study/${studyId}`)
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }
     }
 
     // 뒤로가기 버튼 -> detail Main으로 돌아감
@@ -138,7 +157,6 @@ const StudyModify = () => {
     return (
         <>
             <div className={style.container}>
-
                 <div className={style.disclosureContainer}>
                     <h3 >스터디 정보 수정하기
 
@@ -186,7 +204,6 @@ const StudyModify = () => {
                 </div>
 
 
-
                 <div>
 
                     <div className={`${style.imageContainer} ${style.disclosureContainer} ${style.disclosure}`}>
@@ -200,16 +217,11 @@ const StudyModify = () => {
 
                     <div className={`${style.buttonContainer} ${style.disclosureContainer} ${style.disclosure}`}>
                         <button className={style.submitButton} onClick={handleStudyModifySubmit}>스터디 수정</button>
-                        <button className={style.cancelButton}>취소하기</button>
+                        <button className={style.cancelButton} onClick={handleBackButtonClick}>취소하기</button>
                     </div>
 
                 </div>
             </div>
-            {/* <div className={style.buttons}>
-                <button style={{ backgroundColor: 'black', color: 'white' }} onClick={handleDeleteBtnClick}>
-                    스터디삭제
-                </button>
-            </div> */}
 
         </>
 

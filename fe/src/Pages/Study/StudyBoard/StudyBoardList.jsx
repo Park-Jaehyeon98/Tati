@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import style from './StudyBoardList.module.css'
 import StudyBoardListItem from '../../../Components/Study/StudyBoard/StudyBoardListItem'
+import Loading from '../../../Loading/Loading'
 
 import { Link, useNavigate, useOutletContext } from 'react-router-dom'
 import { apiClient } from '../../../api/apiClient'
 import { useSelector } from 'react-redux'
 import { Button } from '@material-ui/core';
 
-
 const StudyBoardList = () => {
+    const [loadingError, setLoadingError] = useState(true);
     const { studyId, boardType } = useOutletContext();
     const user = useSelector((state) => { return state.user.user })
 
@@ -29,11 +30,20 @@ const StudyBoardList = () => {
                 setBoardList(res.data.content);
             })
             .catch((err) => { console.log(err) })
+            .finally(() => {
+                setLoadingError(() => { return false })
+            })
     }, []);
 
 
     return (
         <div>
+            {/* 로딩 모달 */}
+            {loadingError && (
+                <div className={`${style.modal}`}>
+                    <Loading />
+                </div>
+            )}
             {/* 게시판 컨테이너 */}
             <div className={style.container}>
                 <div className={style.boardFrame}>
@@ -96,7 +106,7 @@ const StudyBoardList = () => {
                 </Button>
             </div>
             {/* 스터디 생성 버튼 */}
-            <div>
+            <div className={style.createBtnBox}>
                 <Link to='./Create'>
                     <Button>새 게시물 만들기</Button>
                 </Link>
