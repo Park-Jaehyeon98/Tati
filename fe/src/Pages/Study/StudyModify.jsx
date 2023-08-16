@@ -214,11 +214,14 @@ const StudyModify = () => {
 
                     <div className={`${style.imageContainer} ${style.disclosureContainer} ${style.disclosure}`}>
                         스터디 대표 이미지
-                        <input type="file" name="studyImg" onChange={handleStudyImgUpload} />
+                        <label style={{ display: "inline" }} htmlFor="studyImg" className={`${style.customFileInput} ${style.centeredText}`}>
+                            이미지 업로드
+                            <input type="file" name="studyImg" id="studyImg" onChange={handleStudyImgUpload} style={{ display: 'none' }} />
+                        </label>
                     </div>
 
-                    <div className={`${style.imagePreview} ${style.disclosureContainer}`} style={{ width: 100, height: 100 }}>
-                        {studyImgView && <img src={studyImgView} alt="" width={100} height={100} />}
+                    <div className={`${style.imagePreview} ${style.disclosureContainer}`} style={{ width: 200, height: 200 }}>
+                        {studyImgView && <img src={studyImgView} alt="" width={200} height={200} />}
                     </div>
 
                     <div className={`${style.buttonContainer} ${style.disclosureContainer} ${style.disclosure}`}>
