@@ -2,10 +2,9 @@ package com.ssafy.tati.service;
 
 import com.ssafy.tati.dto.res.StudyMemberResDto;
 import com.ssafy.tati.dto.res.StudyMemberSecessionResDto;
-import com.ssafy.tati.entity.Member;
-import com.ssafy.tati.entity.Point;
-import com.ssafy.tati.entity.Study;
-import com.ssafy.tati.entity.StudyMember;
+import com.ssafy.tati.entity.*;
+import com.ssafy.tati.exception.DataNotFoundException;
+import com.ssafy.tati.repository.AttendanceRepository;
 import com.ssafy.tati.repository.MemberRepository;
 import com.ssafy.tati.repository.StudyMemberRepository;
 import com.ssafy.tati.repository.StudyRepository;
@@ -27,11 +26,12 @@ public class StudyMemberService {
     private final MemberRepository memberRepository;
     private final StudyRepository studyRepository;
     private final StudyMemberRepository studyMemberRepository;
+    private final AttendanceRepository attendanceRepository;
 
     public List<StudyMemberResDto> getStudyMember(Integer studyId) {
         List<StudyMember> studyMemberList = studyMemberRepository.findAllByStudyStudyId(studyId);
         if(studyMemberList == null){
-            throw new RuntimeException("스터디가 존재하지 않습니다.");
+            throw new DataNotFoundException("스터디가 존재하지 않습니다.");
         }
         List<StudyMemberResDto> studyMemberResDtoList = new ArrayList<>();
         for (StudyMember studyMember : studyMemberList) {
@@ -52,13 +52,14 @@ public class StudyMemberService {
     }
 
     public StudyMemberSecessionResDto studyMemberSecession(Integer studyId, Integer memberId) {
-        StudyMember studyMember = studyMemberRepository.findByStudyStudyIdAndMemberMemberId(studyId, memberId).orElseThrow(() -> new RuntimeException("해당 스터디의 참가 회원이 아닙니다."));
+        StudyMember studyMember = studyMemberRepository.findByStudyStudyIdAndMemberMemberId(studyId, memberId)
+                .orElseThrow(() -> new DataNotFoundException("해당 스터디의 참가 회원이 아닙니다."));
         int cur_point = studyMember.getStudy().getStudyDeposit() - studyMember.getStudyMemberPenalty();
 
         Study study = studyMember.getStudy();
         Member member = memberService.findById(memberId);
 
-        study.setTotalPenalty( studyMember.getStudy().getTotalPenalty() +
+        study.setTotalPenalty(studyMember.getStudy().getTotalPenalty() +
                 studyMember.getStudyMemberPenalty());
 
         //열정지수 > 가입 날짜
@@ -91,9 +92,19 @@ public class StudyMemberService {
                 ("[보증금 반환] '" +studyMember.getStudy().getStudyName() + "' 탈퇴 보증금"), member);
         pointService.save(point);
 
+        List<Attendance> attendanceList = attendanceRepository.findByStudyMemberId(studyMember.getStudyMemberId());
+
         if(study.getStudyMemberList().size()==1) studyRepository.deleteById(studyId);
-        else studyMemberRepository.deleteById(studyMember.getStudyMemberId());
-        StudyMemberSecessionResDto studyMemberSecessionResDto = new StudyMemberSecessionResDto(studyMember.getMember().getMemberNickName(), studyMember.getStudy().getStudyName());
+        else {
+            for(Attendance attendance : attendanceList){
+                attendance.setStudyMember(null);
+            }
+            study.getStudyMemberList().remove(studyMember);
+            studyMemberRepository.deleteById(studyMember.getStudyMemberId());
+        }
+
+        StudyMemberSecessionResDto studyMemberSecessionResDto
+                = new StudyMemberSecessionResDto(studyMember.getMember().getMemberNickName(), studyMember.getStudy().getStudyName());
         return studyMemberSecessionResDto;
     }
 
@@ -111,4 +122,6 @@ public class StudyMemberService {
 
         return optionalStudyMember;
     }
+
+
 }
