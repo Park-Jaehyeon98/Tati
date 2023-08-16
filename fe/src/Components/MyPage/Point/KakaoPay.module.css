@@ -2,9 +2,12 @@
   padding-right: 120px;
 }
 .box{
-    font-size: 11px;
-    font-weight: bold;
-    display: flex;
+  width: 630px;
+  padding: 20px;
+  height: 400px;
+  font-size: 11px;
+  font-weight: bold;
+  /* display: flex; */
   flex-wrap: wrap; /* 컨테이너 크기를 넘어가면 자동으로 다음 줄로 넘어감 */
   gap: 10px; /* 요소들 사이의 간격을 조정 */
 }
@@ -12,8 +15,8 @@
 .pagination {
     display: flex;
     justify-content: center;
-    gap: 10px; /* 버튼 사이에 간격을 주기 위해 gap 설정 */
-    position: absolute;
+    gap: 10px; 
+    /* position: absolute;  */
     top: 1120px;
     left: 650px;
     padding: 10px;
@@ -39,7 +42,7 @@
 .cancel_btn{
     height: 25px;
     font-size: 10px;
-    /* margin-left: 310px; */
+    margin-left: 20px;
     background-color: #f37979;
     border: 1px;
     border-radius: 10px;
@@ -61,4 +64,8 @@
 .point_text{
   font-size: 30px;
   color: #dfdfe0;
+}
+
+.PointItem_box{
+  height: 30px;
 }

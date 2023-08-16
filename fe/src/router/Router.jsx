@@ -56,7 +56,7 @@ import Room from "../Pages/Room/Room";
 import axios from "axios";
 import NoticeDetail from "../Pages/Notice/NoticeDetail";
 import VideoRoomComponent from "../Pages/Room/VideoRoomComponent";
-import CustomVideoRoomComponent from './../Pages/Room/CustomVideoRoomComponent';
+// import CustomVideoRoomComponent from './../Pages/Room/CustomVideoRoomComponent';
 
 
 // 리덕스 툴킷
@@ -185,7 +185,7 @@ export default function Router() {
         {/* openvidu */}
         <Route path="/Room" element={<Room />} />
         <Route path="/VideoEnter" element={<VideoRoomComponent />} />
-        <Route path="/CustomVideoRoom" element={<CustomVideoRoomComponent />} />
+        {/* <Route path="/CustomVideoRoom" element={<CustomVideoRoomComponent />} /> */}
 
 
         {/* 공지사항 */}
