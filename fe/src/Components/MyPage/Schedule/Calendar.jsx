@@ -385,6 +385,7 @@ export default function Calendar() {
     <div>
       {/* 캘린더 */}
       <div className={style.Calendar_box}>
+          <div className={style.Calendar_nation}>날을 클릭 후 일정을 생성해 주세요!</div>
         <div className={style.Calendar_box_box}>
           <div className={style.calendar}>
             <FullCalendar

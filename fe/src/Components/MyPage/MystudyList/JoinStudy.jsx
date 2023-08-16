@@ -4,6 +4,9 @@ import axios from "axios";
 import style from './ApplyStudy.module.css'
 import { useNavigate } from "react-router-dom";
 
+import { Button } from '@material-ui/core';
+
+
 export default function JoinStudy(){
 
   const navigate = useNavigate();
@@ -13,7 +16,7 @@ export default function JoinStudy(){
     navigate(tab);
   };
 
-  const itemsPerPage = 3;
+  const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
 
 
@@ -104,11 +107,11 @@ const dummyData = generateDummyData(numberOfEntries);
 console.log(dummyData);
   //=======================================================================
 
-  const totalPages = Math.ceil(joinStudy.length / itemsPerPage);
+  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNotices = joinStudy.slice(startIndex, endIndex);
+  const currentNotices = dummyData.slice(startIndex, endIndex);
 
 
   return(
@@ -146,14 +149,14 @@ console.log(dummyData);
 
             <div className={style.pagination}>
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                <button
+                <Button
                   key={pageNum}
                   onClick={() => setCurrentPage(pageNum)}
                   disabled={currentPage === pageNum}
                   className={style.btn}
                 >
                   {pageNum}
-                </button>
+                </Button>
               ))}
             </div>
         </div>

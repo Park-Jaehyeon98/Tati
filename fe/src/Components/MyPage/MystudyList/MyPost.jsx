@@ -4,6 +4,9 @@ import axios from "axios";
 import style from './ApplyStudy.module.css'
 import { useNavigate } from "react-router-dom";
 
+import { Button } from '@material-ui/core';
+
+
 export default function MyPost(){
 
   const navigate = useNavigate();
@@ -53,7 +56,7 @@ export default function MyPost(){
   // 가입한 스터디 ======================================================================================
 
 
-  const itemsPerPage = 3;
+  const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
 
   const NoticeItem = ({ studyId,boardId, boardTitle, boardHit, boardCommentCount, boardDate }) => {
@@ -151,14 +154,14 @@ export default function MyPost(){
               
               <div className={style.pagination}>
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                  <button
+                  <Button
                     key={pageNum}
                     onClick={() => setCurrentPage(pageNum)}
                     disabled={currentPage === pageNum}
                     className={style.btn}
                   >
                     {pageNum}
-                  </button>
+                  </Button>
                 ))}
               </div>
           </div>

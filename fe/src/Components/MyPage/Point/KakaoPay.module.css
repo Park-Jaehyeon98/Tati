@@ -2,13 +2,12 @@
   padding-right: 120px;
 }
 .box{
-  border: 1px solid black;
   width: 630px;
   padding: 20px;
-  height: 500px;
+  height: 400px;
   font-size: 11px;
   font-weight: bold;
-  display: flex;
+  /* display: flex; */
   flex-wrap: wrap; /* 컨테이너 크기를 넘어가면 자동으로 다음 줄로 넘어감 */
   gap: 10px; /* 요소들 사이의 간격을 조정 */
 }
@@ -24,7 +23,7 @@
 }
 
 .pagination_button {
-    /* width: 30px;
+    width: 30px;
     height: 30px;
     margin: 0.2rem;
     padding: 0.3rem 0.5rem;
@@ -33,7 +32,7 @@
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    border-radius: 50px; */
+    border-radius: 50px;
   }
   
   .pagination_button:hover {
@@ -43,7 +42,7 @@
 .cancel_btn{
     height: 25px;
     font-size: 10px;
-    /* margin-left: 310px; */
+    margin-left: 20px;
     background-color: #f37979;
     border: 1px;
     border-radius: 10px;
@@ -65,4 +64,8 @@
 .point_text{
   font-size: 30px;
   color: #dfdfe0;
+}
+
+.PointItem_box{
+  height: 30px;
 }
