@@ -347,7 +347,8 @@ const StudyCreate = () => {
 
                 <div className={`${style.inputField} ${style.disclosureContainer}`}>
                     <div className={style.disclosure}>스터디 설명</div>
-                    <Tooltip message={'스터디 설명을 적어주세요. 스터디 메인화면에서 스터디를 소개할 때 사용됩니다.'}>
+                    <Tooltip message={`스터디 설명을 적어주세요. 
+                    \n스터디 메인화면에서 스터디를 소개할 때 사용됩니다.`}>
                         <textarea style={{ width: 660, height: 100 }} type="text" name="studyDescription" value={studyDescription} onChange={handleChange} />
                     </Tooltip>
                 </div>
@@ -392,8 +393,8 @@ const StudyCreate = () => {
 
                 <div className={`${style.scheduleContainer} ${style.disclosureContainer}`}>
                     <Tooltip message={`스터디를 진행할 요일과 시간을 선택하고 추가해주세요. 
-                    \n 스터디 기간 동안 설정한 요일과 시간에 매주 진행되므로 
-                    \n 신중히 정하는 것을 추천드립니다.`}>
+                    \n 스터디 기간 동안 설정한 요일과 시간에 매주 진행되고,
+                    \n 변경할 수 없으니 신중히 정하는 것을 추천드립니다.`}>
                         <div>
                             요일
                             <select className={style.txtDay} name="studyDay" id="studyDay" onChange={handleStudyScheduleItemChange} value={studyDay}>
@@ -474,8 +475,9 @@ const StudyCreate = () => {
                 <div className={`${style.memberContainer} ${style.disclosureContainer} ${style.disclosure}`}>
                     <div>스터디 보증금</div>
                     <Tooltip message={`스터디 보증금은 벌금 3회분의 금액입니다. 
-                    \n 스터디 가입 시 타티에서 보증금만큼 포인트를 차감한 후,
-                    \n 스터디가 종료된 후 벌금 정산후 돌려드릴거에요.`}>
+                    \n 스터디 가입 시 타티에서 보증금만큼 포인트를 차감하고,
+                    \n 스터디가 종료되면 벌금 정산 후 돌려드릴거에요.
+                    \n 1500원 ~ 60000원 사이의 3의 배수 금액으로 설정해주세요.`}>
                         <input
                             type="number"
                             name="studyDeposit"
