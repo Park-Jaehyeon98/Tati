@@ -141,9 +141,6 @@ export default function Router() {
           </div>
           <div className={style.navBoxIn}>
             {/* openvidu */}
-            <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Room">
-              openvidu
-            </NavLink>
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Study">
               스터디
             </NavLink>
