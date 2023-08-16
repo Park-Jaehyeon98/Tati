@@ -36,8 +36,16 @@ public class StudyMemberService {
         List<StudyMemberResDto> studyMemberResDtoList = new ArrayList<>();
         for (StudyMember studyMember : studyMemberList) {
             Member member = studyMember.getMember();
+
+            Integer studyTime =  member.getTotalStudyTime();
+            long hour = studyTime/3600;
+            studyTime%=3600;
+            long min = studyTime/60;
+            studyTime%=60;
+            long sec = studyTime;
+
             StudyMemberResDto studyMemberResDto = new StudyMemberResDto(member.getMemberNickName(), member.getTotalScore(),
-                    member.getCreatedDate().toString(), member.getTotalStudyTime());
+                    member.getCreatedDate().toString(), (hour +"시간 " +min+ "분 " +sec+ "초"));
             studyMemberResDtoList.add(studyMemberResDto);
         }
         return studyMemberResDtoList;
