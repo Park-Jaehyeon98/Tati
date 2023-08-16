@@ -30,8 +30,8 @@ class VideoRoomComponent extends Component {
     this.remotes = [];
     this.localUserAccessAllowed = false;
     this.state = {
-      mySessionId: this.sessionName,
-      myUserName: this.userName,
+      mySessionId: this.props.studyId,
+      myUserName: this.props.memberName,
       session: undefined,
       localUser: undefined,
       subscribers: [],
@@ -108,7 +108,7 @@ class VideoRoomComponent extends Component {
     // });
     console.log(
       "VideoRoomComponent Constructor - Member ID:",
-      this.props.memberId
+      this.state.mySessionId
     );
 
     //서버에 입실기록 전송
@@ -293,10 +293,11 @@ class VideoRoomComponent extends Component {
       })
       .then((res) => {
         console.log(res);
-        window.location.href = "/Study"; //퇴실성공시 버튼위치로 돌아감
+        window.location.href = `/Study/${this.props.studyId}`; //퇴실 성공시 버튼위치로 돌아감
       })
       .catch((err) => {
         console.log(err);
+        window.location.href = `/Study/${this.props.studyId}`; //퇴실 실패시 스터디로
       });
   }
 

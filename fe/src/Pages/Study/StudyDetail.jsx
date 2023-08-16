@@ -5,6 +5,7 @@ import style from './StudyDetail.module.css'
 import { useSelector } from 'react-redux';
 
 import Loading from '../../Loading/Loading';
+import VideoRoomComponent from './../Room/VideoRoomComponent';
 //로딩중
 
 
@@ -17,6 +18,8 @@ const StudyDetailTest = () => {
     // 비밀 스터디 일때
     const [refresh, setRefresh] = useState(true);
     const [viewType, setViewType] = useState(0);
+
+    const [onVideo, setOnVideo] = useState(false);
 
     const [studyData, setStudyData] = useState({
         studyId: 0,
@@ -80,6 +83,10 @@ const StudyDetailTest = () => {
     const handleViewTypeBtnClick = (e) => {
         setViewType((prev) => { return e.target.value })
         navigate(viewTypeURL[e.target.value])
+    }
+
+    const handleOnVideoBtnClick = () => {
+        setOnVideo(() => { return true })
     }
 
     // 처음 렌더링시 스터디 상세정보를 받아옴
@@ -151,7 +158,8 @@ const StudyDetailTest = () => {
             state: {
                 memberId: user.memberId,
                 studyId: studyId,
-                studyName: studyName
+                studyName: studyName,
+                memberNickName: user.memberNickName
             }
         });
     }
@@ -195,7 +203,12 @@ const StudyDetailTest = () => {
         }
     }
 
+
+
+
+
     return (
+
         <div className={style.container}>
             {/* 로딩 모달 */}
             {loadingError && (
@@ -287,7 +300,11 @@ const StudyDetailTest = () => {
                                 isStudyTime() ?
                                     <button className={style.camBtn} onClick={handleEnterBtnClick}>스터디룸 입장</button> :
                                     <button className={`${style.camBtn} ${style.noStudytime}`}>스터디 시간이 아닙니다</button>
+                                // isStudyTime() ?
+                                //     <button className={style.camBtn} onClick={() => setOnVideo(true)}>스터디룸 입장</button> :
+                                //     <button className={`${style.camBtn} ${style.noStudytime}`}>스터디 시간이 아닙니다</button>
                             }
+
                         </div>
 
                     </div>
