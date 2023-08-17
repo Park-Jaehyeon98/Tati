@@ -10,6 +10,7 @@ import com.ssafy.tati.exception.MismatchDataException;
 import com.ssafy.tati.entity.Member;
 //import com.ssafy.tati.entity.Study;
 //import com.ssafy.tati.repository.BoardRepository;
+import com.ssafy.tati.repository.AttendanceRepository;
 import com.ssafy.tati.repository.BoardRepository;
 import com.ssafy.tati.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class MemberService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AttendanceRepository attendanceRepository;
 
     //회원가입
     public Member createMember(Member member){
@@ -161,7 +163,7 @@ public class MemberService {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         if (!optionalMember.isPresent()) { throw new DataNotFoundException("등록된 회원이 아닙니다.");}
 
-        List<Attendance> attendanceList = optionalMember.get().getAttendanceList();
+        List<Attendance> attendanceList = attendanceRepository.findByIdOOrderByAttendanceId(optionalMember.get().getMemberId());
         return attendanceList;
     }
 

@@ -17,4 +17,7 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Integer>
 
     @Query("select a from Attendance as a where a.studyMember.studyMemberId = :studyMemberId")
     List<Attendance> findByStudyMemberId(@Param("studyMemberId") Integer studyMemberId);
+
+    @Query("select a from Attendance as a where a.member.memberId = :memberId order by a.attendanceId desc")
+    List<Attendance> findByIdOOrderByAttendanceId(@Param("memberId") Integer memberId);
 }

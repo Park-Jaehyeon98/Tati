@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -129,6 +131,8 @@ public class MyPageController {
             attendanceList.add(new AttendanceResDto(date, inTime, outTime,
                     attendance.getIsAttended(), attendance.getScore()+"점", attendance.getContent()));
         }
+
+
 
         MyPageResDto myPageResDto = new MyPageResDto(
                 img, studyTime, totalStudyTime, totalScore,
