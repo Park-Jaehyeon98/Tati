@@ -83,7 +83,6 @@ const NoticeDetail = () => {
             </div>
             <div className={style.revDir}>
                 <div className={style.btn} onClick={handleListBtnClick}>목록 보기</div>
-<<<<<<< HEAD
 
                 {!(user.memberNickName === 'admin') ||
                     <>
@@ -91,14 +90,6 @@ const NoticeDetail = () => {
                         <div className={style.btn} onClick={handleModifyBtnClick}>공지사항 수정</div>
                     </>
                 }
-=======
-                {!(user.memberNickName === 'admin') ||
-                <div className={style.btn} onClick={handleDeleteBtnClick}>삭제</div>
-                }
-                {!(user.memberNickName === 'admin') || 
-                <div className={style.btn} onClick={handleModifyBtnClick}>공지사항 수정</div>
-                } 
->>>>>>> 74dee6cf6c90274221863bf4857b24d5d50785c3
             </div>
 
         </div>
