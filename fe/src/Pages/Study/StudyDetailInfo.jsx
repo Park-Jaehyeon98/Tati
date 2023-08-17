@@ -1,13 +1,13 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import style from './StudyDetailInfo.module.css'
-import { useOutletContext, useParams } from 'react-router-dom'
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom'
 import { apiClient } from '../../api/apiClient';
 
 
 
 const StudyDetailInfo = () => {
-
+    const navigate = useNavigate();
     const user = useSelector(state => state.user.user);
 
     const params = useParams();
@@ -58,6 +58,7 @@ const StudyDetailInfo = () => {
             .then((res) => {
                 console.log(res)
                 refreshDetail()
+                navigate('/Study')
             })
             .catch((err) => {
                 console.log(err)
