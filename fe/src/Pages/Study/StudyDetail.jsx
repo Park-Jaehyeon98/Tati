@@ -5,6 +5,7 @@ import style from './StudyDetail.module.css'
 import { useSelector } from 'react-redux';
 
 import Loading from '../../Loading/Loading';
+import Tooltip from '../../Components/Common/Tooltip';
 //로딩중
 
 
@@ -290,7 +291,9 @@ const StudyDetailTest = () => {
                                             {(!studyData.studyMemberYn) && (
                                                 studyData.applicantList.filter(({ memberId }) => memberId === user.memberId).length === 0 ?
                                                     <button className={`${style.smallBtn} ${style.isSelected}`} onClick={handleApplyBtnClick}>가입 신청</button> :
-                                                    <button className={`${style.smallBtn} ${style.isSelected}`}>가입 신청 중</button>
+                                                    <Tooltip message={'스터디장이 신청을 수락할 \n 때까지 기다려주세요.'}>
+                                                        <button className={`${style.smallBtn}`}>가입 신청 완료</button>
+                                                    </Tooltip>
                                             )}
 
                                             {/* 방장의 경우 */}
