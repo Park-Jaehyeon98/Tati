@@ -93,7 +93,7 @@ export default class ChatComponent extends Component {
               {this.props.user.getStreamManager().stream.session.sessionId} -
               CHAT
             </span>
-            <IconButton id="closeButton" onClick={this.close}>
+            <IconButton size="medium" id="closeButton" onClick={this.close}>
               <HighlightOff color="inherit" />
             </IconButton>
           </div>
@@ -138,7 +138,7 @@ export default class ChatComponent extends Component {
             />
             <Tooltip title="Send message">
               <Fab
-                color="inherit"
+                color="primary"
                 size="small"
                 id="sendButton"
                 onClick={this.sendMessage}

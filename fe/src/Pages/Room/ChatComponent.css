@@ -9,22 +9,23 @@
 }
 
 #chatToolbar {
-  height: 30px;
+  height: 40px;
   background-color: #3396f4;
   box-sizing: border-box;
   font-weight: bold;
   font-size: 14px;
   text-align: center;
-  padding-top: 8px;
+  padding-top: 15px;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   color: #ffffff;
 }
 
 #closeButton {
+  margin-top: 10;
   position: absolute;
   right: 0;
-  top: -8px;
+  top: 10px;
 }
 
 #chatComponent {
@@ -48,8 +49,10 @@
 }
 
 .message {
+  /* margin: 20px; */
   position: relative;
   padding: 7px 0;
+  margin: 15px 0px !important;
 }
 .user-img {
   position: absolute;
@@ -177,13 +180,13 @@ span.triangle {
 }
 
 #sendButton {
-  background-color: #81e9b0;
+  background-color: #3396f4;
   position: absolute;
   right: 10px;
   top: 0;
   bottom: 0;
   margin: auto;
-  border: 1px solid #7ae2a9;
+  border: 1px solid #3396f4;
   box-shadow: none !important;
 }
 #sendButton {

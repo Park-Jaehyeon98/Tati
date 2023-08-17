@@ -100,10 +100,11 @@ class VideoRoomComponent extends Component {
       .post("/study/attendance/in", {
         memberId: this.props.memberId, //임시값
         studyId: this.props.studyId, //임시값
-        inTime: new Date(),
+        inTime: new Date(new Date().getTime() + 1000 * 60 * 60 * 9),
+        // 한국시간(+9시간),
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res);
         //출석 식별자 저장
         this.attendanceId = res.data.attendanceId;
         console.log(this.attendanceId);
@@ -111,6 +112,10 @@ class VideoRoomComponent extends Component {
       .catch((err) => {
         console.log("에러");
         console.log(err);
+        if (err.response.status === 400) {
+          alert(err.response.data);
+          window.location.href = `/Study/${this.props.studyId}`;
+        }
       }); //입실 전송
 
     this.OV = new OpenVidu();
@@ -149,7 +154,7 @@ class VideoRoomComponent extends Component {
             status: error.status,
           });
         }
-        alert("There was an error getting the token:", error.message);
+        // alert("There was an error getting the token:", error.message);
       }
     }
   }
@@ -267,20 +272,22 @@ class VideoRoomComponent extends Component {
     if (this.props.leaveSession) {
       this.props.leaveSession();
     }
-
     //서버에 퇴실기록 전송
     apiClient
       .put("/study/attendance/out", {
         memberId: this.props.memberId, //임시값
         attendanceId: this.attendanceId,
-        outTime: new Date(),
+        outTime: new Date(new Date().getTime() + 1000 * 60 * 60 * 9),
+        // 한국시간(+9시간)
       })
       .then((res) => {
         console.log(res);
-        window.location.href = "/Room"; //퇴실성공시 버튼위치로 돌아감
+
+        window.location.href = `/Study/${this.props.studyId}`; //퇴실성공시 버튼위치로 돌아감
       })
       .catch((err) => {
         console.log(err);
+        window.location.href = `/Study/${this.props.studyId}`;
       });
   }
   camStatusChanged() {
