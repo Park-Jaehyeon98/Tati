@@ -72,6 +72,7 @@ import { clearUserStudySchedule } from "../redux/reducers/userStudyScheduleSlice
 import AuthModal from "../Components/MyPage/AuthModal";
 import StudyBoardModify from './../Pages/Study/StudyBoard/StudyBoardModify';
 import VideoEnter from "../Pages/Room/VideoEnter";
+import NotFound from './../Pages/NotFound';
 
 
 export default function Router() {
@@ -248,9 +249,8 @@ export default function Router() {
             </Route>
           </Route>
         </Route>
-
-        {/* 스터디 웹rtc 입실 */}
-        {/* <Route path="/Study/:studyId/Board/Create" element={}/> */}
+        {/* 주소 없을시 */}
+        <Route path="*" element={<NotFound />} />
 
       </Routes>
     </BrowserRouter>
