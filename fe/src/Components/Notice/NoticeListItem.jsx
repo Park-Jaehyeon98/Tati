@@ -5,7 +5,10 @@ const NoticeListItem = ({ boardItemInfo }) => {
 
     return (
         <>
-            <div className={style.NoticeListItem_box}>{boardTitle}
+            <div className={style.NoticeListItem_box}>
+                <div className={style.title}>
+                {boardTitle}
+                </div>
              <p className={style.NoticeListItem_day}
               style={{ justifyContent: 'flex-end' }}
              >작성일 - {createdDate}</p>

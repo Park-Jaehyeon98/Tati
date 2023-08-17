@@ -113,7 +113,7 @@ export default function FaqList() {
 
         return (
             <div>
-                <div onClick={handleTitleClick}>
+                <div className={style.title} onClick={handleTitleClick}>
                     Q : {boardTitle}
                 </div >
                 {!isShow ||

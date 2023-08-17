@@ -95,11 +95,11 @@ export default function RewardPoint(){
   console.log(dummyData);
   //================================================================
 
-  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
+  const totalPages = Math.ceil(usePoint.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNotices = dummyData.slice(startIndex, endIndex);
+  const currentNotices = usePoint.slice(startIndex, endIndex);
 
 
   return(

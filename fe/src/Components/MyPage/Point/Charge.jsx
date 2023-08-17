@@ -91,6 +91,7 @@ export default function Change() {
   }
 
   const formattedTotalPoint = currentPoint.toLocaleString();
+  const Amount = rechargeAmount.toLocaleString();
   const total = currentPoint + rechargeAmount
   const TotalPoint = total.toLocaleString();
 
@@ -113,7 +114,7 @@ export default function Change() {
 
       <p className={style.point}>
         충전 포인트
-        <input className={style.rechargeAmount} type="text" value={rechargeAmount} onChange={handleChange} />
+        <input className={style.rechargeAmount} type="text" value={Amount} onChange={handleChange} />
         <button className={style.btn} onClick={handleRecharge}>+</button>
         <button className={style.btn} onClick={handleDecrease}>-</button>
       </p>

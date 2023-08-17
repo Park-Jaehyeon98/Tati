@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 
+import style from "FaqListItem.module.css"
+
 const FaqListItem = ({ boardItemInfo }) => {
     const [isShow, setIsShow] = useState(false);
     const user = useSelector((state) => { return state.user.user })
@@ -44,7 +46,10 @@ const FaqListItem = ({ boardItemInfo }) => {
         <div>
             <hr />
             <div onClick={handleTitleClick}>
-                Q : {boardTitle}
+                Q : 
+                <div className={style.title}>
+                {boardTitle}
+                </div>
             </div>
             {!isShow ||
                 <div>
