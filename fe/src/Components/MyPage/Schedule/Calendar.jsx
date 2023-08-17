@@ -180,6 +180,7 @@ export default function Calendar() {
       })
       .catch((err) => {
         console.log(err, "일정 요청 실패------------------");
+        // if (err.){}
       });
   };
 
