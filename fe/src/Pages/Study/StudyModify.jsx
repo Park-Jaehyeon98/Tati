@@ -194,7 +194,13 @@ const StudyModify = () => {
                     {!disclosure &&
                         <div className={`${style.inputField} ${style.disclosureContainer}`}>
                             <div className={style.disclosure}>패스워드</div>
-                            <input style={{ width: 660 }} type="studyPassword" name="studyPassword" value={studyPassword} onChange={handleChange} />
+                            <input style={{ width: 660 }}
+                                type="number"
+                                name="studyPassword"
+                                value={studyPassword}
+                                onChange={handleChange}
+                                onWheel={(e) => e.target.blur()}
+                            />
                         </div>
                     }
                 </div>

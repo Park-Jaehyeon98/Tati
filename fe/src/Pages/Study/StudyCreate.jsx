@@ -329,7 +329,13 @@ const StudyCreate = () => {
                         <div className={`${style.inputField} ${style.disclosureContainer}`}>
                             <div className={style.disclosure}>패스워드</div>
                             <Tooltip message={'비밀번호를 숫자로 입력해주세요.'}>
-                                <input style={{ width: 660 }} type="number" name="studyPassword" value={studyPassword} onChange={handleChange} />
+                                <input
+                                    style={{ width: 660 }}
+                                    type="number"
+                                    name="studyPassword"
+                                    value={studyPassword}
+                                    onChange={handleChange}
+                                    onWheel={(e) => e.target.blur()} />
                             </Tooltip>
                         </div>
                     }
@@ -482,6 +488,7 @@ const StudyCreate = () => {
                             value={studyDeposit}
                             onChange={handleChange}
                             onKeyDown={handleStudyCreateEnter}
+                            onWheel={(e) => e.target.blur()}
                         />
                     </Tooltip>
                 </div>
