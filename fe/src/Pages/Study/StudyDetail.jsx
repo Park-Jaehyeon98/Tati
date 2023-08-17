@@ -80,8 +80,8 @@ const StudyDetailTest = () => {
     }
     // 비밀 스터디 입장
     const handleEnterStudyBtnClick = () => {
-        console.log(passwordInput, typeof (passwordInput))
-        console.log(studyPassword, typeof (studyPassword))
+        // console.log(passwordInput, typeof (passwordInput))
+        // console.log(studyPassword, typeof (studyPassword))
         if (Number(passwordInput) === studyPassword) {
             setStudyData((prev) => { return { ...prev, isConfirmed: true } })
         } else {
@@ -128,7 +128,7 @@ const StudyDetailTest = () => {
             apiClient.get(`study/${studyId}/${user.memberId}`)
                 .then(res => {
                     // console.log(res.data);
-                    console.log(res.data)
+                    // console.log(res.data)
                     setStudyData(() => { return { ...res.data, isConfirmed: res.data.disclosure ? res.data.disclosure : res.data.studyMemberYn } });
                 })
                 .catch((err) => {
@@ -138,7 +138,7 @@ const StudyDetailTest = () => {
                     setLoadingError(() => { return false })
                 })
         };
-    }, [studyId, refresh, isConfirmed]);
+    }, [studyId, refresh]);
 
 
 
