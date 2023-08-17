@@ -279,6 +279,7 @@ const StudyCreate = () => {
                     navigate(`../${res.data.studyId}`)
 
                 }).catch((err) => {
+                    alert(err.response.data);
                     console.log(err);
                     console.log(studyReqDto, studyImg);
                 })

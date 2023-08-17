@@ -1,13 +1,13 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import style from './StudyDetailInfo.module.css'
-import { useOutletContext, useParams } from 'react-router-dom'
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom'
 import { apiClient } from '../../api/apiClient';
 
 
 
 const StudyDetailInfo = () => {
-
+    const navigate = useNavigate();
     const user = useSelector(state => state.user.user);
 
     const params = useParams();
@@ -58,6 +58,7 @@ const StudyDetailInfo = () => {
             .then((res) => {
                 console.log(res)
                 refreshDetail()
+                navigate('/Study')
             })
             .catch((err) => {
                 console.log(err)
@@ -162,7 +163,7 @@ const StudyDetailInfo = () => {
                         {/* 스터디 맴버 현황 */}
                         <div className={style.boxTitle}>
                             <span className={style.highlight}>
-                                <img className={style.icons} src="../Assets/memberIcon.png" alt="" />
+                                <img className={style.icons} src="https://tatibucket.s3.ap-northeast-2.amazonaws.com/bc95851a-c496-4141-9685-33165a29c009_memberIcon.png" alt="" />
                                 스터디 멤버
 
                             </span>
@@ -203,7 +204,7 @@ const StudyDetailInfo = () => {
                         {/* 스터디 신청 현황 */}
                         <div className={style.boxTitle}>
                             <span className={style.highlight}>
-                                <img className={style.icons} src="../Assets/applicantIcon.png" alt="" />
+                                <img className={style.icons} src="https://tatibucket.s3.ap-northeast-2.amazonaws.com/2e03a320-473a-4196-b0c4-f490ea248f9a_applicantIcon.png" alt="" />
                                 가입 신청 현황
                             </span>
                         </div>
