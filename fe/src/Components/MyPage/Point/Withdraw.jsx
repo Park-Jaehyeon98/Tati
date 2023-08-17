@@ -99,7 +99,7 @@ export default function Withdraw() {
       <p className={style.point}>현재 포인트 <span className={style.currentPoint}>{formattedTotalPoint}</span></p>
       <p className={style.point}>
         인출 포인트
-        <input  className={style.rechargeAmount} type="text" value={Amount} onChange={handleChange} />
+        <input  className={style.rechargeAmount} type="text" readOnly value={Amount} onChange={handleChange} />
         <button  className={style.btn} onClick={handleRecharge}>+</button>
         <button  className={style.btn} onClick={handleDecrease}>-</button>
       </p>
