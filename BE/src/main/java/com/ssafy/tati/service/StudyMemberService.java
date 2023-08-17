@@ -70,6 +70,8 @@ public class StudyMemberService {
             Integer maxMemberId= 0;
 
             for(StudyMember searchStudyMember : studyMemberList){
+                if(searchStudyMember.getMember().getMemberId()==study.getStudyHost()) continue;
+
                 if(maxScore < searchStudyMember.getMember().getTotalScore()) {
                     maxScore = searchStudyMember.getMember().getTotalScore();
                     maxMemberId = searchStudyMember.getMember().getMemberId();
