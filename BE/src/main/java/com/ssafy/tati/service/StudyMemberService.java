@@ -62,49 +62,57 @@ public class StudyMemberService {
         study.setTotalPenalty(studyMember.getStudy().getTotalPenalty() +
                 studyMember.getStudyMemberPenalty());
 
-        //열정지수 > 가입 날짜
-        List<StudyMember> studyMemberList = study.getStudyMemberList();
+        if(study.getStudyMemberList().size()==1) {
+            Point point = new Point(0, "", LocalDateTime.now(), cur_point,
+                    ("'" +studyMember.getStudy().getStudyName() + "' 탈퇴 보증금"), member);
+            pointService.save(point);
 
-        if(study.getStudyHost()== memberId) {
-            Integer maxScore= 0;
-            Integer maxMemberId= 0;
+            studyRepository.deleteById(studyId);
+        }
 
-            for(StudyMember searchStudyMember : studyMemberList){
-                if(searchStudyMember.getMember().getMemberId()==study.getStudyHost()) continue;
+        else {
+            List<StudyMember> studyMemberList = study.getStudyMemberList();
 
-                if(maxScore < searchStudyMember.getMember().getTotalScore()) {
-                    maxScore = searchStudyMember.getMember().getTotalScore();
-                    maxMemberId = searchStudyMember.getMember().getMemberId();
-                }
+            if(study.getStudyHost()== memberId) {
+                Integer maxScore= 0;
+                Integer maxMemberId= 0;
 
-                else if(maxScore == searchStudyMember.getMember().getTotalScore()) {
-                    LocalDate date1 = studyMemberRepository.findById(maxMemberId).get().getStudyJoinDate();
-                    LocalDate date2 = searchStudyMember.getStudyJoinDate();
+                for(StudyMember searchStudyMember : studyMemberList){
+                    if(searchStudyMember.getMember().getMemberId()==study.getStudyHost()) continue;
 
-                    if(date1.isAfter(date2)) {
+                    if(maxScore < searchStudyMember.getMember().getTotalScore()) {
                         maxScore = searchStudyMember.getMember().getTotalScore();
                         maxMemberId = searchStudyMember.getMember().getMemberId();
                     }
+
+                    else if(maxScore == searchStudyMember.getMember().getTotalScore()) {
+                        LocalDate date1 = studyMemberRepository.findById(maxMemberId).get().getStudyJoinDate();
+                        LocalDate date2 = searchStudyMember.getStudyJoinDate();
+
+                        if(date1.isAfter(date2)) {
+                            maxScore = searchStudyMember.getMember().getTotalScore();
+                            maxMemberId = searchStudyMember.getMember().getMemberId();
+                        }
+                    }
                 }
+
+                study.setStudyHost(maxMemberId);
             }
 
-            if(maxMemberId==0) studyRepository.deleteById(studyId);
-            else study.setStudyHost(maxMemberId);
-        }
+            Point point = new Point(0, "", LocalDateTime.now(), cur_point,
+                    ("'" +studyMember.getStudy().getStudyName() + "' 탈퇴 보증금"), member);
+            pointService.save(point);
 
-        Point point = new Point(0, "", LocalDateTime.now(), cur_point,
-                ("'" +studyMember.getStudy().getStudyName() + "' 탈퇴 보증금"), member);
-        pointService.save(point);
+            List<Attendance> attendanceList = attendanceRepository.findByStudyMemberId(studyMember.getStudyMemberId());
 
-        List<Attendance> attendanceList = attendanceRepository.findByStudyMemberId(studyMember.getStudyMemberId());
-
-        if(study.getStudyMemberList().size()==1) studyRepository.deleteById(studyId);
-        else {
-            for(Attendance attendance : attendanceList){
-                attendance.setStudyMember(null);
+            if(study.getStudyMemberList().size()==1) studyRepository.deleteById(studyId);
+            else {
+                for(Attendance attendance : attendanceList){
+                    attendance.setStudyMember(null);
+                }
+                study.getStudyMemberList().remove(studyMember);
+                studyMemberRepository.deleteById(studyMember.getStudyMemberId());
             }
-            study.getStudyMemberList().remove(studyMember);
-            studyMemberRepository.deleteById(studyMember.getStudyMemberId());
         }
 
         StudyMemberSecessionResDto studyMemberSecessionResDto
