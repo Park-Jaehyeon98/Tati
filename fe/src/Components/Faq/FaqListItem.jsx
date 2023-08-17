@@ -29,7 +29,7 @@ const FaqListItem = ({ boardItemInfo }) => {
 
         const subURL = `/faq/${boardId}`;
         console.log(subURL)
-        apiClient.delete(subURL+`/${user.memberId}`)
+        apiClient.delete(subURL + `/${user.memberId}`)
             .then((res) => {
                 console.log(res);
                 if (res.request.status === 200) {
@@ -46,9 +46,9 @@ const FaqListItem = ({ boardItemInfo }) => {
         <div>
             <hr />
             <div onClick={handleTitleClick}>
-                Q : 
+                Q :
                 <div className={style.title}>
-                {boardTitle}
+                    {boardTitle}
                 </div>
             </div>
             {!isShow ||
@@ -58,7 +58,7 @@ const FaqListItem = ({ boardItemInfo }) => {
                         <>
                             <Button onClick={handleModifyBtnClick}>수정버튼</Button>
                             <Button onClick={handleDeleteBtnClick}>삭제버튼</Button>
-                            
+
                         </>
                     }
 
