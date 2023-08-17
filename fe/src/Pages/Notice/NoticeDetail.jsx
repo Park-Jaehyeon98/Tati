@@ -78,7 +78,7 @@ const NoticeDetail = () => {
                 <br />
                 {memberNickname}
             </div>
-            <div className={style.contentBox}>
+            <div style={{ whiteSpace: 'pre-line' }} className={style.contentBox}>
                 {boardContent}
             </div>
             <div className={style.revDir}>

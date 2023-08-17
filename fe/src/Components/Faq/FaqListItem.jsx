@@ -52,7 +52,7 @@ const FaqListItem = ({ boardItemInfo }) => {
                 </div>
             </div>
             {!isShow ||
-                <div>
+                <div style={{ whiteSpace: 'pre-line' }}>
                     A : {boardContent}
                     {(memberNickName === "admin") ||
                         <>

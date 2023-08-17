@@ -80,7 +80,7 @@ const StudyDetailInfo = () => {
                         스터디 소개
                     </span>
                 </div>
-                <div className={style.box}>
+                <div style={{ whiteSpace: 'pre-line' }} className={style.box}>
                     {studyData.studyDescription}
                 </div>
 
@@ -101,7 +101,8 @@ const StudyDetailInfo = () => {
                                 <hr />
                                 <div>작성자 : {studyData.studyNoticeDetailResDto.memberNickname}</div>
                                 <div>작성일 : {studyData.studyNoticeDetailResDto.createdDate}</div>
-                                <div>내용 : {studyData.studyNoticeDetailResDto.boardContent}</div>
+                                <div style={{ whiteSpace: 'pre-line' }}> 내용 :
+                                    {studyData.studyNoticeDetailResDto.boardContent}</div>
                             </div>
                             : <h3>공지사항이 등록되지 않았습니다.</h3>
                     }
