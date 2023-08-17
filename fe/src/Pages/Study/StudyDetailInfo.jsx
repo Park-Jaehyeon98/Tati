@@ -108,28 +108,27 @@ const StudyDetailInfo = () => {
                     }
                 </div>
 
-                {studyData.studyMemberYn &&
-                    <>
-                        {/* 보증금 현황 */}
-                        <div className={style.boxTitle}>
-                            <span className={style.highlight}>
-                                <img className={style.icons} src="../Assets/coinIcon.png" alt="" />
-                                스터디 보증금
-                            </span>
-                        </div>
 
-                        <div className={`${style.box} ${style.penaltyBox}`}>
-                            {/* 보증금 현황은 멤버만 */}
-                            <div className={style.penaltyBoxItem}>
-                                <div className={style.penaltyBoxItemTitle}>전체 보증금</div>
-                                {studyData.totalDeposit} 원
-                            </div>
-                            <div className={style.penaltyBoxItem}>
-                                <div className={style.penaltyBoxItemTitle}>모인 벌금</div>
-                                {studyData.totalPenalty} 원
-                            </div>
-                        </div>
-                    </>}
+                {/* 보증금 현황 */}
+                <div className={style.boxTitle}>
+                    <span className={style.highlight}>
+                        <img className={style.icons} src="../Assets/coinIcon.png" alt="" />
+                        스터디 보증금
+                    </span>
+                    <span style={{ fontWeight: 400, marginLeft: 10 }}> : {studyData.totalDeposit / studyData.studyMemberResDtoList.length}원</span>
+                </div>
+
+                <div className={`${style.box} ${style.penaltyBox}`}>
+                    {/* 보증금 현황은 멤버만 */}
+                    <div className={style.penaltyBoxItem}>
+                        <div className={style.penaltyBoxItemTitle}>전체 보증금</div>
+                        {studyData.totalDeposit} 원
+                    </div>
+                    <div className={style.penaltyBoxItem}>
+                        <div className={style.penaltyBoxItemTitle}>모인 벌금</div>
+                        {studyData.totalPenalty} 원
+                    </div>
+                </div>
 
                 {/* 스터디 일정 */}
                 <div className={style.boxTitle}>
