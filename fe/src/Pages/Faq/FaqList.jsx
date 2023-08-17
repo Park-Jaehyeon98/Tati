@@ -25,6 +25,7 @@ export default function FaqList() {
     const faq = useSelector(state => state.user.faq);
 
     const [currentPage, setCurrentPage] = useState(0);
+    const [memberNickName, setmemberNickName] = useState('');
     // const firstPage = currentPage - (currentPage % 10) + 1
 
 

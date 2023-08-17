@@ -327,7 +327,7 @@ export default function Calendar() {
 
     console.log(info)
     const event = {
-      id:info.event.id,
+      studyId:info.event._def.extendedProps.studyId,
       title: info.event.title,
       data: formattedNow,
       startTime: formattedStartTime,
@@ -449,8 +449,8 @@ export default function Calendar() {
           <div className={style.confirmation_modal_content}>
             <div className={style.detail_title} 
             onClick={()=>{
-              if (eventColor.id) {
-                navigate(`/Study/${eventColor.id}`);
+              if (eventColor.studyId) {
+                navigate(`/Study/${eventColor.studyId}`);
               }
             }}>
               일정 - {eventColor.title}
