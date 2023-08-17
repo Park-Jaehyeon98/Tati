@@ -133,7 +133,7 @@ console.log(dummyData);
       <div className={style.content}>
 
         <div className={style.point_History_box}>
-            <div>
+            <div className={style.studyItem_box}>
               {joinStudy.length === 0 ? (
                 <p className={style.JoinStudy_text_box}>스터디에 가입해주세요!</p>
               ) : (
@@ -151,6 +151,7 @@ console.log(dummyData);
                   ))}
                 </div>
               )}
+            </div>
 
             <div className={style.pagination}>
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
@@ -164,7 +165,6 @@ console.log(dummyData);
                 </Button>
               ))}
             </div>
-        </div>
       </div>
 
       </div>
