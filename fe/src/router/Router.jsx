@@ -139,7 +139,7 @@ export default function Router() {
         <nav>
 
           <div className={style.logo}>
-            <NavLink to="/">타티
+            <NavLink to="/Study">타티
               <img className={style.logo_img} src="/Assets/logo.png" alt="" />
             </NavLink>
           </div>

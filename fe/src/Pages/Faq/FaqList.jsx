@@ -120,10 +120,10 @@ export default function FaqList() {
                     <div className={style.FaqListItem_A}>
                         A : {boardContent}
                         {!(memberNickName === "admin") ||
-                        <div className={style.FaqListItem_btn}>
-                            <Button onClick={() => handleModifyBtnClick(boardId)} className={style.FaqListItem_btn_update}>수정버튼</Button>
-                            <Button onClick={handleDeleteBtnClick}>삭제버튼</Button>
-                        </div>
+                            <div className={style.FaqListItem_btn}>
+                                <Button onClick={() => handleModifyBtnClick(boardId)} className={style.FaqListItem_btn_update}>수정버튼</Button>
+                                <Button onClick={handleDeleteBtnClick}>삭제버튼</Button>
+                            </div>
                         }
 
                     </div>
@@ -144,11 +144,11 @@ export default function FaqList() {
                 <div className={style.post_create_btn}>
                     {!(user.memberNickName === 'admin') ||
 
-                    <Button
-                        onClick={handleCreateBtnClick}
-                    >
-                        새 글 작성
-                    </Button>
+                        <Button
+                            onClick={handleCreateBtnClick}
+                        >
+                            새 글 작성
+                        </Button>
                     }
                 </div>
             </div>

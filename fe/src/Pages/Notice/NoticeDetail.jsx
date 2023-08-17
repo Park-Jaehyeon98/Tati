@@ -69,25 +69,27 @@ const NoticeDetail = () => {
     return (
         <div className={style.container}>
             <div className={style.titleBox}>
-                <div>{boardTitle}</div>
+                <div style={{ fontSize: 20, fontWeight: 600 }}>{boardTitle}</div>
                 <div className={style.day}>{createdDate}</div>
             </div>
             <hr />
             <div className={style.revDir}>
-                {memberNickname} || 조회수 :
-                {boardHit}
+                조회수 :{boardHit}
+                <br />
+                {memberNickname}
             </div>
             <div className={style.contentBox}>
                 {boardContent}
             </div>
             <div className={style.revDir}>
                 <div className={style.btn} onClick={handleListBtnClick}>목록 보기</div>
+
                 {!(user.memberNickName === 'admin') ||
-                <div className={style.btn} onClick={handleDeleteBtnClick}>삭제</div>
+                    <>
+                        <div className={style.btn} onClick={handleDeleteBtnClick}>삭제</div>
+                        <div className={style.btn} onClick={handleModifyBtnClick}>공지사항 수정</div>
+                    </>
                 }
-                {!(user.memberNickName === 'admin') || 
-                <div className={style.btn} onClick={handleModifyBtnClick}>공지사항 수정</div>
-                } 
             </div>
 
         </div>
