@@ -102,7 +102,8 @@ export default function RewardPoint() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentNotices = usePoint.slice(startIndex, endIndex);
-
+  // console.log("전체", currentNotices)
+  // console.log("필터", currentNotices.filter(notice => notice.content !== null))
 
   return (
     <div className={style.RewardPoint}>
