@@ -14,4 +14,7 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Integer>
     Optional<Attendance> findByStudyMemberAndInTimeBetween(StudyMember studyMember, LocalDateTime startOfDay, LocalDateTime endOfDay);
 
     List<Attendance> findAllByIsAttendedIsNull();
+
+    @Query("select a from Attendance as a where a.studyMember.studyMemberId = :studyMemberId")
+    List<Attendance> findByStudyMemberId(@Param("studyMemberId") Integer studyMemberId);
 }
