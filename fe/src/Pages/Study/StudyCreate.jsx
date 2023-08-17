@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import style from './StudyCreate.module.css';
-import { apiClient, tokenRefresh } from "../../api/apiClient";
+import { apiClient } from "../../api/apiClient";
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Tooltip from "../../Components/Common/Tooltip";
@@ -245,7 +245,6 @@ const StudyCreate = () => {
     // 생성 요청 제출
     const handleStudyCreateSubmit = () => {
         if (isValidSubmit()) {
-            tokenRefresh();
             const studyReqDto = {
                 ...studyData,
                 studySchedule: studySchedule,
