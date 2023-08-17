@@ -105,8 +105,8 @@ export default class ChatComponent extends Component {
                 className={
                   "message" +
                   (data.connectionId !== this.props.user.getConnectionId()
-                    ? " right"
-                    : " left")
+                    ? " left"
+                    : " right")
                 }
               >
                 {/* <canvas
