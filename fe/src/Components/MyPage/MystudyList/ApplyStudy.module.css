@@ -83,8 +83,9 @@
 
 .JoinStudy_text_day{
   margin: 0px;
-  font-size: 12px;
-  margin-left: 450px;
+  font-size: 15px;
+  margin-left: 350px;
+  color: gray;
 }
 
 .ApplyStudy_text{
@@ -142,5 +143,17 @@
 
 .studyName{
   margin-top: 0px;
-  /* font-size: 15px; */
+}
+
+.studyName:hover{
+  cursor: pointer;
+  color: #007BFF;
+}
+
+.studyName:hover + .custom-cursor {
+  display: block;
+}
+
+.studyItem_data{
+  display: flex;
 }

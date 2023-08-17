@@ -1,7 +1,7 @@
 /* 스타일 설정 */
 .RewardPoint {
   width: 800px;
-  height: 700px;
+  height: 900px;
   background-color: white;
   margin-left: 50px;
   box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
@@ -13,12 +13,13 @@
   margin: 0.2rem;
   padding: 0.3rem 0.5rem;
   background-color: #007BFF;
+  justify-content: center;
   color: white;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
   border-radius: 50px;
-  margin-top: 150px;
+  /* margin-top: 150px; */
 }
 
 .RewardPoint_box{
@@ -29,9 +30,7 @@
   display: flex;
   justify-content: center;
   gap: 10px; /* 버튼 사이에 간격을 주기 위해 gap 설정 */
-  position: absolute;
-  top: 1000px;
-  left: 40%;
+  margin-top: 100px;
   padding: 10px;
 }
 
@@ -46,4 +45,9 @@
 .usePoint_text{
   font-size: 30px;
   color: #c2c2c4;
+}
+
+.box{
+  width: 700px;
+  height: 560px;
 }

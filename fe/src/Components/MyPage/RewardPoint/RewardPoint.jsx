@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import style from "./RewardPoint.module.css"
 import axios from "axios";
+import { Button } from '@material-ui/core';
 
 export default function RewardPoint(){
 
@@ -32,14 +33,14 @@ export default function RewardPoint(){
   },[]);
 
   
-  const itemsPerPage = 8;
+  const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
 
   const NoticeItem = ({ attendanceDate, content, inTime, isAttended, outTime, score }) => {
 
-    // const studyName = content.slice(0, -3);
-    // const userContent = content.slice(-2)
-    // const textColor = (userContent === "결석" || userContent === "지각") ? "red" : "#007BFF";
+    const studyName = content.slice(0, -3);
+    const userContent = content.slice(-2)
+    const textColor = (userContent === "결석" || userContent === "지각") ? "red" : "#007BFF";
     
     
 
@@ -47,19 +48,52 @@ export default function RewardPoint(){
       <div>
         <div className={style.ApplyStudy_box}>
           <p className={style.ApplyStudy_text} > 
-            {/* <div style={{ color: textColor }}>
-            {studyName} 
-            {userContent}
-            </div> */}
+            <div style={{ color: textColor }}>
+            {studyName} | {userContent}
+            </div>
+            {/* {content} */}
 
-           <br /> 출석시간 - {inTime} / 퇴실시간 - {outTime}  / {score && '0점'} / {attendanceDate}</p>
+           <br /> 출석시간 - {inTime} | 퇴실시간 - {outTime} | {score && '0점'} | {attendanceDate}</p>
           <hr className={style.Study_hr}/>
         </div>
       </div>
     );
   };
 
-
+  //================================================================
+  function generateDummyData(count) {
+    const dummyData = [];
+  
+    for (let i = 1; i <= count; i++) {
+      const attendanceDate = `2023-08-${i < 10 ? '0' + i : i}`;
+      const content = `Study ${i} ${i % 2 === 0 ? '지각' : '결석'}`;
+      const inHour = i % 2 === 0 ? 9 : 8;
+      const inMinute = i % 2 === 0 ? 15 : 30;
+      const outHour = i % 2 === 0 ? 18 : 17;
+      const outMinute = i % 2 === 0 ? 30 : 45;
+      const score = 0;
+  
+      const inTime = `${inHour < 10 ? '0' + inHour : inHour}:${inMinute < 10 ? '0' + inMinute : inMinute}`;
+      const outTime = `${outHour < 10 ? '0' + outHour : outHour}:${outMinute < 10 ? '0' + outMinute : outMinute}`;
+  
+      dummyData.push({
+        attendanceDate,
+        content,
+        inTime,
+        isAttended: false,
+        outTime,
+        score,
+      });
+    }
+  
+    return dummyData;
+  }
+  
+  const count = 19;
+  const dummyData = generateDummyData(count);
+  
+  console.log(dummyData);
+  //================================================================
 
   const totalPages = Math.ceil(usePoint.length / itemsPerPage);
 
@@ -95,14 +129,14 @@ export default function RewardPoint(){
 
             <div className={style.pagination}>
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                <button
+                <Button
                   key={pageNum}
                   onClick={() => setCurrentPage(pageNum)}
                   disabled={currentPage === pageNum}
                   className={style.btn}
                 >
                   {pageNum}
-                </button>
+                </Button>
               ))}
             </div>
         </div>

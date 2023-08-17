@@ -169,7 +169,7 @@ export default function KakaoPay() {
     return (
       <div>
         <div className={style.PointItem_text}>
-          <p className={style.p_text}>{date} - {formattedTotalPoint} 
+          <p className={style.p_text}>{date} | {formattedTotalPoint} 
           {date == '포인트 적립' && ( // date가 '포인트 인출일'이 아닐 때에만 버튼 렌더링
               <button className={style.cancel_btn} onClick={handleCancel}>
                 결제취소

@@ -64,8 +64,13 @@ export default function JoinStudy(){
         <div className={style.NoticeItem_text}>
           <p className={style.JoinStudy_text}>
             <h2 onClick={handleItemClick} className={style.studyName}>{studyName}</h2>
+
+            <div className={style.studyItem_data}>
             <span role="img" aria-label="writing hand">👥 {studyMemberCount}/{totalMember} </span> 
-            <h6 className={style.JoinStudy_text_day}>{studyStartDate} ~ {studyEndDate}</h6></p>
+            <h6 className={style.JoinStudy_text_day}>{studyStartDate} ~ {studyEndDate}</h6>
+            </div>
+
+            </p>
           <hr className={style.Study_hr}/>
         </div>
       </div>

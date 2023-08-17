@@ -21,10 +21,9 @@ a:active {
 }
 
 .post_create_btn{
-  margin-left: 420px;
-  margin-top: 10px;
+  margin-left: 416px;
   background-color: gray;
-  height: 30px;
+  height: 40px;
   border-radius: 5px;
 }
 

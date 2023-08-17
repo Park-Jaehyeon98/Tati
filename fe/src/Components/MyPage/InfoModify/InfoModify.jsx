@@ -168,10 +168,12 @@ export default function InfoModify() {
     })
       .then((res) => {
         console.log(res)
+        alert("비밀번호 변경 완료");
         // navigate("/MyPage/MyPageInfoModify");
       })
       .catch((err) => {
         console.log(err)
+        // alert(err.);
       });
   }
   //

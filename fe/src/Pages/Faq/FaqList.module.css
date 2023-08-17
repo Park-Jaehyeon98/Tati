@@ -13,9 +13,6 @@
   border-radius: 5px;
 }
 
-.FAQ_content {
-}
-
 .FaqListItem_A{
   padding: 20px;
   padding-bottom: 0px;
@@ -27,4 +24,12 @@
 
 .Pagination{
   margin-left: 230px;
+}
+
+.title{
+  cursor: pointer;
+}
+
+.title:hover{
+  color: #3c90e2;
 }
