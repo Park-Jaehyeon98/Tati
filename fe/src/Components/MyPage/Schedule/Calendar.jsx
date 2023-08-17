@@ -6,7 +6,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from '@fullcalendar/react';
 import listPlugin from "@fullcalendar/list";
 import style from "./Calendar.module.css";
-
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 // 리덕스 저장
@@ -24,6 +24,7 @@ import { event } from "jquery";
 export default function Calendar() {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
 
   // 현재 년, 월
@@ -56,7 +57,7 @@ export default function Calendar() {
 
   useEffect(() => {
 
-    console.log(userTimeZone);
+    console.log(eventColor);
     loadData()
   }, []);
 
@@ -132,7 +133,9 @@ export default function Calendar() {
                 eventStart.setUTCHours(startHour - 9, startMinute); // 19시 0분
                 eventEnd.setUTCHours(endHour - 9, endMinute); // 20시 0분
 
+                console.log(schedule)
                 const studyEvent = {
+                  id:schedule.studyId,
                   title: schedule.studyName,
                   start: eventStart.toISOString(),
                   end: eventEnd.toISOString(),
@@ -322,8 +325,9 @@ export default function Calendar() {
     const endTimeDate = new Date(endTime);
     const formattedEndTime = endTimeDate.toLocaleTimeString("en-US", { timeStyle: "short" });
 
-    console.log(formattedNow)
+    console.log(info)
     const event = {
+      id:info.event.id,
       title: info.event.title,
       data: formattedNow,
       startTime: formattedStartTime,
@@ -442,7 +446,7 @@ export default function Calendar() {
       {showConfirmation && (
         <div className={style.confirmation_modal}>
           <div className={style.confirmation_modal_content}>
-            <div className={style.detail_title}>
+            <div className={style.detail_title} onClick={()=>navigate(`/Study/${eventColor.id}`)}>
               일정 - {eventColor.title}
             </div>
          

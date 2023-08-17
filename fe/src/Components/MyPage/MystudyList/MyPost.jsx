@@ -133,7 +133,7 @@ export default function MyPost(){
 
           <div className={style.point_History_box}>
           
-          <div>
+          <div className={style.studyItem_box}>
             {myPost.length === 0 ? (
               <p className={style.ApplyStudy_text_box}>글을 작성해주세요!</p>
               ):(
@@ -151,6 +151,7 @@ export default function MyPost(){
                 ))}
               </div>
               )}
+          </div>
               
               <div className={style.pagination}>
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
@@ -164,7 +165,6 @@ export default function MyPost(){
                   </Button>
                 ))}
               </div>
-          </div>
         </div>
 
         </div>

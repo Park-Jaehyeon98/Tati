@@ -62,16 +62,16 @@ export default function Withdraw() {
 
     console.log(process.env.REACT_APP_URL)
 
-    axios.post(`${process.env.REACT_APP_URL}/member/point/withdrawal`,{
-      headers:{
-        Authorization: "Bearer " + localStorage.getItem('accessToken'),
-        RefreshToken: localStorage.getItem('refreshtoken')
-      }
-    }, {
+    axios.post(`${process.env.REACT_APP_URL}/member/point/withdrawal`, {
       email:user.email,
       amount:rechargeAmount,
       pointDate:currentDate,
       pContent
+    },{
+      headers:{
+        Authorization: "Bearer " + localStorage.getItem('accessToken'),
+        RefreshToken: localStorage.getItem('refreshtoken')
+      }
     })
       .then((res) => {
         console.log('=================================')

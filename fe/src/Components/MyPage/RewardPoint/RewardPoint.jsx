@@ -38,12 +38,14 @@ export default function RewardPoint(){
 
   const NoticeItem = ({ attendanceDate, content, inTime, isAttended, outTime, score }) => {
 
-    const studyName = content.slice(0, -3);
-    const userContent = content.slice(-2)
+    const formattedScore = score !== 'null점' ? score : "0점";
+    const formattedContent = content !== null ? content : "스터디 없음";
+
+    const studyName = formattedContent.slice(0, -3);
+    const userContent = formattedContent.slice(-2)
     const textColor = (userContent === "결석" || userContent === "지각") ? "red" : "#007BFF";
     
     
-
     return (
       <div>
         <div className={style.ApplyStudy_box}>
@@ -51,9 +53,9 @@ export default function RewardPoint(){
             <div style={{ color: textColor }}>
             {studyName} | {userContent}
             </div>
-            {/* {content} */}
 
-           <br /> 출석시간 - {inTime} | 퇴실시간 - {outTime} | {score && '0점'} | {attendanceDate}</p>
+
+           <br /> 출석시간 - {inTime} | 퇴실시간 - {outTime} | {formattedScore} | {attendanceDate}</p>
           <hr className={style.Study_hr}/>
         </div>
       </div>
@@ -113,7 +115,9 @@ export default function RewardPoint(){
                 <p className={style.usePoint_text}>출결이 없습니다!</p>
               ) : (
           <div className={style.box}>
-              {currentNotices.map((notice, index) => (
+              {currentNotices
+              .filter(notice => notice.content !== null)
+              .map((notice, index) => (
                 <NoticeItem
                   key={index}
                   attendanceDate={notice.attendanceDate} // 날짜
