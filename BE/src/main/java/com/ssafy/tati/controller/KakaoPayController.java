@@ -35,11 +35,10 @@ public class KakaoPayController {
 
     @PostMapping("/success") //결제승인요청
     public ResponseEntity afterPayRequest(@RequestBody KaKaoApproveReqDto kaKaoApproveReqDto){
-        System.out.println("tid : " +kaKaoApproveReqDto.getTid());
         KakaoApproveResponse approveResponse = kakaoPayService.ApproveResponse(kaKaoApproveReqDto);
         Member member = memberService.findByEmail(kaKaoApproveReqDto.getEmail());
         Point point = new Point(0, approveResponse.getTid(), now(),
-                approveResponse.getAmount().getTotal(), "포인트 적립", member);
+                approveResponse.getAmount().getTotal(), "포인트 충전", member);
         pointService.save(point);
 
         return new ResponseEntity(approveResponse, HttpStatus.OK);
@@ -50,7 +49,7 @@ public class KakaoPayController {
         KakaoCancelResponse cancelResponse = kakaoPayService.kakaoPayCancel(kakaoCancleReqDto);
         Member member = memberService.findByEmail(kakaoCancleReqDto.getEmail());
         pointService.delete(new Point(0, cancelResponse.getTid(), now(),
-                cancelResponse.getCanceled_amount().getTotal(), "결제취소", member));
+                cancelResponse.getCanceled_amount().getTotal(), "결제 취소", member));
         return new ResponseEntity(cancelResponse, HttpStatus.OK);
     }
 }

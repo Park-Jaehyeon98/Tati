@@ -91,7 +91,7 @@ public class StudyMemberService {
         }
 
         Point point = new Point(0, "", LocalDateTime.now(), cur_point,
-                ("[보증금 반환] '" +studyMember.getStudy().getStudyName() + "' 탈퇴 보증금"), member);
+                ("'" +studyMember.getStudy().getStudyName() + "' 탈퇴 보증금"), member);
         pointService.save(point);
 
         List<Attendance> attendanceList = attendanceRepository.findByStudyMemberId(studyMember.getStudyMemberId());
