@@ -130,12 +130,12 @@ export default function Calendar() {
                 const endHour = parseInt(endTimeParts[0]);
                 const endMinute = parseInt(endTimeParts[1]);
 
-                eventStart.setUTCHours(startHour - 9, startMinute); // 19시 0분
-                eventEnd.setUTCHours(endHour - 9, endMinute); // 20시 0분
+                eventStart.setUTCHours(startHour-9, startMinute); 
+                eventEnd.setUTCHours(endHour-9, endMinute); 
 
                 console.log(schedule)
                 const studyEvent = {
-                  id:schedule.studyId,
+                  studyId:schedule.studyId,
                   title: schedule.studyName,
                   start: eventStart.toISOString(),
                   end: eventEnd.toISOString(),
@@ -371,12 +371,13 @@ export default function Calendar() {
     setCol(color)
   };
 
+  
 
   // 일정
   const events = [
 
+    ...userStudySchedule,
     ...userSchedule,
-    ...userStudySchedule
   ];
 
   const headerChangeContent = (e) => {
