@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
 import style from "./Login.module.css"
@@ -46,7 +46,6 @@ export default function Login() {
     });
   };
 
-
   // 로그인
   // 로그인 성공 후 토큰과 유저 pk값을 로컬에 저장
   const handleLogin = () => {
@@ -83,12 +82,14 @@ export default function Login() {
         RefreshToken()
 
         dispatch(setUser(user));
-        navigate("/MyPage");
+
+        navigate("/Study");
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err)
         alert(`${err.response.data}`)
-      });
+      })
   }
 
 

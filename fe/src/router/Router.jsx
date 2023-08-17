@@ -136,9 +136,13 @@ export default function Router() {
     <BrowserRouter>
       <div className={style.navBox}>
         <nav>
-          <div className={style.logo}>타티
-            <img className={style.logo_img} src="/Assets/logo.png" alt="" />
+
+          <div className={style.logo}>
+            <NavLink to="/">타티
+              <img className={style.logo_img} src="/Assets/logo.png" alt="" />
+            </NavLink>
           </div>
+
           <div className={style.navBoxIn}>
             {/* openvidu */}
             <NavLink className={({ isActive }) => style["nav-link"] + (isActive ? " " + style.click : "")} to="/Study">

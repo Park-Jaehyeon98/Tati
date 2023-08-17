@@ -97,6 +97,7 @@ h3 {
 
 /* 입력 필드 스타일 */
 .inputField input[type="text"],
+.inputField input[type="number"],
 .inputField textarea {
   padding: 12px;
   border: 1px solid #ccc;
@@ -257,4 +258,10 @@ h3 {
 /* 파일 입력 필드 숨김 */
 .customFileInput[type="file"] {
   display: none;
+}
+
+.container input[type="number"]::-webkit-outer-spin-button,
+.container input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

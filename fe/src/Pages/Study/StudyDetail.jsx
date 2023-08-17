@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import { apiClient, tokenRefresh } from '../../api/apiClient';
+import { apiClient } from '../../api/apiClient';
 import style from './StudyDetail.module.css'
 import { useSelector } from 'react-redux';
 
@@ -80,8 +80,8 @@ const StudyDetailTest = () => {
     }
     // 비밀 스터디 입장
     const handleEnterStudyBtnClick = () => {
-        console.log(passwordInput, typeof (passwordInput))
-        console.log(studyPassword, typeof (studyPassword))
+        // console.log(passwordInput, typeof (passwordInput))
+        // console.log(studyPassword, typeof (studyPassword))
         if (Number(passwordInput) === studyPassword) {
             setStudyData((prev) => { return { ...prev, isConfirmed: true } })
         } else {
@@ -102,30 +102,6 @@ const StudyDetailTest = () => {
         navigate(viewTypeURL[e.target.value])
     }
 
-
-    // 처음 렌더링시 스터디 상세정보를 받아옴
-    useEffect(() => {
-        if (!user) {
-            alert('로그인이 필요합니다')
-            navigate('/Login')
-        } else {
-            tokenRefresh()
-            apiClient.get(`study/${studyId}/${user.memberId}`)
-                .then(res => {
-                    // console.log(res.data);
-                    console.log(res.data)
-                    setStudyData(() => { return { ...res.data, isConfirmed: res.data.disclosure ? res.data.disclosure : res.data.studyMemberYn } });
-                })
-                .catch((err) => {
-                    console.log(err.data);
-                })
-                .finally(() => {
-                    setLoadingError(() => { return false })
-                })
-        };
-    }, [studyId, refresh]);
-
-
     const {
         categoryId,
         studyName,
@@ -141,6 +117,31 @@ const StudyDetailTest = () => {
         studyPassword,
         isConfirmed
     } = studyData
+
+
+    // 처음 렌더링시 스터디 상세정보를 받아옴
+    useEffect(() => {
+        if (!user) {
+            alert('로그인이 필요합니다')
+            navigate('/Login')
+        } else {
+            apiClient.get(`study/${studyId}/${user.memberId}`)
+                .then(res => {
+                    // console.log(res.data);
+                    // console.log(res.data)
+                    setStudyData(() => { return { ...res.data, isConfirmed: res.data.disclosure ? res.data.disclosure : res.data.studyMemberYn } });
+                })
+                .catch((err) => {
+                    console.log(err.data);
+                })
+                .finally(() => {
+                    setLoadingError(() => { return false })
+                })
+        };
+    }, [studyId, refresh]);
+
+
+
 
     // 스터디 수정으로 이동
     const handleModifyBtnClick = () => {
@@ -285,7 +286,12 @@ const StudyDetailTest = () => {
 
                                         <div>
                                             {/* 가입안했을 경우 */}
-                                            {studyData.studyMemberYn || <button className={`${style.smallBtn} ${style.isSelected}`} onClick={handleApplyBtnClick}>가입 신청</button>}
+
+                                            {(!studyData.studyMemberYn) && (
+                                                studyData.applicantList.filter(({ memberId }) => memberId === user.memberId).length === 0 ?
+                                                    <button className={`${style.smallBtn} ${style.isSelected}`} onClick={handleApplyBtnClick}>가입 신청</button> :
+                                                    <button className={`${style.smallBtn} ${style.isSelected}`}>가입 신청 중</button>
+                                            )}
 
                                             {/* 방장의 경우 */}
                                             {user && user.memberNickName === studyHost &&

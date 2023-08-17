@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import style from './StudyCreate.module.css';
-import { apiClient, tokenRefresh } from "../../api/apiClient";
+import { apiClient } from "../../api/apiClient";
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Tooltip from "../../Components/Common/Tooltip";
@@ -245,7 +245,6 @@ const StudyCreate = () => {
     // 생성 요청 제출
     const handleStudyCreateSubmit = () => {
         if (isValidSubmit()) {
-            tokenRefresh();
             const studyReqDto = {
                 ...studyData,
                 studySchedule: studySchedule,
@@ -260,10 +259,10 @@ const StudyCreate = () => {
             formData.append('studyReqDto', new Blob([JSON.stringify(studyReqDto)], {
                 type: "application/json"
             }))
-            for (const [key, value] of formData.entries()) {
-                console.log(key, typeof value);
-            }
-            console.log(studyReqDto)
+            // for (const [key, value] of formData.entries()) {
+            //     console.log(key, typeof value);
+            // }
+            // console.log(studyReqDto)
 
 
             apiClient.post('study/create',
@@ -330,7 +329,13 @@ const StudyCreate = () => {
                         <div className={`${style.inputField} ${style.disclosureContainer}`}>
                             <div className={style.disclosure}>패스워드</div>
                             <Tooltip message={'비밀번호를 숫자로 입력해주세요.'}>
-                                <input style={{ width: 660 }} type="number" name="studyPassword" value={studyPassword} onChange={handleChange} />
+                                <input
+                                    style={{ width: 660 }}
+                                    type="number"
+                                    name="studyPassword"
+                                    value={studyPassword}
+                                    onChange={handleChange}
+                                    onWheel={(e) => e.target.blur()} />
                             </Tooltip>
                         </div>
                     }
@@ -474,7 +479,7 @@ const StudyCreate = () => {
                 <div className={`${style.memberContainer} ${style.disclosureContainer} ${style.disclosure}`}>
                     <div>스터디 보증금</div>
                     <Tooltip message={`스터디 보증금은 벌금 3회분의 금액입니다. 
-                    \n 스터디 가입 시 타티에서 보증금만큼 포인트를 차감하고,
+                    \n 스터디 가입 시 보증금만큼 회원님의 포인트를 차감하고,
                     \n 스터디가 종료되면 벌금 정산 후 돌려드릴거에요.
                     \n 1500원 ~ 60000원 사이의 3의 배수 금액으로 설정해주세요.`}>
                         <input
@@ -483,6 +488,7 @@ const StudyCreate = () => {
                             value={studyDeposit}
                             onChange={handleChange}
                             onKeyDown={handleStudyCreateEnter}
+                            onWheel={(e) => e.target.blur()}
                         />
                     </Tooltip>
                 </div>
