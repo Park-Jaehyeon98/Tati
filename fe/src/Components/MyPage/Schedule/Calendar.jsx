@@ -446,7 +446,12 @@ export default function Calendar() {
       {showConfirmation && (
         <div className={style.confirmation_modal}>
           <div className={style.confirmation_modal_content}>
-            <div className={style.detail_title} onClick={()=>navigate(`/Study/${eventColor.id}`)}>
+            <div className={style.detail_title} 
+            onClick={()=>{
+              if (eventColor.id) {
+                navigate(`/Study/${eventColor.id}`);
+              }
+            }}>
               일정 - {eventColor.title}
             </div>
          
