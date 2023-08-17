@@ -76,7 +76,7 @@ export default function FaqList() {
     // faq리스트 아이템===========================================================
     const FaqListItem = ({ boardId, boardContent, boardTitle }) => {
 
-        const memberNickName = "관리자"
+        // const memberNickName = "관리자"
 
         const [isShow, setIsShow] = useState(false);
 
@@ -119,7 +119,7 @@ export default function FaqList() {
                 {!isShow ||
                     <div className={style.FaqListItem_A}>
                         A : {boardContent}
-                        {!(memberNickName === "admin") ||
+                        {!user || !(user.memberNickName === "admin") ||
                             <div className={style.FaqListItem_btn}>
                                 <Button onClick={() => handleModifyBtnClick(boardId)} className={style.FaqListItem_btn_update}>수정버튼</Button>
                                 <Button onClick={handleDeleteBtnClick}>삭제버튼</Button>
@@ -142,7 +142,7 @@ export default function FaqList() {
             <div className={style.FAQ_header}>
                 <h3>자주하는 질문</h3>
                 <div className={style.post_create_btn}>
-                    {!(user.memberNickName === 'admin') ||
+                    {!user || !(user.memberNickName === 'admin') ||
 
                         <Button
                             onClick={handleCreateBtnClick}
