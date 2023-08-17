@@ -87,7 +87,9 @@ public class StudyMemberService {
                     }
                 }
             }
-            study.setStudyHost(maxMemberId);
+
+            if(maxMemberId==0) studyRepository.deleteById(studyId);
+            else study.setStudyHost(maxMemberId);
         }
 
         Point point = new Point(0, "", LocalDateTime.now(), cur_point,
