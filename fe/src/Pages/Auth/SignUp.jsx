@@ -258,7 +258,7 @@ export default function SignUp() {
           비밀번호확인
           <input
             className={style.input_password_check}
-            type="text"
+            type="password"
             name="password2"
             placeholder="패스워드를 확인합니다."
             value={formData.password2}

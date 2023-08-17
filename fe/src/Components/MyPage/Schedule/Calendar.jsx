@@ -458,7 +458,7 @@ export default function Calendar() {
          
               {eventColor.extendedProps.content.content !== undefined && eventColor.extendedProps.content.content !== null && (
                 <div>
-                  내용 - {eventColor.extendedProps.content.content}
+                  내용 - <div style={{ whiteSpace: 'pre-line' }}>{eventColor.extendedProps.content.content}</div>
                 </div>
               )}
       
