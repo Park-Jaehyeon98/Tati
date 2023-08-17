@@ -117,7 +117,7 @@ export default function ApplyStudy(){
 
           <div className={style.point_History_box}>
           
-          <div>
+          <div className={style.studyItem_box}>
           {applyStudy.length === 0 ? (
                 <p className={style.ApplyStudy_text_box}>스터디를 신청해주세요!</p>
               ) : (
@@ -133,6 +133,7 @@ export default function ApplyStudy(){
                   ))}
                 </div>
               )}
+              </div>
 
               <div className={style.pagination}>
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
@@ -146,7 +147,6 @@ export default function ApplyStudy(){
                   </Button>
                 ))}
               </div>
-          </div>
         </div>
 
         </div>

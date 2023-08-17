@@ -62,16 +62,16 @@ export default function Withdraw() {
 
     console.log(process.env.REACT_APP_URL)
 
-    axios.post(`${process.env.REACT_APP_URL}/member/point/withdrawal`,{
-      headers:{
-        Authorization: "Bearer " + localStorage.getItem('accessToken'),
-        RefreshToken: localStorage.getItem('refreshtoken')
-      }
-    }, {
+    axios.post(`${process.env.REACT_APP_URL}/member/point/withdrawal`, {
       email:user.email,
       amount:rechargeAmount,
       pointDate:currentDate,
       pContent
+    },{
+      headers:{
+        Authorization: "Bearer " + localStorage.getItem('accessToken'),
+        RefreshToken: localStorage.getItem('refreshtoken')
+      }
     })
       .then((res) => {
         console.log('=================================')
@@ -99,7 +99,7 @@ export default function Withdraw() {
       <p className={style.point}>현재 포인트 <span className={style.currentPoint}>{formattedTotalPoint}</span></p>
       <p className={style.point}>
         인출 포인트
-        <input  className={style.rechargeAmount} type="text" value={Amount} onChange={handleChange} />
+        <input  className={style.rechargeAmount} type="text" readOnly value={Amount} onChange={handleChange} />
         <button  className={style.btn} onClick={handleRecharge}>+</button>
         <button  className={style.btn} onClick={handleDecrease}>-</button>
       </p>

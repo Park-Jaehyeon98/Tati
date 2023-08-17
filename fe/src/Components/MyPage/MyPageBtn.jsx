@@ -34,7 +34,7 @@ export default function MyPageBtn(){
                 </button>
 
                 <button className={style.btn} onClick={()=>handleBtnClick("/MyPage/MyPagePoint")}>
-                    마일리지
+                    포인트
                 </button>
 
                 <button className={style.btn} onClick={()=>handleButtonClick()}>

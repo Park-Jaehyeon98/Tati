@@ -62,10 +62,17 @@ const NoticeList = () => {
                 <div className={style.post_create_btn}>
                     {/* 새 공지 작성하기 관리자만 */}
                     {!(user.memberNickName === 'admin') ||
+<<<<<<< HEAD
                         <Button onClick={handleCreateBtnClick}>
                             새 글 작성
                         </Button>
                     }
+=======
+                    <Button onClick={handleCreateBtnClick}>
+                        새 글 작성
+                    </Button>
+                 } 
+>>>>>>> 74dee6cf6c90274221863bf4857b24d5d50785c3
                 </div>
             </div>
 

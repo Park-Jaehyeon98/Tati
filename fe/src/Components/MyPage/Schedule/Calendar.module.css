@@ -192,6 +192,7 @@
 
 .detail_title{
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .Calendar_nation{

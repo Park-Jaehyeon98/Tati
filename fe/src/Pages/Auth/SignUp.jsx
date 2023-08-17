@@ -6,6 +6,7 @@ import axios from "axios";
 import style from "./SignUp.module.css"
 //로딩중
 import Loading from "../../Loading/Loading";
+import Tooltip from "../../Components/Common/Tooltip";
 
 export default function SignUp() {
 
@@ -237,9 +238,9 @@ export default function SignUp() {
             onChange={handleChange}
           />
         </p>
-        
+
         <p className={style.signup_text}>
-          비밀번호
+          <span>비밀번호</span>
           <div className={style.tooltip}>
             <input
               className={style.input_password}
@@ -249,13 +250,9 @@ export default function SignUp() {
               value={formData.password}
               onChange={handleChange}
             />
-            {showPasswordHint && (
-              <div className={style.tooltip_content}>
-                <p>8~16자 이내, 특수문자X</p>
-              </div>
-            )}
           </div>
         </p>
+
 
         <p className={`${style.signup_text} ${style.password}`}>
           비밀번호확인
