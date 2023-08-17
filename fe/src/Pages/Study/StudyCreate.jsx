@@ -134,8 +134,7 @@ const StudyCreate = () => {
     // 일정 등록
     const handleAddScheduleBtnClick = () => {
         // 시작시간과 종료시간이 유효하지 않을때
-        if (studyStartHour > studyEndHour ||
-            (studyStartHour === studyEndHour && studyStartMin >= studyEndMin)) {
+        if (Number(studyStartHour) > Number(studyEndHour) || (studyStartHour === studyEndHour && Number(studyStartMin) >= Number(studyEndMin))) {
             alert('스터디 일정을 확인해주세요. 시작시간과 종료시간이 유효하지 않습니다.')
         }
         else {
@@ -406,7 +405,7 @@ const StudyCreate = () => {
 
                             시작시간
                             <select className={style.txt} name="studyStartHour" id="studyStartHour" onChange={handleStudyScheduleItemChange} value={studyStartHour}>
-                                {hourList.map((value) => {
+                                {hourList.map((value, index) => {
                                     return < option value={value}> {value}</option>
                                 })}
                             </select>
@@ -423,7 +422,7 @@ const StudyCreate = () => {
 
                             종료시간
                             <select className={style.txt} name="studyEndHour" id="studyEndHour" onChange={handleStudyScheduleItemChange} value={studyEndHour}>
-                                {hourList.map((value) => {
+                                {hourList.map((value, index) => {
                                     return < option value={value}> {value}</option>
                                 })}
                             </select>
