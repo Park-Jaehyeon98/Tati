@@ -101,6 +101,7 @@
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24);
 }
 .smallBtn:hover {
+  cursor: pointer;
   padding-bottom: 1%;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.22);
 }

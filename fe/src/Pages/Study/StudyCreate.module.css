@@ -247,6 +247,7 @@ h3 {
   height: 200px;
   overflow: hidden;
   display: flex;
+  border: 1px solid #ccc;
 }
 
 /* 스터디 일정 리스트 스타일 */

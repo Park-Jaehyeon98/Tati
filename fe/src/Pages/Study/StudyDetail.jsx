@@ -5,7 +5,6 @@ import style from './StudyDetail.module.css'
 import { useSelector } from 'react-redux';
 
 import Loading from '../../Loading/Loading';
-import VideoRoomComponent from './../Room/VideoRoomComponent';
 //로딩중
 
 
@@ -15,11 +14,9 @@ const StudyDetailTest = () => {
     const user = useSelector(state => state.user.user);
 
     const [loadingError, setLoadingError] = useState(true);
-    // 비밀 스터디 일때
+
     const [refresh, setRefresh] = useState(true);
     const [viewType, setViewType] = useState(0);
-
-    const [onVideo, setOnVideo] = useState(false);
 
     const [studyData, setStudyData] = useState({
         studyId: 0,
@@ -68,10 +65,30 @@ const StudyDetailTest = () => {
             createdDate: '',
             mainNoticeYn: true
         },
+        // 비밀스터디의 경우 비밀번호 입력여부 확인
         isConfirmed: false
     });
 
     const studyId = params.studyId;
+
+
+    // 비밀 스터디 일때
+    const [passwordInput, setPasswordInput] = useState('');
+    // 비밀번호 input change
+    const handlePasswordInputChange = (e) => {
+        setPasswordInput(() => { return e.target.value })
+    }
+    // 비밀 스터디 입장
+    const handleEnterStudyBtnClick = () => {
+        console.log(passwordInput, typeof (passwordInput))
+        console.log(studyPassword, typeof (studyPassword))
+        if (Number(passwordInput) === studyPassword) {
+            setStudyData((prev) => { return { ...prev, isConfirmed: true } })
+        } else {
+            alert('비밀번호가 틀렸습니다')
+        }
+    }
+
 
     // viewType
     const viewTypeURL = ['', 'Notice', 'Board']
@@ -85,9 +102,6 @@ const StudyDetailTest = () => {
         navigate(viewTypeURL[e.target.value])
     }
 
-    const handleOnVideoBtnClick = () => {
-        setOnVideo(() => { return true })
-    }
 
     // 처음 렌더링시 스터디 상세정보를 받아옴
     useEffect(() => {
@@ -131,6 +145,11 @@ const StudyDetailTest = () => {
     // 스터디 수정으로 이동
     const handleModifyBtnClick = () => {
         navigate('Modify')
+    }
+
+    // 스터디 목록으로 이동
+    const handleBackBtnClick = () => {
+        navigate('../')
     }
 
     // 신청버튼 클릭 시 
@@ -188,20 +207,6 @@ const StudyDetailTest = () => {
         return false
     }
 
-    const [passwordInput, setPasswordInput] = useState('');
-    // 패스워드 바뀔시
-    const handlePasswordInputChange = (e) => {
-        setPasswordInput(() => { return e.target.value })
-    }
-    const handleEnterStudyBtnClick = () => {
-        console.log(passwordInput, typeof (passwordInput))
-        console.log(studyPassword, typeof (studyPassword))
-        if (Number(passwordInput) === studyPassword) {
-            setStudyData((prev) => { return { ...prev, isConfirmed: true } })
-        } else {
-            alert('비밀번호가 틀렸습니다')
-        }
-    }
 
 
 
@@ -276,12 +281,7 @@ const StudyDetailTest = () => {
                                                 })}
                                             {/* 스터디 기간 */}
                                             <span>{studyData.studyStartDate} - {studyData.studyEndDate}</span>
-
-
-
                                         </div>
-
-
 
                                         <div>
                                             {/* 가입안했을 경우 */}
@@ -295,14 +295,24 @@ const StudyDetailTest = () => {
                                     </div>
                             }
                         </div>
-                        <div className={style.content}>
+                        <div style={{ postion: 'relative' }} className={style.content}>
+                            <button className={`${style.camBtn} ${style.backBtn}`} onClick={handleBackBtnClick}>
+                                <img style={{ marginRight: 3 }} className={style.icon} src="../Assets/backIcon.png" alt="" />
+                                <div>
+                                    스터디 목록 <br />
+                                    돌아가기
+                                </div>
+
+                            </button>
+
                             {
-                                isStudyTime() ?
+                                studyData.studyMemberYn && (isStudyTime() ?
                                     <button className={style.camBtn} onClick={handleEnterBtnClick}>스터디룸 입장</button> :
                                     <button className={`${style.camBtn} ${style.noStudytime}`}>스터디 시간이 아닙니다</button>
-                                // isStudyTime() ?
-                                //     <button className={style.camBtn} onClick={() => setOnVideo(true)}>스터디룸 입장</button> :
-                                //     <button className={`${style.camBtn} ${style.noStudytime}`}>스터디 시간이 아닙니다</button>
+                                    // isStudyTime() ?
+                                    //     <button className={style.camBtn} onClick={() => setOnVideo(true)}>스터디룸 입장</button> :
+                                    //     <button className={`${style.camBtn} ${style.noStudytime}`}>스터디 시간이 아닙니다</button>
+                                )
                             }
 
                         </div>
@@ -326,7 +336,7 @@ const StudyDetailTest = () => {
                         <h3 >스터디 비밀번호를 입력해주세요</h3>
                         <div className={style.inputField}>
                             <input type="number" value={passwordInput} onChange={handlePasswordInputChange} />
-                            <div className={style.inputBox}>
+                            <div className={style.buttons}>
                                 <button onClick={handleEnterStudyBtnClick}>
                                     입장
                                 </button>

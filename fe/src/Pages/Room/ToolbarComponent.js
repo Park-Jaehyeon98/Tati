@@ -137,24 +137,6 @@ export default class ToolbarComponent extends Component {
             <IconButton
               color="inherit"
               className="navButton"
-              onClick={this.switchCamera}
-            >
-              <SwitchVideoIcon />
-            </IconButton>
-            <IconButton
-              color="inherit"
-              className="navButton"
-              onClick={this.toggleFullscreen}
-            >
-              {localUser !== undefined && this.state.fullscreen ? (
-                <FullscreenExit />
-              ) : (
-                <Fullscreen />
-              )}
-            </IconButton>
-            <IconButton
-              color="secondary"
-              className="navButton"
               onClick={this.leaveSession}
               id="navLeaveButton"
             >

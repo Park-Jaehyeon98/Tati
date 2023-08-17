@@ -67,6 +67,7 @@
 }
 
 .btn:hover {
+  cursor: pointer;
   padding-bottom: 1%;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.25), 0 3px 3px rgba(0, 0, 0, 0.22);
 }
@@ -83,6 +84,7 @@
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24);
 }
 .smallBtn:hover {
+  cursor: pointer;
   height: 22 px;
   padding-bottom: 1%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.22);
@@ -100,6 +102,7 @@
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24);
 }
 .camBtn:hover {
+  cursor: pointer;
   padding-bottom: 1%;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.25), 0 3px 3px rgba(0, 0, 0, 0.22);
 }
@@ -158,4 +161,63 @@
   width: 1rem;
   height: 1rem;
   margin: auto;
+}
+
+.backBtn {
+  position: fixed;
+  z-index: 10;
+  top: 85%;
+  right: 5%;
+  background-color: #e8e9ea;
+  color: black;
+  padding: 15px;
+  font-size: 12px;
+  font-weight: 500;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.passwordContainer {
+  width: 700px;
+  height: 300px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24);
+  margin-bottom: 5%;
+}
+.inputField input {
+  margin: 50px;
+  padding: 12px;
+  width: 560px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+.container input[type="number"]::-webkit-outer-spin-button,
+.container input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.buttons {
+  display: flex;
+}
+
+.buttons button {
+  background-color: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+  color: #000;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 40%;
+  margin: auto;
+  height: 50px;
+}
+
+.buttons button:hover {
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.22);
 }

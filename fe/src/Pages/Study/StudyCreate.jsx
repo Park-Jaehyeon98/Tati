@@ -7,7 +7,7 @@ import style from './StudyCreate.module.css';
 import { apiClient, tokenRefresh } from "../../api/apiClient";
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
+import Tooltip from "../../Components/Common/Tooltip";
 
 const StudyCreate = () => {
     // date -> stirng 함수
@@ -134,8 +134,7 @@ const StudyCreate = () => {
     // 일정 등록
     const handleAddScheduleBtnClick = () => {
         // 시작시간과 종료시간이 유효하지 않을때
-        if (studyStartHour > studyEndHour ||
-            (studyStartHour === studyEndHour && studyStartMin >= studyEndMin)) {
+        if (Number(studyStartHour) > Number(studyEndHour) || (studyStartHour === studyEndHour && Number(studyStartMin) >= Number(studyEndMin))) {
             alert('스터디 일정을 확인해주세요. 시작시간과 종료시간이 유효하지 않습니다.')
         }
         else {
@@ -286,6 +285,12 @@ const StudyCreate = () => {
                 })
         }
     }
+    // 보증금 인풋에서 엔터 시 생성요청
+    const handleStudyCreateEnter = (e) => {
+        if (e.key === 'Enter') {
+            handleStudyCreateSubmit();
+        }
+    }
 
 
     return (
@@ -301,8 +306,10 @@ const StudyCreate = () => {
                     <div className={style.disclosure}>카테고리</div>
                     <div className={style.buttons}>
                         {categoryIdArray.map((categoryIdItem, index) =>
+
                             <button key={categoryIdItem} className={index === categoryId - 1 ? style.selected : style.noSelected}
                                 onClick={() => handleCategoryIdClick(index)}>{categoryIdItem}</button>
+
                         )}
                     </div>
                 </div>
@@ -311,7 +318,9 @@ const StudyCreate = () => {
                     <div className={style.disclosure}>공개 여부</div>
                     <div className={style.buttons}>
                         <button name="disclosure" className={disclosure ? style.selected : style.noSelected} value={disclosure} onClick={() => handleIsDisclosureClick(true)}> 공개</button>
-                        <button name="disclosure" className={!disclosure ? style.selected : style.noSelected} value={disclosure} onClick={() => handleIsDisclosureClick(false)}> 비공개</button>
+                        <Tooltip message={`비공개 스터디로 설정할 경우 비밀번호를 입력해야 스터디에 참여할 수 있어요.`}>
+                            <button name="disclosure" className={!disclosure ? style.selected : style.noSelected} value={disclosure} onClick={() => handleIsDisclosureClick(false)}> 비공개</button>
+                        </Tooltip>
                     </div>
 
                 </div>
@@ -320,7 +329,9 @@ const StudyCreate = () => {
                     {!disclosure &&
                         <div className={`${style.inputField} ${style.disclosureContainer}`}>
                             <div className={style.disclosure}>패스워드</div>
-                            <input style={{ width: 660 }} type="number" name="studyPassword" value={studyPassword} onChange={handleChange} />
+                            <Tooltip message={'비밀번호를 숫자로 입력해주세요.'}>
+                                <input style={{ width: 660 }} type="number" name="studyPassword" value={studyPassword} onChange={handleChange} />
+                            </Tooltip>
                         </div>
                     }
                 </div>
@@ -328,12 +339,17 @@ const StudyCreate = () => {
 
                 <div className={`${style.inputField} ${style.disclosureContainer}`}>
                     <div className={style.disclosure}>스터디 이름</div>
-                    <input style={{ width: 660 }} type="text" name="studyName" value={studyName} onChange={handleChange} />
+                    <Tooltip message={'스터디 이름은 공백을 제외한 3 ~ 20자로 설정해주세요.'}>
+                        <input style={{ width: 660 }} type="text" name="studyName" value={studyName} onChange={handleChange} />
+                    </Tooltip>
                 </div>
 
                 <div className={`${style.inputField} ${style.disclosureContainer}`}>
                     <div className={style.disclosure}>스터디 설명</div>
-                    <textarea style={{ width: 660, height: 100 }} type="text" name="studyDescription" value={studyDescription} onChange={handleChange} />
+                    <Tooltip message={`스터디 설명을 적어주세요. 
+                    \n스터디 메인화면에서 스터디를 소개할 때 사용됩니다.`}>
+                        <textarea style={{ width: 660, height: 100 }} type="text" name="studyDescription" value={studyDescription} onChange={handleChange} />
+                    </Tooltip>
                 </div>
 
                 <div className={style.disclosureContainer}>
@@ -364,7 +380,9 @@ const StudyCreate = () => {
 
                 <div className={`${style.memberContainer} ${style.disclosureContainer}`}>
                     <div className={style.disclosure}>스터디 멤버수</div>
-                    <input type="number" name="totalMember" value={totalMember} max={8} onChange={handleChange} />
+                    <Tooltip message={'스터디 인원은 2인 ~ 8인으로 구성됩니다.'}>
+                        <input type="number" name="totalMember" value={totalMember} max={8} onChange={handleChange} />
+                    </Tooltip>
                 </div>
 
 
@@ -373,47 +391,51 @@ const StudyCreate = () => {
                 </div>
 
                 <div className={`${style.scheduleContainer} ${style.disclosureContainer}`}>
-                    <div>
-                        요일
-                        <select className={style.txtDay} name="studyDay" id="studyDay" onChange={handleStudyScheduleItemChange} value={studyDay}>
-                            {dayList.map((value, index) => {
-                                return < option key={index} value={index}> {value}</option>
-                            })}
-                        </select>
-                        <div></div>
+                    <Tooltip message={`스터디를 진행할 요일과 시간을 선택하고 추가해주세요. 
+                    \n 스터디 기간 동안 설정한 요일과 시간에 매주 진행되고,
+                    \n 변경할 수 없으니 신중히 정하는 것을 추천드립니다.`}>
+                        <div>
+                            요일
+                            <select className={style.txtDay} name="studyDay" id="studyDay" onChange={handleStudyScheduleItemChange} value={studyDay}>
+                                {dayList.map((value, index) => {
+                                    return < option key={index} value={index}> {value}</option>
+                                })}
+                            </select>
+                            <div></div>
 
-                        시작시간
-                        <select className={style.txt} name="studyStartHour" id="studyStartHour" onChange={handleStudyScheduleItemChange} value={studyStartHour}>
-                            {hourList.map((value) => {
-                                return < option value={value}> {value}</option>
-                            })}
-                        </select>
-                        시
+                            시작시간
+                            <select className={style.txt} name="studyStartHour" id="studyStartHour" onChange={handleStudyScheduleItemChange} value={studyStartHour}>
+                                {hourList.map((value, index) => {
+                                    return < option value={value}> {value}</option>
+                                })}
+                            </select>
+                            시
 
-                        <select className={style.txt} name="studyStartMin" id="studyStartMin" onChange={handleStudyScheduleItemChange} value={studyStartMin}>
-                            {minList.map((value, index) => {
-                                return < option value={value}> {value}</option>
-                            })}
-                        </select>
-                        분
+                            <select className={style.txt} name="studyStartMin" id="studyStartMin" onChange={handleStudyScheduleItemChange} value={studyStartMin}>
+                                {minList.map((value, index) => {
+                                    return < option value={value}> {value}</option>
+                                })}
+                            </select>
+                            분
 
-                        <div></div>
+                            <div></div>
 
-                        종료시간
-                        <select className={style.txt} name="studyEndHour" id="studyEndHour" onChange={handleStudyScheduleItemChange} value={studyEndHour}>
-                            {hourList.map((value) => {
-                                return < option value={value}> {value}</option>
-                            })}
-                        </select>
-                        시
+                            종료시간
+                            <select className={style.txt} name="studyEndHour" id="studyEndHour" onChange={handleStudyScheduleItemChange} value={studyEndHour}>
+                                {hourList.map((value, index) => {
+                                    return < option value={value}> {value}</option>
+                                })}
+                            </select>
+                            시
 
-                        <select className={style.txt} name="studyEndMin" id="studyEndMin" onChange={handleStudyScheduleItemChange} value={studyEndMin}>
-                            {minList.map((value, index) => {
-                                return < option value={value}> {value}</option>
-                            })}
-                        </select>
-                        분
-                    </div>
+                            <select className={style.txt} name="studyEndMin" id="studyEndMin" onChange={handleStudyScheduleItemChange} value={studyEndMin}>
+                                {minList.map((value, index) => {
+                                    return < option value={value}> {value}</option>
+                                })}
+                            </select>
+                            분
+                        </div>
+                    </Tooltip>
 
                     <div className={style.scheduleButtonContainer}>
                         <button onClick={handleAddScheduleBtnClick}>일정 추가</button>
@@ -451,7 +473,18 @@ const StudyCreate = () => {
 
                 <div className={`${style.memberContainer} ${style.disclosureContainer} ${style.disclosure}`}>
                     <div>스터디 보증금</div>
-                    <input type="number" name="studyDeposit" value={studyDeposit} onChange={handleChange} />
+                    <Tooltip message={`스터디 보증금은 벌금 3회분의 금액입니다. 
+                    \n 스터디 가입 시 타티에서 보증금만큼 포인트를 차감하고,
+                    \n 스터디가 종료되면 벌금 정산 후 돌려드릴거에요.
+                    \n 1500원 ~ 60000원 사이의 3의 배수 금액으로 설정해주세요.`}>
+                        <input
+                            type="number"
+                            name="studyDeposit"
+                            value={studyDeposit}
+                            onChange={handleChange}
+                            onKeyDown={handleStudyCreateEnter}
+                        />
+                    </Tooltip>
                 </div>
 
 
