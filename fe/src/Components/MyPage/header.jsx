@@ -51,7 +51,7 @@ export default function MyPageHeader(){
                 ) : (
                 <img
                     className={style.img_box}
-                    src="https://images.squarespace-cdn.com/content/v1/5dec67bb31a1cc1ad78a7326/1602465793445-KHV22QMIC8VPDWDFKE4D/0b2f8a51314ab1ebe0505aee843a33b1.jpg"
+                    src="/Assets/memberIcon.png"
                     alt=""
                 />
                 )}
