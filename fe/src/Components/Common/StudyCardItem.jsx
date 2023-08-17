@@ -26,7 +26,7 @@ const StudyCardItem = ({ studyDetail, user }) => {
             <Link to={user ? `/Study/${studyId}` : `/Login`} onClick={() => { !user && alert('로그인이 필요합니다') }}>
                 {disclosure === false &&
                     <div className={style.lock_icon_div}>
-                        <img src="Assets/disclosureIcon.png" className={style.lock_icon} alt="" />
+                        <img src="https://tatibucket.s3.ap-northeast-2.amazonaws.com/00ae3cad-c6c5-4d4e-a24b-9c30a24628f3_lock.png" className={style.lock_icon} alt="" />
                     </div>}
                 <div className={style.study_img_div}>
                     <img src={studyImg} className={style.study_img} alt="" />
@@ -36,7 +36,7 @@ const StudyCardItem = ({ studyDetail, user }) => {
 
                     {currentMember} / {totalMember}
 
-                    <img src="Assets/member.png" className={style.member_icon} alt="" />
+                    <img src="https://tatibucket.s3.ap-northeast-2.amazonaws.com/bc95851a-c496-4141-9685-33165a29c009_memberIcon.png" className={style.member_icon} alt="" />
                 </div>
             </Link>
         </div>
