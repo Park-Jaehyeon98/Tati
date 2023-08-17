@@ -1,5 +1,5 @@
 import axios from "axios";
-import jwt_decode from "jwt-decode";
+// import jwt_decode from "jwt-decode";
 
 export const apiClient = axios.create({
   baseURL: "https://i9b305.p.ssafy.io/api",
