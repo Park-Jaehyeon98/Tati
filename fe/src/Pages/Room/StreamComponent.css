@@ -2,7 +2,7 @@
   background: rgba(58, 64, 74, 0.651);
   padding: 5px !important;
   position: absolute;
-  top: 10%;
+  top: 0%;
   /* right: px; */
   z-index: 999;
   color: #ffffff;
@@ -36,11 +36,10 @@
 }
 
 .streamComponent {
-  max-width: 400px;
-  height: 240px;
-  /* height: 90%;
-  width: 90%; */
-  margin: 5%;
+  /* max-width: 600px; */
+  /* height: 400px; */
+  height: 100%;
+  width: 100%;
 }
 
 video {
@@ -48,8 +47,8 @@ video {
   object-fit: cover;
   width: 100%;
   height: 100%;
-  max-width: 400px;
-  max-height: 240px;
+  /* max-width: 400px; */
+  /* max-height: 240px; */
   color: #ffffff;
   margin: 0;
   padding: 0;
@@ -90,6 +89,8 @@ video {
 }
 /* Contains the video element, used to fix video letter-boxing */
 .OT_widget-container {
+  top: 2.5%;
+  left: 5%;
   width: 90%;
   height: 90%;
   position: absolute;
