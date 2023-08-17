@@ -23,7 +23,13 @@ export default function RewardPoint() {
       .then((res) => {
         console.log('상벌---------------------------------')
         console.log(res.data)
-        setUsePoint(res.data)
+        const sortedData = res.data.sort((a, b) => {
+          const dateA = new Date(a.attendanceDate);
+          const dateB = new Date(b.attendanceDate);
+          return dateB - dateA; // 최신 순으로 정렬
+        });
+  
+        setUsePoint(sortedData);
         console.log('상벌---------------------------------')
       })
       .catch((err) => {
@@ -82,7 +88,7 @@ export default function RewardPoint() {
   };
 
 
-  const totalPages = Math.ceil(usePoint.length / itemsPerPage);
+  const totalPages = Math.ceil(usePoint.length / itemsPerPage) +1;
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -127,7 +133,7 @@ export default function RewardPoint() {
               <span style={{ 
                 marginTop: '3px',
             }}>
-              {currentPage}
+              {currentPage}/{totalPages}
               </span>
               <Button className="pagination_button" onClick={handleNextClick} disabled={currentPage === totalPages}>
                 다음

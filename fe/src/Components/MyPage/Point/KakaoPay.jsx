@@ -108,15 +108,21 @@ export default function KakaoPay() {
     })
       .then((res) => {
         console.log('---------------------------------------------')
-        console.log(res.data)
-        const sortedPoint = res.data.sort((a, b) => {
-          // Sort by pointDate in descending order
-          const dateA = new Date(a.pointDate);
-          const dateB = new Date(b.pointDate);
-          return dateB - dateA;
+        console.log(res.data);
+        const adjustedData = res.data.map(item => {
+          const originalDate = new Date(item.pointDate);
+
+          const adjustedDate = new Date(originalDate.getTime() + 9 * 60 * 60 * 1000);
+
+          return { ...item, pointDate: adjustedDate };
         });
+
+        const sortedPoint = adjustedData.sort((a, b) => {
+          return b.pointDate - a.pointDate;
+        });
+
         setPoint(sortedPoint);
-        console.log('회원포인트내역')
+        console.log('회원포인트내역');
         console.log('---------------------------------------------')
       })
       .catch((err) => {
@@ -127,7 +133,7 @@ export default function KakaoPay() {
   //pointpointpointpointpointpointpointpointpointpointpointpointpoint
 
 
-  const itemsPerPage = 7;
+  const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
 
@@ -165,21 +171,56 @@ export default function KakaoPay() {
     };
 
     const formattedTotalPoint = point.toLocaleString();
+    
+    
+    const endsWithIndicators = /인출$|취소$|신청$/;
+    const isRedText = date && endsWithIndicators.test(date);
+
+
+    let formattedPointWithSign = formattedTotalPoint;
+    if (isRedText && !formattedTotalPoint.startsWith('-')) {
+      formattedPointWithSign = `-${formattedTotalPoint}`;
+    } else if (!isRedText && !formattedTotalPoint.startsWith('+')) {
+      formattedPointWithSign = `+${formattedTotalPoint}`;
+    }
+
+    const textColorStyle = {
+      color: isRedText ? 'red' : '#007BFF'
+    }
+
+    const formattedPointDate = new Date(day).toLocaleString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZone: 'Asia/Seoul', // Assuming you want to display time in KST
+    });
 
     return (
-      <div>
-        <div className={style.PointItem_text}>
-          <p className={style.p_text}>{date} | {formattedTotalPoint} P
-          {date === '포인트 충전' && ( 
+      <div className={style.PointItem_box}>
+      <div className={style.PointItem_text}>
+        <p className={style.p_text}>
+          <span className={style.date_left}>
+            {date}
+            {date === '포인트 충전' && (
               <button className={style.cancel_btn} onClick={handleCancel}>
                 결제취소
               </button>
             )}
-            <h6 className={style.text}>{day.slice(0, 10)} {day.slice(11, 16)}
-            </h6></p>
-          <hr />
-        </div>
+          </span>
+          <span className={style.pointDate} style={textColorStyle}>
+            <span className={style.sign}>{formattedPointWithSign.startsWith('-') ? '-' : '+'}</span>
+            {formattedPointWithSign.substring(1)}
+          </span>
+          <span className={style.day_right}>
+            {/* {day.slice(0, 10)} {day.slice(11, 16)} */}
+            {formattedPointDate}
+          </span>
+        </p>
+        <hr />
       </div>
+    </div>
     );
   };
 
@@ -214,6 +255,13 @@ export default function KakaoPay() {
     <div className={style.point_History_box}>
       <br />
 
+      <div className={style.point_header}>
+        <p className={style.point_header_text}>내용</p>
+        <p className={style.point_header_text1}>포인트</p>
+        <p className={style.point_header_text2}>일자</p>
+      </div>
+        <hr className={style.separator} />
+
       <div>
         {point.length === 0 ? (
           <p className={style.point_text}>마일리지 내역이 없습니다!</p>
@@ -239,7 +287,7 @@ export default function KakaoPay() {
           <span style={{ 
             marginTop: '3px',
          }}>
-          {currentPage}
+          {currentPage}/{totalPages}
           </span>
           <Button className="pagination_button" onClick={handleNextClick} disabled={currentPage === totalPages}>
             다음

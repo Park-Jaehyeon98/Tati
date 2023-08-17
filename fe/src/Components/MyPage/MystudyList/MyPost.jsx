@@ -99,7 +99,7 @@ export default function MyPost(){
     }
   };
 
-  const totalPages = Math.ceil(myPost.length / itemsPerPage);
+  const totalPages = Math.ceil(myPost.length / itemsPerPage) + 1;
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -146,7 +146,7 @@ export default function MyPost(){
                 <span style={{ 
                   marginTop: '3px',
               }}>
-                {currentPage}
+                {currentPage}/{totalPages}
                 </span>
                 <Button className="pagination_button" onClick={handleNextClick} disabled={currentPage === totalPages}>
                   다음

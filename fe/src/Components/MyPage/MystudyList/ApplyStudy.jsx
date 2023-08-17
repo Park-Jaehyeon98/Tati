@@ -161,7 +161,7 @@ export default function ApplyStudy(){
                 <span style={{ 
                   marginTop: '3px',
               }}>
-                {currentPage}
+                {currentPage}/{totalPages}
                 </span>
                 <Button className="pagination_button" onClick={handleNextClick} disabled={currentPage === totalPages}>
                   다음
