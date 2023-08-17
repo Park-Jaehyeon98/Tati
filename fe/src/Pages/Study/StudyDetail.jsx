@@ -242,7 +242,7 @@ const StudyDetailTest = () => {
                                 {/* 비밀글 일 경우 옆에 자물쇠 이미지 */}
                                 {
                                     studyData.disclosure ||
-                                    <img className={style.icon} src="../Assets/disclosureIcon.png" alt="비공개" />
+                                    <img className={style.icon} src="https://tatibucket.s3.ap-northeast-2.amazonaws.com/00ae3cad-c6c5-4d4e-a24b-9c30a24628f3_lock.png" alt="비공개" />
                                 }
                                 {/* 카테고리 */}
                                 <div className={style.smallBox}>{categoryList[studyData.categoryId]}</div>
@@ -306,7 +306,7 @@ const StudyDetailTest = () => {
                         </div>
                         <div style={{ postion: 'relative' }} className={style.content}>
                             <button className={`${style.camBtn} ${style.backBtn}`} onClick={handleBackBtnClick}>
-                                <img style={{ marginRight: 3 }} className={style.icon} src="../Assets/backIcon.png" alt="" />
+                                <img style={{ marginRight: 3 }} className={style.icon} src="https://tatibucket.s3.ap-northeast-2.amazonaws.com/8f10a47d-a080-450d-9333-538d2f5ec789_backIcon.png" alt="" />
                                 <div>
                                     스터디 목록 <br />
                                     돌아가기
