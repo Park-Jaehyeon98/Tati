@@ -25,6 +25,7 @@ export default function FaqList() {
     const faq = useSelector(state => state.user.faq);
 
     const [currentPage, setCurrentPage] = useState(0);
+    const [memberNickName, setmemberNickName] = useState('');
     // const firstPage = currentPage - (currentPage % 10) + 1
 
 
@@ -119,7 +120,7 @@ export default function FaqList() {
                 {!isShow ||
                     <div className={style.FaqListItem_A}>
                         A : {boardContent}
-                        {!(memberNickName === "admin") ||
+                        {!user || !(memberNickName === "admin") ||
                             <div className={style.FaqListItem_btn}>
                                 <Button onClick={() => handleModifyBtnClick(boardId)} className={style.FaqListItem_btn_update}>수정버튼</Button>
                                 <Button onClick={handleDeleteBtnClick}>삭제버튼</Button>
@@ -142,7 +143,7 @@ export default function FaqList() {
             <div className={style.FAQ_header}>
                 <h3>자주하는 질문</h3>
                 <div className={style.post_create_btn}>
-                    {!(user.memberNickName === 'admin') ||
+                    {!user || !(user.memberNickName === 'admin') ||
 
                         <Button
                             onClick={handleCreateBtnClick}
