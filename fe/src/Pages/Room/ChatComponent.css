@@ -82,7 +82,7 @@
   position: relative;
   margin-top: 5px;
   border-radius: 5px;
-  padding: 8px;
+  padding: 12px;
   color: #000000;
   width: auto;
   max-width: 80%;
@@ -111,7 +111,7 @@ span.triangle {
 }
 
 .message.left .msg-detail {
-  padding-left: 65px;
+  padding-left: 10px;
 }
 
 .message.left .user-img {
