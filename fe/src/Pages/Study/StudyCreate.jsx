@@ -259,10 +259,10 @@ const StudyCreate = () => {
             formData.append('studyReqDto', new Blob([JSON.stringify(studyReqDto)], {
                 type: "application/json"
             }))
-            for (const [key, value] of formData.entries()) {
-                console.log(key, typeof value);
-            }
-            console.log(studyReqDto)
+            // for (const [key, value] of formData.entries()) {
+            //     console.log(key, typeof value);
+            // }
+            // console.log(studyReqDto)
 
 
             apiClient.post('study/create',
@@ -473,7 +473,7 @@ const StudyCreate = () => {
                 <div className={`${style.memberContainer} ${style.disclosureContainer} ${style.disclosure}`}>
                     <div>스터디 보증금</div>
                     <Tooltip message={`스터디 보증금은 벌금 3회분의 금액입니다. 
-                    \n 스터디 가입 시 타티에서 보증금만큼 포인트를 차감하고,
+                    \n 스터디 가입 시 보증금만큼 회원님의 포인트를 차감하고,
                     \n 스터디가 종료되면 벌금 정산 후 돌려드릴거에요.
                     \n 1500원 ~ 60000원 사이의 3의 배수 금액으로 설정해주세요.`}>
                         <input
