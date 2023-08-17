@@ -9,13 +9,16 @@ export default function MyPageHeader(){
 
     // 리덕스 펄시스트 유저정보를 불러옴
     const user = useSelector(state => state.user.user);
-
+    const [totalScore, setTotalScore] = useState(user.totalScore)
     const [graphWidth, setGraphWidth] = useState(0);
 
     useEffect(() => {
 
         // 열정지수 bar
         // setGraphWidth(60 * 4.5);
+        if (user.totalScore<0){
+            setTotalScore(0)
+        }
         setGraphWidth(user.totalScore * 4.5);
     }, []);
 
@@ -25,7 +28,7 @@ export default function MyPageHeader(){
         <div className={style.user_score}>
             <div>
                 <div className={style.totalScore_box}>
-                <h2 className={style.totalScore_h1}>열정지수 {user.totalScore}%</h2>
+                <h2 className={style.totalScore_h1}>열정지수 {totalScore}%</h2>
                 </div>
                 <div className={style.graph_container}>
                     <div className={style.bar} style={{ width: `${graphWidth}px` }}></div>
