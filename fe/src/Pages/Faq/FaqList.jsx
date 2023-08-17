@@ -39,7 +39,7 @@ export default function FaqList() {
 
     const call = () => {
         apiClient.get(subURL, {
-            params: { page: currentPage, size: 12 }
+            params: { page: currentPage, size: 9 }
         }
         )
             .then((res) => {
@@ -119,12 +119,12 @@ export default function FaqList() {
                 {!isShow ||
                     <div className={style.FaqListItem_A}>
                         A : {boardContent}
-                        {/* {!(memberNickName === "admin") || */}
+                        {!(memberNickName === "admin") ||
                         <div className={style.FaqListItem_btn}>
                             <Button onClick={() => handleModifyBtnClick(boardId)} className={style.FaqListItem_btn_update}>수정버튼</Button>
                             <Button onClick={handleDeleteBtnClick}>삭제버튼</Button>
                         </div>
-                        {/* }  */}
+                        }
 
                     </div>
                 }
@@ -142,14 +142,14 @@ export default function FaqList() {
             <div className={style.FAQ_header}>
                 <h3>자주하는 질문</h3>
                 <div className={style.post_create_btn}>
-                    {/* {!(user.memberNickName === 'admin') || */}
+                    {!(user.memberNickName === 'admin') ||
 
                     <Button
                         onClick={handleCreateBtnClick}
                     >
                         새 글 작성
                     </Button>
-                    {/* } */}
+                    }
                 </div>
             </div>
 

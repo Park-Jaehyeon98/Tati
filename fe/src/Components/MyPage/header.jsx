@@ -43,7 +43,7 @@ export default function MyPageHeader(){
                         {/* <img src="./Assets/Mileage.png" className={style.Mileage_img}/> */}
                         <img src="https://cdn-icons-png.flaticon.com/128/2953/2953423.png" className={style.Mileage_img}/>
                         <p className={style.totalPoint_p}>{formattedTotalPoint}</p>
-                        <div className={style.M}>M</div>
+                        <div className={style.M}>P</div>
                     </div>
                 </div>
                 {user.img ? (

@@ -6,7 +6,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from '@fullcalendar/react';
 import listPlugin from "@fullcalendar/list";
 import style from "./Calendar.module.css";
-
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 // 리덕스 저장
@@ -24,6 +24,7 @@ import { event } from "jquery";
 export default function Calendar() {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
 
   // 현재 년, 월
@@ -442,7 +443,7 @@ export default function Calendar() {
       {showConfirmation && (
         <div className={style.confirmation_modal}>
           <div className={style.confirmation_modal_content}>
-            <div className={style.detail_title}>
+            <div className={style.detail_title} onClick={()=>navigate(`/Study/${eventColor.studyId}`)}>
               일정 - {eventColor.title}
             </div>
          
