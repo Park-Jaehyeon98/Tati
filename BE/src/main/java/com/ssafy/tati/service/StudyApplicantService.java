@@ -59,8 +59,10 @@ public class StudyApplicantService {
         LocalDate localDate = LocalDate.now();
         studyMemberRepository.save(new StudyMember(localDate, studyApplicant.getStudy(), studyApplicant.getMember()));
 
-        studyApplicant.getStudy().setTotalDeposit(studyApplicant.getStudy().getStudyDeposit());
-        StudyApplicantApprovalMemberResDto studyApplicantApprovalMemberResDto = new StudyApplicantApprovalMemberResDto(studyId, memberId, studyApplicant.getMember().getMemberNickName());
+        studyApplicant.getStudy().setTotalDeposit(studyApplicant.getStudy().getStudyDeposit()
+                + studyApplicant.getStudy().getTotalDeposit());
+        StudyApplicantApprovalMemberResDto studyApplicantApprovalMemberResDto
+                = new StudyApplicantApprovalMemberResDto(studyId, memberId, studyApplicant.getMember().getMemberNickName());
 
         studyApplicantRepository.deleteById(studyApplicant.getStudyApplicantId());
 
