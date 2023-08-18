@@ -95,6 +95,25 @@ export default function ApplyStudy(){
   const dummyData = generateDummyData(numberOfEntries);
   //==========================================================================
 
+  //====================================================
+  const handlePageClick = (pageNum) => {
+    if (pageNum >= 1 && pageNum <= totalPages) {
+      setCurrentPage(pageNum);
+    }
+  };
+
+  const handleNextClick = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevClick = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   const totalPages = Math.ceil(applyStudy.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -136,16 +155,17 @@ export default function ApplyStudy(){
               </div>
 
               <div className={style.pagination}>
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                  <Button
-                    key={pageNum}
-                    onClick={() => setCurrentPage(pageNum)}
-                    disabled={currentPage === pageNum}
-                    className={style.btn}
-                  >
-                    {pageNum}
-                  </Button>
-                ))}
+              <Button className="pagination_button" onClick={handlePrevClick} disabled={currentPage === 1}>
+                  이전
+                </Button>
+                <span style={{ 
+                  marginTop: '3px',
+              }}>
+                {currentPage}/{totalPages}
+                </span>
+                <Button className="pagination_button" onClick={handleNextClick} disabled={currentPage === totalPages}>
+                  다음
+                </Button>
               </div>
         </div>
 

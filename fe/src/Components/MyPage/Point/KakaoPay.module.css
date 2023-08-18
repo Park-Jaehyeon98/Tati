@@ -1,5 +1,6 @@
 .point_History_box{
   padding-right: 120px;
+  width: 600px;
 }
 .box{
   width: 630px;
@@ -19,6 +20,7 @@
     /* position: absolute;  */
     top: 1120px;
     left: 650px;
+    margin-left: 10px;
     padding: 10px;
 }
 
@@ -40,13 +42,13 @@
   }
 
 .cancel_btn{
-    height: 25px;
-    font-size: 10px;
+    height: 20px;
+    font-size: 13px;
+    font-weight: bold;
     margin-left: 20px;
     background-color: #f37979;
     border: 1px;
-    border-radius: 10px;
-    font-weight: bold;
+    border-radius: 5px;
 }
 .PointItem_text{
     white-space: nowrap;
@@ -68,4 +70,65 @@
 
 .PointItem_box{
   height: 30px;
+}
+
+/* 포인트 내역 */
+
+.point_header {
+  display: flex;
+  align-items: center;
+}
+
+.point_header_text {
+  margin: 0; 
+  margin-left: 20px;
+}
+.point_header_text1 {
+  margin: 0; 
+  margin-left: 310px;
+}
+.point_header_text2 {
+  margin: 0; 
+  margin-left: 120px;
+}
+
+.separator {
+  width: 670px;
+  flex: 1; /* 수평선도 공간을 동일하게 분할합니다. */
+  margin: 0; /* 기본 마진 제거 */
+  border: none; /* 기본 테두리 제거 */
+  border-top: 1px solid #ccc; /* 원하는 스타일의 수평선 추가 */
+  /* margin-left: 10px; */
+}
+
+
+/* fgsfdgjkhlj;k'l */
+.PointItem_box{
+  width: 600px;
+  margin: 7px;
+  /* border: 1px solid; */
+}
+
+.PointItem_text {
+  display: flex;
+  align-items: center;
+}
+
+.p_text {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.date_left {
+  width: 330px;
+  margin-right: auto; /* 좌측 끝에 배치 */
+}
+
+.pointDate{
+  width: 100px;
+}
+
+.day_right {
+  margin-left: auto; /* 오른쪽 끝에 배치 */
 }

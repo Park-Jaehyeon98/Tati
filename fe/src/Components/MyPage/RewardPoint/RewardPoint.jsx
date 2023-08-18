@@ -23,7 +23,13 @@ export default function RewardPoint() {
       .then((res) => {
         console.log('상벌---------------------------------')
         console.log(res.data)
-        setUsePoint(res.data)
+        const sortedData = res.data.sort((a, b) => {
+          const dateA = new Date(a.attendanceDate);
+          const dateB = new Date(b.attendanceDate);
+          return dateB - dateA; // 최신 순으로 정렬
+        });
+  
+        setUsePoint(sortedData);
         console.log('상벌---------------------------------')
       })
       .catch((err) => {
@@ -62,42 +68,27 @@ export default function RewardPoint() {
     );
   };
 
-  //================================================================
-  function generateDummyData(count) {
-    const dummyData = [];
 
-    for (let i = 1; i <= count; i++) {
-      const attendanceDate = `2023-08-${i < 10 ? '0' + i : i}`;
-      const content = `Study ${i} ${i % 2 === 0 ? '지각' : '결석'}`;
-      const inHour = i % 2 === 0 ? 9 : 8;
-      const inMinute = i % 2 === 0 ? 15 : 30;
-      const outHour = i % 2 === 0 ? 18 : 17;
-      const outMinute = i % 2 === 0 ? 30 : 45;
-      const score = 0;
-
-      const inTime = `${inHour < 10 ? '0' + inHour : inHour}:${inMinute < 10 ? '0' + inMinute : inMinute}`;
-      const outTime = `${outHour < 10 ? '0' + outHour : outHour}:${outMinute < 10 ? '0' + outMinute : outMinute}`;
-
-      dummyData.push({
-        attendanceDate,
-        content,
-        inTime,
-        isAttended: false,
-        outTime,
-        score,
-      });
+  const handlePageClick = (pageNum) => {
+    if (pageNum >= 1 && pageNum <= totalPages) {
+      setCurrentPage(pageNum);
     }
+  };
 
-    return dummyData;
-  }
+  const handleNextClick = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
-  const count = 19;
-  const dummyData = generateDummyData(count);
+  const handlePrevClick = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
-  console.log(dummyData);
-  //================================================================
 
-  const totalPages = Math.ceil(usePoint.length / itemsPerPage);
+  const totalPages = Math.ceil(usePoint.length / itemsPerPage) +1;
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -112,6 +103,8 @@ export default function RewardPoint() {
         <h1>입, 퇴실 내역</h1>
 
         <div>
+          <div className={style.usePoint_box}>
+
           {usePoint.length === 0 ? (
             <p className={style.usePoint_text}>출결이 없습니다!</p>
           ) : (
@@ -131,18 +124,20 @@ export default function RewardPoint() {
                 ))}
             </div>
           )}
+          </div>
 
           <div className={style.pagination}>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-              <Button
-                key={pageNum}
-                onClick={() => setCurrentPage(pageNum)}
-                disabled={currentPage === pageNum}
-                className={style.btn}
-              >
-                {pageNum}
+            <Button className="pagination_button" onClick={handlePrevClick} disabled={currentPage === 1}>
+                이전
               </Button>
-            ))}
+              <span style={{ 
+                marginTop: '3px',
+            }}>
+              {currentPage}/{totalPages}
+              </span>
+              <Button className="pagination_button" onClick={handleNextClick} disabled={currentPage === totalPages}>
+                다음
+              </Button>
           </div>
         </div>
       </div>

@@ -78,42 +78,28 @@ export default function MyPost(){
     );
   };
   
+
   //=============================================================================
-  // 더미 데이터 생성 함수
-  function generateDummyData(count) {
-    const dummyData = [];
-    const currentDate = new Date();
 
-    for (let i = 1; i <= count; i++) {
-      const studyId = Math.floor(Math.random() * 5) + 1; // 1에서 5 사이의 랜덤값
-      const boardId = i;
-      const boardTitle = `Board ${i}`;
-      const boardHit = Math.floor(Math.random() * 1000) + 50; // 50에서 1049 사이의 랜덤값
-      const boardCommentCount = Math.floor(Math.random() * 20); // 0에서 19 사이의 랜덤값
-      // const boardDate = new Date(currentDate.getTime() - Math.random() * 30 * 24 * 60 * 60 * 1000); // 현재 날짜를 기준으로 30일 이내에서 무작위로 생성
-
-      dummyData.push({
-        studyId,
-        boardId,
-        boardTitle,
-        boardHit,
-        boardCommentCount,
-        // boardDate,
-      });
+  const handlePageClick = (pageNum) => {
+    if (pageNum >= 1 && pageNum <= totalPages) {
+      setCurrentPage(pageNum);
     }
+  };
 
-    return dummyData;
-  }
+  const handleNextClick = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
-  // 더미 데이터 생성
-  const numberOfEntries = 10; // 생성할 더미 데이터 개수
-  const dummyData = generateDummyData(numberOfEntries);
+  const handlePrevClick = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
-  // 생성된 더미 데이터 출력
-  console.log(dummyData);
-  //=============================================================================
-
-  const totalPages = Math.ceil(myPost.length / itemsPerPage);
+  const totalPages = Math.ceil(myPost.length / itemsPerPage) + 1;
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -154,16 +140,17 @@ export default function MyPost(){
           </div>
               
               <div className={style.pagination}>
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                  <Button
-                    key={pageNum}
-                    onClick={() => setCurrentPage(pageNum)}
-                    disabled={currentPage === pageNum}
-                    className={style.btn}
-                  >
-                    {pageNum}
-                  </Button>
-                ))}
+                <Button className="pagination_button" onClick={handlePrevClick} disabled={currentPage === 1}>
+                  이전
+                </Button>
+                <span style={{ 
+                  marginTop: '3px',
+              }}>
+                {currentPage}/{totalPages}
+                </span>
+                <Button className="pagination_button" onClick={handleNextClick} disabled={currentPage === totalPages}>
+                  다음
+                </Button>
               </div>
         </div>
 

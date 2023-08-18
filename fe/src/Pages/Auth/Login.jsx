@@ -96,11 +96,14 @@ export default function Login() {
 
   return (
     <div className={style.Login_box}>
+      <div className={style.image_container}>
+
       <img
         className={style.login_img}
         src="./Assets/Login_img01.jpg"
         alt="Login background"
       />
+      </div>
 
       <div className={style.login}>
         <h1 className={style.login_title}>로그인</h1>

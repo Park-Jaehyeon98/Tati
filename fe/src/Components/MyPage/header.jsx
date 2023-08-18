@@ -19,7 +19,7 @@ export default function MyPageHeader(){
         if (user.totalScore<0){
             setTotalScore(0)
         }
-        setGraphWidth(user.totalScore * 4.5);
+        setGraphWidth(totalScore * 4.5);
     }, []);
 
     const formattedTotalPoint = user.totalPoint.toLocaleString();
