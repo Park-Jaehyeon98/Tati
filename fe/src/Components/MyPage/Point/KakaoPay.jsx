@@ -173,7 +173,7 @@ export default function KakaoPay() {
     const formattedTotalPoint = point.toLocaleString();
     
     
-    const endsWithIndicators = /인출$|취소$|신청$/;
+    const endsWithIndicators = /인출$|취소$|신청$|생성$/;
     const isRedText = date && endsWithIndicators.test(date);
 
 
