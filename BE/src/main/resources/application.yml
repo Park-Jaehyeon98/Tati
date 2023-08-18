@@ -1,0 +1,64 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/tati?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=utf8
+    username: tati
+    password: 1234
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ssafy9tati@gmail.com
+    password: tgbyftzeazurgxqb
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+  redis:
+    host: localhost
+    port: 6379
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+logging:
+  level:
+    org:
+      hibernate:
+        sql: debug
+        type:
+         descriptor:
+           sql: trace
+springdoc:
+  packages-to-scan: com.ssafy.tati.controller
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    path: /index.html
+    disable-swagger-default-url: true
+    display-request-duration: true
+    operations-sorter: alpha
+jwt:
+  secret-key: C7FpXJfbfI9UIkPeqdUh2fvATQItnPEoYYAV9tPGwSv82kacFc
+  access-token-expiration-minutes: 120
+  refresh-token-expiration-minutes: 420
+
+cloud:
+  aws:
+    s3:
+      bucket: tatibucket
+    credentials:
+      access-key: AKIAZ2FVWCGMVDQIMUON
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
