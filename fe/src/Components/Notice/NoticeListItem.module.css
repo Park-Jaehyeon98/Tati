@@ -1,0 +1,15 @@
+.NoticeListItem_box{
+  /* display: flex; */
+}
+
+.NoticeListItem_day{
+  font-size: 12px;
+}
+
+.title{
+  cursor: pointer;
+}
+
+.title:hover{
+  color: #3c90e2;
+}

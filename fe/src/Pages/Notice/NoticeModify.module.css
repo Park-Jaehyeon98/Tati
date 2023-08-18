@@ -1,0 +1,59 @@
+.FaqModify_box{
+  background-color: white;
+  height: 500px;
+  margin-top: 40px;
+  border-radius: 10px;
+  padding: 50px;
+}
+
+.FaqModify_title{
+  margin-top: 40px;
+  margin-bottom: 50px;
+  margin-left: 40px;
+  display: flex;
+}
+.FaqModify_title_name{
+  margin-right: 30px;
+  font-size: 20px;
+}
+.FaqModify_title_input{
+  height: 25px;
+  width: 250px;
+}
+
+.FaqModify_content_name{
+  margin-right: 30px;
+  font-size: 20px;
+  
+}
+
+.FaqModify_content_input{
+  height: 250px;
+  width: 250px;
+  border: 1px solid black;
+  resize: none;
+  font-size: 14px;
+}
+
+.FaqModify_btn {
+  /* margin-left: 370px; */
+  margin-right: 30px;
+  width: 70px;
+  height: 30px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.FaqModify_btn:hover {
+  background-color: #0056b3;
+  color: #f8f9fa;
+}
+
+.FaqModify_btns{
+  display: flex;
+  margin-left: 250px;
+}

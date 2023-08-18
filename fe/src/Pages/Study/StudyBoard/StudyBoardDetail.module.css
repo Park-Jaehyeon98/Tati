@@ -1,0 +1,82 @@
+.container {
+  margin: 10px;
+}
+
+/* .titleBox {
+  border: solid 1px black;
+  border-radius: 5px;
+} */
+
+.titleContent {
+  margin: 10px;
+  font-size: 32px;
+}
+
+.subBox {
+  display: grid;
+  grid-template-columns: 4fr 4fr 2fr;
+}
+
+.buttonBox {
+  display: flex;
+}
+
+.contentBox {
+  min-height: 300px;
+  background-color: white;
+  /* border: solid 1px black; */
+}
+
+.btn {
+  width: 120px;
+  height: 40px;
+  margin: 10px;
+  border: 10px;
+}
+
+.gray {
+  background-color: gray;
+}
+
+.blue {
+  background-color: #3396f4;
+}
+
+.commentContainer {
+  width: 100%;
+}
+
+.commentInputField input[type="text"] {
+  width: 97%;
+  padding: 1.5%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.commentItem {
+  min-height: 40px;
+  display: grid;
+  grid-template-columns: 3fr 18fr 3fr 0.5fr;
+  border: 0.5px solid #e8e9ea;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 3px;
+}
+
+.boardFileArea {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  margin-bottom: 20px;
+}
+
+.boardImg {
+  max-width: 300px;
+  max-height: 300px;
+  background-color: #fff;
+}
+
+.fileBox {
+  text-align: right;
+  height: 50px;
+}

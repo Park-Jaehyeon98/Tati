@@ -1,0 +1,29 @@
+.boardFrame {
+  height: 30px;
+  display: grid;
+  grid-template-columns: 2fr 7fr 3fr 3fr 3fr;
+}
+
+.cell {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.container {
+  margin: 10px;
+}
+
+.boardContent {
+  height: auto;
+}
+
+.pagenataion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.createBtnBox {
+  text-align: right;
+}

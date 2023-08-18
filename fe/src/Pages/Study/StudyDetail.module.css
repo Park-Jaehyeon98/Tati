@@ -1,0 +1,223 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.titleBox {
+  display: grid;
+  min-height: 11rem;
+  width: 100%;
+  grid-template-columns: 1fr 2fr 1fr;
+  /* border: 1px solid black; */
+  background-color: #e8e9ea;
+  border-radius: 10px;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+.mainView {
+  display: block;
+  margin: 3%;
+}
+
+.mainViewTitle {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-size: 32px;
+  margin-top: 3%;
+  margin-bottom: 4%;
+  align-items: center;
+}
+
+.mainViewBottom {
+  height: 30px;
+}
+
+.titleDescription {
+  font-size: 8px;
+}
+
+.btnBox {
+  display: grid;
+  min-height: 5%;
+  width: 90%;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  min-height: 40px;
+  width: 80%;
+  border-radius: 10px;
+  border: none;
+  background-color: gray;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24);
+}
+
+.btn:hover {
+  cursor: pointer;
+  padding-bottom: 1%;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.25), 0 3px 3px rgba(0, 0, 0, 0.22);
+}
+
+.smallBtn {
+  height: 20px;
+  width: 120px;
+  border-radius: 6px;
+  border: none;
+  background-color: white;
+  color: black;
+  font-size: 8px;
+  font-weight: 700;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24);
+}
+.smallBtn:hover {
+  cursor: pointer;
+  height: 22 px;
+  padding-bottom: 1%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.22);
+}
+
+.camBtn {
+  min-height: 60px;
+  width: 140px;
+  border-radius: 6px;
+  border: none;
+  background-color: #3396f4;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24);
+}
+.camBtn:hover {
+  cursor: pointer;
+  padding-bottom: 1%;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.25), 0 3px 3px rgba(0, 0, 0, 0.22);
+}
+.dDay {
+  height: 15px;
+  width: 40px;
+  margin: 2px;
+  font-size: 0.8rem;
+  color: white;
+  border-radius: 6px;
+  background-color: #3396f4;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.5%;
+  text-align: center;
+}
+
+.noStudytime {
+  font-size: 12px;
+  color: white;
+  background-color: gray;
+}
+
+.isSelected {
+  background-color: #3396f4;
+  color: white;
+}
+
+.content {
+  display: flex;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+}
+.smallBox {
+  height: 15px;
+  width: 40px;
+  margin: 2px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: white;
+  border-radius: 6px;
+  background-color: gray;
+  padding: 0.5%;
+  text-align: center;
+}
+
+.titleImg {
+  width: 120px;
+  height: 120px;
+  border-radius: 100%;
+  background-color: white;
+}
+
+.icon {
+  width: 1rem;
+  height: 1rem;
+  margin: auto;
+}
+
+.backBtn {
+  position: fixed;
+  z-index: 10;
+  top: 85%;
+  right: 5%;
+  background-color: #e8e9ea;
+  color: black;
+  padding: 15px;
+  font-size: 12px;
+  font-weight: 500;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.passwordContainer {
+  width: 700px;
+  height: 300px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24);
+  margin-bottom: 5%;
+}
+.inputField input {
+  margin: 50px;
+  padding: 12px;
+  width: 560px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+.container input[type="number"]::-webkit-outer-spin-button,
+.container input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.buttons {
+  display: flex;
+}
+
+.buttons button {
+  background-color: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+  color: #000;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 40%;
+  margin: auto;
+  height: 50px;
+}
+
+.buttons button:hover {
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.22);
+}

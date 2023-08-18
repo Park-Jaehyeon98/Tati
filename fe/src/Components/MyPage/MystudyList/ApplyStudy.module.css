@@ -1,0 +1,165 @@
+.point{
+  padding: 50px;
+  height: 900px;
+  padding-left: 100px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+}
+
+.point_nav_btn{
+  display: flex;
+  margin-left: 50px;
+  margin-bottom: 30px;
+}
+/* 선택된 버튼 */
+
+
+.nav_btn {
+  margin-right: 50px;
+  margin-bottom: 30px;
+  width: 150px;
+  height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 5px;
+  background-color: #f0f0f0; 
+  transition: background-color 0.3s, color 0.3s;
+}
+.nav_blue{
+  background-color: #007BFF;
+  color: white;
+}
+
+.nav_btn:hover {
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
+}
+
+
+.point_History_box{
+  width: 550px;
+  height: 700px;
+  /* border: 1px solid black; */
+}
+
+.box{
+  font-size: 11px;
+  font-weight: bold;
+  display: flex;
+  flex-wrap: wrap; /* 컨테이너 크기를 넘어가면 자동으로 다음 줄로 넘어감 */
+  gap: 10px; /* 요소들 사이의 간격을 조정 */
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* 버튼 사이에 간격을 주기 위해 gap 설정 */
+  /* position: absolute; */
+  /* top: 1390px; */
+  /* left: 40%; */
+  padding: 10px;
+}
+
+.cancel_btn{
+  height: 17px;
+  font-size: 10px;
+  margin-left: 310px;
+}
+
+
+.Study_hr{
+  width: 600px;
+}
+
+.JoinStudy_text{
+  margin: 0px;
+  font-size: 13px;
+}
+
+.MyPost_text_time{
+  margin: 0px;
+  margin-left: 530px;
+}
+
+.JoinStudy_text_day{
+  margin: 0px;
+  font-size: 15px;
+  margin-left: 350px;
+  color: gray;
+}
+
+.ApplyStudy_text{
+  margin: 0px;
+  margin-bottom: 18px;
+  margin-left: 5px;
+  font-size: 13px;
+}
+
+.MyPost_text{
+  margin: 0px;
+  margin-left: 5px;
+  font-size: 13px;
+}
+
+.JoinStudy_box{
+  width: 700px;
+  height: 800px;
+  background-color: white;
+  padding: 50px;
+  padding-left: 80px;
+}
+
+.NoticeItem_text{
+  margin-left: 30px;
+}
+
+.ApplyStudy_box{
+  margin-left: 30px;
+}
+
+.btn{ 
+  width: 30px;
+  height: 30px;
+  margin: 0.2rem;
+  padding: 0.3rem 0.5rem;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 50px;
+}
+
+/* 가입된스터디가 없을 경우 문구 */
+.JoinStudy_text_box{
+  font-size: 30px;
+  color: #dfdfe0;
+}
+
+.ApplyStudy_text_box{
+  font-size: 30px;
+  color: #dfdfe0;
+}
+
+.studyName{
+  margin-top: 0px;
+}
+
+.studyName:hover{
+  cursor: pointer;
+  color: #007BFF;
+}
+
+.studyName:hover + .custom-cursor {
+  display: block;
+}
+
+.studyItem_data{
+  display: flex;
+}
+
+.studyItem_box{
+  width: 700px;
+  height: 600px;
+  padding: 10px;
+}

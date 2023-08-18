@@ -1,0 +1,36 @@
+.FaqList_btn{
+ margin-left: 200px;
+}
+
+.FAQ_header{
+  display: flex;
+}
+
+.post_create_btn{
+  margin-left: 360px;
+  background-color: gray;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.FaqListItem_A{
+  padding: 20px;
+  padding-bottom: 0px;
+}
+
+.FaqListItem_btn{
+  margin-top: 40px;
+}
+
+.Pagination{
+  margin-left: 230px;
+}
+
+.title{
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.title:hover{
+  color: #3c90e2;
+}

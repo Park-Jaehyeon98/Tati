@@ -226,5 +226,9 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+# 환경변수 
+.env
+
 .idea
 .vscode

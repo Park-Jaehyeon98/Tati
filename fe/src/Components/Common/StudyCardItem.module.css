@@ -1,0 +1,53 @@
+.card {
+  width: 180px;
+  height: 100%;
+  /* margin: auto; */
+  margin: 1%;
+  /* border: 1px solid black; */
+  border-radius: 10px;
+  padding: 1%;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 0px rgba(0, 0, 0, 0.24);
+}
+
+.card:hover {
+  padding-bottom: 1%;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.25), 0 3px 3px rgba(0, 0, 0, 0.22);
+}
+
+.study_img_div {
+  text-align: center;
+}
+.study_img {
+  width: 120px;
+  height: 120px;
+}
+.study_name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 4%;
+}
+.study_member {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  font-size: 1rem;
+  font-weight: 700;
+  width: 92%;
+  margin: 4%;
+  text-align: right;
+  /* background-color: gray; */
+}
+.member_icon {
+  height: 16px;
+  width: 16px;
+  margin-right: 10px;
+}
+
+/* 비공개 스터디일경우 */
+.lock_icon_div {
+  position: absolute;
+}
+.lock_icon {
+  height: 20px;
+  width: 15px;
+}

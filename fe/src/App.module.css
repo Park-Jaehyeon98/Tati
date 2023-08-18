@@ -1,0 +1,35 @@
+.Footer {
+  top: 100vh;
+  width: 100%;
+  height: 250px;
+  background-color: rgb(238, 235, 235);
+  /* z-index: 1; */
+}
+.App_hr {
+  margin: 0px;
+  width: 100%;
+}
+.App_Footer_name {
+  margin: 0px;
+  padding-top: 50px;
+  padding-left: 200px;
+  font-size: 25px;
+  font-weight: bold;
+}
+.App_Footer_text {
+  margin: 0px;
+  margin-top: 72px;
+  display: flex;
+  padding-left: 70%;
+}
+.App_Footer_name_text {
+  margin-right: 20px;
+}
+
+.centeredContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  min-height: 100vh; /* 화면의 높이를 최소한으로 차지하도록 설정 */
+}

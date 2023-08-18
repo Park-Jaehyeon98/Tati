@@ -1,0 +1,59 @@
+.NoticeCreate_box{
+  background-color: white;
+  height: 500px;
+  margin-top: 40px;
+  border-radius: 10px;
+  padding: 50px;
+}
+
+.NoticeCreate_title{
+  margin-top: 40px;
+  margin-bottom: 50px;
+  margin-left: 40px;
+  display: flex;
+}
+.NoticeCreate_title_name{
+  margin-right: 30px;
+  font-size: 20px;
+}
+.NoticeCreate_title_input{
+  height: 25px;
+  width: 250px;
+}
+
+.NoticeCreate_content_name{
+  margin-right: 30px;
+  font-size: 20px;
+  
+}
+
+.NoticeCreate_content_input{
+  height: 250px;
+  width: 250px;
+  border: 1px solid black;
+  resize: none;
+  font-size: 14px;
+}
+
+.NoticeCreate_btn {
+  /* margin-left: 370px; */
+  margin-right: 30px;
+  width: 70px;
+  height: 30px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.NoticeCreate_btn:hover {
+  background-color: #0056b3;
+  color: #f8f9fa;
+}
+
+.NoticeCreate_btns{
+  display: flex;
+  margin-left: 250px;
+}
